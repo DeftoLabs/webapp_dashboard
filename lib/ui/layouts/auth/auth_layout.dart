@@ -47,7 +47,7 @@ class _DesktopBody extends StatelessWidget {
 
     return Container(
       width: size.width,
-      height: size.height,
+      height: size.height * 0.95,
       color: Colors.pink[300],
       child: Row(
         children: [
