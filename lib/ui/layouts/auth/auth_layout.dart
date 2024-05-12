@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/ui/layouts/auth/widgets/background_image.dart';
+import 'package:web_dashboard/ui/layouts/auth/widgets/custom_title.dart';
+import 'package:web_dashboard/ui/layouts/auth/widgets/links_bar.dart';
 
 class AuthLayout extends StatelessWidget {
-  const AuthLayout({super.key});
+
+  final Widget child;
+
+  const AuthLayout({
+    super.key,
+    required this.child
+    });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
+        physics: ClampingScrollPhysics(),
         children: [
           // Desktop
 
-          _DesktopBody(),
+          _DesktopBody(child: child),
 
           // Mobile
 
           // LinksBar
+          const LinksBar(),
+
         ],
 
       )
@@ -23,7 +34,10 @@ class AuthLayout extends StatelessWidget {
   }
 }
 class _DesktopBody extends StatelessWidget {
-  const _DesktopBody({super.key});
+
+  final Widget child;
+
+  const _DesktopBody({super.key, required this.child});
 
 
   @override
@@ -46,7 +60,13 @@ class _DesktopBody extends StatelessWidget {
               width: 600,
               height: double.infinity,
               color: Colors.amber[50],
-              //child: 
+              child: Column(
+                children: [
+                  const CustomTitle(),
+                  const SizedBox(height: 50),
+                  Expanded(child: child),
+                ],
+              )
             )
         ],
       )
