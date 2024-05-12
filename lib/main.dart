@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/router/router.dart';
+import 'package:web_dashboard/ui/layouts/auth/auth_layout.dart';
 
-void main () => runApp(MyApp());
+void main () {
+
+  Flurorouter.configureRoutes();
+  runApp(MyApp());
+
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -9,8 +16,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Dashboard',
-      home: Container(),
+      title: 'Admin Dashboard',
+      initialRoute: '/',
+      onGenerateRoute: Flurorouter.router.generator,
+      builder: (_, child) {
+        return AuthLayout();
+      },
     );
   }
 }
