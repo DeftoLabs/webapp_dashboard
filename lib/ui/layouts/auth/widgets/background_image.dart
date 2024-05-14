@@ -1,22 +1,26 @@
-
-
 import 'package:flutter/material.dart';
 
 class BackgroundImage extends StatelessWidget {
-  const BackgroundImage({super.key});
+
+
+  const BackgroundImage({super.key,});
 
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+
     return Expanded(
             child: Container(
               decoration: buildBoxDecoration(),
               child: Container(
                 constraints: const BoxConstraints(maxWidth: 400),
-                child: const Center(
+                child: Center(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: Image(image: AssetImage('logo.png'),
-                    width: 400,),
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: (size.width > 1000 ) ? const Image(image: AssetImage('logo.png'),
+                    width: 400,) : const Image(image: AssetImage('logo.png'),
+                    width: 250,) ,
                   )
                 ),
               )
