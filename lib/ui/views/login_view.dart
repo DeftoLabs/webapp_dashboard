@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/buttons/link_text.dart';
+import 'package:web_dashboard/ui/inputs/custom_inputs.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -21,7 +22,7 @@ class LoginView extends StatelessWidget {
               TextFormField(
                 // validator: (),
                 style: const TextStyle(color: Colors.white),
-                decoration: buildInputDecoration(
+                decoration: CustomInput.loginInputDecoration(
                   hint: 'Enter your email',
                   label: 'Email',
                   icon: Icons.email_outlined,
@@ -33,7 +34,7 @@ class LoginView extends StatelessWidget {
                 // validator: (),
                 obscureText: true,
                 style: const TextStyle(color: Colors.white),
-                decoration: buildInputDecoration(
+                decoration: CustomInput.loginInputDecoration(
                   hint: 'Enter your password',
                   label: 'Password',
                   icon: Icons.lock_outline_rounded,
@@ -59,23 +60,4 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  InputDecoration buildInputDecoration ({
-    required String hint,
-    required String label,
-    required IconData icon,
-  }){
-
-    return InputDecoration(
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color:Colors.white.withOpacity(0.3))),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.3))),
-          hintText: hint,
-          labelText: label,
-          prefixIcon: Icon ( icon, color: Colors.grey),
-          labelStyle: const TextStyle(color: Colors.grey),
-          hintStyle: const TextStyle( color: Colors.grey),
-
-    );
-  }
 }
