@@ -22,7 +22,7 @@ class CustomTitle extends StatelessWidget {
 
           FittedBox(
             fit: BoxFit.contain,
-            child: Text('Title App',
+            child: Text('Wave Soft',
             style: GoogleFonts.plusJakartaSans(
               fontSize: 60,
               fontWeight: FontWeight.bold,
