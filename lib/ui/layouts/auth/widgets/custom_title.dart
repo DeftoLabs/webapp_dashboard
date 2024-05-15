@@ -26,6 +26,7 @@ class CustomTitle extends StatelessWidget {
             style: GoogleFonts.plusJakartaSans(
               fontSize: 60,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
              )),
           )
         ],

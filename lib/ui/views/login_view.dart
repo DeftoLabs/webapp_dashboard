@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/auth_provider.dart';
 
 import 'package:web_dashboard/providers/login_form_provider.dart';
 import 'package:web_dashboard/router/router.dart';
@@ -14,8 +15,10 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return ChangeNotifierProvider(
-      create: ( _ ) => LoginFormProvider(),
+      create: ( _ ) => LoginFormProvider(authProvider),
       child: Builder(builder: (context) {
 
         final loginFormProvider = Provider.of<LoginFormProvider>(context, listen: false);

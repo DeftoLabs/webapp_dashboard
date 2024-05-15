@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/ui/layouts/auth/auth_layout.dart';
 
 void main () {
 
   Flurorouter.configureRoutes();
-  runApp(MyApp());
+  runApp(const AppState());
 
+}
+
+class AppState extends StatelessWidget {
+  const AppState({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ( _ ) => AuthProvider()),
+      ],
+      child: const MyApp(),
+      );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +40,7 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData.light().copyWith(
         scrollbarTheme: const ScrollbarThemeData().copyWith(
-          thumbColor: MaterialStatePropertyAll(Colors.white)
+          thumbColor: const MaterialStatePropertyAll(Colors.white)
         )
       )
     );

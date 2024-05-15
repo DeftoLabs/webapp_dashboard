@@ -12,7 +12,7 @@ class LinksBar extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      color: Colors.white,
+      color: Colors.pink[300],
       height: (size.width > 1000) ? size.height * 0.07 : null,
       child: Wrap(
         alignment: WrapAlignment.center,
@@ -21,6 +21,7 @@ class LinksBar extends StatelessWidget {
           LinkText (text: 'Help Center'),
           LinkText (text: 'Term of Service'),
           LinkText (text: 'Privacy Policy'),
+          LinkText (text: '@copyrigth 2024 All Rigth Reverved '),
         ],
       )
     );
