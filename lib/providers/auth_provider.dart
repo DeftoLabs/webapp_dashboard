@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+
 import 'package:web_dashboard/services/local_storage.dart';
 
 enum AuthStatus {
@@ -24,11 +23,7 @@ class AuthProvider extends ChangeNotifier {
 
     _token = 'dasdasdasdasdasdasdasdas';
     LocalStorage.prefs.setString('token', _token! );
-
-    print('Almacener JWT: $_token');
-
-    // TODO: Navegar el Dashboard
-
+    authStatus = AuthStatus.authenticated;
     notifyListeners();
   }
 
@@ -43,7 +38,7 @@ class AuthProvider extends ChangeNotifier {
 
             //TODO: ir al backend si el JWT es valido
 
-            
+
       await Future.delayed(const Duration(milliseconds: 1000));
       authStatus = AuthStatus.authenticated;
       notifyListeners();
