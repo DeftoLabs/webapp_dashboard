@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/services/local_storage.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/layouts/auth/auth_layout.dart';
+import 'package:web_dashboard/ui/layouts/dashboard/dashboard_layout.dart';
 
 void main () async {
 
@@ -20,7 +22,9 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ( _ ) => AuthProvider()),
+        ChangeNotifierProvider(
+          lazy: false,
+          create: ( _ ) => AuthProvider()),
       ],
       child: const MyApp(),
       );
@@ -37,13 +41,25 @@ class MyApp extends StatelessWidget {
       title: 'Admin Dashboard',
       initialRoute: '/',
       onGenerateRoute: Flurorouter.router.generator,
+      navigatorKey: NavigationService.navigatorKey,
       builder: (_, child) {
-        return AuthLayout(child: child!);
+
+        final authProvider = Provider.of<AuthProvider> (context);
+
+        if (authProvider.authStatus == AuthStatus.checking) {
+          return const Center( child: Text('checking'));
+        }
+        if(authProvider.authStatus == AuthStatus.authenticated) {
+          return DashboardLayout(child: child!);
+        } else {
+          return AuthLayout(child: child!);
+        }
+
+        
       },
       theme: ThemeData.light().copyWith(
-        scrollbarTheme: const ScrollbarThemeData().copyWith(
-          thumbColor: const MaterialStatePropertyAll(Colors.white)
-        )
+        scrollbarTheme: const ScrollbarThemeData().copyWith()
+        //TODO: Asignar color al ScrollBar
       )
     );
   }
