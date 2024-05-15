@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/services/local_storage.dart';
 
 class AuthProvider extends ChangeNotifier {
 
@@ -10,7 +11,8 @@ class AuthProvider extends ChangeNotifier {
 
     // TODO: Petition HTTP
 
-    this._token = 'dasdasdasdasdasdasdasdas';
+    _token = 'dasdasdasdasdasdasdasdas';
+    LocalStorage.prefs.setString('token', _token! );
 
     print('Almacener JWT: $_token');
 
