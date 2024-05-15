@@ -10,21 +10,20 @@ class BackgroundImage extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
 
-    return Expanded(
-            child: Container(
-              decoration: buildBoxDecoration(),
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: (size.width > 1000 ) ? const Image(image: AssetImage('logo.png'),
-                    width: 400,) : const Image(image: AssetImage('logo.png'),
-                    width: 250,) ,
-                  )
-                ),
-              )
-            ));
+    return Container(
+      decoration: buildBoxDecoration(),
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 400),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: (size.width > 1000 ) ? const Image(image: AssetImage('logo.png'),
+            width: 400,) : const Image(image: AssetImage('logo.png'),
+            width: 250,) ,
+          )
+        ),
+      )
+    );
   }
 
   BoxDecoration buildBoxDecoration() {

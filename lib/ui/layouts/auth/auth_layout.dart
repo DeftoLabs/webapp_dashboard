@@ -92,8 +92,8 @@ class _DesktopBody extends StatelessWidget {
         children: [
 
           //Backgorund
-          const BackgroundImage(),
-
+          const Expanded(child:BackgroundImage()),
+          
           // View Container
             Container(
               width: 600,

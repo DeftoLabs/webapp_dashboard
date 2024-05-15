@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return ChangeNotifierProvider(
-      create: ( _ ) => LoginFormProvider(authProvider),
+      create: ( _ ) => LoginFormProvider(),
       child: Builder(builder: (context) {
 
         final loginFormProvider = Provider.of<LoginFormProvider>(context, listen: false);
@@ -70,9 +70,10 @@ class LoginView extends StatelessWidget {
       
                CustomOutlineButtom(
                 onPressed: (){
-
-                  loginFormProvider.validateForm();
-                  
+                  final isValid =  loginFormProvider.validateForm();
+                  if (isValid) {
+                    authProvider.login(loginFormProvider.email, loginFormProvider.password);
+                  }
                 }, 
                 text: 'Login'),
       
