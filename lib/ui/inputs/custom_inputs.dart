@@ -15,9 +15,9 @@ class CustomInput {
           borderSide: BorderSide(color: Colors.white.withOpacity(0.3))),
           hintText: hint,
           labelText: label,
-          prefixIcon: Icon ( icon, color: Colors.grey),
-          labelStyle: const TextStyle(color: Colors.grey),
-          hintStyle: const TextStyle( color: Colors.grey),
+          prefixIcon: Icon ( icon, color: Colors.white),
+          labelStyle: const TextStyle(color: Colors.white),
+          hintStyle: const TextStyle( color: Colors.white),
 
     );
   }

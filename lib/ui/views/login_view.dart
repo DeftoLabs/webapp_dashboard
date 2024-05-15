@@ -65,7 +65,7 @@ class LoginView extends StatelessWidget {
                 ),
                const SizedBox(height: 20),
       
-               LinkText(
+               CustomOutlineButtom(
                 onPressed: (){
 
                   loginFormProvider.validateForm();

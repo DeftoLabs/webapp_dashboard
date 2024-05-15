@@ -1,4 +1,7 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/register_form_provider.dart';
 import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/buttons/link_text.dart';
@@ -9,17 +12,28 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ChangeNotifierProvider(
+      create: ( _ ) => RegisterFormProvider(),
+      child: Builder(builder: (context) {
+
+        final registerFormProvider = Provider.of<RegisterFormProvider>(context, listen: false);
+
+        return Container(
       margin: const EdgeInsets.only(top: 100),
       padding:const EdgeInsets.symmetric(horizontal: 20),
       child: Center (
         child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 370),
         child: Form(
+          key: registerFormProvider.formKey,
           child: Column(
             children: [
               // Name
               TextFormField(
-                // validator: (),
+                onChanged: ( value ) => registerFormProvider.name = value,
+                validator: ( value ) {
+                  if( value == null || value.isEmpty) return 'Requiered valid name';
+                  return null;
+                },
                 style: const TextStyle(color: Colors.white),
                 decoration: CustomInput.loginInputDecoration(
                   hint: 'Enter your Name',
@@ -31,7 +45,11 @@ class RegisterView extends StatelessWidget {
 
               // Email
               TextFormField(
-                // validator: (),
+                onChanged: ( value ) => registerFormProvider.email = value,
+                validator: ( value ) {
+                  if ( !EmailValidator.validate( value ?? '')) return 'Requiered valid Email';
+                  return null;
+                },
                 style: const TextStyle(color: Colors.white),
                 decoration: CustomInput.loginInputDecoration(
                   hint: 'Enter your email',
@@ -42,7 +60,13 @@ class RegisterView extends StatelessWidget {
                 const SizedBox(height: 20),
                 // Password
                 TextFormField(
-                // validator: (),
+                onChanged: ( value ) => registerFormProvider.password = value,
+                  validator: ( value ){
+                    if( value == null || value.isEmpty ) return ' Password required';
+                    if( value.length < 6  ) return ' Password will have 6 characters';
+      
+                    return null;
+                  },
                 obscureText: true,
                 style: const TextStyle(color: Colors.white),
                 decoration: CustomInput.loginInputDecoration(
@@ -54,7 +78,11 @@ class RegisterView extends StatelessWidget {
              const SizedBox(height: 20),
 
              CustomOutlineButtom(
-              onPressed: (){}, 
+              onPressed: (){
+
+                registerFormProvider.validateForm();
+
+              }, 
               text: 'Create Account'),
 
 
@@ -68,6 +96,8 @@ class RegisterView extends StatelessWidget {
           ))
         ),)
     );
+      })
+      );
   }
 
 }

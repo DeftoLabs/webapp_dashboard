@@ -12,7 +12,7 @@ class CustomOutlineButtom extends StatelessWidget {
     Key? key,
     required this.onPressed,
     required this.text,
-    this.color = Colors.grey,
+    this.color = Colors.white,
     this.isFilled = false
     }) : super (key: key);
 
@@ -28,13 +28,13 @@ class CustomOutlineButtom extends StatelessWidget {
           isFilled ? color.withOpacity(0.3) : Colors.transparent,
         )
       ),
-      onPressed: () => onPressed, 
+      onPressed: () => onPressed(), 
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text( text,
         style:GoogleFonts.plusJakartaSans(
           fontSize: 16,
-          color: Colors.grey,
+          color: Colors.white,
         ),
         ),));
   }

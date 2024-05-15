@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData.light().copyWith(
         scrollbarTheme: const ScrollbarThemeData().copyWith(
-          thumbColor: MaterialStatePropertyAll(Colors.grey[400])
+          thumbColor: MaterialStatePropertyAll(Colors.white)
         )
       )
     );
