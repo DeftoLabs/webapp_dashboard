@@ -9,12 +9,12 @@ class CustomOutlineButtom extends StatelessWidget {
   final bool isFilled;
 
   const CustomOutlineButtom({
-    super.key,
+    Key? key,
     required this.onPressed,
     required this.text,
     this.color = Colors.grey,
     this.isFilled = false
-    });
+    }) : super (key: key);
 
   @override
   Widget build(BuildContext context) {
