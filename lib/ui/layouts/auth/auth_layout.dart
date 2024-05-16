@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:web_dashboard/ui/layouts/auth/widgets/background_image.dart';
 import 'package:web_dashboard/ui/layouts/auth/widgets/custom_title.dart';
 import 'package:web_dashboard/ui/layouts/auth/widgets/links_bar.dart';
@@ -43,7 +44,6 @@ class _MobileBody extends StatelessWidget {
   final Widget child;
 
   const _MobileBody({
-    super.key,
     required this.child
     });
 
@@ -56,15 +56,15 @@ class _MobileBody extends StatelessWidget {
         children: [
           const SizedBox(height: 20),
           const CustomTitle(),
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 420,
             child: child
           ),
-          Container(
+          const SizedBox(
             width: double.infinity,
             height: 400,
-            child: const BackgroundImage(),
+            child: BackgroundImage(),
           ),
         ],
       )
@@ -76,7 +76,7 @@ class _DesktopBody extends StatelessWidget {
 
   final Widget child;
 
-  const _DesktopBody({super.key, required this.child});
+  const _DesktopBody({required this.child});
 
 
   @override

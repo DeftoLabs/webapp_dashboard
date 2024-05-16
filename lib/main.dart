@@ -59,8 +59,9 @@ class MyApp extends StatelessWidget {
         
       },
       theme: ThemeData.light().copyWith(
-        scrollbarTheme: const ScrollbarThemeData().copyWith()
-        //TODO: Asignar color al ScrollBar
+        scrollbarTheme: const ScrollbarThemeData().copyWith(
+          thumbColor: WidgetStateProperty.all(Colors.white)
+        )
       )
     );
   }

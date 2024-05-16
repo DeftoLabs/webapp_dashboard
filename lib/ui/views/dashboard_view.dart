@@ -8,10 +8,8 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Dashboard View', style: GoogleFonts.plusJakartaSans())
-      )
+    return Center(
+      child: Text('Dashboard View', style: GoogleFonts.plusJakartaSans())
     );
   }
 }
