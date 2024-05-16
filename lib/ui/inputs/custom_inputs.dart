@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CustomInput {
 
@@ -19,6 +20,20 @@ class CustomInput {
           labelStyle: const TextStyle(color: Colors.white),
           hintStyle: const TextStyle( color: Colors.white),
 
+    );
+  }
+
+  static InputDecoration searchInputDecoration ({
+    required String hint,
+    required IconData icon,
+  }) {
+    return InputDecoration(
+      border: InputBorder.none,
+      enabledBorder: InputBorder.none,
+      hintText: hint,
+      prefixIcon: Icon(icon, color: Colors.grey),
+      labelStyle: const TextStyle(color: Colors.grey),
+      hintStyle: const TextStyle( color: Colors.grey)
     );
   }
 }

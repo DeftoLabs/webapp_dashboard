@@ -18,7 +18,7 @@ class Logo extends StatelessWidget {
           Text('Admin',
           style: GoogleFonts.plusJakartaSans(
             fontSize: 20,
-            color: Colors.black,
+            color: Colors.white,
            )
           )
 
