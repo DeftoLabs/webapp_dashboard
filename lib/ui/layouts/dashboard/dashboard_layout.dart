@@ -13,7 +13,12 @@ class DashboardLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Dashboard', style: GoogleFonts.plusJakartaSans(fontSize: 50, fontWeight: FontWeight.bold) )
+        child: Column(
+          children: [
+            Text('Dashboard', style: GoogleFonts.plusJakartaSans(fontSize: 50, fontWeight: FontWeight.bold) ),
+            Expanded(child: child)
+          ],
+        )
       )
     );
   }
