@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'package:web_dashboard/ui/shared/sidebar.dart';
 
 class DashboardLayout extends StatelessWidget {
 
@@ -11,14 +12,13 @@ class DashboardLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Text('Dashboard', style: GoogleFonts.plusJakartaSans(fontSize: 50, fontWeight: FontWeight.bold) ),
-            Expanded(child: child)
-          ],
-        )
+    return const Scaffold(
+      backgroundColor: const Color(0xffEDF1F2),
+      body: Row(
+        children: [
+          // TODO: este depende de si es mas de 700px
+          Sidebar(),
+        ],
       )
     );
   }
