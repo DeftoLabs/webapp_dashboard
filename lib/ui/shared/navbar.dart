@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/ui/shared/widget/navbar_avatar.dart';
 import 'package:web_dashboard/ui/shared/widget/notifications_indicator.dart';
 import 'package:web_dashboard/ui/shared/widget/search_text.dart';
@@ -19,7 +20,8 @@ class Navbar extends StatelessWidget {
         children: [
 
           if(size.width <= 700)
-          IconButton(icon: const Icon(Icons.menu_outlined) ,onPressed: (){}, ),
+          IconButton(icon: const Icon(Icons.menu_outlined),
+          onPressed: ()=> SideMenuProvider.openMenu() ),
           const SizedBox(width: 5),
 
           // Search Input
