@@ -1,16 +1,28 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
+import 'package:web_dashboard/router/router.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 import 'package:web_dashboard/ui/shared/widget/logo.dart';
 import 'package:web_dashboard/ui/shared/widget/menu_item.dart';
 import 'package:web_dashboard/ui/shared/widget/text_separator.dart';
 
 class Sidebar extends StatelessWidget {
+
+  void navigateTo( String routeName ) {
+   NavigationService.navigateTo( routeName );
+   SideMenuProvider.closeMenu();
+  }
+
   const Sidebar({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    final sideMenuProvider = Provider.of<SideMenuProvider>(context);
+
     return Container(
       width: 200,
       height: double.infinity,
@@ -26,9 +38,10 @@ class Sidebar extends StatelessWidget {
          const TextSeparator (text:'main'),
 
          MenuItem(
+          isActive: sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
           text: 'Dashboard', 
           icon: Icons.compass_calibration_outlined, 
-          onPressed: ()=> SideMenuProvider.closeMenu()),
+          onPressed: ()=> navigateTo(Flurorouter.dashboardRoute)),
 
         MenuItem(text: 'Orders', icon: Icons.shopping_bag,            onPressed: (){}),
         MenuItem(text: 'Analityc', icon: Icons.analytics,             onPressed: (){}),
@@ -40,11 +53,16 @@ class Sidebar extends StatelessWidget {
         const SizedBox(height: 30),
 
         const TextSeparator(text: 'Elements'),
-        MenuItem(text: 'Marketing', icon: Icons.mark_email_read_outlined,       onPressed: (){}),
+        MenuItem(text: 'Marketing', 
+        icon: Icons.mark_email_read_outlined,
+        onPressed: ()=> navigateTo(Flurorouter.marketingdRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.marketingdRoute,
+        ),
+
         MenuItem(text: 'Message', icon: Icons.message_outlined,                 onPressed: (){}),
         MenuItem(text: 'Update', icon: Icons.update_outlined,                   onPressed: (){}),
 
-        const SizedBox(height: 30),
+        const SizedBox(height: 50),
 
         const TextSeparator(text: 'Configuration'),
         MenuItem(text: 'Settings', icon: Icons.settings_applications_outlined,  onPressed: (){}),
