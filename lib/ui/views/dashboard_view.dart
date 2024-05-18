@@ -1,5 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
@@ -9,6 +11,9 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final activeUser = Provider.of<AuthProvider>(context).user!;
+
     return Container(
       child: ListView(
         physics: const ClampingScrollPhysics(),
@@ -17,9 +22,9 @@ class DashboardView extends StatelessWidget {
 
           const SizedBox(height: 10),
 
-          const WhiteCard(
-            title: 'Sales Stadistics',
-            child: const Text('Astro Wave')
+          WhiteCard(
+            title: activeUser.nombre,
+            child: Text('Astro Wave')
           )
         ],
       )

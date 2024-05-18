@@ -10,7 +10,12 @@ class RegisterFormProvider extends ChangeNotifier {
 
   validateForm(){
     
-    formKey.currentState!.validate();
+    if( formKey.currentState!.validate() ){
+          return true;
+    } else {
+      return false;
+    }
+
   }
 
 }

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -70,8 +71,12 @@ class Sidebar extends StatelessWidget {
         const SizedBox(height: 50),
 
         const TextSeparator(text: 'Configuration'),
-        MenuItem(text: 'Settings', icon: Icons.settings_applications_outlined,  onPressed: (){}),
-        MenuItem(text: 'Logout', icon: Icons.logout_outlined,                   onPressed: (){}),
+        MenuItem(text: 'Settings', icon: Icons.settings_applications_outlined, onPressed: (){}),
+        MenuItem(text: 'Logout',
+        icon: Icons.logout_outlined,
+        onPressed: (){
+          Provider.of<AuthProvider>(context, listen: false).logout();
+        }),
 
         const SizedBox(height: 30),
 
