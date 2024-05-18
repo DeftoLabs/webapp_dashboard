@@ -55,11 +55,16 @@ class Sidebar extends StatelessWidget {
         const TextSeparator(text: 'Elements'),
         MenuItem(text: 'Marketing', 
         icon: Icons.mark_email_read_outlined,
-        onPressed: ()=> navigateTo(Flurorouter.marketingdRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.marketingdRoute,
+        onPressed: ()=> navigateTo(Flurorouter.marketingRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.marketingRoute,
         ),
 
-        MenuItem(text: 'Message', icon: Icons.message_outlined,                 onPressed: (){}),
+        MenuItem(text: 'Message', 
+        icon: Icons.message_outlined,
+        onPressed: ()=> navigateTo(Flurorouter.messageRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.messageRoute,
+        ),
+        
         MenuItem(text: 'Update', icon: Icons.update_outlined,                   onPressed: (){}),
 
         const SizedBox(height: 50),
