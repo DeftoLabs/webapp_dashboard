@@ -1,6 +1,7 @@
 # web_dashboard
 
 A new Flutter project.
+- Ready to access to DB to test
 
 ## Getting Started
 
