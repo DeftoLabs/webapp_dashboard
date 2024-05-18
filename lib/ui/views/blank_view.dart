@@ -4,8 +4,8 @@ import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 
-class DashboardView extends StatelessWidget {
-  const DashboardView({super.key});
+class BlankView extends StatelessWidget {
+  const BlankView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class DashboardView extends StatelessWidget {
 
           const WhiteCard(
             title: 'Sales Stadistics',
-            child: const Text('Astro Wave')
+            child:  Text('Astro Wave')
           )
         ],
       )
