@@ -1,7 +1,7 @@
 
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:web_dashboard/providers/sidemenu_provider.dart';
+
 import 'package:web_dashboard/ui/shared/widget/logo.dart';
 import 'package:web_dashboard/ui/shared/widget/menu_item.dart';
 import 'package:web_dashboard/ui/shared/widget/text_separator.dart';
@@ -26,7 +26,9 @@ class Sidebar extends StatelessWidget {
          const TextSeparator (text:'main'),
 
          MenuItem(
-          text: 'Dashboard', icon: Icons.compass_calibration_outlined, onPressed: (){}),
+          text: 'Dashboard', 
+          icon: Icons.compass_calibration_outlined, 
+          onPressed: ()=> SideMenuProvider.closeMenu()),
 
         MenuItem(text: 'Orders', icon: Icons.shopping_bag,            onPressed: (){}),
         MenuItem(text: 'Analityc', icon: Icons.analytics,             onPressed: (){}),

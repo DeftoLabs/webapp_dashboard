@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 
 class NotificationsIndicator extends StatelessWidget {
   const NotificationsIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container (
+    return SizedBox (
       child: Stack(
         children: [
           const Icon(Icons.notifications_none_outlined, color: Colors.grey),
