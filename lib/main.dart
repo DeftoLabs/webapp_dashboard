@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
+import 'package:web_dashboard/providers/categories_provider.dart';
 
 import 'package:web_dashboard/router/router.dart';
 
@@ -31,13 +32,11 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          lazy: false,
-          create: ( _ ) => AuthProvider()),
+        ChangeNotifierProvider(lazy: false, create: ( _ ) => AuthProvider()),
 
-          ChangeNotifierProvider(
-            lazy: false,
-            create: ( _ ) => SideMenuProvider()),
+        ChangeNotifierProvider(lazy: false, create: ( _ ) => SideMenuProvider()),
+
+        ChangeNotifierProvider(create: ( _ ) => CategoriesProvier()),
       ],
       child: const MyApp(),
       );

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:web_dashboard/providers/categories_provider.dart';
 
 import 'package:web_dashboard/datatables/categories_datasource.dart';
+
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
@@ -17,8 +21,18 @@ class _CategoriesViewState extends State<CategoriesView> {
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<CategoriesProvier>(context, listen: false).getCategories();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    final categorias = Provider.of<CategoriesProvier>(context).categorias;
+
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
@@ -33,8 +47,8 @@ class _CategoriesViewState extends State<CategoriesView> {
                 DataColumn(label: Text('Create')),
                 DataColumn(label: Text('Actions')),                
               ], 
-              source: CategoriesDTS(),
-              header: Text( ' Products', maxLines: 2),
+              source: CategoriesDTS(categorias, context),
+              header: const  Text( ' Products', maxLines: 2),
               onRowsPerPageChanged: (value) {
                 setState(() {
                   _rowsPerPage = value ?? 10;
