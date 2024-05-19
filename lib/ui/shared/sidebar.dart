@@ -48,6 +48,13 @@ class Sidebar extends StatelessWidget {
         MenuItem(text: 'Analityc', icon: Icons.analytics,             onPressed: (){}),
         MenuItem(text: 'GPS', icon: Icons.gps_fixed,                  onPressed: (){}),
         MenuItem(text: 'Products', icon: Icons.dashboard_outlined,    onPressed: (){}),
+
+        MenuItem(text: 'Categories', 
+        icon: Icons.category_outlined,        
+        onPressed: ()=> navigateTo(Flurorouter.categoriesRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.categoriesRoute,),
+
+
         MenuItem(text: 'Customers', icon: Icons.people_alt_outlined,  onPressed: (){}),
         MenuItem(text: 'Sales', icon: Icons.people_alt_outlined,      onPressed: (){}),
 
