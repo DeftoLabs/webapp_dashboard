@@ -47,7 +47,7 @@ class Navbar extends StatelessWidget {
   }
 
   BoxDecoration buildBoxDecoration() => const BoxDecoration(
-    color: Color.fromARGB(255, 164, 255, 253),
+    color:  Color.fromARGB(255, 50, 100, 199),
      boxShadow: [
       BoxShadow(
         color: Colors.black38,

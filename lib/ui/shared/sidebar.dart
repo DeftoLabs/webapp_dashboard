@@ -96,8 +96,8 @@ class Sidebar extends StatelessWidget {
   BoxDecoration buildBoxDecoration() => const BoxDecoration(
     gradient: LinearGradient(
       colors: [
-        Color.fromARGB(255, 137, 173, 255),
-        Color.fromARGB(255, 98, 129, 201),
+        Color.fromARGB(255, 38, 80, 165),
+        Color.fromARGB(255, 29, 61, 124),
       ]
       ),
       boxShadow: [

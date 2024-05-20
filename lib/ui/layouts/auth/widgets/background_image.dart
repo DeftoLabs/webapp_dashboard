@@ -17,8 +17,8 @@ class BackgroundImage extends StatelessWidget {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: (size.width > 1000 ) ? const Image(image: AssetImage('logo.png'),
-            width: 400,) : const Image(image: AssetImage('logo.png'),
+            child: (size.width > 1000 ) ? const Image(image: AssetImage('wave.png'),
+            width: 400,) : const Image(image: AssetImage('wave.png'),
             width: 250,) ,
           )
         ),

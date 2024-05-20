@@ -7,6 +7,7 @@ import 'package:web_dashboard/datatables/categories_datasource.dart';
 
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
+import 'package:web_dashboard/ui/modals/category_modal.dart';
 
 
 class CategoriesView extends StatefulWidget {
@@ -57,7 +58,12 @@ class _CategoriesViewState extends State<CategoriesView> {
               rowsPerPage: _rowsPerPage,
               actions: [
                 CustomIconButton(
-                  onPressed: (){}, 
+                  onPressed: (){
+                    showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context, 
+                      builder: ( _ ) => const CategoryModal(categoria: null));
+                  }, 
                   text:'Create', 
                   icon: Icons.add_outlined)
               ],

@@ -16,4 +16,50 @@ class CategoriesProvier extends ChangeNotifier {
     categorias = [...categoriesResp.categorias];
     notifyListeners();
   }
+
+  Future newCategory (String name) async {
+
+    final data = {
+      'nombre': name
+    };
+
+    try{
+
+      final json = await CafeApi.post('/categorias', data);
+      final newCategory = Categoria.fromMap(json);
+
+      categorias.add(newCategory);
+      notifyListeners();
+
+    } catch (e){
+
+    }
+
+  }
+
+    Future updateCategory (String id, String name) async {
+
+    final data = {
+      'nombre': name
+    };
+
+    try{
+
+      await CafeApi.put('/categorias/$id', data);
+      
+      categorias = categorias.map(
+        (category) {
+          if(category.id != id) return category;
+          category.nombre = name;
+          return category;
+        
+      },).toList();
+
+      notifyListeners();
+
+    } catch (e){
+
+    }
+
+  }
 }
