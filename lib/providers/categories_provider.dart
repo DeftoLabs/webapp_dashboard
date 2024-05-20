@@ -18,47 +18,44 @@ class CategoriesProvier extends ChangeNotifier {
   }
 
   Future newCategory (String name) async {
-
     final data = {
       'nombre': name
     };
-
     try{
-
       final json = await CafeApi.post('/categorias', data);
       final newCategory = Categoria.fromMap(json);
-
       categorias.add(newCategory);
       notifyListeners();
-
     } catch (e){
-
+      throw ' Error to create the Category ';
     }
-
   }
 
     Future updateCategory (String id, String name) async {
-
     final data = {
       'nombre': name
     };
-
     try{
-
       await CafeApi.put('/categorias/$id', data);
-      
       categorias = categorias.map(
         (category) {
           if(category.id != id) return category;
           category.nombre = name;
           return category;
-        
       },).toList();
-
       notifyListeners();
-
     } catch (e){
+      throw ' Error to Update the Category ';
+    }
+  }
 
+      Future deleteCategory (String id) async {
+    try{
+      await CafeApi.delete('/categorias/$id',{});
+      categorias.removeWhere((categorias) => categorias.id == id);
+      notifyListeners();
+    } catch (e){
+      throw ' Error to Delete the Category ';
     }
 
   }

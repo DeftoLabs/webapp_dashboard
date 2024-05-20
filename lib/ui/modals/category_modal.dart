@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/categories.dart';
 import 'package:web_dashboard/providers/categories_provider.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/inputs/custom_inputs.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
@@ -70,12 +71,20 @@ String? id;
             alignment: Alignment.center,
             child: CustomOutlineButtom(
               onPressed:() async {
+
+                try{
                 if(id == null) {
                   await categoryProvider.newCategory(nombre);
-
+                  NotificationService.showSnackBa('$nombre Create');
                 }else {
                   await categoryProvider.updateCategory(id!, nombre);
+                   NotificationService.showSnackBa('$nombre Update');
                 }
+                } catch(e) {
+                  NotificationService.showSnackBa('Dont Save the Category');
+                }
+
+
                 Navigator.of(context).pop();
               },
               text: 'Save',
