@@ -78,7 +78,7 @@ class LoginView extends StatelessWidget {
               const SizedBox(height: 20),
                LinkText(text: 'New Account',
                onPressed: () {
-               Navigator.pushNamed(context, Flurorouter.registerRoute);
+               Navigator.pushReplacementNamed(context, Flurorouter.registerRoute);
                },)
       
               ],

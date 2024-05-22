@@ -80,12 +80,14 @@ String? id;
                   await categoryProvider.updateCategory(id!, nombre);
                    NotificationService.showSnackBa('$nombre Update');
                 }
+                  Navigator.of(context).pop();  
                 } catch(e) {
+                  Navigator.of(context).pop();                  
                   NotificationService.showSnackBa('Dont Save the Category');
                 }
 
 
-                Navigator.of(context).pop();
+
               },
               text: 'Save',
               color: Colors.white
