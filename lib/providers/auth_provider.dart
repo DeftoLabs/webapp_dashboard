@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/auth_response.dart';
+import 'package:web_dashboard/models/usuaro.dart';
 import 'package:web_dashboard/router/router.dart';
 
 import 'package:web_dashboard/services/local_storage.dart';

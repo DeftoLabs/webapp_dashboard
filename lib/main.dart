@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:web_dashboard/api/cafeapi.dart';
-import 'package:web_dashboard/providers/categories_provider.dart';
 
 import 'package:web_dashboard/router/router.dart';
 
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
+import 'package:web_dashboard/providers/categories_provider.dart';
+import 'package:web_dashboard/providers/users_providers.dart';
 
 import 'package:web_dashboard/services/local_storage.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -37,6 +39,8 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(lazy: false, create: ( _ ) => SideMenuProvider()),
 
         ChangeNotifierProvider(create: ( _ ) => CategoriesProvier()),
+
+        ChangeNotifierProvider(create: ( _ ) => UsersProvider()),
       ],
       child: const MyApp(),
       );

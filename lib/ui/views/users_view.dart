@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 import 'package:web_dashboard/datatables/users_datasource.dart';
+import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 
@@ -12,7 +14,9 @@ class UsersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final userDataSource = UserDatasource();
+    final userProvider = Provider.of<UsersProvider>(context);
+
+    final userDataSource = UserDatasource( userProvider.users);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
