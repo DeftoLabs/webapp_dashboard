@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/models/usuaro.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
-import 'package:web_dashboard/ui/views/user_view.dart';
+
 
 class UserDatasource extends DataTableSource {
 

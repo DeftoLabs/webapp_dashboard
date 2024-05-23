@@ -23,7 +23,7 @@ class Usuario {
         this.zone = '',
     });
 
-    factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
+    factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
         rol: json["rol"],
         estado: json["estado"],
         google: json["google"],
@@ -32,7 +32,7 @@ class Usuario {
         uid: json["uid"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toMap() => {
         "rol": rol,
         "estado": estado,
         "google": google,

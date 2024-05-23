@@ -25,7 +25,7 @@ class DashboardView extends StatelessWidget {
 
           WhiteCard(
             title: activeUser.nombre,
-            child: Text('Astro Wave')
+            child: const Text('Astro Wave')
           )
         ],
       )
