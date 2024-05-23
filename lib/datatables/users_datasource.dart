@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/models/usuaro.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/ui/views/user_view.dart';
 
 class UserDatasource extends DataTableSource {
 
@@ -19,7 +21,7 @@ class UserDatasource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-          DataCell(
+          const DataCell(
             ClipOval (child: image,)
            ),
           DataCell(Text( user.nombre)),
@@ -28,7 +30,9 @@ class UserDatasource extends DataTableSource {
           DataCell(Text( user.zone!)),
           DataCell(
             IconButton(icon: const Icon(Icons.edit_outlined),
-            onPressed: (){},)
+            onPressed: (){
+              NavigationService.replaceTo('/dashboard/users/${user.uid}');
+            },)
           ),
 
         ]
