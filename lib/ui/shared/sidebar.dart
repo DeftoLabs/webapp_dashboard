@@ -59,8 +59,15 @@ class Sidebar extends StatelessWidget {
         MenuItem(text: 'Sales', icon: Icons.people_alt_outlined,      onPressed: (){}),
 
         const SizedBox(height: 30),
+        
 
         const TextSeparator(text: 'Elements'),
+
+        MenuItem(text: 'Users', 
+        icon: Icons.update_outlined,
+        onPressed: ()=> navigateTo(Flurorouter.usersRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.usersRoute,),
+
         MenuItem(text: 'Marketing', 
         icon: Icons.mark_email_read_outlined,
         onPressed: ()=> navigateTo(Flurorouter.marketingRoute),
@@ -72,8 +79,7 @@ class Sidebar extends StatelessWidget {
         onPressed: ()=> navigateTo(Flurorouter.messageRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.messageRoute,
         ),
-        
-        MenuItem(text: 'Update', icon: Icons.update_outlined,                   onPressed: (){}),
+
 
         const SizedBox(height: 50),
 
