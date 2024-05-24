@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/usuario.dart';
 
 
@@ -39,8 +40,21 @@ bool _validForm() {
   return formKey.currentState!.validate();
 }
 
-updateUser (){
-  if ( !_validForm()) return;
+Future updateUser () async {
+  if ( !_validForm()) return false;
+
+  final data = {
+    'nombre': user!.nombre,
+    'correo': user!.correo,
+  };
+  try {
+    final resp = await CafeApi.put('/usuarios/${user!.uid}', data);
+    return true;
+  } catch (e) {
+    return 'Update Error';
+  }
+
+
 }
 
 }

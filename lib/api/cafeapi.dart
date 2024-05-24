@@ -56,7 +56,7 @@ class CafeApi {
       final resp = await _dio.put(path, data: formData);
       return resp.data;
       
-    } catch (e) {
+    }  catch (e) {
       throw('Error in the PUT');
       
     }

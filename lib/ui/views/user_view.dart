@@ -9,6 +9,7 @@ import 'package:web_dashboard/models/usuario.dart';
 import 'package:web_dashboard/providers/user_form_provider.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/inputs/custom_inputs.dart';
 
@@ -42,15 +43,22 @@ class UserViewState extends State<UserView> {
 
     usersProvider.getUserById(widget.uid)
       .then((userDB) {
-        
+        if( userDB != null) {
         userFormProvider.user = userDB;
         setState((){ user = userDB; });
-
+        } else {
+          NavigationService.replaceTo('/dashboard/users');
+        }
       }
     );
     
   }
-
+  @override
+  void dispose() {
+    user = null;
+    Provider.of<UserFormProvider>(context, listen: false).user = null;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,12 +190,12 @@ class _UserViewForm extends StatelessWidget {
                 label: 'Phone Number', 
                 icon: Icons.phone_android_rounded
               ),
-              onChanged: ( value )=> userFormProvider.copyUserWith( phone: value ),
-              validator: ( value ) {
-                if ( value == null || value.isEmpty ) return 'Invalid Phone Number';
-                if ( value.length < 2 ) return 'Mimimun 9 Charactes';
-                return null;
-              },
+           //   onChanged: ( value )=> userFormProvider.copyUserWith( phone: value ),
+           //   validator: ( value ) {
+           //     if ( value == null || value.isEmpty ) return 'Invalid Phone Number';
+           //     if ( value.length < 2 ) return 'Mimimun 9 Charactes';
+           //     return null;
+           //   },
             ),
             const SizedBox( height: 20 ),
 
@@ -198,20 +206,26 @@ class _UserViewForm extends StatelessWidget {
                 label: 'Zone', 
                 icon: Icons.map
               ),
-              onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
-              validator: ( value ) {
-                if ( value == null || value.isEmpty ) return 'Invalid Register';
-                if ( value.length < 2 ) return 'Mimimun 3 Charactes';
-                return null;
-              },
-            ),
+           //   onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
+           //   validator: ( value ) {
+           //     if ( value == null || value.isEmpty ) return 'Invalid Register';
+           //     if ( value.length < 2 ) return 'Mimimun 3 Charactes';
+           //     return null;
+           //   },
+             ),
             const SizedBox( height: 20 ),
 
             ConstrainedBox(
               constraints: const BoxConstraints( maxWidth: 120),
               child: ElevatedButton(
-                onPressed: () {
-
+                onPressed: () async {
+                  final saved = await userFormProvider.updateUser();
+                  if( saved) {
+                    NotificationService.showSnackBa('User Updated');
+                    Provider.of<UsersProvider>(context, listen: false).refreshUser(user);
+                  } else {
+                    NotificationService.showSnackBarError('Error try to Update the User');
+                  }
 
                 }, 
                 style: ButtonStyle(
