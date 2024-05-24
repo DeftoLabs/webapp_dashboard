@@ -19,7 +19,7 @@ class WhiteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width !=null  ? width : null,
+      width: width,
       margin:const EdgeInsets.all(8),
       padding: const EdgeInsets.all(10),
       decoration: buildBoxDecoration(),
@@ -35,8 +35,9 @@ class WhiteCard extends StatelessWidget {
               style: GoogleFonts.plusJakartaSans(fontSize: 15, fontWeight: FontWeight.bold)
             ),
           ),
-          
-          const Divider()
+          const SizedBox(height: 20,),
+          const Divider(),
+          const SizedBox(height: 20),
 
           ],
 

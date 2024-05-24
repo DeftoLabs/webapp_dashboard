@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/usuaro.dart';
+import 'package:web_dashboard/providers/user_form_provider.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/inputs/custom_inputs.dart';
@@ -29,9 +29,16 @@ class _UserViewState extends State<UserView> {
   @override
   void initState() {
     super.initState();
-    final userProvider = Provider.of<UsersProvider>(context, listen: false);
 
-    userProvider.getUserById(widget.uid).then((userDB) => setState(() { user = userDB;})); 
+    final userProvider      = Provider.of<UsersProvider>(context, listen: false);
+    final userFormProvider  = Provider.of<UserFormProvider>(context, listen: false);
+
+    userProvider.getUserById(widget.uid)
+    .then((userDB) {
+      userFormProvider.user = userDB;
+      setState(() { user = userDB;}); 
+    }
+    );
   }
 
   @override
@@ -90,8 +97,17 @@ class _UserViewBody extends StatelessWidget {
 }
 
 class _UserViewForm extends StatelessWidget {
+const _UserViewForm ({
+  Key? key
+}) : super ( key: key);
+
   @override
   Widget build(BuildContext context) {
+
+    final userFormProviver = Provider.of<UserFormProvider>(context);
+    final user = userFormProviver.user;
+
+
     return WhiteCard(
       title: 'General Information',
       child: Form(
@@ -99,6 +115,7 @@ class _UserViewForm extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              initialValue: user!.nombre,
               decoration: CustomInput.formInputDecoration(
                 hint: 'User Name', 
                 label: 'Name', 
@@ -106,6 +123,7 @@ class _UserViewForm extends StatelessWidget {
             ),
             const SizedBox(height: 20,),
             TextFormField(
+              initialValue: user.phone,
               decoration: CustomInput.formInputDecoration(
                 hint: 'User Phone', 
                 label: 'Phone', 
@@ -113,6 +131,7 @@ class _UserViewForm extends StatelessWidget {
             ),
             const SizedBox(height: 20,),
             TextFormField(
+              initialValue: user.correo,
               decoration: CustomInput.formInputDecoration(
                 hint: 'User Email', 
                 label: 'Email', 
@@ -120,6 +139,7 @@ class _UserViewForm extends StatelessWidget {
             ),
             const SizedBox(height: 20,),
             TextFormField(
+              initialValue: user.zone,
               decoration: CustomInput.formInputDecoration(
                 hint: 'User Zone', 
                 label: 'Zone', 
@@ -128,17 +148,20 @@ class _UserViewForm extends StatelessWidget {
             const SizedBox(height: 20,),
             
             ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 100),
+              constraints: const BoxConstraints(maxWidth: 200),
               child: ElevatedButton(
                 onPressed: (){}, 
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(Colors.indigo),
-                  shadowColor: WidgetStateProperty.all(Colors.transparent)
+                  shadowColor: WidgetStateProperty.all(Colors.transparent),
+                  padding: WidgetStateProperty.all(EdgeInsets.symmetric(vertical: 20, horizontal: 30)),
                 ),
                 child: const Row (
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.save, color: Colors.white, size: 20,),
-                    Text(' Save', style: TextStyle(color: Colors.white, fontSize: 13),)
+                    Text('  Save', style: TextStyle(color: Colors.white, fontSize: 20),)
                   ],)
                       ),
             )],
