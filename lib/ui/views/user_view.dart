@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'package:email_validator/email_validator.dart';
@@ -7,6 +8,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:web_dashboard/models/usuario.dart';
 import 'package:web_dashboard/providers/user_form_provider.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/inputs/custom_inputs.dart';
 
@@ -58,7 +60,22 @@ class UserViewState extends State<UserView> {
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          Text('User View', style: CustomLabels.h1 ),
+          const SizedBox( height: 10 ),
+          Row(
+            children: [
+            IconButton(
+              color: Colors.black,
+              onPressed: (){
+                NavigationService.replaceTo('/dashboard/users');
+              }, 
+              icon:const Icon(Icons.arrow_back_rounded)),
+              Expanded
+              (child: Text('Update User', style: CustomLabels.h1, textAlign: TextAlign.center, ),)
+            
+            ],
+          ),
+          const SizedBox( height: 10 ),
+
 
           const SizedBox( height: 10 ),
 
@@ -118,7 +135,7 @@ class _UserViewForm extends StatelessWidget {
     final user = userFormProvider.user!;
 
     return WhiteCard(
-      title: 'Información general',
+      title: 'General Information',
       child: Form(
         key: userFormProvider.formKey,
         autovalidateMode: AutovalidateMode.always,
@@ -128,9 +145,9 @@ class _UserViewForm extends StatelessWidget {
             TextFormField(
               initialValue: user.nombre,
               decoration: CustomInput.formInputDecoration(
-                hint: 'Nombre del usuario', 
-                label: 'Nombre', 
-                icon: Icons.supervised_user_circle_outlined
+                hint: 'User Name', 
+                label: 'Name', 
+                icon: Icons.person_pin_rounded
               ),
               onChanged: ( value )=> userFormProvider.copyUserWith( nombre: value ),
               validator: ( value ) {
@@ -145,8 +162,8 @@ class _UserViewForm extends StatelessWidget {
             TextFormField(
               initialValue: user.correo,
               decoration: CustomInput.formInputDecoration(
-                hint: 'Correo del usuario', 
-                label: 'Correo', 
+                hint: 'User Email', 
+                label: 'Email', 
                 icon: Icons.mark_email_read_outlined
               ),
               onChanged: ( value )=> userFormProvider.copyUserWith( correo: value ),
@@ -156,11 +173,42 @@ class _UserViewForm extends StatelessWidget {
                 return null;
               },
             ),
+            const SizedBox( height: 20 ),
 
+            TextFormField(
+              initialValue: user.phone,
+              decoration: CustomInput.formInputDecoration(
+                hint: 'Phone', 
+                label: 'Phone Number', 
+                icon: Icons.phone_android_rounded
+              ),
+              onChanged: ( value )=> userFormProvider.copyUserWith( phone: value ),
+              validator: ( value ) {
+                if ( value == null || value.isEmpty ) return 'Invalid Phone Number';
+                if ( value.length < 2 ) return 'Mimimun 9 Charactes';
+                return null;
+              },
+            ),
+            const SizedBox( height: 20 ),
+
+            TextFormField(
+              initialValue: user.zone,
+              decoration: CustomInput.formInputDecoration(
+                hint: 'Zone', 
+                label: 'Zone', 
+                icon: Icons.map
+              ),
+              onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
+              validator: ( value ) {
+                if ( value == null || value.isEmpty ) return 'Invalid Register';
+                if ( value.length < 2 ) return 'Mimimun 3 Charactes';
+                return null;
+              },
+            ),
             const SizedBox( height: 20 ),
 
             ConstrainedBox(
-              constraints: const BoxConstraints( maxWidth: 100 ),
+              constraints: const BoxConstraints( maxWidth: 120),
               child: ElevatedButton(
                 onPressed: () {
 
@@ -170,10 +218,11 @@ class _UserViewForm extends StatelessWidget {
                   backgroundColor: WidgetStateProperty.all( Colors.indigo ),
                   shadowColor: WidgetStateProperty.all( Colors.transparent ),
                 ),
-                child: const Row(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon( Icons.save_outlined, size: 20 ),
-                    Text('  Guardar')
+                    const Icon( Icons.save_outlined, size: 20,color: Colors.white, ),
+                    Flexible(child: Text(' Save ', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16),))
                   ],
                 )
               ),
@@ -216,7 +265,7 @@ class _AvatarContainer extends StatelessWidget {
                   
                   const ClipOval(
                     child: Image(
-                      image: AssetImage('no-image.jpg'),
+                      image: AssetImage('noimage.jpeg'),
                     ),
                   ),
 
@@ -233,7 +282,7 @@ class _AvatarContainer extends StatelessWidget {
                       child: FloatingActionButton(
                         backgroundColor: Colors.indigo,
                         elevation: 0,
-                        child: const  Icon( Icons.camera_alt_outlined, size: 20,),
+                        child: const  Icon( Icons.camera_alt_outlined, size: 20,color: Colors.white,),
                         onPressed: () {
                           // TODO: Seleccionar la imagen
                         },

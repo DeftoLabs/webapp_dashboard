@@ -26,7 +26,7 @@ class WhiteCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
+          const SizedBox(height: 20),
           if( title !=null)
         ... [ FittedBox(
             fit: BoxFit.contain,
