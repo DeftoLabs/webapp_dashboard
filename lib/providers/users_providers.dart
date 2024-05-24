@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/user_response.dart';
-import 'package:web_dashboard/models/usuaro.dart';
+import 'package:web_dashboard/models/usuario.dart';
 
 
 

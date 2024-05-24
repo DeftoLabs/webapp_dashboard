@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:web_dashboard/models/usuaro.dart';
+import 'package:web_dashboard/models/usuario.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
 

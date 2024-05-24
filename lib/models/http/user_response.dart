@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:web_dashboard/models/usuaro.dart';
+import 'package:web_dashboard/models/usuario.dart';
 
 class UsersResponse {
     int total;

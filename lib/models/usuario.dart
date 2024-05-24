@@ -1,15 +1,15 @@
 
 
 class Usuario {
-    final String rol;
-    final bool estado;
-    final bool google;
-    final String nombre;
-    final String correo;
-    final String uid;
-    final String? img;
-    final String? phone;
-    final String? zone;
+    String rol;
+    bool estado;
+    bool google;
+    String nombre;
+    String correo;
+    String uid;
+    String? img;
+    String? phone;
+    String? zone;
 
     Usuario({
         required this.rol,

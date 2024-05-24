@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import '../usuaro.dart';
+import '../usuario.dart';
 
 AuthResponse authResponseFromJson(String str) => AuthResponse.fromJson(json.decode(str));
 
