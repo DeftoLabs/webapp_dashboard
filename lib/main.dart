@@ -5,11 +5,7 @@ import 'package:web_dashboard/api/cafeapi.dart';
 
 import 'package:web_dashboard/router/router.dart';
 
-import 'package:web_dashboard/providers/auth_provider.dart';
-import 'package:web_dashboard/providers/sidemenu_provider.dart';
-import 'package:web_dashboard/providers/categories_provider.dart';
-import 'package:web_dashboard/providers/users_providers.dart';
-import 'package:web_dashboard/providers/user_form_provider.dart';
+import 'providers/providers.dart';
 
 import 'package:web_dashboard/services/local_storage.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -18,6 +14,8 @@ import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/layouts/auth/auth_layout.dart';
 import 'package:web_dashboard/ui/layouts/dashboard/dashboard_layout.dart';
 import 'package:web_dashboard/ui/layouts/splash/splash_layout.dart';
+
+
 
 void main () async {
 
