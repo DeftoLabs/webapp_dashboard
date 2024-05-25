@@ -16,12 +16,16 @@ class UserDatasource extends DataTableSource {
 
     final Usuario user = users[index];
 
-    const image = Image( image: AssetImage('noimage.jpeg'), width: 35, height: 35,);
+    final image = (user.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35,) 
+    : FadeInImage.assetNetwork(
+      placeholder: 'load.gif', 
+      image: user.img!, width: 35, height: 35,);
 
     return DataRow.byIndex(
       index: index,
       cells: [
-          const DataCell(
+          DataCell(
             ClipOval (child: image,)
            ),
           DataCell(Text( user.nombre)),

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/usuario.dart';
@@ -53,8 +55,20 @@ Future updateUser () async {
   } catch (e) {
     return 'Update Error';
   }
+}
 
+Future<Usuario> uploadImage (String path, Uint8List bytes) async {
 
+try {
+  final resp = await CafeApi.uploadFile(path, bytes);
+  user = Usuario.fromMap(resp);
+  notifyListeners();
+
+  return user!;
+  
+} catch (e) {
+  throw 'Error User Img Profile Provider';
+}
 }
 
 }

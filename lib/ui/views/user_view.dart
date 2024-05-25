@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -262,6 +263,12 @@ class _AvatarContainer extends StatelessWidget {
     final userFormProvider = Provider.of<UserFormProvider>(context);
     final user = userFormProvider.user!;
 
+    final image = (user.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg')) 
+    : FadeInImage.assetNetwork(
+      placeholder: 'load.gif', 
+      image: user.img!);
+
     return WhiteCard(
       width: 250,
       child: SizedBox(
@@ -279,10 +286,8 @@ class _AvatarContainer extends StatelessWidget {
               child: Stack(
                 children: [
                   
-                  const ClipOval(
-                    child: Image(
-                      image: AssetImage('noimage.jpeg'),
-                    ),
+                  ClipOval(
+                    child: image,
                   ),
 
                   Positioned(
@@ -299,8 +304,22 @@ class _AvatarContainer extends StatelessWidget {
                         backgroundColor: Colors.indigo,
                         elevation: 0,
                         child: const  Icon( Icons.camera_alt_outlined, size: 20,color: Colors.white,),
-                        onPressed: () {
-                          // TODO: Seleccionar la imagen
+                        onPressed: () async  {
+                         FilePickerResult? result = await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: ['jpg', 'jpeg', 'png'],
+                          allowMultiple: false,
+                         );
+
+                          if (result != null) {
+                            NotificationService.showBusyIndicator(context);
+                            final newUser = await userFormProvider.uploadImage('/uploads/usuarios/${user.uid}', result.files.first.bytes!);
+                            Provider.of<UsersProvider>(context, listen: false).refreshUser(newUser);                
+                            Navigator.of(context).pop();
+                          } else {
+                            
+                            // User canceled the picker
+}
                         },
                       ),
                     ),
