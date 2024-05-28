@@ -13,6 +13,7 @@ class CafeApi {
 
     // URL Base
     _dio.options.baseUrl = 'http://localhost:8080/api';
+    // _dio.options.baseUrl = 'https://test-webapp-lake.vercel.app/api';
 
     // Header Config
     _dio.options.headers = {
