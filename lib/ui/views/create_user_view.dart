@@ -18,20 +18,20 @@ import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 
 
-class UserView extends StatefulWidget {
+class CreateUserView extends StatefulWidget {
 
   final String uid;
 
-  const UserView({
+  const CreateUserView({
     Key? key, 
     required this.uid
   }) : super(key: key);
 
   @override
-  UserViewState createState() => UserViewState();
+  CreateUserViewState createState() => CreateUserViewState();
 }
 
-class UserViewState extends State<UserView> {
+class CreateUserViewState extends State<CreateUserView> {
 
   Usuario? user;
 
@@ -81,7 +81,7 @@ class UserViewState extends State<UserView> {
               }, 
               icon:const Icon(Icons.arrow_back_rounded)),
               Expanded
-              (child: Text('Update User', style: CustomLabels.h1, textAlign: TextAlign.center, ),)
+              (child: Text('Create User', style: CustomLabels.h1, textAlign: TextAlign.center, ),)
             
             ],
           ),
@@ -112,7 +112,7 @@ class _UserViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Table(
         columnWidths: const {
           0: FixedColumnWidth(250)
@@ -193,12 +193,12 @@ class _UserViewForm extends StatelessWidget {
                 label: 'Phone Number', 
                 icon: Icons.phone_android_rounded
               ),
-              onChanged: ( value )=> userFormProvider.copyUserWith( phone: value ),
-              validator: ( value ) {
-                if ( value == null || value.isEmpty ) return 'Invalid Phone Number';
-                if ( value.length < 8 ) return 'Mimimun 9 Charactes';
-                return null;
-              },
+           //   onChanged: ( value )=> userFormProvider.copyUserWith( phone: value ),
+           //   validator: ( value ) {
+           //     if ( value == null || value.isEmpty ) return 'Invalid Phone Number';
+           //     if ( value.length < 2 ) return 'Mimimun 9 Charactes';
+           //     return null;
+           //   },
             ),
             const SizedBox( height: 20 ),
 
@@ -208,39 +208,6 @@ class _UserViewForm extends StatelessWidget {
                 hint: 'Zone', 
                 label: 'Zone', 
                 icon: Icons.map
-              ),
-              onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
-              validator: ( value ) {
-                if ( value == null || value.isEmpty ) return 'Invalid Register';
-                if ( value.length < 2 ) return 'Mimimun 2 Charactes';
-                return null;
-              },
-             ),
-            const SizedBox( height: 20 ),
-
-            TextFormField(
-              initialValue: user.rol,
-              decoration: CustomInput.formInputDecoration(
-                hint: 'Rol', 
-                label: 'Rol', 
-                icon: Icons.add_moderator_outlined
-              ),
-           //   onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
-           //   validator: ( value ) {
-           //     if ( value == null || value.isEmpty ) return 'Invalid Register';
-           //     if ( value.length < 2 ) return 'Mimimun 3 Charactes';
-           //     return null;
-           //   },
-             ),
-            const SizedBox( height: 20 ),
-
-
-            TextFormField(
-              initialValue: user.zone,
-              decoration: CustomInput.formInputDecoration(
-                hint: 'Status', 
-                label: 'Status', 
-                icon: Icons.announcement_outlined
               ),
            //   onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
            //   validator: ( value ) {

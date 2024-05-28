@@ -8,8 +8,8 @@ class Usuario {
     String correo;
     String uid;
     String? img;
-    String? phone;
-    String? zone;
+    String phone;
+    String zone;
 
     Usuario({
         required this.rol,
@@ -19,8 +19,8 @@ class Usuario {
         required this.correo,
         required this.uid,
         this.img,
-        this.phone = '',
-        this.zone = '',
+        required this.phone,
+        required this.zone,
     });
 
     factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
@@ -31,6 +31,10 @@ class Usuario {
         correo: json["correo"],
         uid: json["uid"],
         img: json["img"],
+        phone: json ["phone"] ?? '',
+        zone: json ["zone"] ?? '',
+
+
     );
 
     Map<String, dynamic> toMap() => {
@@ -41,5 +45,8 @@ class Usuario {
         "correo": correo,
         "uid": uid,
         "img": img,
+        "phone": phone,
+        "zone": zone,
+
     };
 }

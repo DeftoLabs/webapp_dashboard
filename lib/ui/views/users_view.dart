@@ -54,7 +54,7 @@ class UsersView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.amber[100],
+                  color: Colors.amber[200],
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
@@ -68,7 +68,7 @@ class UsersView extends StatelessWidget {
                     child: Center(child: Text(value)),
                   );
                               }).toList(),
-                  dropdownColor: Colors.amber[100],
+                  dropdownColor: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                               ),
                 ),
@@ -96,11 +96,14 @@ class UsersView extends StatelessWidget {
                 userProvider.sort((user) => user.correo);
               }),
 
-              const DataColumn(label: Text('Phone')),
+              DataColumn(label: const Text('Phone'), onSort: (colIndex, _) {
+                userProvider.sortColumnIndex = colIndex;
+                userProvider.sort((user) => user.phone);
+              }),
 
               DataColumn(label: const Text('Zone'), onSort: (colIndex, _) {
                 userProvider.sortColumnIndex = colIndex;
-                userProvider.sort((user) => user.zone!);
+                userProvider.sort((user) => user.zone);
               }),
 
               DataColumn(label: const Text('Rol'), onSort: (colIndex, _) {

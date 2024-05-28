@@ -30,8 +30,8 @@ class UserDatasource extends DataTableSource {
            ),
           DataCell(Text( user.nombre)),
           DataCell(Text( user.correo)),
-          DataCell(Text( user.phone!)),
-          DataCell(Text( user.zone!)),
+          DataCell(Text( user.phone)),
+          DataCell(Text( user.zone)),
           DataCell(Text(
             user.rol == 'USER_ROLE' ? 'Sales Rep' : user.rol == 'ADMIN_ROLE' ? 'Admin' : user.rol)),
           DataCell(

@@ -48,6 +48,9 @@ Future updateUser () async {
   final data = {
     'nombre': user!.nombre,
     'correo': user!.correo,
+    'phone': user!.phone,
+    'zone': user!.zone,
+    
   };
   try {
     final resp = await CafeApi.put('/usuarios/${user!.uid}', data);
