@@ -50,6 +50,8 @@ Future updateUser () async {
     'correo': user!.correo,
     'phone': user!.phone,
     'zone': user!.zone,
+    'estado': user!.estado,
+    'rol': user!.rol,
     
   };
   try {

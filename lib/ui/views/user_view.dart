@@ -262,15 +262,20 @@ class StatusUserView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final userFormProvider = Provider.of<UserFormProvider>(context);
+
     return Column(
       children: [
-
         SwitchListTile(
-          title: Text('Status', style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),),
+          title: Text(
+            'Status', 
+            style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),),
           subtitle: Text(  user.estado ? 'Active' : 'Inactive'),
           value: user.estado, 
          onChanged: (value) {
-        
+            userFormProvider.copyUserWith(estado: value);
+
           }
         
           ),
