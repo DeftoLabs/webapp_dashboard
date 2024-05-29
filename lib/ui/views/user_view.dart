@@ -24,7 +24,7 @@ class UserView extends StatefulWidget {
 
   const UserView({
     Key? key, 
-    required this.uid
+    required this.uid,
   }) : super(key: key);
 
   @override
@@ -41,6 +41,7 @@ class UserViewState extends State<UserView> {
     super.initState();
     final usersProvider    = Provider.of<UsersProvider>(context, listen: false);
     final userFormProvider = Provider.of<UserFormProvider>(context, listen: false);
+
 
     usersProvider.getUserById(widget.uid)
       .then((userDB) {
@@ -88,8 +89,6 @@ class UserViewState extends State<UserView> {
           const SizedBox( height: 10 ),
 
 
-          const SizedBox( height: 10 ),
-
           if( user == null ) 
             WhiteCard(
               child: Container(
@@ -112,7 +111,7 @@ class _UserViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Table(
         columnWidths: const {
           0: FixedColumnWidth(250)
@@ -126,6 +125,7 @@ class _UserViewBody extends StatelessWidget {
 
               // Formulario de actualización
               const  _UserViewForm(),
+
             ]
           )
         ],
@@ -216,40 +216,7 @@ class _UserViewForm extends StatelessWidget {
                 return null;
               },
              ),
-            const SizedBox( height: 20 ),
-
-            TextFormField(
-              initialValue: user.rol,
-              decoration: CustomInput.formInputDecoration(
-                hint: 'Rol', 
-                label: 'Rol', 
-                icon: Icons.add_moderator_outlined
-              ),
-           //   onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
-           //   validator: ( value ) {
-           //     if ( value == null || value.isEmpty ) return 'Invalid Register';
-           //     if ( value.length < 2 ) return 'Mimimun 3 Charactes';
-           //     return null;
-           //   },
-             ),
-            const SizedBox( height: 20 ),
-
-
-            TextFormField(
-              initialValue: user.zone,
-              decoration: CustomInput.formInputDecoration(
-                hint: 'Status', 
-                label: 'Status', 
-                icon: Icons.announcement_outlined
-              ),
-           //   onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
-           //   validator: ( value ) {
-           //     if ( value == null || value.isEmpty ) return 'Invalid Register';
-           //     if ( value.length < 2 ) return 'Mimimun 3 Charactes';
-           //     return null;
-           //   },
-             ),
-            const SizedBox( height: 20 ),
+            const SizedBox( height: 48 ),
 
             ConstrainedBox(
               constraints: const BoxConstraints( maxWidth: 120),
@@ -281,6 +248,33 @@ class _UserViewForm extends StatelessWidget {
           ],
         ),
       )
+    );
+  }
+}
+
+class StatusUserView extends StatelessWidget {
+  const StatusUserView({
+    super.key,
+    required this.user,
+  });
+
+  final Usuario user;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+
+        SwitchListTile(
+          title: Text('Status', style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),),
+          subtitle: Text(  user.estado ? 'Active' : 'Inactive'),
+          value: user.estado, 
+         onChanged: (value) {
+        
+          }
+        
+          ),
+      ],
     );
   }
 }
@@ -368,7 +362,20 @@ class _AvatarContainer extends StatelessWidget {
               user.nombre,
               style: const TextStyle( fontWeight: FontWeight.bold ),
               textAlign: TextAlign.center,
-            )
+            ),
+            const SizedBox( height: 20 ),
+            Text(user.rol == 'USER_ROLE' ? 'SALES REP' 
+            : user.rol == 'ADMIN_ROLE' ? 'ADMIN' 
+            : user.rol == 'MASTER_ROL' ? 'MANAGER' : user.rol,),
+
+            const SizedBox( height: 20 ),
+
+            const Divider(),
+
+            StatusUserView(user: user),
+
+            const SizedBox( height: 20 ),
+
           ],
         ),
       )

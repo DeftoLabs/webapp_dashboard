@@ -33,7 +33,9 @@ class UserDatasource extends DataTableSource {
           DataCell(Text( user.phone)),
           DataCell(Text( user.zone)),
           DataCell(Text(
-            user.rol == 'USER_ROLE' ? 'Sales Rep' : user.rol == 'ADMIN_ROLE' ? 'Admin' : user.rol)),
+              user.rol == 'USER_ROLE' ? 'SALES REP' 
+            : user.rol == 'ADMIN_ROLE' ? 'ADMIN' 
+            : user.rol == 'MASTER_ROL' ? 'MANAGER' : user.rol)),
           DataCell(
             IconButton(icon: const Icon(Icons.edit_outlined),
             onPressed: (){
