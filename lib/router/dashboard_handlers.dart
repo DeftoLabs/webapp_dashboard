@@ -8,9 +8,11 @@ import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/ui/views/categories_view.dart';
 
 import 'package:web_dashboard/ui/views/dashboard_view.dart';
+import 'package:web_dashboard/ui/views/inactive_user_view.dart';
 import 'package:web_dashboard/ui/views/login_view.dart';
 import 'package:web_dashboard/ui/views/marketing_view.dart';
 import 'package:web_dashboard/ui/views/message_view.dart';
+import 'package:web_dashboard/ui/views/settings_view.dart';
 import 'package:web_dashboard/ui/views/user_view.dart';
 import 'package:web_dashboard/ui/views/users_view.dart';
 
@@ -90,9 +92,34 @@ class DashboardHandlers {
       } else {
           return const UsersView();
       } return const LoginView();
-
-
     }
   ); 
+
+
+
+
+  // Configuration
+
+    static Handler settings = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.settingsRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const SettingsView();
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler inactiveUser = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.inactiveUserRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const InactiveUserView();
+      } return const LoginView();
+
+    }
+  );
 }
 

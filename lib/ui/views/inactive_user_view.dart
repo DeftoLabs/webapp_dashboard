@@ -8,8 +8,8 @@ import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 
-class UsersView extends StatelessWidget {
-  const UsersView({super.key});
+class InactiveUserView extends StatelessWidget {
+  const InactiveUserView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class UsersView extends StatelessWidget {
               const SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
-                child: Text('Users View', style: CustomLabels.h1,),
+                child: Text('Inactive User', style: CustomLabels.h1,),
               ),
               const Spacer(),
               Padding(

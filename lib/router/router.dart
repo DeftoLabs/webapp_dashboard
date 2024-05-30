@@ -24,6 +24,10 @@ class Flurorouter {
 
   static String userRoute    = '/dashboard/users/:uid';
 
+
+  static String settingsRoute         = '/dashboard/settings';
+  static String inactiveUserRoute     = '/dashboard/settings/inactiveuser';
+
   static void configureRoutes () {
     // Auth Routes
     router.define (rootRoute, handler:      AdminHandlers.login   , transitionType: TransitionType.none);
@@ -41,8 +45,15 @@ class Flurorouter {
     router.define (marketingRoute, handler:   DashboardHandlers.marketing,  transitionType: TransitionType.fadeIn);
     router.define (messageRoute, handler:     DashboardHandlers.message,    transitionType: TransitionType.fadeIn);
 
-    // USER 
-    router.define (userRoute, handler:     DashboardHandlers.user,    transitionType: TransitionType.fadeIn);
+    // ELEMENTS 
+    router.define (userRoute, handler:        DashboardHandlers.user,    transitionType: TransitionType.fadeIn);
+
+
+
+    // CONFIGURATION
+    router.define (settingsRoute, handler:     DashboardHandlers.settings,      transitionType: TransitionType.fadeIn);
+    router.define (inactiveUserRoute, handler: DashboardHandlers.inactiveUser,  transitionType: TransitionType.fadeIn);
+
 
     // 404
     router.notFoundHandler = NoPageFoundHandlers.noPageFound;

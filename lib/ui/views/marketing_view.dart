@@ -45,6 +45,21 @@ class MarketingView extends StatelessWidget {
               width: 170,
               child: Center(child: Icon(Icons.local_offer)),
               ),
+                            WhiteCard(
+              title: 'Eventos',
+              width: 170,
+              child: Center(child: Icon(Icons.event_rounded)),
+              ),
+              WhiteCard(
+              title: 'Promociones',
+              width: 170,
+              child: Center(child: Icon(Icons.local_offer)),
+              ),
+              WhiteCard(
+              title: 'Promociones',
+              width: 170,
+              child: Center(child: Icon(Icons.local_offer)),
+              ),
           ],
          )
         ],

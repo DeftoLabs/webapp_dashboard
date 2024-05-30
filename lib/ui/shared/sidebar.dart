@@ -84,7 +84,12 @@ class Sidebar extends StatelessWidget {
         const SizedBox(height: 50),
 
         const TextSeparator(text: 'Configuration'),
-        MenuItem(text: 'Settings', icon: Icons.settings_applications_outlined, onPressed: (){}),
+        MenuItem(text: 'Settings', 
+        icon: Icons.settings_applications_outlined, 
+        onPressed: ()=> navigateTo(Flurorouter.settingsRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.settingsRoute,),
+
+
         MenuItem(text: 'Logout',
         icon: Icons.logout_outlined,
         onPressed: (){

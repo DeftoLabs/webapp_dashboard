@@ -7,6 +7,7 @@ import 'package:email_validator/email_validator.dart';
 
 
 import 'package:web_dashboard/models/usuario.dart';
+import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/user_form_provider.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -253,6 +254,7 @@ class _UserViewForm extends StatelessWidget {
 }
 
 class StatusUserView extends StatelessWidget {
+
   const StatusUserView({
     super.key,
     required this.user,
@@ -264,23 +266,27 @@ class StatusUserView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final userFormProvider = Provider.of<UserFormProvider>(context);
-
-    return Column(
+    final currentUserId = Provider.of<AuthProvider>(context).user;
+    
+    if(user.rol == 'MASTER_ROL' || user.uid == currentUserId?.uid ) {
+      return const SizedBox(height: 64);
+    } else {
+      return Column(
       children: [
         SwitchListTile(
           title: Text(
-            'Status', 
+            'Status ', 
             style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),),
           subtitle: Text(  user.estado ? 'Active' : 'Inactive'),
           value: user.estado, 
          onChanged: (value) {
             userFormProvider.copyUserWith(estado: value);
-
           }
-        
           ),
       ],
     );
+    }
+
   }
 }
 
