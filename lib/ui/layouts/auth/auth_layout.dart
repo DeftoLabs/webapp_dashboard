@@ -54,18 +54,20 @@ class _MobileBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 200,
+          width: double.infinity,
+          child: BackgroundImage()),
           const CustomTitle(),
           SizedBox(
             width: double.infinity,
             height: 420,
             child: child
           ),
-          const SizedBox(
-            width: double.infinity,
-            height: 400,
-            child: BackgroundImage(),
-          ),
+        //  const SizedBox(
+        //    width: double.infinity,
+        //    height: 400,
+        //    child: BackgroundImage(),
+        //  ),
         ],
       )
     );
@@ -87,7 +89,7 @@ class _DesktopBody extends StatelessWidget {
     return Container(
       width: size.width,
       height: size.height * 0.95,
-      color: Colors.pink[300],
+      color: const Color.fromRGBO(215, 255, 148, 0),
       child: Row(
         children: [
 

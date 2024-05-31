@@ -12,7 +12,7 @@ class LinksBar extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      color: Colors.pink[300],
+      color: const Color.fromRGBO(215, 255, 148, 50),
       height: (size.width > 1000) ? size.height * 0.07 : null,
       child: Wrap(
         alignment: WrapAlignment.center,

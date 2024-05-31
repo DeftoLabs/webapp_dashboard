@@ -16,7 +16,9 @@ class InactiveUserView extends StatelessWidget {
 
     final userProvider = Provider.of<UsersProvider>(context);
 
-    final userDataSource = UserDatasource( userProvider.users);
+    final inactiveUsers = userProvider.users.where((user) => user.estado == false).toList();
+
+    final userDataSource = UserDatasource(inactiveUsers);
 
 
     return Container(
@@ -32,39 +34,16 @@ class InactiveUserView extends StatelessWidget {
                 child: Text('Inactive User', style: CustomLabels.h1,),
               ),
               const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.indigo[500],
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    onPressed: (){}, 
-                    icon: const Icon(Icons.person_add_alt_1, color: Colors.white,)),
-                ),
-              ),
-              const SizedBox(width: 10,),
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child:              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.amber[200],
-                ),
-              ),
-              )
-
-            ],
+            ]
           ),
 
           const SizedBox(height: 10),
+        
 
           PaginatedDataTable(
             sortAscending: userProvider.ascending,
             sortColumnIndex: userProvider.sortColumnIndex,
-            columns: [
+            columns:[
               const DataColumn(label: Text('Avatar')),
 
               DataColumn(label:const Text('Name'), onSort: (colIndex, _) {

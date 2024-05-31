@@ -5,7 +5,7 @@ import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/cards/rectangular_card.dart';
 
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
-import 'package:web_dashboard/ui/views/inactive_user_view.dart';
+
 
 
 class SettingsView extends StatelessWidget {

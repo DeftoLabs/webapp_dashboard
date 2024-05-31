@@ -13,18 +13,14 @@ class CustomTitle extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset('logo.png',
-          width: 50,
-          height: 50,
-          ),
-
-          const SizedBox(height: 20),
+  
+          const SizedBox(height: 50),
 
           FittedBox(
             fit: BoxFit.contain,
-            child: Text('Wave Soft',
+            child: Text('Fuel your Sales !!',
             style: GoogleFonts.plusJakartaSans(
-              fontSize: 60,
+              fontSize: 40,
               fontWeight: FontWeight.bold,
               color: Colors.white,
              )),

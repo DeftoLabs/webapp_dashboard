@@ -16,7 +16,9 @@ class UsersView extends StatelessWidget {
 
     final userProvider = Provider.of<UsersProvider>(context);
 
-    final userDataSource = UserDatasource( userProvider.users);
+    final activeUsers = userProvider.users.where((user) => user.estado).toList();
+
+    final userDataSource = UserDatasource( activeUsers );
 
 
     return Container(
@@ -45,17 +47,6 @@ class UsersView extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10,),
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child:              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.amber[200],
-                ),
-              ),
-              )
-
             ],
           ),
 
