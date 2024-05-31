@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/ui/shared/widget/navbar_avatar.dart';
 import 'package:web_dashboard/ui/shared/widget/notifications_indicator.dart';
@@ -14,7 +15,7 @@ class Navbar extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: 50,
+      height: 60,
       decoration: buildBoxDecoration(),
       child: Row(
         children: [
@@ -47,7 +48,7 @@ class Navbar extends StatelessWidget {
   }
 
   BoxDecoration buildBoxDecoration() => const BoxDecoration(
-    color:  Color.fromARGB(255, 50, 100, 199),
+    color:  Color.fromRGBO(215, 255, 148, 50),
      boxShadow: [
       BoxShadow(
         color: Colors.black38,

@@ -37,8 +37,8 @@ class UsersView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 20),
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.indigo[500],
+                  decoration: const BoxDecoration(
+                    color:  Color.fromRGBO(40, 41, 38, 0.808),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
