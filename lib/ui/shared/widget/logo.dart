@@ -1,7 +1,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Logo extends StatelessWidget {
   const Logo({super.key});
@@ -13,15 +12,12 @@ class Logo extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon (Icons.bubble_chart_outlined, color: Color(0xff7A6BF5),),
-          const SizedBox(width: 10,),
-          Text('Admin',
-          style: GoogleFonts.plusJakartaSans(
-            fontSize: 20,
-            color: Colors.white,
-           )
-          )
-
+          SizedBox(
+            width: 150,
+            height: 150,
+            child: Image.asset('bozzwhite.png',
+            fit: BoxFit.contain,
+            ),),
         ],
       ),
     );

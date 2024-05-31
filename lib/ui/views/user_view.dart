@@ -12,6 +12,7 @@ import 'package:web_dashboard/providers/user_form_provider.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
+import 'package:web_dashboard/ui/buttons/custom_outlined_buttom_register.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/inputs/custom_inputs.dart';
 
@@ -219,35 +220,24 @@ class _UserViewForm extends StatelessWidget {
              ),
             const SizedBox( height: 48 ),
 
-            ConstrainedBox(
-              constraints: const BoxConstraints( maxWidth: 120),
-              child: ElevatedButton(
-                onPressed: () async {
-                  final saved = await userFormProvider.updateUser();
-                  if( saved) {
-                    NotificationService.showSnackBa('User Updated');
-                    Provider.of<UsersProvider>(context, listen: false).refreshUser(user);
-                  } else {
-                    NotificationService.showSnackBarError('Error try to Update the User');
-                  }
-
-                }, 
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all( Colors.indigo ),
-                  shadowColor: WidgetStateProperty.all( Colors.transparent ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon( Icons.save_outlined, size: 20,color: Colors.white, ),
-                    Flexible(child: Text(' Save ', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16),))
-                  ],
-                )
-              ),
-            )
+            CustomOutlineButtomRegister(
+              onPressed: () async {
+                final saved = await userFormProvider.updateUser();
+                if( saved) {
+                  NotificationService.showSnackBa('User Updated');
+                  Provider.of<UsersProvider>(context, listen: false).refreshUser(user);
+                } else {
+                  NotificationService.showSnackBarError('Error try to Update the User');
+                }
+            
+              }, 
+              text: 'Save',
+            ),
+            const SizedBox(height: 40,)
 
           ],
         ),
+  
       )
     );
   }

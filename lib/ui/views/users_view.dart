@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:web_dashboard/datatables/users_datasource.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 
@@ -42,7 +43,9 @@ class UsersView extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                    onPressed: (){}, 
+                    onPressed: (){
+                      NavigationService.replaceTo('dashboard/users/newuser');
+                    }, 
                     icon: const Icon(Icons.person_add_alt_1, color: Colors.white,)),
                 ),
               ),

@@ -16,7 +16,7 @@ class InactiveUserView extends StatelessWidget {
 
     final userProvider = Provider.of<UsersProvider>(context);
 
-    final inactiveUsers = userProvider.users.where((user) => user.estado == false).toList();
+    final inactiveUsers = userProvider.users.where((user) => !user.estado).toList();
 
     final userDataSource = UserDatasource(inactiveUsers);
 

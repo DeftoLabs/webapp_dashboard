@@ -9,7 +9,7 @@ class NavbarAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     
-    final currentUser = Provider.of<AuthProvider>(context, listen: false).user;
+    final currentUser = Provider.of<AuthProvider>(context).user;
 
     return ClipOval(
       child: SizedBox(

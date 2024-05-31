@@ -36,7 +36,7 @@ class _LinkTextState extends State<LinkText> {
             widget.text,
             style: GoogleFonts.plusJakartaSans(
               fontSize: 16,
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: const Color.fromARGB(255, 0, 0, 0),
               decoration: isHover ? TextDecoration.underline : TextDecoration.none,
             ),
           )

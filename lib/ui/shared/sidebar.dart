@@ -34,9 +34,9 @@ class Sidebar extends StatelessWidget {
 
         const Logo(),
 
-         const SizedBox(height: 50),
+         const SizedBox(height: 10),
 
-         const TextSeparator (text:'main'),
+         const TextSeparator (text:'Main'),
 
          MenuItem(
           isActive: sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
