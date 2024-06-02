@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/auth_response.dart';
@@ -64,7 +66,7 @@ class AuthProvider extends ChangeNotifier {
 
         authStatus = AuthStatus.authenticated;
         LocalStorage.prefs.setString('token', authResponse.token );
-        NavigationService.replaceTo(Flurorouter.dashboardRoute);
+        NavigationService.replaceTo(Flurorouter.dashboardRoute );
         CafeApi.configureDio();
         notifyListeners();
 
@@ -73,6 +75,25 @@ class AuthProvider extends ChangeNotifier {
       });
 
 
+  }
+
+  void newUserRegister (String email, String password, String name){
+
+    final data ={
+      'nombre': name,
+      'correo': email,
+      'password': password, 
+    };
+
+      CafeApi.post('/usuarios', data).then((json) {
+
+        NotificationService.showSnackBa('User Created Successfully');
+        NavigationService.replaceTo(Flurorouter.usersRoute );
+        CafeApi.configureDio();
+        notifyListeners();
+      }).catchError((e) {
+        NotificationService.showSnackBarError('User Not Valid');
+      }) ;
   }
 
     Future<bool> isAuthenticated () async {

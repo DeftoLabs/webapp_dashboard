@@ -141,11 +141,14 @@ class _UserViewForm extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  
+
   @override
   Widget build(BuildContext context) {
 
     final userFormProvider = Provider.of<UserFormProvider>(context);
     final user = userFormProvider.user!;
+    
 
     return WhiteCard(
       title: 'General Information',

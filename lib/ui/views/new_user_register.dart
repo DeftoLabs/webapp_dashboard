@@ -1,22 +1,20 @@
-import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/providers/user_form_provider.dart';
-import 'package:web_dashboard/providers/users_providers.dart';
 
-import 'package:web_dashboard/router/router.dart';
+
+
 
 import 'package:email_validator/email_validator.dart';
 
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/register_form_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
-import 'package:web_dashboard/services/notification_services.dart';
 
 
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom_register.dart';
-import 'package:web_dashboard/ui/buttons/link_text.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
+import 'package:web_dashboard/ui/cards/white_card_new_user.dart';
 import 'package:web_dashboard/ui/inputs/custom_Imput_register_user.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
@@ -96,7 +94,6 @@ class _NewUserViewBody extends StatelessWidget {
 
 class _UserFormView extends StatelessWidget {
   const _UserFormView({
-    super.key,
     required this.registerFormProvider,
   });
 
@@ -104,7 +101,7 @@ class _UserFormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WhiteCard(
+    return WhiteCardNewUser(
       title: 'General Information',
           child: Form(
             key: registerFormProvider.formKey,
@@ -191,13 +188,13 @@ class _UserFormView extends StatelessWidget {
 
           
                CustomOutlineButtomRegister(
-                onPressed: (){
+                onPressed: () {
           
                   final validForm = registerFormProvider.validateForm();
                   if(!validForm) return;
           
                   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-                  authProvider.register(
+                  authProvider.newUserRegister(
                     registerFormProvider.email, 
                     registerFormProvider.password, 
                     registerFormProvider.name,
