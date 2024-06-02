@@ -4,13 +4,27 @@ import 'package:provider/provider.dart';
 
 
 import 'package:web_dashboard/datatables/users_datasource.dart';
+import 'package:web_dashboard/models/categories.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 
-class UsersView extends StatelessWidget {
+class UsersView extends StatefulWidget {
   const UsersView({super.key});
+
+  @override
+  State<UsersView> createState() => _UsersViewState();
+}
+
+class _UsersViewState extends State<UsersView> {
+
+  @override
+  void initState() {
+    super.initState();
+    final userProvider = Provider.of<UsersProvider>(context, listen: false);
+    userProvider.getPaginatedUsers();
+  }
 
   @override
   Widget build(BuildContext context) {

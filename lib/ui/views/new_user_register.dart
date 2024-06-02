@@ -180,6 +180,8 @@ class _UserFormView extends StatelessWidget {
               validator: ( value ) {
                 if ( value == null || value.isEmpty ) return 'Invalid Register';
                 if ( value.length < 2 ) return 'Mimimun 2 Charactes';
+                final numericRegex = RegExp(r'^[0-9]+$');
+                if( !numericRegex.hasMatch(value)) return 'Only numeric Character';
                 return null;
               },
              ),
@@ -198,6 +200,8 @@ class _UserFormView extends StatelessWidget {
                     registerFormProvider.email, 
                     registerFormProvider.password, 
                     registerFormProvider.name,
+                    registerFormProvider.phone,
+                    registerFormProvider.zone,
 
                     );
           

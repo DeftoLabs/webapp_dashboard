@@ -77,18 +77,20 @@ class AuthProvider extends ChangeNotifier {
 
   }
 
-  void newUserRegister (String email, String password, String name){
+  void newUserRegister (String email, String password, String name, String phone, String zone,){
 
     final data ={
       'nombre': name,
       'correo': email,
       'password': password, 
+      'phone': phone,
+      'zone': zone,
     };
 
       CafeApi.post('/usuarios', data).then((json) {
 
         NotificationService.showSnackBa('User Created Successfully');
-        NavigationService.replaceTo(Flurorouter.usersRoute );
+        NavigationService.replaceTo(Flurorouter.usersRoute);
         CafeApi.configureDio();
         notifyListeners();
       }).catchError((e) {
