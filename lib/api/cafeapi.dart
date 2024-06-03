@@ -7,7 +7,7 @@ import 'package:web_dashboard/services/local_storage.dart';
 
 class CafeApi {
 
-  static Dio _dio = Dio();
+  static final Dio _dio = Dio();
 
   static void configureDio() {
 

@@ -48,7 +48,7 @@ class WhiteCardNewUser extends StatelessWidget {
   }
 
   BoxDecoration buildBoxDecoration() => BoxDecoration(
-    color:  Color.fromARGB(206, 255, 255, 255),
+    color: const Color.fromARGB(206, 255, 255, 255),
     borderRadius: BorderRadius.circular(5),
     boxShadow: [
       BoxShadow(

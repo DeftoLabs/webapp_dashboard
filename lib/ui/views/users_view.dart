@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 
 import 'package:web_dashboard/datatables/users_datasource.dart';
-import 'package:web_dashboard/models/categories.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
@@ -52,11 +52,11 @@ class _UsersViewState extends State<UsersView> {
               Padding(
                 padding: const EdgeInsets.only(right: 20),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color:  Color.fromRGBO(40, 41, 38, 0.808),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(color: Colors.amber[800], borderRadius: BorderRadius.circular(20)),
+                  
+                  child: TextButton.icon(
+                    label: Text('Add a New User', style: GoogleFonts.plusJakartaSans(color: Colors.white),) ,
                     onPressed: (){
                       NavigationService.replaceTo('dashboard/users/newuser');
                     }, 

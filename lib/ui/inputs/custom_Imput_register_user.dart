@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 
+
+
 class CustomInputsRegisterUser {
 
    static InputDecoration loginInputDecoration ({

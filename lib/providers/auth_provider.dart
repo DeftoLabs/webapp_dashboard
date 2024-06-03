@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/auth_response.dart';
@@ -94,7 +92,7 @@ class AuthProvider extends ChangeNotifier {
         CafeApi.configureDio();
         notifyListeners();
       }).catchError((e) {
-        NotificationService.showSnackBarError('User Not Valid');
+        NotificationService.showSnackBarError('This email is already registered.');
       }) ;
   }
 
