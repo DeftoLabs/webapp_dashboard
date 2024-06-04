@@ -16,7 +16,11 @@ class Flurorouter {
 
   //Dashboard
   static String dashboardRoute  = '/dashboard';
+
+  static String gpsRoute  = '/dashboard/gps';
+
   static String categoriesRoute = '/dashboard/categories';
+
 
   static String usersRoute      = '/dashboard/users';
   static String newUserRoute    = '/dashboard/users/newuser';
@@ -39,7 +43,9 @@ class Flurorouter {
     // Dashboard
     router.define (dashboardRoute, handler:   DashboardHandlers.dashboard, transitionType: TransitionType.fadeIn);
 
-    //
+    //Main
+
+    router.define (gpsRoute,        handler:  DashboardHandlers.gps,        transitionType: TransitionType.fadeIn);
     router.define (categoriesRoute, handler:  DashboardHandlers.categories, transitionType: TransitionType.fadeIn);
 
     //

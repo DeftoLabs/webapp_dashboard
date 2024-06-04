@@ -22,6 +22,8 @@ class CafeApi {
 
   }
 
+  
+
   // HTTP Get
   static Future httpGet ( String path) async {
     try {
@@ -97,6 +99,18 @@ class CafeApi {
     }  catch (e) {
       throw('Error in the PUT Image');
       
+    }
+  }
+
+  static Future<void> validateEmailBackend(String email) async {
+    try {
+      final response = await _dio.post('/validate-email', data: {'email': email});
+      if (response.statusCode != 200) {
+        final responseData = response.data;
+        throw Exception(responseData['message'] ?? 'Error validating email');
+      }
+    } catch (e) {
+      throw Exception('Error validating email: $e');
     }
   }
 

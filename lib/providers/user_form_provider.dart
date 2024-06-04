@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/usuario.dart';

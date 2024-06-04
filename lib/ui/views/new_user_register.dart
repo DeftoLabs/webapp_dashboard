@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 
 import 'package:email_validator/email_validator.dart';
-import 'package:web_dashboard/api/cafeapi.dart';
 
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/register_form_provider.dart';
