@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'package:web_dashboard/api/cafeapi.dart';
+import 'package:web_dashboard/gps/blocs/gps/gps_bloc.dart';
 
 import 'package:web_dashboard/router/router.dart';
 
@@ -40,8 +42,12 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: ( _ ) => UserFormProvider()),
 
       ],
-      child: const MyApp(),
-      );
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => GpsBloc())
+        ], 
+        child: const MyApp(),
+      ));
   }
 }
 

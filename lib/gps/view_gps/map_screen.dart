@@ -4,8 +4,8 @@ import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 
-class GpsScreen extends StatelessWidget {
-  const GpsScreen({super.key});
+class MapScreen extends StatelessWidget {
+  const MapScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
