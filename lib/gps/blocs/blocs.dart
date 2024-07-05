@@ -1,2 +1,3 @@
-export 'package:web_dashboard/gps/blocs/gps/gps_bloc.dart';
+export 'gps/gps_bloc.dart';
+export 'location/location_bloc.dart';
 
