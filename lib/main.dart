@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'providers/providers.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +11,6 @@ import 'package:web_dashboard/gps/blocs/blocs.dart';
 
 import 'package:web_dashboard/router/router.dart';
 
-
-
 import 'package:web_dashboard/services/local_storage.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
@@ -19,15 +19,27 @@ import 'package:web_dashboard/ui/layouts/auth/auth_layout.dart';
 import 'package:web_dashboard/ui/layouts/dashboard/dashboard_layout.dart';
 import 'package:web_dashboard/ui/layouts/splash/splash_layout.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
+  await dotenv.load(fileName: '.env');
 
-void main () async {
+  final googleMapKey = dotenv.env['GOOGLEMAPKEY'];
+  // Verifica si el script de Google Maps ya está presente
+  final googleMapsScript = html.document.querySelector(
+      'script[src*="https://maps.googleapis.com/maps/api/js"]');
+  if (googleMapsScript == null) {
+    final script = html.ScriptElement()
+      ..src = 'https://maps.googleapis.com/maps/api/js?key=$googleMapKey'
+      ..async = true
+      ..defer = true;
+    html.document.head!.append(script);
+  }
 
   await LocalStorage.configurePrefs();
   CafeApi.configureDio();
   Flurorouter.configureRoutes();
   runApp(const AppState());
-
 }
 
 class AppState extends StatelessWidget {
@@ -36,21 +48,20 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(lazy: false, create: ( _ ) => AuthProvider()),
-        ChangeNotifierProvider(lazy: false, create: ( _ ) => SideMenuProvider()),
-        ChangeNotifierProvider(create: ( _ ) => CategoriesProvier()),
-        ChangeNotifierProvider(create: ( _ ) => UsersProvider()),
-        ChangeNotifierProvider(create: ( _ ) => UserFormProvider()),
-
-      ],
-      child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => GpsBloc()),
-          BlocProvider(create: (context) => LocationBloc()),
-        ], 
-        child: const MyApp(),
-      ));
+          ChangeNotifierProvider(lazy: false, create: (_) => AuthProvider()),
+          ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
+          ChangeNotifierProvider(create: (_) => CategoriesProvier()),
+          ChangeNotifierProvider(create: (_) => UsersProvider()),
+          ChangeNotifierProvider(create: (_) => UserFormProvider()),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => GpsBloc()),
+            BlocProvider(create: (context) => LocationBloc()),
+          ],
+          child: const MyApp(),
+        ));
   }
 }
 
@@ -60,32 +71,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Admin Dashboard',
-      initialRoute: '/',
-      onGenerateRoute: Flurorouter.router.generator,
-      navigatorKey: NavigationService.navigatorKey,
-      scaffoldMessengerKey: NotificationService.messegerKey,
-      builder: (_, child) {
+        debugShowCheckedModeBanner: false,
+        title: 'Admin Dashboard',
+        initialRoute: '/',
+        onGenerateRoute: Flurorouter.router.generator,
+        navigatorKey: NavigationService.navigatorKey,
+        scaffoldMessengerKey: NotificationService.messegerKey,
+        builder: (_, child) {
+          final authProvider = Provider.of<AuthProvider>(context);
 
-        final authProvider = Provider.of<AuthProvider> (context);
-
-        if (authProvider.authStatus == AuthStatus.checking) {
-          return const SplashLayout();
-        }
-        if(authProvider.authStatus == AuthStatus.authenticated) {
-          return DashboardLayout(child: child!);
-        } else {
-          return AuthLayout(child: child!);
-        }
-
-        
-      },
-      theme: ThemeData.light().copyWith(
-        scrollbarTheme: const ScrollbarThemeData().copyWith(
-          thumbColor: WidgetStateProperty.all(Colors.white)
-        )
-      )
-    );
+          if (authProvider.authStatus == AuthStatus.checking) {
+            return const SplashLayout();
+          }
+          if (authProvider.authStatus == AuthStatus.authenticated) {
+            return DashboardLayout(child: child!);
+          } else {
+            return AuthLayout(child: child!);
+          }
+        },
+        theme: ThemeData.light().copyWith(
+            scrollbarTheme: const ScrollbarThemeData().copyWith(
+                thumbColor: WidgetStateProperty.all(Colors.white))));
   }
 }
