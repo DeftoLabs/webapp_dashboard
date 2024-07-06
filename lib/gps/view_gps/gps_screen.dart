@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_dashboard/gps/blocs/blocs.dart';
 import 'package:web_dashboard/gps/view_gps/screen_gps.dart';
+import 'package:web_dashboard/gps/view_gps/widgets/widgets.dart';
 
 
 
@@ -79,6 +80,14 @@ class _GpsScreenState extends State<GpsScreen> {
             );
           }
         },
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: const Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          BtnCurrentLocation()
+        ],
       ),
     );
   }

@@ -53,14 +53,14 @@ class _UsersViewState extends State<UsersView> {
                 padding: const EdgeInsets.only(right: 20),
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(color: Colors.amber[800], borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(color: const Color.fromRGBO(177, 255, 46, 100), borderRadius: BorderRadius.circular(20)),
                   
                   child: TextButton.icon(
-                    label: Text('Add a New User', style: GoogleFonts.plusJakartaSans(color: Colors.white),) ,
+                    label: Text('Add a New User', style: GoogleFonts.plusJakartaSans(color: const Color.fromARGB(255, 0, 0, 0)),) ,
                     onPressed: (){
                       NavigationService.replaceTo('dashboard/users/newuser');
                     }, 
-                    icon: const Icon(Icons.person_add_alt_1, color: Colors.white,)),
+                    icon: const Icon(Icons.person_add_alt_1, color: Color.fromARGB(255, 0, 0, 0),)),
                 ),
               ),
               const SizedBox(width: 10,),
