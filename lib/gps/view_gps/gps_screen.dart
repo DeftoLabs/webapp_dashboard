@@ -1,10 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:web_dashboard/gps/blocs/blocs.dart';
-import 'package:web_dashboard/ui/labels/custom_labels.dart';
 import 'dart:async';
 import 'dart:html' as html;
+
+import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:web_dashboard/gps/blocs/blocs.dart';
+import 'package:web_dashboard/gps/view_gps/screen_gps.dart';
+
+
 
 class GpsScreen extends StatefulWidget {
   const GpsScreen({super.key});
@@ -23,13 +26,11 @@ class _GpsScreenState extends State<GpsScreen> {
     locationBloc = BlocProvider.of<LocationBloc>(context);
     locationBloc.startFollowingUser();
 
-    // Verifica si el script de Google Maps ya está presente
     final googleMapsScript = html.document.querySelector(
         'script[src*="https://maps.googleapis.com/maps/api/js"]');
     if (googleMapsScript != null) {
       _googleMapsCompleter.complete();
     } else {
-      // Observa cuando se agregue el script de Google Maps
       html.document.head!.children
           .whereType<html.ScriptElement>()
           .firstWhere(
@@ -67,22 +68,10 @@ class _GpsScreenState extends State<GpsScreen> {
                   return const Center(child: Text('Wait Please ...'));
                 }
 
-                final CameraPosition initialCameraPosition = CameraPosition(
-                  target: state.lastKnowLocation!,
-                  zoom: 15,
-                );
-
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(
+                return SingleChildScrollView(
+                  child: Stack(
                     children: [
-                      Text('GPS View', style: CustomLabels.h1),
-                      const SizedBox(height: 10),
-                      Expanded(
-                        child: GoogleMap(
-                          initialCameraPosition: initialCameraPosition,
-                        ),
-                      ),
+                      MapView(initialLocation: state.lastKnowLocation!),
                     ],
                   ),
                 );
@@ -95,6 +84,4 @@ class _GpsScreenState extends State<GpsScreen> {
   }
 }
 
-        
-      
   
