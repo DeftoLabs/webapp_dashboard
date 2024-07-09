@@ -23,6 +23,8 @@ copyUserWith ({
     String? img,
     String? phone,
     String? zone,
+    Location? location,
+
 
 }){
   user = Usuario (
@@ -35,6 +37,8 @@ copyUserWith ({
     img: img ?? user!.img,
     phone: phone ?? user!.phone,
     zone: zone ?? user!.zone,
+    location: location ?? user!.location,
+
   );
   notifyListeners();
 }

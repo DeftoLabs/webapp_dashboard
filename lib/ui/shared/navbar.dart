@@ -48,7 +48,7 @@ class Navbar extends StatelessWidget {
   }
 
   BoxDecoration buildBoxDecoration() => const BoxDecoration(
-    color:  Color.fromRGBO(177, 255, 46, 100),
+    color:  Color.fromRGBO(235, 237, 233, 0.612),
      boxShadow: [
       BoxShadow(
         color: Colors.black38,

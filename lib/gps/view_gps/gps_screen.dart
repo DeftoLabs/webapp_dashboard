@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:web_dashboard/gps/blocs/blocs.dart';
 import 'package:web_dashboard/gps/view_gps/screen_gps.dart';
-import 'package:web_dashboard/gps/view_gps/widgets/widgets.dart';
-
+import 'package:web_dashboard/providers/users_providers.dart';
 
 
 class GpsScreen extends StatefulWidget {
@@ -20,6 +20,8 @@ class GpsScreen extends StatefulWidget {
 class _GpsScreenState extends State<GpsScreen> {
   late LocationBloc locationBloc;
   Completer<void> _googleMapsCompleter = Completer<void>();
+  late GoogleMapController _mapController;
+  final Set<Marker> _markers = {};
 
   @override
   void initState() {
@@ -49,11 +51,41 @@ class _GpsScreenState extends State<GpsScreen> {
   @override
   void dispose() {
     locationBloc.stopFollowingUser();
+    _mapController.dispose();
     super.dispose();
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    _mapController = controller;
+    _addUserMarkers();
+  }
+
+  void _addUserMarkers() {
+    final userProvider = Provider.of<UsersProvider>(context, listen: false);
+    final users = userProvider.users;
+    setState(() {
+      _markers.clear();
+      for (var user in users) {
+        if (user.location != null) {
+          final marker = Marker(
+            markerId: MarkerId(user.uid),
+            position: LatLng(user.location!.lat, user.location!.lng),
+            infoWindow: InfoWindow(title: user.nombre, snippet: user.correo),
+          );
+          _markers.add(marker);
+        }
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    final containerWidth = screenWidth * 0.20;
+    final containerHeigth = screenHeight * 0.6;
+
     return Scaffold(
       body: FutureBuilder<void>(
         future: _googleMapsCompleter.future,
@@ -69,28 +101,35 @@ class _GpsScreenState extends State<GpsScreen> {
                   return const Center(child: Text('Wait Please ...'));
                 }
 
-                return SingleChildScrollView(
-                  child: Stack(
-                    children: [
-                      MapView(initialLocation: state.lastKnowLocation!),
-                    ],
-                  ),
+                return Stack(
+                  children: [
+                    GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(state.lastKnowLocation!.latitude, state.lastKnowLocation!.longitude),
+                        zoom: 15,
+                      ),
+                      markers: _markers,
+                    ),
+                    LocationSquare(containerWidth: containerWidth, containerHeigth: containerHeigth),
+                  ],
                 );
               },
             );
           }
         },
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: const Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          BtnCurrentLocation()
+          BtnCurrentLocation(),
         ],
       ),
     );
   }
 }
+
+
 
   

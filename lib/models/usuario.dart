@@ -10,6 +10,7 @@ class Usuario {
     String? img;
     String phone;
     String zone;
+    Location? location;
 
     Usuario({
         required this.rol,
@@ -21,6 +22,7 @@ class Usuario {
         this.img,
         required this.phone,
         required this.zone,
+        this.location
     });
 
     factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
@@ -33,6 +35,7 @@ class Usuario {
         img: json["img"],
         phone: json ["phone"] ?? '',
         zone: json ["zone"] ?? '',
+        location: json ["location"] != null ? Location.fromMap(json["location"]) : null,
 
 
     );
@@ -47,6 +50,27 @@ class Usuario {
         "img": img,
         "phone": phone,
         "zone": zone,
+        "location": location?.toMap(),
 
     };
+}
+
+class Location {
+  double lat;
+  double lng;
+
+  Location({
+    required this.lat,
+    required this.lng,
+  });
+
+  factory Location.fromMap(Map<String, dynamic> json) => Location(
+    lat: json["lat"]?.toDouble() ?? 0.0,
+    lng: json["lng"]?.toDouble() ?? 0.0,
+  );
+
+  Map<String, dynamic> toMap() => {
+    "lat": lat,
+    "lng": lng,
+  };
 }

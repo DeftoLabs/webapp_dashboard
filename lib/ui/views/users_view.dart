@@ -30,9 +30,7 @@ class _UsersViewState extends State<UsersView> {
   Widget build(BuildContext context) {
 
     final userProvider = Provider.of<UsersProvider>(context);
-
     final activeUsers = userProvider.users.where((user) => user.estado).toList();
-
     final userDataSource = UserDatasource( activeUsers );
 
 

@@ -12,7 +12,7 @@ class BtnCurrentLocation extends StatelessWidget {
     final mapBloc = BlocProvider.of<MapBloc>(context);
 
     return Container(
-      margin: const EdgeInsets.only( bottom: 100),
+      margin: const EdgeInsets.only( bottom: 100, right: 30),
       child: CircleAvatar(
         backgroundColor: Colors.white,
         maxRadius: 25,
