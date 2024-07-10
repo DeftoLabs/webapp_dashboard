@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/gps/blocs/blocs.dart';
 import 'package:web_dashboard/gps/view_gps/screen_gps.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
+import 'package:web_dashboard/ui/views/dashboard_view.dart';
 
 
 class GpsScreen extends StatefulWidget {
@@ -112,6 +113,18 @@ class _GpsScreenState extends State<GpsScreen> {
                       markers: _markers,
                     ),
                     LocationSquare(containerWidth: containerWidth, containerHeigth: containerHeigth),
+                      Positioned(
+                            left:16,
+                            bottom: 130,
+                            child: FloatingActionButton.extended(
+                              label: const Text('Back'),
+                              icon: const  Icon(Icons.arrow_back),
+                              backgroundColor: const Color.fromRGBO(177, 255, 46, 100),
+                              onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const DashboardView() ));
+                            },
+                            )
+                            ),
                   ],
                 );
               },
