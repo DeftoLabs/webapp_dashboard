@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/gps/blocs/blocs.dart';
 import 'package:web_dashboard/gps/view_gps/screen_gps.dart';
+import 'package:web_dashboard/gps/view_gps/widgets/user_marker.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/ui/views/dashboard_view.dart';
 
@@ -20,15 +21,19 @@ class GpsScreen extends StatefulWidget {
 
 class _GpsScreenState extends State<GpsScreen> {
   late LocationBloc locationBloc;
+  late UsersProvider userProvider;
   Completer<void> _googleMapsCompleter = Completer<void>();
   late GoogleMapController _mapController;
   final Set<Marker> _markers = {};
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
     locationBloc = BlocProvider.of<LocationBloc>(context);
+    userProvider = Provider.of<UsersProvider>(context, listen: false);
     locationBloc.startFollowingUser();
+    _startMarkerUpdateTimer();
 
     final googleMapsScript = html.document.querySelector(
         'script[src*="https://maps.googleapis.com/maps/api/js"]');
@@ -53,6 +58,7 @@ class _GpsScreenState extends State<GpsScreen> {
   void dispose() {
     locationBloc.stopFollowingUser();
     _mapController.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -61,8 +67,14 @@ class _GpsScreenState extends State<GpsScreen> {
     _addUserMarkers();
   }
 
-  void _addUserMarkers() {
-    final userProvider = Provider.of<UsersProvider>(context, listen: false);
+   void _startMarkerUpdateTimer() {
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      _addUserMarkers();
+    });
+  }
+
+  void _addUserMarkers() async {
+    await userProvider.fetchUsers();
     final users = userProvider.users;
     setState(() {
       _markers.clear();
@@ -74,6 +86,7 @@ class _GpsScreenState extends State<GpsScreen> {
             infoWindow: InfoWindow(title: user.nombre, snippet: user.correo),
           );
           _markers.add(marker);
+          print('Location User Marker: ${user.location?.lat}, ${user.location?.lng}');
         }
       }
     });
@@ -112,6 +125,14 @@ class _GpsScreenState extends State<GpsScreen> {
                       ),
                       markers: _markers,
                     ),
+                    //   Positioned(
+                    //  left: screenWidth / 2 - 10,
+                    //  top: screenHeight / 2 - 10,
+                    //  child: UserMarker(
+                    //    lat: state.lastKnowLocation!.latitude,
+                    //    lng: state.lastKnowLocation!.longitude,
+                    //  ),
+                    //),
                     LocationSquare(containerWidth: containerWidth, containerHeigth: containerHeigth),
                       Positioned(
                             left:16,

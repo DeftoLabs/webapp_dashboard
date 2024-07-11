@@ -68,4 +68,11 @@ class UsersProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+    Future<void> fetchUsers() async {
+    final resp = await CafeApi.httpGet('/usuarios?limite=100&desde=0');
+    final usersResp = UsersResponse.fromMap(resp);
+    users = usersResp.usuarios;
+    notifyListeners();
+  }
+
 }
