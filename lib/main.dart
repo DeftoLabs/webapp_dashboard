@@ -3,8 +3,6 @@ import 'dart:html' as html;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/gps/blocs/observer/observer.dart';
-import 'package:web_dashboard/gps/blocs/userlocation/userlocation_bloc.dart';
 import 'providers/providers.dart';
 import 'api/cafeapi.dart';
 import 'gps/blocs/blocs.dart';

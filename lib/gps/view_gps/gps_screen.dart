@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/gps/blocs/blocs.dart';
+import 'package:web_dashboard/gps/view_gps/helper/custom_image_market.dart';
 import 'package:web_dashboard/gps/view_gps/screen_gps.dart';
-import 'package:web_dashboard/gps/view_gps/widgets/user_marker.dart';
+import 'package:web_dashboard/models/usuario.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/ui/views/dashboard_view.dart';
 
@@ -79,16 +80,24 @@ class _GpsScreenState extends State<GpsScreen> {
     setState(() {
       _markers.clear();
       for (var user in users) {
-        if (user.location != null) {
-          final marker = Marker(
-            markerId: MarkerId(user.uid),
-            position: LatLng(user.location!.lat, user.location!.lng),
-            infoWindow: InfoWindow(title: user.nombre, snippet: user.correo),
-          );
-          _markers.add(marker);
-          print('Location User Marker: ${user.location?.lat}, ${user.location?.lng}');
+        if (user.location != null && user.img != null) {
+          _addMarker(user);
         }
       }
+    });
+  }
+
+  Future<void> _addMarker(Usuario user) async {
+    final markerIcon = await getNetworkImageMarker(user.img!);
+    setState(() {
+      final marker = Marker(
+        markerId: MarkerId(user.uid),
+        position: LatLng(user.location!.lat, user.location!.lng),
+        icon: markerIcon,
+        infoWindow: InfoWindow(title: user.nombre, snippet: user.correo),
+      );
+      _markers.add(marker);
+      print('Location User Marker: ${user.nombre}, ${user.location?.lat}, ${user.location?.lng}');
     });
   }
 
