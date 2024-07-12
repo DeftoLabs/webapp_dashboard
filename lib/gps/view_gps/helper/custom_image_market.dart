@@ -7,7 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 Future<BitmapDescriptor> getNetworkImageMarker(String imageUrl) async {
   final Uint8List bytes = await getImageFromUrl(imageUrl);
-
   final ui.Codec codec = await ui.instantiateImageCodec(bytes, targetHeight: 50, targetWidth: 50);
   final ui.FrameInfo frameInfo = await codec.getNextFrame();
   final ByteData? data = await frameInfo.image.toByteData(format: ui.ImageByteFormat.png);
