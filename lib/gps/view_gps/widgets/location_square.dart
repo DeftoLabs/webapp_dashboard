@@ -21,7 +21,7 @@ class LocationSquare extends StatefulWidget {
 class _LocationSquareState extends State<LocationSquare> {
   bool _isExpanded = false;
   int _currentPage = 0;
-  final int _itemsPerPage = 7;
+  final int _itemsPerPage = 5;
 
   @override
   void initState() {
@@ -48,18 +48,17 @@ class _LocationSquareState extends State<LocationSquare> {
   }
 
   Future<String> _getAddress(double lat, double lng) async {
-    const apiKey = 'AIzaSyDH6RXeyIM_2m37JA6x_lV7p0XzGZlOH9E';
-    final url =
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey';
+    const apiKey = 'pk.eyJ1IjoiZGVmdG9sYWJzIiwiYSI6ImNseHhiZjJybTE5b2wya29vMDdrdXViem0ifQ._dnK1oSv5G-MfKwzHpdKcQ'; 
+    final url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/$lng,$lat.json?access_token=$apiKey';
 
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      if (json['status'] == 'OK') {
-        return json['results'][0]['formatted_address'];
+      if (json['features'] != null && json['features'].isNotEmpty) {
+        return json['features'][0]['place_name'];
       } else {
-        throw Exception('Error al obtener la dirección: ${json['error_message']}');
+        throw Exception('Error al obtener la dirección: No results found');
       }
     } else {
       throw Exception('Error al conectarse al servidor');
@@ -107,57 +106,58 @@ class _LocationSquareState extends State<LocationSquare> {
                     children: [
                       Expanded(
                         child: ListView.separated(
-                  itemCount: paginatedUsers.length,
-                  itemBuilder: (context, index) {
-                    final user = paginatedUsers[index];
-                    return FutureBuilder<String>(
-                      future: _getAddress(user.location!.lat, user.location!.lng),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return ListTile(
-                            title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
-                            subtitle: const Text('Loading...'),
-                          );
-                        } else if (snapshot.hasError) {
-                          return ListTile(
-                            title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
-                            subtitle: Text('Error: ${snapshot.error}'),
-                          );
-                        } else {
-                          return ListTile(
-                            title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
-                            subtitle: Text(snapshot.data ?? 'No address available'),
-                          );
-                        }
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) => SizedBox(
-                    width: widget.containerWidth *0.7,
-                    child:const Divider()
-                    ),
-),
+                          itemCount: paginatedUsers.length,
+                          itemBuilder: (context, index) {
+                            final user = paginatedUsers[index];
+                            return FutureBuilder<String>(
+                              future: _getAddress(user.location!.lat, user.location!.lng),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return ListTile(
+                                    title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    subtitle: const Text('Loading...'),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return ListTile(
+                                    title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    subtitle: Text('Error: ${snapshot.error}'),
+                                  );
+                                } else {
+                                  return ListTile(
+                                    title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    subtitle: Text(snapshot.data ?? 'No address available'),
+                                  );
+                                }
+                              },
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: widget.containerWidth * 0.7,
+                            child: const Divider(),
+                          ),
                         ),
-            ])),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            onPressed: _previousPage,
-                          ),
-                          Text('Página ${_currentPage + 1}'),
-                          IconButton(
-                            icon: const Icon(Icons.arrow_forward),
-                            onPressed: _nextPage,
-                          ),
-                        ],
                       ),
                     ],
                   ),
                 ),
-            
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: _previousPage,
+                  ),
+                  Text('Página ${_currentPage + 1}'),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: _nextPage,
+                  ),
+                ],
+              ),
+            ],
           ),
-        );
+        ),
+      ),
+    );
   }
 }
