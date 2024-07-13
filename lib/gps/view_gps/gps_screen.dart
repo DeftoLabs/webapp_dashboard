@@ -134,14 +134,6 @@ class _GpsScreenState extends State<GpsScreen> {
                       ),
                       markers: _markers,
                     ),
-                    //   Positioned(
-                    //  left: screenWidth / 2 - 10,
-                    //  top: screenHeight / 2 - 10,
-                    //  child: UserMarker(
-                    //    lat: state.lastKnowLocation!.latitude,
-                    //    lng: state.lastKnowLocation!.longitude,
-                    //  ),
-                    //),
                     LocationSquare(containerWidth: containerWidth, containerHeigth: containerHeigth),
                       Positioned(
                             left:16,
