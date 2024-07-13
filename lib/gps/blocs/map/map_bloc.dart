@@ -23,7 +23,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   void _onInitMap( OnMapInitializedEvent event, Emitter<MapState> emit ){
 
     _mapController = event.controller;
-
     emit(state.copyWith( isMapInitialized: true ));
 
   }
