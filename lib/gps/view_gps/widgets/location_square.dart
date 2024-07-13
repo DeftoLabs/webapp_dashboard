@@ -1,16 +1,18 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 
 class LocationSquare extends StatefulWidget {
   const LocationSquare({
-    super.key,
+    Key? key,
     required this.containerWidth,
-    required this.containerHeigth,
-  });
+    required this.containerHeight,
+  }) : super(key: key);
 
   final double containerWidth;
-  final double containerHeigth;
+  final double containerHeight;
 
   @override
   State<LocationSquare> createState() => _LocationSquareState();
@@ -45,6 +47,25 @@ class _LocationSquareState extends State<LocationSquare> {
     }
   }
 
+  Future<String> _getAddress(double lat, double lng) async {
+    const apiKey = 'AIzaSyDH6RXeyIM_2m37JA6x_lV7p0XzGZlOH9E';
+    final url =
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      if (json['status'] == 'OK') {
+        return json['results'][0]['formatted_address'];
+      } else {
+        throw Exception('Error al obtener la dirección: ${json['error_message']}');
+      }
+    } else {
+      throw Exception('Error al conectarse al servidor');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UsersProvider>(context);
@@ -74,34 +95,50 @@ class _LocationSquareState extends State<LocationSquare> {
           child: Column(
             children: [
               ListTile(
-                title: const Center (child: Text('Sales Representative',style: TextStyle( fontWeight: FontWeight.bold))),
+                title: const Center(child: Text('Sales Representative', style: TextStyle(fontWeight: FontWeight.bold))),
                 trailing: Icon(
                   _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                 ),
               ),
               if (_isExpanded)
                 SizedBox(
-                  height: widget.containerHeigth,
+                  height: widget.containerHeight,
                   child: Column(
                     children: [
                       Expanded(
                         child: ListView.separated(
-                          itemCount: paginatedUsers.length,
-                          itemBuilder: (context, index) {
-                            final user = paginatedUsers[index];
-                            final locationString = user.location != null
-                                ? 'Lat: ${user.location!.lat}, Lng: ${user.location!.lng}'
-                                : 'No location available';
-                            return ListTile(
-                              title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold),),
-                              subtitle: Text(locationString),
-                            );
-                          },
-                          separatorBuilder: (context, index) => SizedBox(
-                            width: widget.containerWidth * 0.7,
-                            child: const Divider()),
+                  itemCount: paginatedUsers.length,
+                  itemBuilder: (context, index) {
+                    final user = paginatedUsers[index];
+                    return FutureBuilder<String>(
+                      future: _getAddress(user.location!.lat, user.location!.lng),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return ListTile(
+                            title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                            subtitle: const Text('Loading...'),
+                          );
+                        } else if (snapshot.hasError) {
+                          return ListTile(
+                            title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                            subtitle: Text('Error: ${snapshot.error}'),
+                          );
+                        } else {
+                          return ListTile(
+                            title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                            subtitle: Text(snapshot.data ?? 'No address available'),
+                          );
+                        }
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(
+                    width: widget.containerWidth *0.7,
+                    child:const Divider()
+                    ),
+),
                         ),
-                      ),
+            ])),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -119,10 +156,8 @@ class _LocationSquareState extends State<LocationSquare> {
                     ],
                   ),
                 ),
-            ],
+            
           ),
-        ),
-      ),
-    );
+        );
   }
 }

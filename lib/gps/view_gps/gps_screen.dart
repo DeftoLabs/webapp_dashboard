@@ -107,7 +107,7 @@ class _GpsScreenState extends State<GpsScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     final containerWidth = screenWidth * 0.20;
-    final containerHeigth = screenHeight * 0.6;
+    final containerHeight = screenHeight * 0.6;
 
     return Scaffold(
       body: FutureBuilder<void>(
@@ -134,7 +134,9 @@ class _GpsScreenState extends State<GpsScreen> {
                       ),
                       markers: _markers,
                     ),
-                    LocationSquare(containerWidth: containerWidth, containerHeigth: containerHeigth),
+                    LocationSquare(containerWidth: containerWidth, containerHeight: containerHeight),
+
+
                       Positioned(
                             left:16,
                             bottom: 130,
