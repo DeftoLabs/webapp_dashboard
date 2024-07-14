@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/gps/blocs/blocs.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 
 class LocationSquare extends StatefulWidget {
@@ -146,7 +144,12 @@ class _LocationSquareState extends State<LocationSquare> {
                                                  }, 
                                                 icon: const Icon(Icons.my_location_outlined)),
                                             ),
-                                            Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                            const SizedBox(height: 10),
+                                            Expanded(
+                                              child: Text(
+                                                user.nombre, style: const TextStyle(fontWeight: FontWeight.bold),
+                                                textAlign: TextAlign.center,
+                                                )),
                                           ],
                                         ),
                                         const SizedBox(height: 10)
