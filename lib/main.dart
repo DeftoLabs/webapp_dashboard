@@ -20,7 +20,8 @@ void main() async {
   await dotenv.load(fileName: '.env');
 
   final googleMapKey = dotenv.env['GOOGLEMAPKEY'];
-  // Verifica si el script de Google Maps ya está presente
+  
+
   final googleMapsScript = html.document.querySelector(
       'script[src*="https://maps.googleapis.com/maps/api/js"]');
   if (googleMapsScript == null) {

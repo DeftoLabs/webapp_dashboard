@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
@@ -48,7 +49,7 @@ class _LocationSquareState extends State<LocationSquare> {
   }
 
   Future<String> _getAddress(double lat, double lng) async {
-    const apiKey = 'pk.eyJ1IjoiZGVmdG9sYWJzIiwiYSI6ImNseHhiZjJybTE5b2wya29vMDdrdXViem0ifQ._dnK1oSv5G-MfKwzHpdKcQ'; 
+    final apiKey = dotenv.env['MAPBOXKEY'];
     final url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/$lng,$lat.json?access_token=$apiKey';
 
     final response = await http.get(Uri.parse(url));
@@ -58,10 +59,10 @@ class _LocationSquareState extends State<LocationSquare> {
       if (json['features'] != null && json['features'].isNotEmpty) {
         return json['features'][0]['place_name'];
       } else {
-        throw Exception('Error al obtener la dirección: No results found');
+        throw Exception('Error to get address: No results found');
       }
     } else {
-      throw Exception('Error al conectarse al servidor');
+      throw Exception('Error to connect to the server');
     }
   }
 
@@ -147,7 +148,7 @@ class _LocationSquareState extends State<LocationSquare> {
                     icon: const Icon(Icons.arrow_back),
                     onPressed: _previousPage,
                   ),
-                  Text('Página ${_currentPage + 1}'),
+                  Text('Page ${_currentPage + 1}'),
                   IconButton(
                     icon: const Icon(Icons.arrow_forward),
                     onPressed: _nextPage,
