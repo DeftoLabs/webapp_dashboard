@@ -22,7 +22,7 @@ class LocationSquare extends StatefulWidget {
 class _LocationSquareState extends State<LocationSquare> {
   bool _isExpanded = false;
   int _currentPage = 0;
-  final int _itemsPerPage = 5;
+  final int _itemsPerPage = 4;
 
   @override
   void initState() {
@@ -66,6 +66,7 @@ class _LocationSquareState extends State<LocationSquare> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UsersProvider>(context);
@@ -89,7 +90,7 @@ class _LocationSquareState extends State<LocationSquare> {
         child: Container(
           width: widget.containerWidth,
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(177, 255, 46, 100),
+            color: const Color.fromRGBO(177, 255, 46, 1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Column(
@@ -125,7 +126,15 @@ class _LocationSquareState extends State<LocationSquare> {
                                   );
                                 } else {
                                   return ListTile(
-                                    title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    title: Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: (){
+                                           }, 
+                                          icon: const Icon(Icons.my_location_outlined)),
+                                        Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
                                     subtitle: Text(snapshot.data ?? 'No address available'),
                                   );
                                 }

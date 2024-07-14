@@ -14,7 +14,7 @@ Future<BitmapDescriptor> getNetworkImageMarker(String imageUrl) async {
   final Uint8List resizedBytes = data!.buffer.asUint8List();
   final Uint8List circularBytes = await _getCircularImageWithBorder(
     resizedBytes, 
-    Colors.blue, // Define the color of the border
+    Colors.black54, // Define the color of the border
     5.0 // Define the width of the border
   );
 
@@ -39,7 +39,7 @@ Future<Uint8List> _getCircularImageWithBorder(Uint8List imageBytes, Color border
   });
   final ui.Image image = await completer.future;
 
-  final double size = 50.0;
+  const double size = 50.0;
   final double borderSize = size + borderWidth * 2;
 
   final ui.PictureRecorder recorder = ui.PictureRecorder();

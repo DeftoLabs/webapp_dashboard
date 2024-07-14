@@ -143,7 +143,7 @@ class _GpsScreenState extends State<GpsScreen> {
                             child: FloatingActionButton.extended(
                               label: const Text('Back'),
                               icon: const  Icon(Icons.arrow_back),
-                              backgroundColor: const Color.fromRGBO(177, 255, 46, 100),
+                              backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
                               onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> const DashboardView() ));
                             },
