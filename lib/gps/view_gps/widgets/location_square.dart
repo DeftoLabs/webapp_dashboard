@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/gps/blocs/blocs.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 
 class LocationSquare extends StatefulWidget {
@@ -69,6 +71,7 @@ class _LocationSquareState extends State<LocationSquare> {
 
   @override
   Widget build(BuildContext context) {
+
     final userProvider = Provider.of<UsersProvider>(context);
     final users = userProvider.users;
     final startIndex = _currentPage * _itemsPerPage;
@@ -126,13 +129,27 @@ class _LocationSquareState extends State<LocationSquare> {
                                   );
                                 } else {
                                   return ListTile(
-                                    title: Row(
+                                    contentPadding: const EdgeInsets.symmetric(vertical:8.0, horizontal: 16),
+                                    title: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        IconButton(
-                                          onPressed: (){
-                                           }, 
-                                          icon: const Icon(Icons.my_location_outlined)),
-                                        Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            CircleAvatar(
+                                             backgroundColor: Colors.white,
+                                             maxRadius: 15,
+                                              child: IconButton(
+                                                iconSize: 15,
+                                                onPressed: (){
+                                                  
+                                                 }, 
+                                                icon: const Icon(Icons.my_location_outlined)),
+                                            ),
+                                            Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10)
                                       ],
                                     ),
                                     subtitle: Text(snapshot.data ?? 'No address available'),

@@ -34,4 +34,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     
   }
 
+  void moveUserCamera( double lat, double lng) {
+    final userLocation = LatLng(lat, lng);
+    final cameraUpdate = CameraUpdate.newLatLng(userLocation);
+    _mapController?.animateCamera(cameraUpdate);
+  }
+
+
 }
