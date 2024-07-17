@@ -12,8 +12,9 @@ class CafeApi {
   static void configureDio() {
 
     // URL Base
-    _dio.options.baseUrl = 'http://localhost:8080/api';
-    // _dio.options.baseUrl = 'https://test-webapp-lake.vercel.app/api';
+    // _dio.options.baseUrl = 'http://localhost:8080/api';
+     _dio.options.baseUrl = 'https://bozz-test-backend-55b9e4133740.herokuapp.com/api';
+    
 
     // Header Config
     _dio.options.headers = {
