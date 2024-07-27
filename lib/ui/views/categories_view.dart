@@ -43,10 +43,9 @@ class _CategoriesViewState extends State<CategoriesView> {
 
         PaginatedDataTable(
               columns: const [
-                DataColumn(label: Text('ID')),
-                DataColumn(label: Text('Categorie')),
-                DataColumn(label: Text('Create')),
-                DataColumn(label: Text('Actions')),                
+                DataColumn(label: Expanded(child:Text('Categorie')),),
+                DataColumn(label: Text('Create', textAlign: TextAlign.right), numeric: true),
+                DataColumn(label: Text('Actions', textAlign: TextAlign.right), numeric: true),                
               ], 
               source: CategoriesDTS(categorias, context),
               header: const  Text( ' Products', maxLines: 2),
@@ -59,10 +58,12 @@ class _CategoriesViewState extends State<CategoriesView> {
               actions: [
                 CustomIconButton(
                   onPressed: (){
-                    showModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      context: context, 
-                      builder: ( _ ) => const CategoryModal(categoria: null));
+                   showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const CategoryModal(categoria: null);
+                              },
+                            );
                   }, 
                   text:'Create', 
                   icon: Icons.add_outlined)

@@ -23,7 +23,7 @@ class GpsScreen extends StatefulWidget {
 class _GpsScreenState extends State<GpsScreen> {
   late LocationBloc locationBloc;
   late UsersProvider userProvider;
-  Completer<void> _googleMapsCompleter = Completer<void>();
+  final Completer<void> _googleMapsCompleter = Completer<void>();
   late GoogleMapController _mapController;
   final Set<Marker> _markers = {};
   Timer? _timer;
