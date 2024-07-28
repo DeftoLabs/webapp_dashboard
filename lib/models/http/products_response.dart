@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../categories.dart';
+import '../products.dart';
 
 class CategoriesResponse {
     CategoriesResponse({
