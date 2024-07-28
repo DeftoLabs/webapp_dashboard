@@ -2,26 +2,26 @@ import 'dart:convert';
 
 import '../products.dart';
 
-class CategoriesResponse {
-    CategoriesResponse({
+class ProductsResponse {
+    ProductsResponse({
         required this.total,
-        required this.categorias,
+        required this.productos,
     });
 
     int total;
-    List<Categoria> categorias;
+    List<Producto> productos;
 
-    factory CategoriesResponse.fromJson(String str) => CategoriesResponse.fromMap(json.decode(str));
+    factory ProductsResponse.fromJson(String str) => ProductsResponse.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory CategoriesResponse.fromMap(Map<String, dynamic> json) => CategoriesResponse(
+    factory ProductsResponse.fromMap(Map<String, dynamic> json) => ProductsResponse(
         total: json["total"],
-        categorias: List<Categoria>.from(json["categorias"].map((x) => Categoria.fromMap(x))),
+        productos: List<Producto>.from(json["productos"].map((x) => Producto.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
         "total": total,
-        "categorias": List<dynamic>.from(categorias.map((x) => x.toMap())),
+        "productos": List<dynamic>.from(productos.map((x) => x.toMap())),
     };
 }
