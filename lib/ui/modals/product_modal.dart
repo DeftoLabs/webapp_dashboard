@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/models/categories.dart';
+import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/categories_provider.dart';
+import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
-class CategoryModal extends StatefulWidget {
-  final Categoria? categoria;
+class ProductModal extends StatefulWidget {
+  final Producto? producto;
 
-  const CategoryModal({super.key, this.categoria});
+  const ProductModal({super.key, this.producto});
 
   @override
-  State<CategoryModal> createState() => _CategoryModalState();
+  State<ProductModal> createState() => _ProductModalState();
 }
 
-class _CategoryModalState extends State<CategoryModal> {
+class _ProductModalState extends State<ProductModal> {
   String nombre = '';
   String? id;
 
   @override
   void initState() {
     super.initState();
-    nombre = widget.categoria?.nombre ?? '';
-    id = widget.categoria?.id;
+    nombre = widget.producto?.nombre ?? '';
+    id = widget.producto?.id;
   }
 
   @override
   Widget build(BuildContext context) {
-    final categoryProvider = Provider.of<CategoriesProvier>(context, listen: false);
+    final productProvider = Provider.of<ProductsProvider>(context, listen: false);
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -50,7 +51,7 @@ class _CategoryModalState extends State<CategoryModal> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.categoria?.nombre ?? 'Add Category',
+                  widget.producto?.nombre ?? 'Add Product',
                   style: CustomLabels.h1.copyWith(color: Colors.white),
                 ),
                 IconButton(
@@ -64,11 +65,11 @@ class _CategoryModalState extends State<CategoryModal> {
             const SizedBox(height: 40),
 
              TextFormField(
-              initialValue: widget.categoria?.nombre ?? '',
+              initialValue: widget.producto?.nombre ?? '',
               onChanged: (value) => nombre = value,
               decoration: InputDecoration(
-                hintText: 'Category Name',
-                labelText: 'Category',
+                hintText: 'Product Name',
+                labelText: 'Product',
                 labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                 hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
                 focusedBorder:const OutlineInputBorder(
@@ -87,10 +88,10 @@ class _CategoryModalState extends State<CategoryModal> {
                 onPressed: () async {
                   try {
                     if (id == null) {
-                      await categoryProvider.newCategory(nombre);
+                      await productProvider.newProduct(nombre);
                       NotificationService.showSnackBa('$nombre Created');
                     } else {
-                      await categoryProvider.updateCategory(id!, nombre);
+                      await productProvider.updateProduct(id!, nombre);
                       NotificationService.showSnackBa('$nombre Updated');
                     }
                     if (mounted) Navigator.of(context).pop();

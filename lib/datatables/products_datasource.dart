@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/models/categories.dart';
-import 'package:web_dashboard/providers/categories_provider.dart';
-import 'package:web_dashboard/ui/modals/category_modal.dart';
+import 'package:web_dashboard/models/products.dart';
+import 'package:web_dashboard/providers/products_provider.dart';
+import 'package:web_dashboard/ui/modals/product_modal.dart';
 
-class CategoriesDTS extends DataTableSource {
+class ProductsDTS extends DataTableSource {
 
-  final List<Categoria> categorias;
+  final List<Producto> productos;
   final BuildContext context;
 
-  CategoriesDTS(this.categorias, this.context);
+  ProductsDTS(this.productos, this.context);
 
   @override
   DataRow? getRow(int index) {
 
-    final category = categorias[index];
+    final product = productos[index];
 
     return DataRow.byIndex(
       index: index,
       cells:[ 
-        DataCell (Text(category.nombre)),
-        DataCell (Text(category.usuario.nombre)),        
+        DataCell (Text(product.nombre)),     
         DataCell (
           Row(
             children: [
@@ -30,7 +29,7 @@ class CategoriesDTS extends DataTableSource {
                    showModalBottomSheet(
                       backgroundColor: Colors.transparent,
                       context: context, 
-                      builder: ( _ ) => CategoryModal(categoria: category));
+                      builder: ( _ ) => ProductModal(producto: product));
 
                 } ),
               IconButton(
@@ -38,7 +37,7 @@ class CategoriesDTS extends DataTableSource {
                 onPressed: (){
                   final dialog = AlertDialog(
                     title: const Text('Are you sure to delete this register?'),
-                    content: Text('Delete ${category.nombre}'),
+                    content: Text('Delete ${product.nombre}'),
                     actions: [
                       TextButton(
                         child: const Text('No'),
@@ -48,8 +47,8 @@ class CategoriesDTS extends DataTableSource {
                       TextButton(
                         child: const Text('Yes, Delete'),
                         onPressed: () async {
-                          final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
-                          await categoriesProvider.deleteCategory(category.id);
+                          final productsProvider = Provider.of<ProductsProvider>(context, listen: false);
+                          await productsProvider.deleteProduct(product.id);
                           if (context.mounted) {
                             Navigator.of(context).pop();
                           }
@@ -72,7 +71,7 @@ class CategoriesDTS extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => categorias.length;
+  int get rowCount => productos.length;
 
   @override
   int get selectedRowCount => 0;

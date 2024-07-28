@@ -1,59 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
-import 'package:web_dashboard/models/categories.dart';
-import 'package:web_dashboard/models/http/categories_response.dart';
+import 'package:web_dashboard/models/http/products_response.dart';
+import 'package:web_dashboard/models/products.dart';
 
 class ProductsProvider extends ChangeNotifier {
 
-  List <Categoria> categorias = [];
+  List <Producto> productos = [];
 
 
   getCategories() async {
-    final resp = await CafeApi.httpGet('/categorias');
-    final categoriesResp = CategoriesResponse.fromMap(resp);
-    categorias = [...categoriesResp.categorias];
+    final resp = await CafeApi.httpGet('/productos');
+    final productsResp = ProductsResponse.fromMap(resp);
+    productos = [...productsResp.productos];
     notifyListeners();
   }
 
-  Future newCategory (String name) async {
+  Future newProduct (String nombre) async {
     final data = {
-      'nombre': name
+      'nombre': nombre,
     };
     try{
-      final json = await CafeApi.post('/categorias', data);
-      final newCategory = Categoria.fromMap(json);
-      categorias.add(newCategory);
+      final json = await CafeApi.post('/productos', data);
+      final newProduct = Producto.fromMap(json);
+      productos.add(newProduct);
       notifyListeners();
     } catch (e){
-      throw ' Error to create the Category ';
+      throw ' Error to create New Product ';
     }
   }
 
-    Future updateCategory (String id, String name) async {
+    Future updateProduct (String id, String nombre) async {
     final data = {
-      'nombre': name
+      'nombre': nombre
     };
     try{
-      await CafeApi.put('/categorias/$id', data);
-      categorias = categorias.map(
-        (category) {
-          if(category.id != id) return category;
-          category.nombre = name;
-          return category;
+      await CafeApi.put('/productos/$id', data);
+      productos = productos.map(
+        (product) {
+          if(product.id != id) return product;
+          product.nombre = nombre;
+          return product;
       },).toList();
       notifyListeners();
     } catch (e){
-      throw ' Error to Update the Category ';
+      throw ' Error to Update the Product ';
     }
   }
 
-      Future deleteCategory (String id) async {
+      Future deleteProduct (String id) async {
     try{
-      await CafeApi.delete('/categorias/$id',{});
-      categorias.removeWhere((categorias) => categorias.id == id);
+      await CafeApi.delete('/productos/$id',{});
+      productos.removeWhere((productos) => productos.id == id);
       notifyListeners();
     } catch (e){
-      throw ' Error to Delete the Category ';
+      throw ' Error to Delete the Product ';
     }
 
   }
