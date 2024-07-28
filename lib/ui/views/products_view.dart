@@ -10,14 +10,14 @@ import 'package:web_dashboard/ui/labels/custom_labels.dart';
 import 'package:web_dashboard/ui/modals/category_modal.dart';
 
 
-class CategoriesView extends StatefulWidget {
-  const CategoriesView({super.key});
+class ProductsView extends StatefulWidget {
+  const ProductsView({super.key});
 
   @override
-  State<CategoriesView> createState() => _CategoriesViewState();
+  State<ProductsView> createState() => _ProductsViewState();
 }
 
-class _CategoriesViewState extends State<CategoriesView> {
+class _ProductsViewState extends State<ProductsView> {
 
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 

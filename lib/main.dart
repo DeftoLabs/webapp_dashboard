@@ -3,6 +3,7 @@ import 'dart:html' as html;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/products_provider.dart';
 import 'providers/providers.dart';
 import 'api/cafeapi.dart';
 import 'gps/blocs/blocs.dart';
@@ -52,6 +53,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CategoriesProvier()),
         ChangeNotifierProvider(create: (_) => UsersProvider()),
         ChangeNotifierProvider(create: (_) => UserFormProvider()),
+        ChangeNotifierProvider(create: (_) => ProductsProvider()),
       ],
       child: MultiBlocProvider(
         providers: [

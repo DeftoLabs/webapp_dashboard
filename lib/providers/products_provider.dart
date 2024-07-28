@@ -3,7 +3,7 @@ import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/categories.dart';
 import 'package:web_dashboard/models/http/categories_response.dart';
 
-class CategoriesProvier extends ChangeNotifier {
+class ProductsProvider extends ChangeNotifier {
 
   List <Categoria> categorias = [];
 

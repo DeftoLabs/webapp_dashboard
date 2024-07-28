@@ -19,6 +19,7 @@ class Flurorouter {
 
   static String gpsRoute        = '/dashboard/gps';
 
+  static String productsRoute   = '/dashboard/products';
   static String categoriesRoute = '/dashboard/categories';
 
 
@@ -46,6 +47,8 @@ class Flurorouter {
     //Main
 
     router.define (gpsRoute,        handler:  DashboardHandlers.gps,        transitionType: TransitionType.fadeIn);
+
+    router.define (productsRoute, handler:  DashboardHandlers.products,   transitionType: TransitionType.fadeIn);    
     router.define (categoriesRoute, handler:  DashboardHandlers.categories, transitionType: TransitionType.fadeIn);
 
     //

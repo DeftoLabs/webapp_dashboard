@@ -52,7 +52,10 @@ class Sidebar extends StatelessWidget {
         isActive: sideMenuProvider.currentPage == Flurorouter.gpsRoute,),
 
 
-        MenuItem(text: 'Products', icon: Icons.dashboard_outlined,    onPressed: (){}),
+        MenuItem(text: 'Products', 
+        icon: Icons.dashboard_outlined,    
+        onPressed: ()=> navigateTo(Flurorouter.productsRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.productsRoute,),
 
         MenuItem(text: 'Categories', 
         icon: Icons.category_outlined,        

@@ -15,7 +15,7 @@ class CustomIconButton extends StatelessWidget {
     required this.onPressed, 
     required this.text, 
     required this.icon,
-    this.color = const Color.fromRGBO(177, 255, 46, 100),
+    this.color = const Color.fromRGBO(177, 255, 46, 1),
     this.isFilled = false, 
     });
 
