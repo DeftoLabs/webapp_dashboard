@@ -8,7 +8,7 @@ class ProductsProvider extends ChangeNotifier {
   List <Producto> productos = [];
 
 
-  getCategories() async {
+  getProducts() async {
     final resp = await CafeApi.httpGet('/productos');
     final productsResp = ProductsResponse.fromMap(resp);
     productos = [...productsResp.productos];

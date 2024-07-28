@@ -19,7 +19,8 @@ class ProductsDTS extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells:[ 
-        DataCell (Text(product.nombre)),     
+        DataCell (Text(product.descripcion.toString())), 
+        DataCell ( Text(product.usuario.nombre)),    
         DataCell (
           Row(
             children: [

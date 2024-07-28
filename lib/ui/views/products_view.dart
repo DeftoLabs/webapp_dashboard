@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:web_dashboard/providers/categories_provider.dart';
-
-import 'package:web_dashboard/datatables/categories_datasource.dart';
-
+import 'package:web_dashboard/datatables/products_datasource.dart';
+import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
-import 'package:web_dashboard/ui/modals/category_modal.dart';
+import 'package:web_dashboard/ui/modals/product_modal.dart';
 
 
 class ProductsView extends StatefulWidget {
@@ -24,30 +22,30 @@ class _ProductsViewState extends State<ProductsView> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CategoriesProvier>(context, listen: false).getCategories();
+    Provider.of<ProductsProvider>(context, listen: false).getProducts();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final categorias = Provider.of<CategoriesProvier>(context).categorias;
+    final productos = Provider.of<ProductsProvider>(context).productos;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          Text('Categories', style: CustomLabels.h1,),
+          Text('List of Products', style: CustomLabels.h1,),
 
           const SizedBox(height: 10),
 
         PaginatedDataTable(
               columns: const [
-                DataColumn(label: Expanded(child:Text('Categories')),),
+                DataColumn(label: Expanded(child:Text('Products')),),
                 DataColumn(label: Text('Create by', textAlign: TextAlign.right), numeric: true),
                 DataColumn(label: Text('Actions', textAlign: TextAlign.right), numeric: true),                
               ], 
-              source: CategoriesDTS(categorias, context),
+              source: ProductsDTS(productos, context),
               header: const  Text( ' Products', maxLines: 2),
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -61,7 +59,7 @@ class _ProductsViewState extends State<ProductsView> {
                    showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return const CategoryModal(categoria: null);
+                                return const ProductModal(producto: null);
                               },
                             );
                   }, 

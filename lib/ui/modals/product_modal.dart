@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/products.dart';
-import 'package:web_dashboard/providers/categories_provider.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
@@ -96,7 +95,7 @@ class _ProductModalState extends State<ProductModal> {
                     }
                     if (mounted) Navigator.of(context).pop();
                   } catch (e) {
-                    if (mounted) NotificationService.showSnackBa('Could not save the category');
+                    if (mounted) NotificationService.showSnackBa('Could not save the Product');
                     if (mounted) Navigator.of(context).pop();
                   }
                 },
