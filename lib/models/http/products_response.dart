@@ -3,13 +3,13 @@ import 'dart:convert';
 import '../products.dart';
 
 class ProductsResponse {
+    int total;
+    List<Producto> productos;
+
     ProductsResponse({
         required this.total,
         required this.productos,
     });
-
-    int total;
-    List<Producto> productos;
 
     factory ProductsResponse.fromJson(String str) => ProductsResponse.fromMap(json.decode(str));
 

@@ -5,8 +5,7 @@ import 'package:web_dashboard/models/products.dart';
 
 class ProductsProvider extends ChangeNotifier {
 
-  List <Producto> productos = [];
-
+  List<Producto> productos = [];
 
   getProducts() async {
     final resp = await CafeApi.httpGet('/productos');
@@ -15,9 +14,19 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future newProduct (String nombre) async {
+  Future newProduct ({
+    required String nombre,
+    required double precio,
+    String? descripcion,
+    required bool disponible,
+    required String categoria,
+    }) async {
     final data = {
       'nombre': nombre,
+      'precio': precio,
+      'descripcion': descripcion,
+      'disponible': disponible,
+      'categoria': categoria,
     };
     try{
       final json = await CafeApi.post('/productos', data);
@@ -29,25 +38,39 @@ class ProductsProvider extends ChangeNotifier {
     }
   }
 
-    Future updateProduct (String id, String nombre) async {
+  Future updateProduct ({
+    required String id,
+    required String nombre,
+    required double precio,
+    String? descripcion,
+    required bool disponible,
+    required String categoria,
+  })  async {
     final data = {
-      'nombre': nombre
+      'nombre': nombre,
+      'precio': precio,
+      'descripcion': descripcion,
+      'disponible': disponible,
+      'categoria': categoria,
     };
     try{
       await CafeApi.put('/productos/$id', data);
-      productos = productos.map(
-        (product) {
+      productos = productos.map((product) {
           if(product.id != id) return product;
           product.nombre = nombre;
+          product.precio = precio;
+          product.descripcion = descripcion;
+          product.disponible = disponible;
+          product.categoria.nombre = categoria;
           return product;
-      },).toList();
+      }).toList();
       notifyListeners();
     } catch (e){
       throw ' Error to Update the Product ';
     }
   }
 
-      Future deleteProduct (String id) async {
+  Future deleteProduct (String id) async {
     try{
       await CafeApi.delete('/productos/$id',{});
       productos.removeWhere((productos) => productos.id == id);
@@ -55,6 +78,5 @@ class ProductsProvider extends ChangeNotifier {
     } catch (e){
       throw ' Error to Delete the Product ';
     }
-
   }
 }

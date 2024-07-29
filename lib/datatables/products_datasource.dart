@@ -19,20 +19,23 @@ class ProductsDTS extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells:[ 
-        DataCell (Text(product.descripcion.toString())), 
-        DataCell ( Text(product.usuario.nombre)),    
+        DataCell (Text(product.nombre)), 
+        DataCell (Text(product.descripcion ?? '')),
+        DataCell (Text(product.disponible.toString())),
+        DataCell (Text(product.precio.toString())),
+        DataCell (Text(product.categoria.nombre)),                
         DataCell (
           Row(
             children: [
               IconButton(
                 icon: const Icon(Icons.edit_outlined),
                 onPressed: (){
-                   showModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      context: context, 
-                      builder: ( _ ) => ProductModal(producto: product));
-
-                } ),
+                  showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    context: context, 
+                    builder: ( _ ) => ProductModal(producto: product));
+                } 
+              ),
               IconButton(
                 icon: Icon(Icons.delete_outline, color: Colors.red.withOpacity(0.4)),
                 onPressed: (){
@@ -44,7 +47,8 @@ class ProductsDTS extends DataTableSource {
                         child: const Text('No'),
                         onPressed: (){
                           Navigator.of(context).pop();
-                        }, ),
+                        }, 
+                      ),
                       TextButton(
                         child: const Text('Yes, Delete'),
                         onPressed: () async {
@@ -53,19 +57,21 @@ class ProductsDTS extends DataTableSource {
                           if (context.mounted) {
                             Navigator.of(context).pop();
                           }
-                        }, )
+                        }, 
+                      )
                     ],
                   );
 
                   showDialog(
                     context: context, 
                     builder: ( _ ) => dialog);
-                } ),
+                } 
+              ),
             ],
           )
         ),
       ]
-       );
+    );
   }
 
   @override
@@ -76,5 +82,4 @@ class ProductsDTS extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
-
 }

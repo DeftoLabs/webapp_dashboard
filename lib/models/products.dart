@@ -13,15 +13,15 @@ class Producto {
     this.img,
   });
 
-    String id;
-    String nombre;
-    bool estado;
-    User usuario;
-    double precio;
-    Categoria categoria;
-    String? descripcion;
-    bool disponible;
-    String? img;
+  String id;
+  String nombre;
+  bool estado;
+  User usuario;
+  double precio;
+  Categoria categoria;
+  String? descripcion;
+  bool disponible;
+  String? img;
 
   factory Producto.fromJson(String str) => Producto.fromMap(json.decode(str));
 
@@ -30,7 +30,7 @@ class Producto {
   factory Producto.fromMap(Map<String, dynamic> json) => Producto(
     id: json["_id"],
     nombre: json["nombre"],
-    estado: json["estado"],
+    estado: json["estado"] ?? false,
     usuario: User.fromMap(json["usuario"]),
     precio: json["precio"]?.toDouble() ?? 0.0,
     categoria: Categoria.fromMap(json["categoria"]),
@@ -57,60 +57,50 @@ class Producto {
   }
 }
 
-
 class Categoria {
-    Categoria({
-        required this.id,
-        required this.nombre,
-        required this.usuario,
-    });
+  String id;
+  String nombre;
 
-    String id;
-    String nombre;
-    User usuario;
+  Categoria({
+    required this.id,
+    required this.nombre,
+  });
 
-    factory Categoria.fromJson(String str) => Categoria.fromMap(json.decode(str));
+  factory Categoria.fromJson(String str) => Categoria.fromMap(json.decode(str));
 
-    String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-    factory Categoria.fromMap(Map<String, dynamic> json) => Categoria(
-        id: json["_id"],
-        nombre: json["nombre"],
-        usuario: User.fromMap(json["usuario"]),
-    );
+  factory Categoria.fromMap(Map<String, dynamic> json) => Categoria(
+    id: json["_id"],
+    nombre: json["nombre"],
+  );
 
-    Map<String, dynamic> toMap() => {
-        "_id": id,
-        "nombre": nombre,
-        "usuario": usuario.toMap(),
-    };
-
-  @override
-  String toString() {
-    return 'Categoria: $nombre';
-  }
+  Map<String, dynamic> toMap() => {
+    "_id": id,
+    "nombre": nombre,
+  };
 }
 
 class User {
-    User({
-        required this.id,
-        required this.nombre,
-    });
+  User({
+    required this.id,
+    required this.nombre,
+  });
 
-    String id;
-    String nombre;
+  String id;
+  String nombre;
 
-    factory User.fromJson(String str) => User.fromMap(json.decode(str));
+  factory User.fromJson(String str) => User.fromMap(json.decode(str));
 
-    String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-    factory User.fromMap(Map<String, dynamic> json) => User(
-        id: json["_id"],
-        nombre: json["nombre"],
-    );
+  factory User.fromMap(Map<String, dynamic> json) => User(
+    id: json["_id"],
+    nombre: json["nombre"],
+  );
 
-    Map<String, dynamic> toMap() => {
-        "_id": id,
-        "nombre": nombre,
-    };
+  Map<String, dynamic> toMap() => {
+    "_id": id,
+    "nombre": nombre,
+  };
 }

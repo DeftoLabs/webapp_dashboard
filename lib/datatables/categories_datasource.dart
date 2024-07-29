@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/categories.dart';
-import 'package:web_dashboard/providers/categories_provider.dart';
 import 'package:web_dashboard/ui/modals/category_modal.dart';
 
 class CategoriesDTS extends DataTableSource {
@@ -33,34 +31,37 @@ class CategoriesDTS extends DataTableSource {
                       builder: ( _ ) => CategoryModal(categoria: category));
 
                 } ),
-              IconButton(
-                icon: Icon(Icons.delete_outline, color: Colors.red.withOpacity(0.4)),
-                onPressed: (){
-                  final dialog = AlertDialog(
-                    title: const Text('Are you sure to delete this register?'),
-                    content: Text('Delete ${category.nombre}'),
-                    actions: [
-                      TextButton(
-                        child: const Text('No'),
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        }, ),
-                      TextButton(
-                        child: const Text('Yes, Delete'),
-                        onPressed: () async {
-                          final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
-                          await categoriesProvider.deleteCategory(category.id);
-                          if (context.mounted) {
-                            Navigator.of(context).pop();
-                          }
-                        }, )
-                    ],
-                  );
 
-                  showDialog(
-                    context: context, 
-                    builder: ( _ ) => dialog);
-                } ),
+              // Opcion para cambiar el estado de la categoria - FALSE -
+
+              //IconButton(
+              //  icon: Icon(Icons.delete_outline, color: Colors.red.withOpacity(0.4)),
+              //  onPressed: (){
+              //    final dialog = AlertDialog(
+              //      title: const Text('Are you sure to delete this register?'),
+              //      content: Text('Delete ${category.nombre}'),
+              //      actions: [
+              //        TextButton(
+              //          child: const Text('No'),
+              //          onPressed: (){
+              //            Navigator.of(context).pop();
+              //          }, ),
+              //        TextButton(
+              //          child: const Text('Yes, Delete'),
+              //          onPressed: () async {
+              //            final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
+              //            await categoriesProvider.deleteCategory(category.id);
+              //            if (context.mounted) {
+              //              Navigator.of(context).pop();
+              //            }
+              //          }, )
+              //      ],
+              //    );
+//
+              //    showDialog(
+              //      context: context, 
+              //      builder: ( _ ) => dialog);
+              //  } ),
             ],
           )
         ),

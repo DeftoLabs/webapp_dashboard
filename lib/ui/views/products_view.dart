@@ -35,18 +35,21 @@ class _ProductsViewState extends State<ProductsView> {
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          Text('List of Products', style: CustomLabels.h1,),
+          Text('Products', style: CustomLabels.h1,),
 
           const SizedBox(height: 10),
 
         PaginatedDataTable(
               columns: const [
-                DataColumn(label: Expanded(child:Text('Products')),),
-                DataColumn(label: Text('Create by', textAlign: TextAlign.right), numeric: true),
-                DataColumn(label: Text('Actions', textAlign: TextAlign.right), numeric: true),                
+                DataColumn(label: Text('Code'),),
+                DataColumn(label: Text('Description'),),
+                DataColumn(label: Text('Stock'),),
+                DataColumn(label: Text('Price')),
+                DataColumn(label: Text('Categorie')),
+                DataColumn(label: Text('Actions')),                
               ], 
               source: ProductsDTS(productos, context),
-              header: const  Text( ' Products', maxLines: 2),
+              header: const  Text( ' List of Products', maxLines: 2),
               onRowsPerPageChanged: (value) {
                 setState(() {
                   _rowsPerPage = value ?? 10;

@@ -18,13 +18,27 @@ class ProductModal extends StatefulWidget {
 
 class _ProductModalState extends State<ProductModal> {
   String nombre = '';
+  double precio = 0.0;
+  String? descripcion;
   String? id;
+  bool disponible = true;
+  String categoria = '';
+  
+  final _precioController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     nombre = widget.producto?.nombre ?? '';
+    precio = widget.producto?.precio ?? 0.0;
+    descripcion = widget.producto?.descripcion;
     id = widget.producto?.id;
+    disponible = widget.producto?.disponible ?? true;
+    categoria = widget.producto?.categoria.nombre ?? '';
+    
+    // Inicializar el controlador con el valor del precio
+    _precioController.text = precio.toString();
   }
 
   @override
@@ -36,74 +50,188 @@ class _ProductModalState extends State<ProductModal> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: 300,
-        width: 600, 
+        height: 600,
+        width: 600,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color:  const Color.fromARGB(255, 58, 60, 65),
+          color: const Color.fromARGB(255, 58, 60, 65),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min, 
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  widget.producto?.nombre ?? 'Add Product',
-                  style: CustomLabels.h1.copyWith(color: Colors.white),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.producto?.nombre ?? 'Add Product',
+                      style: CustomLabels.h1.copyWith(color: Colors.white),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close, color: Colors.white),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
                 ),
-                IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: () => Navigator.of(context).pop(),
+                const Divider(color: Colors.white70),
+                
+                const SizedBox(height: 20),
+                
+                TextFormField(
+                  initialValue: nombre,
+                  onChanged: (value) => nombre = value,
+                  decoration: InputDecoration(
+                    hintText: 'BarCode & Internal Code',
+                    labelText: 'BarCode & Internal Code',
+                    labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12),
+                    hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    ),
+                  ),
+                  style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'This field is required';
+                    }
+                    if (value.length > 20) {
+                      return 'The code cannot have more than 20 characters';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: _precioController,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(
+                    hintText: 'Price',
+                    labelText: 'Price - e.g. 10.20',
+                    labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12),
+                    hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                  style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Price is required';
+                    }
+                    if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
+                      return 'Invalid price format. Use "." for decimals';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Invalid number';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    if (double.tryParse(value) != null) {
+                      precio = double.tryParse(value) ?? 0.0;
+                    }
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  initialValue: descripcion,
+                  onChanged: (value) => descripcion = value,
+                  decoration: InputDecoration(
+                    hintText: 'Description',
+                    labelText: 'Description',
+                    labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12),
+                    hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    ),
+                  ),
+                  style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  initialValue: categoria,
+                  onChanged: (value) => categoria = value,
+                  decoration: InputDecoration(
+                    hintText: 'Category',
+                    labelText: 'Category',
+                    labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12),
+                    hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    ),
+                  ),
+                  style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                ),
+                const SizedBox(height: 10),
+                SwitchListTile(
+                  value: disponible,
+                  onChanged: (value) => setState(() => disponible = value),
+                  title: Text(
+                    'Available',
+                    style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                  ),
+                  activeColor: const Color.fromRGBO(177, 255, 46, 100),
+                  inactiveThumbColor: Colors.white,
+                  inactiveTrackColor: Colors.grey,
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  alignment: Alignment.center,
+                  child: CustomOutlineButtom(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          if (id == null) {
+                            await productProvider.newProduct(
+                              nombre: nombre,
+                              precio: precio,
+                              descripcion: descripcion,
+                              disponible: disponible,
+                              categoria: categoria,
+                            );
+                            NotificationService.showSnackBa('$descripcion Created');
+                          } else {
+                            await productProvider.updateProduct(
+                              id: id!,
+                              nombre: nombre,
+                              precio: precio,
+                              descripcion: descripcion,
+                              disponible: disponible,
+                              categoria: categoria,
+                            );
+                            NotificationService.showSnackBa('$descripcion Updated');
+                          }
+                          if (mounted) Navigator.of(context).pop();
+                        } catch (e) {
+                           print('Error saving product: $e');
+                          if (mounted) NotificationService.showSnackBa('Could not save the Product');
+                          if (mounted) Navigator.of(context).pop();
+                        }
+                      }
+                    },
+                    text: 'Save',
+                    color: Colors.white,
+                  ),
                 ),
               ],
-            ),
-            const Divider(color: Colors.white70),
-
-            const SizedBox(height: 40),
-
-             TextFormField(
-              initialValue: widget.producto?.nombre ?? '',
-              onChanged: (value) => nombre = value,
-              decoration: InputDecoration(
-                hintText: 'Product Name',
-                labelText: 'Product',
-                labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
-                focusedBorder:const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 1.0),
-                ),
-              ),
-              style: GoogleFonts.plusJakartaSans(color: Colors.white),
-            ),
-            const SizedBox(height: 40),
-            Container(
-              alignment: Alignment.center,
-              child: CustomOutlineButtom(
-                onPressed: () async {
-                  try {
-                    if (id == null) {
-                      await productProvider.newProduct(nombre);
-                      NotificationService.showSnackBa('$nombre Created');
-                    } else {
-                      await productProvider.updateProduct(id!, nombre);
-                      NotificationService.showSnackBa('$nombre Updated');
-                    }
-                    if (mounted) Navigator.of(context).pop();
-                  } catch (e) {
-                    if (mounted) NotificationService.showSnackBa('Could not save the Product');
-                    if (mounted) Navigator.of(context).pop();
-                  }
-                },
-                text: 'Save',
-                color: Colors.white,
-              ),
-            ),
-          ],
+            ), 
+          ),
         ),
       ),
     );
