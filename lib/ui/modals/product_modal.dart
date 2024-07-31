@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
+import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
@@ -22,7 +23,7 @@ class _ProductModalState extends State<ProductModal> {
   String? descripcion;
   String? id;
   bool disponible = true;
-  String categoria = '';
+  String? categoria;
   
   final _precioController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -35,10 +36,14 @@ class _ProductModalState extends State<ProductModal> {
     descripcion = widget.producto?.descripcion;
     id = widget.producto?.id;
     disponible = widget.producto?.disponible ?? true;
-    categoria = widget.producto?.categoria.nombre ?? '';
+    categoria = widget.producto?.categoria.id;
     
-    // Inicializar el controlador con el valor del precio
+  
     _precioController.text = precio.toString();
+
+    final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
+    categoriesProvider.getCategories();
+
   }
 
   @override
@@ -161,36 +166,50 @@ class _ProductModalState extends State<ProductModal> {
                   style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 ),
                 const SizedBox(height: 10),
-                TextFormField(
-                  initialValue: categoria,
-                  onChanged: (value) => categoria = value,
-                  decoration: InputDecoration(
-                    hintText: 'Category',
-                    labelText: 'Category',
-                    labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12),
-                    hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 1.0),
-                    ),
-                  ),
-                  style: GoogleFonts.plusJakartaSans(color: Colors.white),
-                ),
+
                 const SizedBox(height: 10),
-                SwitchListTile(
-                  value: disponible,
-                  onChanged: (value) => setState(() => disponible = value),
-                  title: Text(
-                    'Available',
-                    style: GoogleFonts.plusJakartaSans(color: Colors.white),
-                  ),
-                  activeColor: const Color.fromRGBO(177, 255, 46, 100),
-                  inactiveThumbColor: Colors.white,
-                  inactiveTrackColor: Colors.grey,
+
+               Consumer<CategoriesProvier>(
+                  builder: (context, categoriesProvider, child) {
+                    return DropdownButtonFormField<String>(
+                      value: categoria,
+                      decoration: InputDecoration(
+                        hintText: 'Category',
+                        labelText: 'Category',
+                        labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12),
+                        hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white, width: 1.0),
+                        ),
+                      ),
+                      style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                      dropdownColor: Colors.grey[800],
+                      items: categoriesProvider.categorias.map((category) {
+                        return DropdownMenuItem<String>(
+                          value: category.nombre,
+                          child: Text(category.nombre),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          categoria = value!;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a Category';
+                        }
+                        return null;
+                      },
+                    );
+                  },
                 ),
+
                 const SizedBox(height: 10),
+             
                 Container(
                   alignment: Alignment.center,
                   child: CustomOutlineButtom(
@@ -203,7 +222,7 @@ class _ProductModalState extends State<ProductModal> {
                               precio: precio,
                               descripcion: descripcion,
                               disponible: disponible,
-                              categoria: categoria,
+                              categoria: categoria!,
                             );
                             NotificationService.showSnackBa('$descripcion Created');
                           } else {
@@ -213,7 +232,7 @@ class _ProductModalState extends State<ProductModal> {
                               precio: precio,
                               descripcion: descripcion,
                               disponible: disponible,
-                              categoria: categoria,
+                              categoria: categoria!,
                             );
                             NotificationService.showSnackBa('$descripcion Updated');
                           }
