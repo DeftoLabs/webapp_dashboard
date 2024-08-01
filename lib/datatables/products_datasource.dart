@@ -16,9 +16,22 @@ class ProductsDTS extends DataTableSource {
 
     final product = productos[index];
 
+    const image = Image( image: AssetImage('noimage.jpeg'), width: 35, height: 35,);
+
     return DataRow.byIndex(
       index: index,
       cells:[ 
+        DataCell ( Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.grey,
+              width: 2.0,
+            )
+          ),
+          child: ClipOval( child: image)) ), 
+
+
         DataCell (Text(product.nombre)), 
         DataCell (Text(product.descripcion ?? '')),
         DataCell (Text(product.disponible.toString())),

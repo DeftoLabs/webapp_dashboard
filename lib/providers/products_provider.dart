@@ -7,6 +7,8 @@ class ProductsProvider extends ChangeNotifier {
 
   List<Producto> productos = [];
 
+  bool ascending = true;
+
 
   Future<void> getProducts() async {
     final resp = await CafeApi.httpGet('/productos');
@@ -80,4 +82,24 @@ class ProductsProvider extends ChangeNotifier {
       throw ' Error to Delete the Product ';
     }
   }
+
+  void sort<T> (Comparable<T> Function (Producto producto) getField) {
+
+    productos.sort( ( a,b ) {
+
+      final aValue = getField (a);
+      final bValue = getField (b);
+
+      return ascending 
+      ? Comparable.compare(aValue, bValue)
+      : Comparable.compare(bValue, aValue);
+
+    });
+
+    ascending = !ascending;
+
+    notifyListeners();
+
+  }
+
 }

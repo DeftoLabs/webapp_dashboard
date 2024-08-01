@@ -31,6 +31,8 @@ class _ProductsViewState extends State<ProductsView> {
   Widget build(BuildContext context) {
 
     final productos = Provider.of<ProductsProvider>(context).productos;
+    final productsProvider = Provider.of<ProductsProvider>(context);
+    final productDataSource = ProductsDTS(productsProvider.productos, context);
 
 
     return Container(
@@ -73,13 +75,24 @@ class _ProductsViewState extends State<ProductsView> {
           const SizedBox(height: 10),
 
         PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('Code'),),
-                DataColumn(label: Text('Description'),),
-                DataColumn(label: Text('Stock'),),
-                DataColumn(label: Text('Price')),
-                DataColumn(label: Text('Categorie')),
-                DataColumn(label: Text('Actions')),                
+              columns: [
+                const DataColumn(label: Text('Image'),),
+
+                const DataColumn(label: Text('Code'),),
+
+                DataColumn(label: const Text('Description'), onSort: ( colIndex, _) {
+                  productsProvider.sort((producto) => producto.descripcion.toString());
+                }),
+                DataColumn(label: const Text('Stock'), onSort:  ( colIndex, _) {
+                  productsProvider.sort((producto) => producto.disponible.toString());
+                }),
+                DataColumn(label: const Text('Price'), onSort:  ( colIndex, _) {
+                  productsProvider.sort((producto) => producto.precio);
+                }),
+                DataColumn(label: const Text('Categorie'), onSort:  ( colIndex, _) {
+                 // productsProvider.sort((producto) => producto.categoria);
+                }),
+                const DataColumn(label: Text('Actions')),                
               ], 
               source: ProductsDTS(productos, context,),
               header: const  Text( ' List of Products', maxLines: 2),
