@@ -48,7 +48,7 @@ class _CategoriesViewState extends State<CategoriesView> {
                 DataColumn(label: Text('Actions', textAlign: TextAlign.right), numeric: true),                
               ], 
               source: CategoriesDTS(categorias, context),
-              header: const  Text( ' Products', maxLines: 2),
+              header: const  Text( ' Categories', maxLines: 2),
               onRowsPerPageChanged: (value) {
                 setState(() {
                   _rowsPerPage = value ?? 10;

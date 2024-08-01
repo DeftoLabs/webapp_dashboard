@@ -48,14 +48,16 @@ class _ProductModalState extends State<ProductModal> {
 
   @override
   Widget build(BuildContext context) {
+
     final productProvider = Provider.of<ProductsProvider>(context, listen: false);
+    final categoriesProvier = Provider.of<CategoriesProvier>(context);
 
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: 600,
+        height: 450,
         width: 600,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -167,9 +169,27 @@ class _ProductModalState extends State<ProductModal> {
                 ),
                 const SizedBox(height: 10),
 
+             //     TextFormField(
+             //     initialValue: categoria,
+             //     onChanged: (value) => categoria = value,
+             //     decoration: InputDecoration(
+             //       hintText: 'Category',
+             //       labelText: 'Category',
+             //       labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12),
+             //       hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+             //       focusedBorder: const OutlineInputBorder(
+             //         borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+             //       ),
+             //       enabledBorder: const OutlineInputBorder(
+             //         borderSide: BorderSide(color: Colors.white, width: 1.0),
+             //       ),
+             //     ),
+             //     style: GoogleFonts.plusJakartaSans(color: Colors.white),
+             //   ),
+
                 const SizedBox(height: 10),
 
-               Consumer<CategoriesProvier>(
+                  Consumer<CategoriesProvier>(
                   builder: (context, categoriesProvider, child) {
                     return DropdownButtonFormField<String>(
                       value: categoria,
@@ -189,7 +209,7 @@ class _ProductModalState extends State<ProductModal> {
                       dropdownColor: Colors.grey[800],
                       items: categoriesProvider.categorias.map((category) {
                         return DropdownMenuItem<String>(
-                          value: category.nombre,
+                          value: category.id, 
                           child: Text(category.nombre),
                         );
                       }).toList(),
