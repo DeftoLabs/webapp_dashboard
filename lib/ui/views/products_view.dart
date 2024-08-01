@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:web_dashboard/datatables/products_datasource.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
+
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 import 'package:web_dashboard/ui/modals/product_modal.dart';
@@ -30,6 +31,7 @@ class _ProductsViewState extends State<ProductsView> {
 
     final productos = Provider.of<ProductsProvider>(context).productos;
 
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -48,7 +50,7 @@ class _ProductsViewState extends State<ProductsView> {
                 DataColumn(label: Text('Categorie')),
                 DataColumn(label: Text('Actions')),                
               ], 
-              source: ProductsDTS(productos, context),
+              source: ProductsDTS(productos, context,),
               header: const  Text( ' List of Products', maxLines: 2),
               onRowsPerPageChanged: (value) {
                 setState(() {

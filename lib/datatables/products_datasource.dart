@@ -30,8 +30,7 @@ class ProductsDTS extends DataTableSource {
               IconButton(
                 icon: const Icon(Icons.edit_outlined),
                 onPressed: (){
-                  showModalBottomSheet(
-                    backgroundColor: Colors.transparent,
+                  showDialog(
                     context: context, 
                     builder: ( _ ) => ProductModal(producto: product));
                 } 

@@ -50,7 +50,6 @@ class _ProductModalState extends State<ProductModal> {
   Widget build(BuildContext context) {
 
     final productProvider = Provider.of<ProductsProvider>(context, listen: false);
-    final categoriesProvier = Provider.of<CategoriesProvier>(context);
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -74,7 +73,7 @@ class _ProductModalState extends State<ProductModal> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.producto?.nombre ?? 'Add Product',
+                      widget.producto?.descripcion ?? 'Add Product',
                       style: CustomLabels.h1.copyWith(color: Colors.white),
                     ),
                     IconButton(
@@ -167,26 +166,6 @@ class _ProductModalState extends State<ProductModal> {
                   ),
                   style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 ),
-                const SizedBox(height: 10),
-
-             //     TextFormField(
-             //     initialValue: categoria,
-             //     onChanged: (value) => categoria = value,
-             //     decoration: InputDecoration(
-             //       hintText: 'Category',
-             //       labelText: 'Category',
-             //       labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12),
-             //       hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
-             //       focusedBorder: const OutlineInputBorder(
-             //         borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
-             //       ),
-             //       enabledBorder: const OutlineInputBorder(
-             //         borderSide: BorderSide(color: Colors.white, width: 1.0),
-             //       ),
-             //     ),
-             //     style: GoogleFonts.plusJakartaSans(color: Colors.white),
-             //   ),
-
                 const SizedBox(height: 10),
 
                   Consumer<CategoriesProvier>(
