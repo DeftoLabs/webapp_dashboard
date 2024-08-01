@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'package:web_dashboard/datatables/products_datasource.dart';
@@ -37,7 +38,37 @@ class _ProductsViewState extends State<ProductsView> {
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          Text('Products', style: CustomLabels.h1,),
+           Row(
+            children: [
+              const SizedBox(height: 50),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text('Products', style: CustomLabels.h1,),
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(color: const Color.fromRGBO(177, 255, 46, 100), 
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                    width: 0.6,
+                  )
+                  ),
+                  
+                  child: TextButton.icon(
+                    label: Text('PDF List', style: GoogleFonts.plusJakartaSans(color: const Color.fromARGB(255, 0, 0, 0)),) ,
+                    onPressed: (){
+                      //TODO Create .pdf list
+                    }, 
+                    icon: const Icon(Icons.share, color: Color.fromARGB(255, 0, 0, 0),)),
+                ),
+              ),
+              const SizedBox(width: 10,),
+            ],
+          ),
 
           const SizedBox(height: 10),
 
@@ -59,6 +90,8 @@ class _ProductsViewState extends State<ProductsView> {
               },
               rowsPerPage: _rowsPerPage,
               actions: [
+                IconButton(onPressed: (){}, icon:const Icon(Icons.search)),
+                const SizedBox(width: 20,),
                 CustomIconButton(
                   onPressed: (){
                    showDialog(
@@ -68,7 +101,7 @@ class _ProductsViewState extends State<ProductsView> {
                               },
                             );
                   }, 
-                  text:'Create', 
+                  text:'Create New Product', 
                   icon: Icons.add_outlined)
               ],
               )
