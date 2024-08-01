@@ -75,26 +75,35 @@ class _ProductsViewState extends State<ProductsView> {
           const SizedBox(height: 10),
 
         PaginatedDataTable(
+              sortAscending: productsProvider.ascending,
+              sortColumnIndex: productsProvider.sortColumnIndex,
+
               columns: [
                 const DataColumn(label: Text('Image'),),
 
                 const DataColumn(label: Text('Code'),),
 
                 DataColumn(label: const Text('Description'), onSort: ( colIndex, _) {
+                  productsProvider.sortColumnIndex = colIndex;
                   productsProvider.sort((producto) => producto.descripcion.toString());
                 }),
                 DataColumn(label: const Text('Stock'), onSort:  ( colIndex, _) {
+                  productsProvider.sortColumnIndex = colIndex;
                   productsProvider.sort((producto) => producto.disponible.toString());
                 }),
                 DataColumn(label: const Text('Price'), onSort:  ( colIndex, _) {
+                  productsProvider.sortColumnIndex = colIndex;
                   productsProvider.sort((producto) => producto.precio);
                 }),
-                DataColumn(label: const Text('Categorie'), onSort:  ( colIndex, _) {
-                 // productsProvider.sort((producto) => producto.categoria);
+                DataColumn(label: const Text('Categorie'), onSort: (colIndex, _) {
+                //  productsProvider.sortColumnIndex = colIndex;
+                //  productsProvider.sort((producto) => producto.categoria.toString());
                 }),
+
+
                 const DataColumn(label: Text('Actions')),                
               ], 
-              source: ProductsDTS(productos, context,),
+              source: productDataSource,
               header: const  Text( ' List of Products', maxLines: 2),
               onRowsPerPageChanged: (value) {
                 setState(() {

@@ -8,6 +8,7 @@ class ProductsProvider extends ChangeNotifier {
   List<Producto> productos = [];
 
   bool ascending = true;
+  int? sortColumnIndex;
 
 
   Future<void> getProducts() async {
