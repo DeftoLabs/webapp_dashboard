@@ -1,6 +1,16 @@
 import 'dart:convert';
 
 class Producto {
+  String id;
+  String nombre;
+  bool estado;
+  User usuario;
+  double precio;
+  Categoria categoria;
+  String? descripcion;
+  bool disponible;
+  String? img;
+  
   Producto({
     required this.id,
     required this.nombre,
@@ -13,19 +23,8 @@ class Producto {
     this.img,
   });
 
-  String id;
-  String nombre;
-  bool estado;
-  User usuario;
-  double precio;
-  Categoria categoria;
-  String? descripcion;
-  bool disponible;
-  String? img;
+ 
 
-  factory Producto.fromJson(String str) => Producto.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
 
   factory Producto.fromMap(Map<String, dynamic> json) => Producto(
     id: json["_id"],
@@ -51,10 +50,29 @@ class Producto {
     "img": img,
   };
 
-  @override
-  String toString() {
-    return 'Producto: $nombre, Precio: $precio, Disponible: $disponible';
-  }
+  Producto copyWith({
+    String? id,
+    String? nombre,
+    bool? estado,
+    User? usuario,
+    double? precio,
+    Categoria? categoria,
+    String? descripcion,
+    bool? disponible,
+    String? img,
+  }) { return Producto(
+    id: id ?? this.id,
+      nombre: nombre ?? this.nombre,
+      estado: estado ?? this.estado,
+      usuario: usuario ?? this.usuario,
+      precio: precio ?? this.precio,
+      categoria: categoria ?? this.categoria,
+      descripcion: descripcion ?? this.descripcion,
+      disponible: disponible ?? this.disponible,
+      img: img ?? this.img,
+    );
+    }
+
 }
 
 class Categoria {

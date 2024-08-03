@@ -30,7 +30,7 @@ class _ProductsViewState extends State<ProductsView> {
   @override
   Widget build(BuildContext context) {
 
-    final productos = Provider.of<ProductsProvider>(context).productos;
+  
     final productsProvider = Provider.of<ProductsProvider>(context);
     final productDataSource = ProductsDTS(productsProvider.productos, context);
 
@@ -120,6 +120,7 @@ class _ProductsViewState extends State<ProductsView> {
                               context: context,
                               builder: (BuildContext context) {
                                 return const ProductModal(producto: null);
+                                
                               },
                             );
                   }, 

@@ -1,11 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/products_response.dart';
 import 'package:web_dashboard/models/products.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 class ProductsProvider extends ChangeNotifier {
-
+  
+  Producto? producto;
   List<Producto> productos = [];
+
 
   bool ascending = true;
   int? sortColumnIndex;
@@ -103,4 +108,22 @@ class ProductsProvider extends ChangeNotifier {
 
   }
 
+  // Error en el Product Provider
+
+Future<void> uploadImage(String path, Uint8List bytes) async {
+  try {
+    final response = await CafeApi.uploadImage(path, bytes);
+    final imageUrl = response['img']; 
+    if (producto != null) {
+      producto = producto!.copyWith(img: imageUrl); 
+    notifyListeners();
+    }
+    NotificationService.showSnackBa('Image Uploaded successfully');
+  } catch (e) {
+    print('Error uploading image: $e');
+    NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
+  }
+ 
+}
+ 
 }

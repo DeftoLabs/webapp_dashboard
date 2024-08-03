@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -114,5 +115,27 @@ class CafeApi {
       throw Exception('Error validating email: $e');
     }
   }
+
+// Error del Product Provider
+
+
+static Future<Map<String, dynamic>> uploadImage(String path, Uint8List bytes) async {
+  final formData = FormData.fromMap({
+    'archivo': MultipartFile.fromBytes(bytes)
+  });
+
+  try {
+    final resp = await _dio.put(path, data: formData);
+    if (resp.statusCode == 200) {
+      return resp.data is Map<String, dynamic> 
+        ? resp.data as Map<String, dynamic> 
+        : json.decode(resp.data);
+    } else {
+      throw Exception('Failed to upload image: ${resp.statusCode}');
+    }
+  } catch (e) {
+    throw Exception('Error in the PUT image: $e');
+  }
+}
 
 }
