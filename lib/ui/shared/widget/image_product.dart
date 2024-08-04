@@ -26,11 +26,14 @@ class ImageProductState extends State<ImageProduct> {
   Widget build(BuildContext context) {
    
 
+
     final productProvider = Provider.of<ProductsProvider>(context);
+    final productImage = producto?.img;
+    print('Image: ${productImage}');
 
     final image = (producto!.img == null 
     ?  const Image(image: AssetImage('noimage.jpeg')) 
-    :  FadeInImage.assetNetwork(placeholder: 'load.gif', image: producto!.img!)
+    :  FadeInImage.assetNetwork(placeholder: 'load.gif', image: productImage!)
     ) ;
     
 
@@ -76,7 +79,7 @@ class ImageProductState extends State<ImageProduct> {
                               final resp = await productProvider.uploadImage('/uploads/productos/${producto!.id}',result.files.first.bytes!,);
                               Navigator.of(context).pop();
                             } else {
-                              //TODO: SnackBar: Error al cargar imagen
+                            NotificationService.showSnackBarError('Failed to Upload Image');
                             }
                           }}),
                       ),
@@ -93,5 +96,3 @@ class ImageProductState extends State<ImageProduct> {
       ));
   }
 }
-
-

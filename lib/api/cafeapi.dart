@@ -130,9 +130,9 @@ static Future<Map<String, dynamic>> uploadImage(String path, Uint8List bytes) as
       return resp.data is Map<String, dynamic> 
         ? resp.data as Map<String, dynamic> 
         : json.decode(resp.data);
-    } else {
+    }else {
       throw Exception('Failed to upload image: ${resp.statusCode}');
-    }
+    } 
   } catch (e) {
     throw Exception('Error in the PUT image: $e');
   }

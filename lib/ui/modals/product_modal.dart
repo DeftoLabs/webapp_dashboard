@@ -25,6 +25,8 @@ class _ProductModalState extends State<ProductModal> {
   String? id;
   bool disponible = true;
   String? categoria;
+  String? img;
+  
 
   final _precioController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -38,19 +40,17 @@ class _ProductModalState extends State<ProductModal> {
     id = widget.producto?.id;
     disponible = widget.producto?.disponible ?? true;
     categoria = widget.producto?.categoria.id;
+    img = widget.producto?.img;
 
     _precioController.text = precio.toString();
 
-    final categoriesProvider =
-        Provider.of<CategoriesProvier>(context, listen: false);
+    final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
     categoriesProvider.getCategories();
   }
 
   @override
   Widget build(BuildContext context) {
-    final productProvider =
-        Provider.of<ProductsProvider>(context, listen: false);
-
+    final productProvider = Provider.of<ProductsProvider>(context, listen: false);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -90,8 +90,11 @@ class _ProductModalState extends State<ProductModal> {
                     1: FlexColumnWidth(),
                   },
                   children: [
-                    TableRow(children: [
-                       ImageProduct(producto: widget.producto),
+                    TableRow(
+                      children: [
+                      ChangeNotifierProvider.value(
+                        value: productProvider,
+                        child: ImageProduct(producto: widget.producto)),
                       Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
@@ -303,5 +306,3 @@ class _ProductModalState extends State<ProductModal> {
     );
   }
 }
-
-

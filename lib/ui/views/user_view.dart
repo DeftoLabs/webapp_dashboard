@@ -348,9 +348,8 @@ class _AvatarContainer extends StatelessWidget {
                             Provider.of<UsersProvider>(context, listen: false).refreshUser(newUser);                
                             Navigator.of(context).pop();
                           } else {
-                            
-                            // User canceled the picker
-}
+                            NotificationService.showSnackBarError('Failed to Create User');                            // User canceled the picker
+                          }
                         },
                       ),
                     ),
