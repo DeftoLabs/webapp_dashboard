@@ -1,3 +1,7 @@
+
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -6,19 +10,19 @@ import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
+import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
-import 'package:web_dashboard/ui/shared/widget/image_product.dart';
 
-class ProductModal extends StatefulWidget {
+class ProductNewModal extends StatefulWidget {
   final Producto? producto;
 
-  const ProductModal({super.key, this.producto});
+  const ProductNewModal({super.key, this.producto});
 
   @override
-  State<ProductModal> createState() => _ProductModalState();
+  State<ProductNewModal> createState() => _ProductNewModalState();
 }
 
-class _ProductModalState extends State<ProductModal> {
+class _ProductNewModalState extends State<ProductNewModal> {
   String nombre = '';
   double precio = 0.0;
   String? descripcion;
@@ -136,7 +140,7 @@ class _ProductModalState extends State<ProductModal> {
                       children: [
                       ChangeNotifierProvider.value(
                         value: productProvider,
-                        child: ImageProduct(producto: widget.producto)),
+                        child: _ImageNewProduct()),
                       Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
@@ -352,4 +356,90 @@ class _ProductModalState extends State<ProductModal> {
 }
 }
 
-   
+class _ImageNewProduct extends StatefulWidget {
+  @override
+  _ImageNewProductState createState() => _ImageNewProductState();
+}
+
+class _ImageNewProductState extends State<_ImageNewProduct> {
+  Uint8List? _selectedImageBytes;
+
+  @override
+  Widget build(BuildContext context) {
+    return WhiteCard(
+      width: 250,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 150,
+              height: 160,
+              child: Stack(
+                children: [
+                  // Mostrar la imagen seleccionada o la imagen predeterminada
+                  ClipOval(
+                    child: _selectedImageBytes != null
+                        ? Image.memory(
+                            _selectedImageBytes!,
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 160,
+                          )
+                        : Image.asset(
+                            'assets/noimage.jpeg',
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 160,
+                          ),
+                  ),
+                  Positioned(
+                    bottom: 5,
+                    right: 5,
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(color: Colors.white, width: 5),
+                      ),
+                      child: FloatingActionButton(
+                        backgroundColor: Colors.indigo,
+                        elevation: 0,
+                        child: const Icon(
+                          Icons.camera_alt_outlined,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                        onPressed: () async {
+                          FilePickerResult? result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['jpg', 'jpeg', 'png'],
+                            allowMultiple: false,
+                          );
+
+                          if (result != null) {
+                            // Obtener el contenido en bytes del archivo
+                            final bytes = result.files.single.bytes;
+
+                            if (bytes != null) {
+                              setState(() {
+                                _selectedImageBytes = bytes;
+                              });
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

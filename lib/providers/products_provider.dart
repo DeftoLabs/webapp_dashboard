@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ class ProductsProvider extends ChangeNotifier {
 
   bool ascending = true;
   int? sortColumnIndex;
-
 
 
   Future<void> getProducts() async {
@@ -115,9 +115,10 @@ Future uploadImage(String path, Uint8List bytes) async {
     final imageUrl = response['img']; 
     if (producto != null) {
       producto = producto!.copyWith(img: imageUrl); 
+      notifyListeners();
     }
-    NotificationService.showSnackBa('Image Uploaded successfully');
-    print('Image Provider: ${imageUrl}');
+    NotificationService.showSnackBa('Image Uploaded Successfully');
+    await getProducts();
     notifyListeners();
   } catch (e) {
     NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
