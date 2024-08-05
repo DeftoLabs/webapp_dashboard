@@ -7,6 +7,10 @@ class CategoriesProvier extends ChangeNotifier {
 
   List <Categoria> categorias = [];
 
+  bool ascending = true;
+  int? sortColumnIndex;
+
+
 
   getCategories() async {
     final resp = await CafeApi.httpGet('/categorias');
@@ -55,6 +59,25 @@ class CategoriesProvier extends ChangeNotifier {
     } catch (e){
       throw ' Error to Delete the Category ';
     }
+
+  }
+
+  void sort<T> (Comparable<T> Function (Categoria categorias) getField) {
+
+    categorias.sort( ( a,b ) {
+
+      final aValue = getField (a);
+      final bValue = getField (b);
+
+      return ascending 
+      ? Comparable.compare(aValue, bValue)
+      : Comparable.compare(bValue, aValue);
+
+    });
+
+    ascending = !ascending;
+
+    notifyListeners();
 
   }
 }

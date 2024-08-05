@@ -31,6 +31,7 @@ class _CategoriesViewState extends State<CategoriesView> {
   Widget build(BuildContext context) {
 
     final categorias = Provider.of<CategoriesProvier>(context).categorias;
+    final categoriasProvider = Provider.of<CategoriesProvier>(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -42,10 +43,15 @@ class _CategoriesViewState extends State<CategoriesView> {
           const SizedBox(height: 10),
 
         PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Expanded(child:Text('Categories')),),
-                DataColumn(label: Text('Create by', textAlign: TextAlign.right), numeric: true),
-                DataColumn(label: Text('Actions', textAlign: TextAlign.right), numeric: true),                
+              sortAscending: categoriasProvider.ascending,
+              sortColumnIndex: categoriasProvider.sortColumnIndex,
+              columns:[
+                DataColumn(label: const Expanded(child: Text('Categories')), onSort:(colIndex, _) {
+                  categoriasProvider.sortColumnIndex = colIndex;
+                  categoriasProvider.sort((categorias) => categorias.nombre);
+                }),
+                const DataColumn(label: Text('Create by', textAlign: TextAlign.right), numeric: true),
+                const DataColumn(label: Text('Actions', textAlign: TextAlign.right), numeric: true),                
               ], 
               source: CategoriesDTS(categorias, context),
               header: const  Text( ' Categories', maxLines: 2),
