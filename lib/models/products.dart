@@ -61,7 +61,7 @@ class Producto {
     bool? disponible,
     String? img,
   }) { return Producto(
-    id: id ?? this.id,
+      id: id ?? this.id,
       nombre: nombre ?? this.nombre,
       estado: estado ?? this.estado,
       usuario: usuario ?? this.usuario,

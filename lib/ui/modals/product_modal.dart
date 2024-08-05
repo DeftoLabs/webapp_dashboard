@@ -281,9 +281,9 @@ class _ProductModalState extends State<ProductModal> {
                               disponible: disponible,
                               categoria: categoria!,
                             );
-                            NotificationService.showSnackBa(
-                                '$descripcion Updated');
+                            NotificationService.showSnackBa('$descripcion Updated');
                           }
+                          await productProvider.getProducts();
                           if (mounted) Navigator.of(context).pop();
                         } catch (e) {
                           print('Error saving product: $e');

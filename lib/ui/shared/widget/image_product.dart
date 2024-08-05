@@ -31,9 +31,9 @@ class ImageProductState extends State<ImageProduct> {
     final productImage = producto?.img;
     print('Image: ${productImage}');
 
-    final image = (producto!.img == null 
+    final image = (productImage == null 
     ?  const Image(image: AssetImage('noimage.jpeg')) 
-    :  FadeInImage.assetNetwork(placeholder: 'load.gif', image: productImage!)
+    :  FadeInImage.assetNetwork(placeholder: 'load.gif', image: productImage)
     ) ;
     
 
@@ -76,7 +76,7 @@ class ImageProductState extends State<ImageProduct> {
                               if (result != null) {
                               if (producto != null) {
                               NotificationService.showBusyIndicator(context);
-                              final resp = await productProvider.uploadImage('/uploads/productos/${producto!.id}',result.files.first.bytes!,);
+                              final resp = await productProvider.uploadImage('/uploads/productos/${producto!.id}',result.files.first.bytes!,);              
                               Navigator.of(context).pop();
                             } else {
                             NotificationService.showSnackBarError('Failed to Upload Image');

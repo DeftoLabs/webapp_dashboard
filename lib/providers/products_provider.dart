@@ -16,6 +16,7 @@ class ProductsProvider extends ChangeNotifier {
   int? sortColumnIndex;
 
 
+
   Future<void> getProducts() async {
     final resp = await CafeApi.httpGet('/productos');
     final productsResp = ProductsResponse.fromMap(resp);
@@ -108,7 +109,7 @@ class ProductsProvider extends ChangeNotifier {
 
   }
 
-Future<void> uploadImage(String path, Uint8List bytes) async {
+Future uploadImage(String path, Uint8List bytes) async {
   try {
     final response = await CafeApi.uploadImage(path, bytes);
     final imageUrl = response['img']; 
@@ -121,7 +122,6 @@ Future<void> uploadImage(String path, Uint8List bytes) async {
   } catch (e) {
     NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
   }
- 
 }
 
 }

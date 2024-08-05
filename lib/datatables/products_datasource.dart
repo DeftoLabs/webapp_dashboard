@@ -16,7 +16,14 @@ class ProductsDTS extends DataTableSource {
 
     final product = productos[index];
 
-    const image = Image( image: AssetImage('noimage.jpeg'), width: 35, height: 35,);
+
+
+    final image = (product.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35,) 
+    : FadeInImage.assetNetwork(
+      placeholder: 'load.gif', 
+      image: product.img!, width: 35, height: 35,);
+
 
     return DataRow.byIndex(
       index: index,
