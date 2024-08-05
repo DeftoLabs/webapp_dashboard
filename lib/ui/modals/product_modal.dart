@@ -23,12 +23,13 @@ class _ProductModalState extends State<ProductModal> {
   double precio = 0.0;
   String? descripcion;
   String? id;
-  bool disponible = true;
+  double stock = 0.0;
   String? categoria;
   String? img;
   
 
   final _precioController = TextEditingController();
+  final _stockController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -43,11 +44,12 @@ class _ProductModalState extends State<ProductModal> {
     precio = producto?.precio ?? 0.0;
     descripcion = producto?.descripcion;
     id = producto?.id;
-    disponible = producto?.disponible ?? true;
+    stock = producto?.stock ?? 0.0;
     categoria = producto?.categoria.id;
     img = producto?.img;
 
     _precioController.text = precio.toString();
+    _stockController.text  = stock.toString();
 
     final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
     categoriesProvider.getCategories();
@@ -98,7 +100,7 @@ class _ProductModalState extends State<ProductModal> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: 470,
+        height: 500,
         width: 800,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -177,6 +179,52 @@ class _ProductModalState extends State<ProductModal> {
                                     )
                                   else
                                     _buildNonEditableField('BarCode & Internal Code', nombre),
+                              const SizedBox(height: 10),
+                               TextFormField(
+                                controller: _stockController,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
+                                decoration: InputDecoration(
+                                  hintText: 'Stock',
+                                  labelText: 'Stock - (Accept 2 Digits )e.g. 10.20',
+                                  labelStyle: GoogleFonts.plusJakartaSans(
+                                      color: Colors.white, fontSize: 12),
+                                  hintStyle: GoogleFonts.plusJakartaSans(
+                                      color: Colors.white.withOpacity(0.7)),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(177, 255, 46, 100),
+                                        width: 2.0),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 1.0),
+                                  ),
+                                  border: const OutlineInputBorder(),
+                                ),
+                                style: GoogleFonts.plusJakartaSans(
+                                    color: Colors.white),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Stock is required';
+                                  }
+                                  if (!RegExp(r'^\d+(\.\d{1,2})?$')
+                                      .hasMatch(value)) {
+                                    return 'Invalid Stock Format. Use "." for decimals and Max 2 Decimals';
+                                  }
+                                  if (double.tryParse(value) == null) {
+                                    return 'Invalid number';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  if (double.tryParse(value) != null) {
+                                    stock = double.tryParse(value) ?? 0.0;
+                                  }
+                                },
+                              ),
                               const SizedBox(height: 10),
                               TextFormField(
                                 controller: _precioController,
@@ -312,7 +360,7 @@ class _ProductModalState extends State<ProductModal> {
                               nombre: nombre,
                               precio: precio,
                               descripcion: descripcion,
-                              disponible: disponible,
+                              stock: stock,
                               categoria: categoria!,
                             );
                             NotificationService.showSnackBa(
@@ -323,18 +371,16 @@ class _ProductModalState extends State<ProductModal> {
                               nombre: nombre,
                               precio: precio,
                               descripcion: descripcion,
-                              disponible: disponible,
+                              stock: stock,
                               categoria: categoria!,
                             );
                             NotificationService.showSnackBa('$descripcion Updated');
                           }
-                          if (mounted) Navigator.of(context).pop();
+                          if(!context.mounted) return;
+                          Navigator.of(context).pop();
                         } catch (e) {
-                          print('Error saving product: $e');
-                          if (mounted)
-                            NotificationService.showSnackBa(
-                                'Could not save the Product');
-                          if (mounted) Navigator.of(context).pop();
+                          NotificationService.showSnackBa('Could not save the Product');
+                          Navigator.of(context).pop();
                         }
                       }
                     },

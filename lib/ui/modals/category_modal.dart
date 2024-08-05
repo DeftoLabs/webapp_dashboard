@@ -93,7 +93,8 @@ class _CategoryModalState extends State<CategoryModal> {
                       await categoryProvider.updateCategory(id!, nombre);
                       NotificationService.showSnackBa('$nombre Updated');
                     }
-                    if (mounted) Navigator.of(context).pop();
+                    if(!context.mounted) return;
+                    Navigator.of(context).pop();
                   } catch (e) {
                     if (mounted) NotificationService.showSnackBa('Could not save the category');
                     if (mounted) Navigator.of(context).pop();

@@ -60,11 +60,13 @@ class ImageProduct extends StatelessWidget {
                             allowMultiple: false,
                           );
                           if (result != null) {
+                              if(!context.mounted) return;
                               NotificationService.showBusyIndicator(context);
                               await Provider.of<ProductsProvider>(context, listen: false).uploadImage(
                                 '/uploads/productos/${product!.id}',
                                 result.files.first.bytes!,
                               );
+                                if(!context.mounted) return;
                               Navigator.of(context).pop();
                             } else {
                               NotificationService.showSnackBarError('Failed to Upload Image');

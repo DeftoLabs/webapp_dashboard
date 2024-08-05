@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
+// import 'dart:html' as html;
+
+import 'package:universal_html/html.dart' as html;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';

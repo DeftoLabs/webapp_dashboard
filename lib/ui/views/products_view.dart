@@ -5,7 +5,6 @@ import 'package:web_dashboard/datatables/products_datasource.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
-import 'package:web_dashboard/ui/modals/product_modal.dart';
 import 'package:web_dashboard/ui/modals/product_new_modal.dart';
 
 class ProductsView extends StatefulWidget {
@@ -92,7 +91,7 @@ class _ProductsViewState extends State<ProductsView> {
                 }),
                 DataColumn(label: const Text('Stock'), onSort: (colIndex, _) {
                   productsProvider.sortColumnIndex = colIndex;
-                  productsProvider.sort((producto) => producto.disponible.toString());
+                  productsProvider.sort((producto) => producto.stock);
                 }),
                 DataColumn(label: const Text('Price'), onSort: (colIndex, _) {
                   productsProvider.sortColumnIndex = colIndex;

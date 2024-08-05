@@ -28,14 +28,14 @@ class ProductsProvider extends ChangeNotifier {
     required String nombre,
     required double precio,
     String? descripcion,
-    required bool disponible,
+    required double stock,
     required String categoria,
     }) async {
     final data = {
       'nombre': nombre,
       'precio': precio,
       'descripcion': descripcion,
-      'disponible': disponible,
+      'stock': stock,
       'categoria': categoria,
     };
     try{
@@ -53,14 +53,14 @@ class ProductsProvider extends ChangeNotifier {
     required String nombre,
     required double precio,
     String? descripcion,
-    required bool disponible,
+    required double stock,
     required String categoria,
   })  async {
     final data = {
       'nombre': nombre,
       'precio': precio,
       'descripcion': descripcion,
-      'disponible': disponible,
+      'stock': stock,
       'categoria': categoria,
     };
     try{
@@ -70,13 +70,50 @@ class ProductsProvider extends ChangeNotifier {
           product.nombre = nombre;
           product.precio = precio;
           product.descripcion = descripcion;
-          product.disponible = disponible;
+          product.stock = stock;
           product.categoria.id = categoria;
           return product;
       }).toList();
       notifyListeners();
     } catch (e){
       throw ' Error to Update the Product ';
+    }
+  }
+
+    Future<void> newCreateProduct({
+    required String nombre,
+    required double precio,
+    String? descripcion,
+    required bool disponible,
+    required String categoria,
+    Uint8List? imageBytes,
+  }) async {
+    final data = {
+      'nombre': nombre,
+      'precio': precio,
+      'descripcion': descripcion,
+      'disponible': disponible,
+      'categoria': categoria,
+    };
+    
+    try {
+      String? imageUrl;
+      if (imageBytes != null) {
+        final response = await CafeApi.uploadImage('/uploads/productos/${''}', imageBytes);
+        imageUrl = response['img'];
+      }
+
+      
+      if (imageUrl != null) {
+        data['img'] = imageUrl;
+      }
+      
+      final json = await CafeApi.post('/productos', data);
+      final newProduct = Producto.fromMap(json);
+      productos.add(newProduct);
+      notifyListeners();
+    } catch (e) {
+      throw 'Error to create New Product';
     }
   }
 
@@ -122,6 +159,19 @@ Future uploadImage(String path, Uint8List bytes) async {
     notifyListeners();
   } catch (e) {
     NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
+  }
+}
+
+Future <Producto> uploadNewImageProduct ( String path, Uint8List bytes) async {
+  try {
+    final resp = await CafeApi.uploadFile(path, bytes);
+    producto = Producto.fromMap(resp);
+    notifyListeners();
+
+    return producto!;
+  } catch (e) {
+    NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
+    throw 'Error Upload Image';
   }
 }
 

@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'dart:html' as html;
+//import 'dart:html' as html;
+
+import 'package:universal_html/html.dart' as html;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,7 +99,6 @@ class _GpsScreenState extends State<GpsScreen> {
         infoWindow: InfoWindow(title: user.nombre, snippet: user.correo),
       );
       _markers.add(marker);
-      print('Location User Marker: ${user.nombre}, ${user.location?.lat}, ${user.location?.lng}');
     });
   }
 

@@ -20,8 +20,6 @@ class Flurorouter {
   static String gpsRoute        = '/dashboard/gps';
 
   static String productsRoute   = '/dashboard/products';
-  static String productRoute    = '/dashboard/products/:uid';
-  static String newProductRoute = '/dashboard/products/newproduct';
 
   static String categoriesRoute = '/dashboard/categories';
 

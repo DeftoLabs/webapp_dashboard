@@ -9,6 +9,7 @@ class Producto {
   Categoria categoria;
   String? descripcion;
   bool disponible;
+  double stock;
   String? img;
   
   Producto({
@@ -20,6 +21,7 @@ class Producto {
     required this.categoria,
     this.descripcion,
     required this.disponible,
+    required this.stock,
     this.img,
   });
 
@@ -35,6 +37,7 @@ class Producto {
     categoria: Categoria.fromMap(json["categoria"]),
     descripcion: json["descripcion"],
     disponible: json["disponible"] ?? true,
+    stock: json["stock"]?.toDouble() ?? 0.0,
     img: json["img"],
   );
 
@@ -47,6 +50,7 @@ class Producto {
     "categoria": categoria.toMap(),
     "descripcion": descripcion,
     "disponible": disponible,
+    "stock": stock,
     "img": img,
   };
 
@@ -59,6 +63,7 @@ class Producto {
     Categoria? categoria,
     String? descripcion,
     bool? disponible,
+    double? stock,
     String? img,
   }) { return Producto(
       id: id ?? this.id,
@@ -69,6 +74,7 @@ class Producto {
       categoria: categoria ?? this.categoria,
       descripcion: descripcion ?? this.descripcion,
       disponible: disponible ?? this.disponible,
+      stock: stock ?? this.stock,
       img: img ?? this.img,
     );
     }

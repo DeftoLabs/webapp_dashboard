@@ -225,6 +225,7 @@ class _UserViewForm extends StatelessWidget {
                   final saved = await userFormProvider.updateUser();
                   if( saved) {
                     NotificationService.showSnackBa('User Updated');
+                    if(!context.mounted) return;
                     Provider.of<UsersProvider>(context, listen: false).refreshUser(user);
                   } else {
                     NotificationService.showSnackBarError('Error try to Update the User');
@@ -312,8 +313,10 @@ class _AvatarContainer extends StatelessWidget {
                          );
 
                           if (result != null) {
+                            if(!context.mounted) return;
                             NotificationService.showBusyIndicator(context);
                             final newUser = await userFormProvider.uploadImage('/uploads/usuarios/${user.uid}', result.files.first.bytes!);
+                            if(!context.mounted) return;
                             Provider.of<UsersProvider>(context, listen: false).refreshUser(newUser);                
                             Navigator.of(context).pop();
                           } else {
