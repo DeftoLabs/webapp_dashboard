@@ -42,6 +42,7 @@ class ProductsDTS extends DataTableSource {
         DataCell (Text(product.nombre)), 
         DataCell (Text(product.descripcion ?? '')),
         DataCell (Text(product.stock.toString())),
+        DataCell (Text(product.unid)),
         DataCell (Text(product.precio.toString())),
         DataCell (Text(product.categoria.nombre)),                
         DataCell (
@@ -52,7 +53,10 @@ class ProductsDTS extends DataTableSource {
                 onPressed: (){
                   showDialog(
                     context: context, 
-                    builder: ( _ ) => ProductModal(producto: product));
+                    builder: ( _ ) => ChangeNotifierProvider.value(
+                      value: Provider.of<ProductsProvider>(context),
+                      child: ProductModal(producto: product,)
+                      ));
                 } 
               ),
               IconButton(

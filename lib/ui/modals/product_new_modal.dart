@@ -25,17 +25,18 @@ class ProductNewModal extends StatefulWidget {
 class _ProductNewModalState extends State<ProductNewModal> {
 
    Uint8List? _selectedImageBytes;
-
   String nombre = '';
   double precio = 0.0;
   String? descripcion;
   String? id;
-  bool disponible = true;
+  double stock = 0.0;
+  String? unid;
   String? categoria;
   String? img;
   
 
   final _precioController = TextEditingController();
+  final _stockController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -45,16 +46,18 @@ class _ProductNewModalState extends State<ProductNewModal> {
   }
 
    void _initializeProduct() {
-    final producto = widget.producto;
+     final producto = widget.producto;
     nombre = producto?.nombre ?? '';
     precio = producto?.precio ?? 0.0;
     descripcion = producto?.descripcion;
     id = producto?.id;
-    disponible = producto?.disponible ?? true;
+    stock = producto?.stock ?? 0.0;
+    unid = producto?.unid;
     categoria = producto?.categoria.id;
     img = producto?.img;
 
     _precioController.text = precio.toString();
+    _stockController.text  = stock.toString();
 
     final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
     categoriesProvider.getCategories();
@@ -105,7 +108,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: 470,
+        height: 540,
         width: 800,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -259,6 +262,105 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   else
                                     _buildNonEditableField('BarCode & Internal Code', nombre),
                               const SizedBox(height: 10),
+                                 TextFormField(
+                                controller: _stockController,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
+                                decoration: InputDecoration(
+                                  hintText: 'Stock',
+                                  labelText: 'Stock - (Accept 2 Digits )e.g. 10.20',
+                                  labelStyle: GoogleFonts.plusJakartaSans(
+                                      color: Colors.white, fontSize: 12),
+                                  hintStyle: GoogleFonts.plusJakartaSans(
+                                      color: Colors.white.withOpacity(0.7)),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(177, 255, 46, 100),
+                                        width: 2.0),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 1.0),
+                                  ),
+                                  border: const OutlineInputBorder(),
+                                ),
+                                style: GoogleFonts.plusJakartaSans(
+                                    color: Colors.white),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Stock is required';
+                                  }
+                                  if (!RegExp(r'^\d+(\.\d{1,2})?$')
+                                      .hasMatch(value)) {
+                                    return 'Invalid Stock Format. Use "." for decimals and Max 2 Decimals';
+                                  }
+                                  if (double.tryParse(value) == null) {
+                                    return 'Invalid number';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  if (double.tryParse(value) != null) {
+                                    stock = double.tryParse(value) ?? 0.0;
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 10),
+
+                              Consumer<ProductsProvider>(
+                                    builder: (context, productProvider, child) {
+                                      return DropdownButtonFormField<String>(
+                                        value: unid,
+                                        decoration: InputDecoration(
+                                          hintText: 'Unit',
+                                          labelText: 'Unit',
+                                          labelStyle: GoogleFonts.plusJakartaSans(
+                                              color: Colors.white, fontSize: 12),
+                                          hintStyle: GoogleFonts.plusJakartaSans(
+                                              color: Colors.white.withOpacity(0.7)),
+                                          focusedBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color.fromRGBO(
+                                                    177, 255, 46, 100),
+                                                width: 2.0),
+                                          ),
+                                          enabledBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.white, width: 2.0),
+                                          ),
+                                          border: const OutlineInputBorder(),
+                                        ),
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.white,
+                                        ),
+                                        dropdownColor:
+                                            const Color.fromARGB(255, 58, 60, 65),
+                                        items: productProvider.units.map((unit) {
+                                          return DropdownMenuItem<String>(
+                                            value: unit,
+                                            child: Text(unit,
+                                                style:
+                                                    const TextStyle(color: Colors.white)),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            unid = value;
+                                          });
+                                        },
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Unit is required';
+                                          }
+                                          return null;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(height: 10),                                                                                                                                    
                               TextFormField(
                                 controller: _precioController,
                                 keyboardType:
@@ -394,7 +496,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                               nombre: nombre,
                               precio: precio,
                               descripcion: descripcion,
-                              disponible: disponible,
+                              stock: stock ,
+                              unid: unid!,
                               categoria: categoria!,
                               imageBytes: imageBytes, 
                             );

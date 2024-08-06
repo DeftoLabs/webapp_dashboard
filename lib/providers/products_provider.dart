@@ -11,6 +11,8 @@ class ProductsProvider extends ChangeNotifier {
   
   Producto? producto;
   List<Producto> productos = [];
+  final List<String> _units = ['Box', 'Kgs', 'Lbs', 'Units', 'Pkg'];
+  List<String> get units => _units;
 
 
   bool ascending = true;
@@ -24,11 +26,19 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> getUnits() async {
+    final resp = await CafeApi.httpGet('/productos');
+    final productsResp = ProductsResponse.fromMap(resp);
+    productos = [...productsResp.productos];
+    notifyListeners();
+  }
+
   Future newProduct ({
     required String nombre,
     required double precio,
     String? descripcion,
     required double stock,
+    required String unid,
     required String categoria,
     }) async {
     final data = {
@@ -36,6 +46,7 @@ class ProductsProvider extends ChangeNotifier {
       'precio': precio,
       'descripcion': descripcion,
       'stock': stock,
+      'unid': unid,
       'categoria': categoria,
     };
     try{
@@ -54,6 +65,7 @@ class ProductsProvider extends ChangeNotifier {
     required double precio,
     String? descripcion,
     required double stock,
+    required String unid,
     required String categoria,
   })  async {
     final data = {
@@ -61,6 +73,7 @@ class ProductsProvider extends ChangeNotifier {
       'precio': precio,
       'descripcion': descripcion,
       'stock': stock,
+      'unid': unid,
       'categoria': categoria,
     };
     try{
@@ -84,7 +97,8 @@ class ProductsProvider extends ChangeNotifier {
     required String nombre,
     required double precio,
     String? descripcion,
-    required bool disponible,
+    required double stock,
+    required String unid,
     required String categoria,
     Uint8List? imageBytes,
   }) async {
@@ -92,7 +106,8 @@ class ProductsProvider extends ChangeNotifier {
       'nombre': nombre,
       'precio': precio,
       'descripcion': descripcion,
-      'disponible': disponible,
+      'stock': stock,
+      'unid': unid,
       'categoria': categoria,
     };
     
@@ -174,5 +189,7 @@ Future <Producto> uploadNewImageProduct ( String path, Uint8List bytes) async {
     throw 'Error Upload Image';
   }
 }
+
+
 
 }

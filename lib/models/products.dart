@@ -10,6 +10,7 @@ class Producto {
   String? descripcion;
   bool disponible;
   double stock;
+  String unid;
   String? img;
   
   Producto({
@@ -22,6 +23,7 @@ class Producto {
     this.descripcion,
     required this.disponible,
     required this.stock,
+    required this.unid,
     this.img,
   });
 
@@ -38,6 +40,7 @@ class Producto {
     descripcion: json["descripcion"],
     disponible: json["disponible"] ?? true,
     stock: json["stock"]?.toDouble() ?? 0.0,
+    unid: json["unid"] ?? '',
     img: json["img"],
   );
 
@@ -51,6 +54,7 @@ class Producto {
     "descripcion": descripcion,
     "disponible": disponible,
     "stock": stock,
+    "unid": unid,
     "img": img,
   };
 
@@ -64,6 +68,7 @@ class Producto {
     String? descripcion,
     bool? disponible,
     double? stock,
+    String? unid,
     String? img,
   }) { return Producto(
       id: id ?? this.id,
@@ -75,6 +80,7 @@ class Producto {
       descripcion: descripcion ?? this.descripcion,
       disponible: disponible ?? this.disponible,
       stock: stock ?? this.stock,
+      unid: unid ?? this.unid,
       img: img ?? this.img,
     );
     }
