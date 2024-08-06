@@ -18,12 +18,12 @@ class ImageProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = producto; 
 
-    final image = (product?.img == null
-        ? const Image(image: AssetImage('noimage.jpeg'))
-        : FadeInImage.assetNetwork(
-            placeholder: 'load.gif',
-            image: product!.img!,
-          ));
+
+    final image = (product?.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg')) 
+    : FadeInImage.assetNetwork(
+      placeholder: 'load.gif', 
+      image: product!.img!);
 
     return WhiteCard(
       width: 250,

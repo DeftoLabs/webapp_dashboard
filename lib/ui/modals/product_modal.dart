@@ -7,6 +7,7 @@ import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
+import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 import 'package:web_dashboard/ui/shared/widget/image_product.dart';
 import 'package:web_dashboard/ui/views/products_view.dart';
@@ -136,9 +137,51 @@ class _ProductModalState extends State<ProductModal> {
                     },
                     children: [
                       TableRow(children: [
-                        ChangeNotifierProvider.value(
-                            value: productProvider,
-                            child: ImageProduct(producto: widget.producto)),
+                        Column(
+                          children: [
+                            ChangeNotifierProvider.value(
+                              value: productProvider,
+                              child: ImageProduct(producto: widget.producto),
+                            ),
+                            WhiteCard(
+                                width: 250,
+                                child: SizedBox(
+                                    width: double.infinity,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        RichText(
+                                          textAlign: TextAlign.center,
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text:
+                                                    'Recommended Image Size: ',
+                                                style:
+                                                    DefaultTextStyle.of(context)
+                                                        .style,
+                                              ),
+                                              TextSpan(
+                                                text: '450x450 Pixels',
+                                                style:
+                                                    DefaultTextStyle.of(context)
+                                                        .style
+                                                        .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20)
+                                      ],
+                                    ))),
+                          ],
+                        ),
                         Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
@@ -182,7 +225,6 @@ class _ProductModalState extends State<ProductModal> {
                                   _buildNonEditableField(
                                       'BarCode & Internal Code', nombre),
                                 const SizedBox(height: 10),
-                                
                                 TextFormField(
                                   controller: _stockController,
                                   keyboardType:
@@ -230,7 +272,6 @@ class _ProductModalState extends State<ProductModal> {
                                   },
                                 ),
                                 const SizedBox(height: 10),
-
                                 Consumer<ProductsProvider>(
                                   builder: (context, productProvider, child) {
                                     return DropdownButtonFormField<String>(
@@ -284,7 +325,6 @@ class _ProductModalState extends State<ProductModal> {
                                   },
                                 ),
                                 const SizedBox(height: 10),
-
                                 TextFormField(
                                   controller: _precioController,
                                   keyboardType:
@@ -441,11 +481,19 @@ class _ProductModalState extends State<ProductModal> {
                                   '$descripcion Updated');
                             }
                             if (!context.mounted) return;
-                          Navigator.push(context, PageTransition( type: PageTransitionType.rightToLeft, child: const ProductsView()));
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: const ProductsView()));
                           } catch (e) {
                             NotificationService.showSnackBa(
                                 'Could not save the Product');
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> const ProductsView() ));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ProductsView()));
                           }
                         }
                       },
