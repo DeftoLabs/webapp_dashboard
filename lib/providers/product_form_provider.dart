@@ -50,7 +50,7 @@ Future updateProduct() async {
     'descripcion': producto!.descripcion,
     'stock': producto!.stock,
     'unid': producto!.unid,
-   // 'categoria': producto!.categoria,
+    'categoria': producto!.categoria.id,
   };
 
   try {

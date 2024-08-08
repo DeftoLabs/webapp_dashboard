@@ -142,14 +142,19 @@ class _PriceProductView extends StatelessWidget {
   }
 }
 
-class _ProductFormView extends StatelessWidget {
+class _ProductFormView extends StatefulWidget {
+  @override
+  State<_ProductFormView> createState() => _ProductFormViewState();
+}
+
+class _ProductFormViewState extends State<_ProductFormView> {
   @override
   Widget build(BuildContext context) {
     final productFormProvider = Provider.of<ProductFormProvider>(context);
     final producto = productFormProvider.producto!;
 
-    // final categoriesProvider = Provider.of<CategoriesProvier>(context);
-    // categoriesProvider.getCategories();
+    final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
+    categoriesProvider.getCategories();
 
     return WhiteCardColor(
         title: 'General Information',
@@ -292,48 +297,49 @@ class _ProductFormView extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                //       Consumer<CategoriesProvier>(
-                //         builder: (context, categoriesProvider, child) {
-                //           return DropdownButtonFormField<String>(
-                //             value: producto.categoria.id,
-                //             decoration: InputDecoration(
-                //               hintText: 'Category',
-                //               labelText: 'Category',
-                //               labelStyle: GoogleFonts.plusJakartaSans(
-                //                   color: Colors.white, fontSize: 12),
-                //               hintStyle: GoogleFonts.plusJakartaSans(
-                //                   color: Colors.white.withOpacity(0.7)),
-                //               focusedBorder: const OutlineInputBorder(
-                //                 borderSide: BorderSide(
-                //                     color: Color.fromRGBO(177, 255, 46, 100),
-                //                     width: 2.0),
-                //               ),
-                //               enabledBorder: const OutlineInputBorder(
-                //                 borderSide:
-                //                     BorderSide(color: Colors.white, width: 2.0),
-                //               ),
-                //             ),
-                //             style: GoogleFonts.plusJakartaSans(color: Colors.white),
-                //             dropdownColor: Colors.grey[800],
-                //             items: categoriesProvider.categorias.map((category) {
-                //               return DropdownMenuItem<String>(
-                //                 value: category.id,
-                //                 child: Text(category.nombre,
-                //                     style: const TextStyle(color: Colors.white)),
-                //               );
-                //             }).toList(),
-                //             onChanged: (value) {
-                //               producto.categoria;
-                //             },
-                //             validator: (value) {
-                //               if (value == null || value.isEmpty) {
-                //                 return 'Please select a Category';
-                //               }
-                //               return null;
-                //             },
-                //           );
-                //         },
-                //       ),
+     Consumer<CategoriesProvier>(
+  builder: (context, categoriesProvider, child) {
+    return DropdownButtonFormField<String>(
+      value: producto.categoria.id,
+      decoration: InputDecoration(
+        hintText: 'Category',
+        labelText: 'Category',
+        labelStyle: GoogleFonts.plusJakartaSans(
+            color: Colors.white, fontSize: 12),
+        hintStyle: GoogleFonts.plusJakartaSans(
+            color: Colors.white.withOpacity(0.7)),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+              color: Color.fromRGBO(177, 255, 46, 100),
+              width: 2.0),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white, width: 2.0),
+        ),
+      ),
+      style: GoogleFonts.plusJakartaSans(color: Colors.white),
+      dropdownColor: Colors.grey[800],
+      items: categoriesProvider.categorias.map((category) {
+        return DropdownMenuItem<String>(
+          value: category.id,
+          child: Text(category.nombre,
+              style: const TextStyle(color: Colors.white)),
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {
+          producto.categoria.id = value!;
+        });
+      },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please select a Category';
+        }
+        return null;
+      },
+    );
+  },
+),
                 const SizedBox(height: 40),
                 Container(
                   alignment: Alignment.center,
