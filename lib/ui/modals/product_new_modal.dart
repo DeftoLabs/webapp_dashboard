@@ -72,7 +72,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Color.fromARGB(156, 0, 0, 0),
+              color: const Color.fromARGB(156, 0, 0, 0),
               width: 2.0,
             ),
             borderRadius: BorderRadius.circular(4.0),
@@ -89,10 +89,18 @@ class _ProductNewModalState extends State<ProductNewModal> {
     );
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductsProvider>(context);
     final producto = productProvider.producto;
+
+    final image = (producto?.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg')) 
+    : FadeInImage.assetNetwork(
+      placeholder: 'load.gif', 
+      image: producto!.img!);
 
     return Consumer<ProductsProvider>(
         builder: (context, productProvider, child) {
@@ -152,7 +160,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   child: Stack(
                                     children: [
                                       ClipOval(
-                                          child: Image.asset('noimage.jpeg')),
+                                          child: image),
                                       Positioned(
                                         bottom: 5,
                                         right: 5,

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
-import 'package:web_dashboard/ui/modals/product_modal.dart';
 
 class ProductsDTS extends DataTableSource {
 
