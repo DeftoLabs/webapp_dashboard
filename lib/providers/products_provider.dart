@@ -14,16 +14,33 @@ class ProductsProvider extends ChangeNotifier {
   final List<String> _units = ['Box', 'Kgs', 'Lbs', 'Units', 'Pkg'];
   List<String> get units => _units;
 
-
+  bool isloading = true;
   bool ascending = true;
   int? sortColumnIndex;
+
+  ProductsProvider(){
+    getProducts();
+  }
 
 
   Future<void> getProducts() async {
     final resp = await CafeApi.httpGet('/productos');
     final productsResp = ProductsResponse.fromMap(resp);
     productos = [...productsResp.productos];
+    isloading = false;
     notifyListeners();
+  }
+
+    Future<Producto> getProductById (String id) async {
+      try {
+        final resp = await CafeApi.httpGet('/productos/$id');
+        final producto = Producto.fromMap(resp);
+        return producto;
+      } catch (e) {
+        throw 'Error to Get the Product';
+      }
+
+  
   }
 
   Future<void> getUnits() async {

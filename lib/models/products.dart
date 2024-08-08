@@ -103,6 +103,7 @@ class Categoria {
   factory Categoria.fromMap(Map<String, dynamic> json) => Categoria(
     id: json["_id"],
     nombre: json["nombre"],
+    
   );
 
   Map<String, dynamic> toMap() => {

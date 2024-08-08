@@ -6,6 +6,7 @@ import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
+import 'package:web_dashboard/ui/modals/product_view.dart';
 import 'package:web_dashboard/ui/views/categories_view.dart';
 
 import 'package:web_dashboard/ui/views/dashboard_view.dart';
@@ -56,6 +57,20 @@ class DashboardHandlers {
     }
   );
 
+  static Handler product = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.productRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if( params['id']?.first !=null){
+           return ProductView(id: params['id']!.first);
+        }else{
+          return const ProductsView();
+        }
+      } return const LoginView();
+
+    }
+  );
 
   static Handler categories = Handler (
     handlerFunc: (context, params) {

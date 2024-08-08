@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/modals/product_modal.dart';
 
 class ProductsDTS extends DataTableSource {
@@ -51,12 +52,15 @@ class ProductsDTS extends DataTableSource {
               IconButton(
                 icon: const Icon(Icons.edit_outlined),
                 onPressed: (){
-                  showDialog(
-                    context: context, 
-                    builder: ( _ ) => ChangeNotifierProvider.value(
-                      value: Provider.of<ProductsProvider>(context),
-                      child: ProductModal(producto: product,)
-                      ));
+                 NavigationService.replaceTo('/dashboard/products/${product.id}');
+
+
+                //  showDialog(
+                //    context: context, 
+                //    builder: ( _ ) => ChangeNotifierProvider.value(
+                //      value: Provider.of<ProductsProvider>(context),
+                //      child: ProductModal(producto: product,)
+                //      ));
                 } 
               ),
               IconButton(

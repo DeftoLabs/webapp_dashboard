@@ -5,6 +5,7 @@ import 'package:universal_html/html.dart' as html;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/product_form_provider.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
 import 'providers/providers.dart';
 import 'api/cafeapi.dart';
@@ -56,6 +57,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UsersProvider()),
         ChangeNotifierProvider(create: (_) => UserFormProvider()),
         ChangeNotifierProvider(create: (_) => ProductsProvider()),
+        ChangeNotifierProvider(create: (_) => ProductFormProvider()),
       ],
       child: MultiBlocProvider(
         providers: [
