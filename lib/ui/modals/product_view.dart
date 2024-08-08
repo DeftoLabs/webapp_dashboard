@@ -354,6 +354,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                       if (saved) {
                         NotificationService.showSnackBa(
                             '${producto.descripcion} Updated');
+                            NavigationService.replaceTo('/dashboard/products');
                       } else {
                         NotificationService.showSnackBarError(
                             'Could not save the Product');
