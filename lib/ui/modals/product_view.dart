@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -33,19 +34,20 @@ class _ProductViewState extends State<ProductView> {
     final productFormProvider =
         Provider.of<ProductFormProvider>(context, listen: false);
 
-  productsProvider.getProductById(widget.id).then((productDB) {
+    productsProvider.getProductById(widget.id).then((productDB) {
       productFormProvider.producto = productDB;
       setState(() {
         producto = productDB;
         _isLoading = false;
       });
-        });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if(_isLoading) {
-      return const Center(child: CircularProgressIndicator(
+    if (_isLoading) {
+      return const Center(
+          child: CircularProgressIndicator(
         color: Color.fromRGBO(177, 255, 46, 100),
         strokeWidth: 2.0,
       ));
@@ -153,7 +155,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
     final productFormProvider = Provider.of<ProductFormProvider>(context);
     final producto = productFormProvider.producto!;
 
-    final categoriesProvider = Provider.of<CategoriesProvier>(context, listen: false);
+    final categoriesProvider =
+        Provider.of<CategoriesProvier>(context, listen: false);
     categoriesProvider.getCategories();
 
     return WhiteCardColor(
@@ -297,49 +300,50 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   },
                 ),
                 const SizedBox(height: 20),
-     Consumer<CategoriesProvier>(
-  builder: (context, categoriesProvider, child) {
-    return DropdownButtonFormField<String>(
-      value: producto.categoria.id,
-      decoration: InputDecoration(
-        hintText: 'Category',
-        labelText: 'Category',
-        labelStyle: GoogleFonts.plusJakartaSans(
-            color: Colors.white, fontSize: 12),
-        hintStyle: GoogleFonts.plusJakartaSans(
-            color: Colors.white.withOpacity(0.7)),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Color.fromRGBO(177, 255, 46, 100),
-              width: 2.0),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white, width: 2.0),
-        ),
-      ),
-      style: GoogleFonts.plusJakartaSans(color: Colors.white),
-      dropdownColor: Colors.grey[800],
-      items: categoriesProvider.categorias.map((category) {
-        return DropdownMenuItem<String>(
-          value: category.id,
-          child: Text(category.nombre,
-              style: const TextStyle(color: Colors.white)),
-        );
-      }).toList(),
-      onChanged: (value) {
-        setState(() {
-          producto.categoria.id = value!;
-        });
-      },
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please select a Category';
-        }
-        return null;
-      },
-    );
-  },
-),
+                Consumer<CategoriesProvier>(
+                  builder: (context, categoriesProvider, child) {
+                    return DropdownButtonFormField<String>(
+                      value: producto.categoria.id,
+                      decoration: InputDecoration(
+                        hintText: 'Category',
+                        labelText: 'Category',
+                        labelStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white, fontSize: 12),
+                        hintStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white.withOpacity(0.7)),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromRGBO(177, 255, 46, 100),
+                              width: 2.0),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 2.0),
+                        ),
+                      ),
+                      style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                      dropdownColor: Colors.grey[800],
+                      items: categoriesProvider.categorias.map((category) {
+                        return DropdownMenuItem<String>(
+                          value: category.id,
+                          child: Text(category.nombre,
+                              style: const TextStyle(color: Colors.white)),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          producto.categoria.id = value!;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a Category';
+                        }
+                        return null;
+                      },
+                    );
+                  },
+                ),
                 const SizedBox(height: 40),
                 Container(
                   alignment: Alignment.center,
@@ -349,10 +353,10 @@ class _ProductFormViewState extends State<_ProductFormView> {
 
                       if (saved) {
                         NotificationService.showSnackBa(
-                                  '${producto.descripcion} Updated');
+                            '${producto.descripcion} Updated');
                       } else {
                         NotificationService.showSnackBarError(
-                                'Could not save the Product');
+                            'Could not save the Product');
                       }
                     },
                     text: 'Save',
@@ -366,9 +370,25 @@ class _ProductFormViewState extends State<_ProductFormView> {
   }
 }
 
-class _Avatar extends StatelessWidget {
+class _Avatar extends StatefulWidget {
+  @override
+  State<_Avatar> createState() => _AvatarState();
+}
+
+class _AvatarState extends State<_Avatar> {
   @override
   Widget build(BuildContext context) {
+
+    final productFormProvider = Provider.of<ProductFormProvider>(context);
+    final producto = productFormProvider.producto!;
+
+      final image = (producto.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg')) 
+    : FadeInImage.assetNetwork(
+      placeholder: 'load.gif', 
+      image: producto.img!);
+
+
     return WhiteCard(
         width: 250,
         child: Column(
@@ -381,8 +401,8 @@ class _Avatar extends StatelessWidget {
               height: 160,
               child: Stack(
                 children: [
-                  const ClipOval(
-                      child: Image(image: AssetImage('noimage.jpeg'))),
+                  ClipOval(
+                      child: image),
                   Positioned(
                     bottom: 5,
                     right: 5,
@@ -397,7 +417,25 @@ class _Avatar extends StatelessWidget {
                                 const Color.fromRGBO(177, 255, 46, 100),
                             elevation: 0,
                             child: const Icon(Icons.camera_alt_outlined),
-                            onPressed: () {})),
+                            onPressed: () async {
+                                   FilePickerResult? result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['jpg', 'jpeg', 'png'],
+                            allowMultiple: false,
+                          );
+                          if (result != null) {
+                              if(!context.mounted) return;
+                              NotificationService.showBusyIndicator(context);
+                              await productFormProvider.uploadImage(
+                                '/uploads/productos/${producto.id}',
+                                result.files.first.bytes!,
+                              );
+                                if(!context.mounted) return;
+                              Navigator.of(context).pop();
+                            } else {
+                              NotificationService.showSnackBarError('Failed to Upload Image');
+                            }
+                            })),
                   )
                 ],
               ),

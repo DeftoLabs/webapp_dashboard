@@ -1,8 +1,11 @@
 
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/products.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 class ProductFormProvider extends ChangeNotifier {
 
@@ -62,5 +65,18 @@ Future updateProduct() async {
 }
 
 
-
+Future uploadImage(String path, Uint8List bytes) async {
+  try {
+    final response = await CafeApi.uploadImage(path, bytes);
+    final imageUrl = response['img']; 
+    if (producto != null) {
+      producto = producto!.copyWith(img: imageUrl); 
+      notifyListeners();
+    }
+    NotificationService.showSnackBa('Image Uploaded Successfully');
+    notifyListeners();
+  } catch (e) {
+    NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
   }
+}
+}
