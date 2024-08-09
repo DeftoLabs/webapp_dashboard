@@ -110,7 +110,7 @@ class ProductsProvider extends ChangeNotifier {
     }
   }
 
-    Future<void> newCreateProduct({
+    Future<String?> newCreateProduct({
     required String nombre,
     required double precio,
     String? descripcion,
@@ -144,6 +144,8 @@ class ProductsProvider extends ChangeNotifier {
       final newProduct = Producto.fromMap(json);
       productos.add(newProduct);
       notifyListeners();
+
+      return newProduct.id;
     } catch (e) {
       throw 'Error to create New Product';
     }
@@ -194,18 +196,7 @@ Future uploadImage(String path, Uint8List bytes) async {
   }
 }
 
-Future <Producto> uploadNewImageProduct ( String path, Uint8List bytes) async {
-  try {
-    final resp = await CafeApi.uploadFile(path, bytes);
-    producto = Producto.fromMap(resp);
-    notifyListeners();
 
-    return producto!;
-  } catch (e) {
-    NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
-    throw 'Error Upload Image';
-  }
-}
 
 
 

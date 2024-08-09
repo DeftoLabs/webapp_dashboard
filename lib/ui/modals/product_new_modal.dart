@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,6 +29,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
   double stock = 0.0;
   String? unid;
   String? categoria;
+  Uint8List? fileImage;
 
   final _precioController = TextEditingController();
   final _stockController = TextEditingController();
@@ -55,40 +58,6 @@ class _ProductNewModalState extends State<ProductNewModal> {
         Provider.of<CategoriesProvier>(context, listen: false);
     categoriesProvider.getCategories();
   }
-
-  Widget _buildNonEditableField(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: GoogleFonts.plusJakartaSans(
-              color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.7), fontSize: 12),
-        ),
-        const SizedBox(height: 5),
-        Container(
-          width: 600,
-          height: 45,
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromARGB(156, 0, 0, 0),
-              width: 2.0,
-            ),
-            borderRadius: BorderRadius.circular(4.0),
-          ),
-          child: Text(
-            value,
-            style: GoogleFonts.plusJakartaSans(
-              color: const Color.fromARGB(255, 0, 0, 0),
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   
 
   @override
@@ -96,11 +65,9 @@ class _ProductNewModalState extends State<ProductNewModal> {
     final productProvider = Provider.of<ProductsProvider>(context);
     final producto = productProvider.producto;
 
-    final image = (producto?.img == null) 
-    ? const Image(image: AssetImage('noimage.jpeg')) 
-    : FadeInImage.assetNetwork(
-      placeholder: 'load.gif', 
-      image: producto!.img!);
+    final image = (fileImage == null) 
+  ? const Image(image: AssetImage('noimage.jpeg')) 
+  : Image.memory(fileImage!);
 
     return Consumer<ProductsProvider>(
         builder: (context, productProvider, child) {
@@ -182,9 +149,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                   Icons.camera_alt_outlined,
                                                   size: 20),
                                               onPressed: () async {
-                                                FilePickerResult? result =
-                                                    await FilePicker.platform
-                                                        .pickFiles(
+                                                FilePickerResult? result = await FilePicker.platform.pickFiles(
                                                   type: FileType.custom,
                                                   allowedExtensions: [
                                                     'jpg',
@@ -194,24 +159,36 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                   allowMultiple: false,
                                                 );
                                                 if (result != null) {
-                                                  if (!context.mounted) return;
-                                                  NotificationService
-                                                      .showBusyIndicator(
-                                                          context);
-                                                  await Provider.of<
-                                                              ProductsProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .uploadImage(
-                                                    '/uploads/productos/${producto!.id}',
-                                                    result.files.first.bytes!,
-                                                  );
-                                                  if (!context.mounted) return;
-                                                  Navigator.of(context).pop();
+                                                  PlatformFile file = result.files.first;
+                                                  fileImage = file.bytes;
+
+                                                  setState(() {
+                                                    fileImage;
+                                                  });
+                                                  print('Image ${fileImage}');
+
+                                                
+                                      
+                                               //   if (!context.mounted) return;
+                                               //   NotificationService
+                                               //       .showBusyIndicator(
+                                               //           context);
+                                               //   await Provider.of<
+                                               //               ProductsProvider>(
+                                               //           context,
+                                               //           listen: false)
+                                               //       .uploadImage(
+                                               //     '/uploads/productos/${producto!.id}',
+                                               //     result.files.first.bytes!,
+                                               //   );
+                                               //   if (!context.mounted) return;
+                                               //   Navigator.of(context).pop();
+                                               // } else {
+                                               //   NotificationService
+                                               //       .showSnackBarError(
+                                               //           'Failed to Upload Image');
                                                 } else {
-                                                  NotificationService
-                                                      .showSnackBarError(
-                                                          'Failed to Upload Image');
+                                                  print('Image No Selected');
                                                 }
                                               }),
                                         ),
@@ -231,7 +208,6 @@ class _ProductNewModalState extends State<ProductNewModal> {
                               child: Column(
                                 children: [
                                   const SizedBox(height: 10),
-                                  if (nombre.isEmpty)
                                     TextFormField(
                                       initialValue: nombre,
                                       onChanged: (value) => nombre = value,
@@ -265,10 +241,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         }
                                         return null;
                                       },
-                                    )
-                                  else
-                                    _buildNonEditableField(
-                                        'BarCode & Internal Code', nombre),
+                                    ),
                                   const SizedBox(height: 20),
                                   TextFormField(
                                     controller: _stockController,
@@ -854,13 +827,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                 unid: unid!,
                                 categoria: categoria!,
                               );
+                              if(! context.mounted) return;
                               NotificationService.showSnackBa(
                                   '$descripcion Created');
-                            } else {
-                              NotificationService.showSnackBa(
-                                  'Error to Create a New Product Updated');
                             }
-                            if (!context.mounted) return;
                             Navigator.of(context).pop();
                           } catch (e) {
                             NotificationService.showSnackBa(
