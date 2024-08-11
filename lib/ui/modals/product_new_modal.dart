@@ -164,11 +164,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
 
                                                   setState(() {
                                                     fileImage;
-                                                  });
-                                                  print('Image ${fileImage}');
-
-                                                
-                                      
+                                                  });                                  
                                                //   if (!context.mounted) return;
                                                //   NotificationService
                                                //       .showBusyIndicator(
@@ -188,7 +184,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                //       .showSnackBarError(
                                                //           'Failed to Upload Image');
                                                 } else {
-                                                  print('Image No Selected');
+                                                  
                                                 }
                                               }),
                                         ),

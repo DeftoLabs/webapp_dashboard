@@ -63,7 +63,12 @@ class Sidebar extends StatelessWidget {
         isActive: sideMenuProvider.currentPage == Flurorouter.categoriesRoute,),
 
 
-        MenuItem(text: 'Customers', icon: Icons.people_rounded,  onPressed: (){}),
+        MenuItem(text: 'Customers', 
+        icon: Icons.people_rounded,  
+       onPressed: ()=> navigateTo(Flurorouter.customersRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.customersRoute,),
+
+
         MenuItem(text: 'Sales', icon: Icons.attach_money_outlined,      onPressed: (){}),
 
         MenuItem(text: 'Routes', icon: Icons.route_rounded,      onPressed: (){}),

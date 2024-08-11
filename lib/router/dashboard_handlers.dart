@@ -8,6 +8,7 @@ import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
 import 'package:web_dashboard/ui/modals/product_view.dart';
 import 'package:web_dashboard/ui/views/categories_view.dart';
+import 'package:web_dashboard/ui/views/customers_view.dart';
 
 import 'package:web_dashboard/ui/views/dashboard_view.dart';
 import 'package:web_dashboard/ui/views/inactive_user_view.dart';
@@ -78,6 +79,17 @@ class DashboardHandlers {
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.categoriesRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return const CategoriesView();
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler customers = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.customersRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const CustomersView();
       } return const LoginView();
 
     }
