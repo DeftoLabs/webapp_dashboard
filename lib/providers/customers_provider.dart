@@ -9,6 +9,9 @@ class CustomersProvider extends ChangeNotifier {
 List <Customer>customers = [];
 bool isLoading = true;
 
+bool ascending = true;
+int? sortColumnIndex;
+
 CustomersProvider () {
   getPaginatedCustomers();
 }
@@ -21,4 +24,36 @@ Future<void> getPaginatedCustomers()async {
   isLoading = false;
   notifyListeners();
 }
+
+
+ Future<Customer> getCustomerById (String id) async { 
+  try {
+      final resp = await CafeApi.httpGet('/clientes/$id');
+  final customer = Customer.fromMap(resp);
+  return customer;
+  } catch (e) {
+    rethrow;
+  }
+}
+
+void sort<T>( Comparable<T> Function( Customer customer) getField) {
+  
+  customers.sort((a,b) {
+
+    final aValue = getField( a );
+    final bValue = getField( b );
+
+    return ascending 
+    ? Comparable.compare(aValue, bValue) 
+    : Comparable.compare(bValue, aValue);
+    
+    
+
+  });
+
+  ascending = !ascending;
+
+  notifyListeners();
+}
+
 }

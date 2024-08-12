@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/models/customers.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 class CustomersDatasource extends DataTableSource {
 
@@ -23,6 +24,12 @@ class CustomersDatasource extends DataTableSource {
       DataCell(Text(customer.telefono)),
       DataCell(Text(customer.correo)),
       DataCell(Text(customer.usuario.nombre)),
+      DataCell(IconButton(
+        icon: const Icon(Icons.edit_outlined),
+        onPressed: (){
+          NavigationService.replaceTo('/dashboard/customers/${customer.id}');
+        },
+        ))
 
     ]
     );

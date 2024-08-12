@@ -26,16 +26,29 @@ class CustomersView extends StatelessWidget {
           const SizedBox(height: 10),
 
          PaginatedDataTable(
-          columns: const [
-            DataColumn(label: Text('Code')),
-            DataColumn(label: Text('Name')),
-            DataColumn(label: Text('Branch')),
-            DataColumn(label: Text('Phone')),
-            DataColumn(label: Text('Email')),
-            DataColumn(label: Text('Sales')),
+          sortAscending: customerProvider.ascending,
+          sortColumnIndex: customerProvider.sortColumnIndex,
+          columns: [
+            DataColumn(label: const Text('Code'), onSort: (colIndex, _) {
+              customerProvider.sortColumnIndex = colIndex;
+              customerProvider.sort((customer)=> customer.codigo);
+            }),
+            DataColumn(label: const Text('Name'), onSort: (colIndex, _) {
+              customerProvider.sortColumnIndex = colIndex;
+              customerProvider.sort((customer)=> customer.nombre);
+            }),
+            const DataColumn(label: Text('Branch')),
+            const DataColumn(label: Text('Phone')),
+            const DataColumn(label: Text('Email')),
+            const DataColumn(label: Text('Sales')),
+            const DataColumn(label: Text('Edit')),
 
           ], 
-          source: customersDataSource)
+          source: customersDataSource,
+          onPageChanged: (page) {
+
+          },
+          )
         ],
       )
     );

@@ -47,10 +47,10 @@ class _ProductViewState extends State<ProductView> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Center(
-          child: CircularProgressIndicator(
-        color: Color.fromRGBO(177, 255, 46, 100),
-        strokeWidth: 2.0,
-      ));
+        child: CircularProgressIndicator(
+        color: Color.fromRGBO(255, 0, 200, 0.612),
+        strokeWidth: 4.0),
+        );
     }
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
