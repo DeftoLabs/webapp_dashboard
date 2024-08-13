@@ -29,10 +29,8 @@ class _ProductViewState extends State<ProductView> {
   @override
   void initState() {
     super.initState();
-    final productsProvider =
-        Provider.of<ProductsProvider>(context, listen: false);
-    final productFormProvider =
-        Provider.of<ProductFormProvider>(context, listen: false);
+    final productsProvider = Provider.of<ProductsProvider>(context, listen: false);
+    final productFormProvider = Provider.of<ProductFormProvider>(context, listen: false);
 
     productsProvider.getProductById(widget.id).then((productDB) {
       productFormProvider.producto = productDB;
