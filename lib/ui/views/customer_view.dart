@@ -59,7 +59,7 @@ class _CustomerViewState extends State<CustomerView> {
               columnWidths: const {
                 0: FixedColumnWidth(350),
               },
-              children: [
+              children:[
                 TableRow(children: [
                   WhiteCardColor(
                       child: Column(
@@ -94,6 +94,7 @@ class _CustomerViewState extends State<CustomerView> {
                               focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromRGBO(177, 255, 46, 1)))),
+                          onChanged: (value) => customerFormProvider.copyCustomerWith (codigo: value),            
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Code is Required';
@@ -127,6 +128,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color.fromRGBO(177, 255, 46, 1)))),
+                                  onChanged: (value) => customerFormProvider.copyCustomerWith (credito: value as int),                  
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Credit is Required';
@@ -197,6 +199,7 @@ class _CustomerViewState extends State<CustomerView> {
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromRGBO(177, 255, 46, 1)))),
+                          onChanged: (value) => customerFormProvider.copyCustomerWith (contacto: value),                      
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Manager is Required';
@@ -223,6 +226,7 @@ class _CustomerViewState extends State<CustomerView> {
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromRGBO(177, 255, 46, 1)))),
+                          onChanged: (value) => customerFormProvider.copyCustomerWith (telefono: value),                      
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Phone is Required';
@@ -249,6 +253,7 @@ class _CustomerViewState extends State<CustomerView> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Color.fromRGBO(177, 255, 46, 1)))),
+                        onChanged: (value) => customerFormProvider.copyCustomerWith (correo: value),                      
                         validator: (value) {
                           if (!EmailValidator.validate(value ?? '')) {
                             return 'Email not Valid';
@@ -275,6 +280,7 @@ class _CustomerViewState extends State<CustomerView> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Color.fromRGBO(177, 255, 46, 1)))),
+                        onChanged: (value) => customerFormProvider.copyCustomerWith (web: value),                     
                         validator: (value) {
                           return null;
                         },
@@ -319,6 +325,7 @@ class _CustomerViewState extends State<CustomerView> {
                             focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Color.fromRGBO(177, 255, 46, 1)))),
+                        onChanged: (value) => customerFormProvider.copyCustomerWith (idfiscal: value),            
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'TAX is Required';
@@ -351,6 +358,7 @@ class _CustomerViewState extends State<CustomerView> {
                               focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromRGBO(177, 255, 46, 1)))),
+                          onChanged: (value) => customerFormProvider.copyCustomerWith (razons: value),                    
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Legal is Required';
@@ -382,6 +390,7 @@ class _CustomerViewState extends State<CustomerView> {
                               focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromRGBO(177, 255, 46, 1)))),
+                          onChanged: (value) => customerFormProvider.copyCustomerWith (nombre: value),                     
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Bussiness is Required';
@@ -413,6 +422,7 @@ class _CustomerViewState extends State<CustomerView> {
                               focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromRGBO(177, 255, 46, 1)))),
+                          onChanged: (value) => customerFormProvider.copyCustomerWith (sucursal: value),        
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Sucursal is Required';
@@ -444,6 +454,7 @@ class _CustomerViewState extends State<CustomerView> {
                               focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromRGBO(177, 255, 46, 1)))),
+                          onChanged: (value) => customerFormProvider.copyCustomerWith (direccion: value),                    
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Address is Required';
@@ -451,7 +462,7 @@ class _CustomerViewState extends State<CustomerView> {
                             if (value.length < 2) {
                               return 'The Address required minimum 3 characters';
                             }
-                            if (value.length > 35) return 'Max 35 characters';
+                            // if (value.length > 35) return 'Max 35 characters';
                             return null;
                           }),
                       const SizedBox(height: 30),
@@ -487,6 +498,7 @@ class _CustomerViewState extends State<CustomerView> {
                                   color: Color.fromRGBO(177, 255, 46, 1)),
                             ),
                           ),
+                          onChanged: (value) => customerFormProvider.copyCustomerWith (note: value),          
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Note is Required';
@@ -494,7 +506,7 @@ class _CustomerViewState extends State<CustomerView> {
                             if (value.length < 2) {
                               return 'The Bussiness required minimum 3 characters';
                             }
-                            if (value.length > 41) return 'Max 40 characters';
+                            // if (value.length >= 41) return 'Max 40 characters';
                             return null;
                           }),
                       const SizedBox(height: 10),
@@ -507,7 +519,9 @@ class _CustomerViewState extends State<CustomerView> {
             Container(
               alignment: Alignment.center,
               child: CustomOutlineButtom(
-                onPressed: () {},
+                onPressed: () {
+                  customerFormProvider.updateCustomer();
+                },
                 text: 'Save',
                 color: Colors.white,
               ),
