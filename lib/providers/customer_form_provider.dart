@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/customers.dart';
 
 class CustomerFormProvider extends ChangeNotifier {
@@ -50,9 +51,36 @@ class CustomerFormProvider extends ChangeNotifier {
     return formKey.currentState!.validate();
   }
 
-  updateCustomer() {
+  updateCustomer() async {
 
-    if( !_validForm() ) return;
+    if( !_validForm() ) return false;
+
+    final data = {
+      'idfiscal': customer!.idfiscal,
+      'nombre': customer!.nombre,
+      'razons': customer!.razons,
+      'sucursal': customer!.sucursal,
+      'direccion': customer!.direccion,
+      'correo': customer!.correo,
+      'telefono': customer!.telefono,
+      'web': customer!.web,
+      'contacto': customer!.contacto,
+      'credito': customer!.credito,
+      'note': customer!.note,
+      'usuario': customer!.usuario,
+    };
+
+    try {
+      
+      final resp = await CafeApi.put('/clientes/${ customer!.id}', data);
+      print( resp );
+      return true;
+
+    } catch (e) {
+      print('error updateCustomer: $e');
+      return false;
+      
+    }
 
   }
 }

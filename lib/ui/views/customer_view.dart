@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/providers/customer_form_provider.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 
@@ -59,7 +60,7 @@ class _CustomerViewState extends State<CustomerView> {
               columnWidths: const {
                 0: FixedColumnWidth(350),
               },
-              children:[
+              children: [
                 TableRow(children: [
                   WhiteCardColor(
                       child: Column(
@@ -79,22 +80,29 @@ class _CustomerViewState extends State<CustomerView> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                           decoration: InputDecoration(
-                              hintText: 'Customer Code',
-                              hintStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              labelText: 'Code',
-                              labelStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              prefixIcon: customer.codigo.isEmpty
-                                  ? const Icon(Icons.code,
-                                      color: Colors.white, size: 20)
-                                  : null,
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromRGBO(177, 255, 46, 1)))),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith (codigo: value),            
+                            hintText: 'Customer Code',
+                            hintStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            labelText: 'Code',
+                            labelStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            prefixIcon: customer.codigo.isEmpty
+                                ? const Icon(Icons.code,
+                                    color: Colors.white, size: 20)
+                                : null,
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                          ),
+                          onChanged: (value) => customerFormProvider
+                              .copyCustomerWith(codigo: value),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Code is Required';
@@ -106,7 +114,7 @@ class _CustomerViewState extends State<CustomerView> {
                             return null;
                           }),
                       const SizedBox(height: 10),
-                      Row(    
+                      Row(
                         children: [
                           Expanded(
                             flex: 2,
@@ -115,31 +123,47 @@ class _CustomerViewState extends State<CustomerView> {
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 14),
                                 decoration: const InputDecoration(
-                                    hintText: 'Condition Sale',
-                                    hintStyle:
-                                        TextStyle(color: Colors.white, fontSize: 14),
-                                    labelText: 'Credit (Days) & Cash',
-                                    labelStyle:
-                                        TextStyle(color: Colors.white, fontSize: 14),
-                                    prefixIcon: Icon(Icons.monetization_on,
-                                        color: Colors.white, size: 20),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color.fromRGBO(177, 255, 46, 1)))),
-                                  onChanged: (value) => customerFormProvider.copyCustomerWith (credito: value as int),                  
+                                  hintText: 'Condition Sale',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                  labelText: 'Credit (Days) & Cash',
+                                  labelStyle: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                  prefixIcon: Icon(Icons.monetization_on,
+                                      color: Colors.white, size: 20),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Color.fromRGBO(177, 255, 46, 1))),
+                                  errorBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.red)),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Color.fromRGBO(177, 255, 46, 1))),
+                                ),
+                                onChanged: (value) => customerFormProvider
+                                    .copyCustomerWith(credito: value as int),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Credit is Required';
                                   }
-                                  if (value.length > 4) return 'Max 3 characters';
+                                  if (value.length > 4) {
+                                    return 'Max 3 characters';
+                                  }
                                   return null;
-                                }
-                                ),
+                                }),
                           ),
                           const SizedBox(width: 10),
-                          Text('days', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
+                          Text('days',
+                              style: GoogleFonts.plusJakartaSans(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold)),
                           const SizedBox(width: 120)
                         ],
                       ),
@@ -149,21 +173,27 @@ class _CustomerViewState extends State<CustomerView> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                           decoration: InputDecoration(
-                              hintText: 'Sales Representative',
-                              hintStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              labelText: 'Sales Representative',
-                              labelStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              prefixIcon: customer.usuario.nombre.isEmpty
-                                  ? const Icon(Icons.person_2_sharp,
-                                      color: Colors.white, size: 20)
-                                  : null,
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromRGBO(177, 255, 46, 1)))),
+                            hintText: 'Sales Representative',
+                            hintStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            labelText: 'Sales Representative',
+                            labelStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            prefixIcon: customer.usuario.nombre.isEmpty
+                                ? const Icon(Icons.person_2_sharp,
+                                    color: Colors.white, size: 20)
+                                : null,
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                          ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Sales Representative is Required';
@@ -186,20 +216,27 @@ class _CustomerViewState extends State<CustomerView> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                           decoration: const InputDecoration(
-                              hintText: 'Manager',
-                              hintStyle:
-                                  TextStyle(color: Colors.white, fontSize: 14),
-                              labelText: 'Manager',
-                              labelStyle:
-                                  TextStyle(color: Colors.white, fontSize: 14),
-                              prefixIcon: Icon(Icons.person_rounded,
-                                  color: Colors.white, size: 20),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromRGBO(177, 255, 46, 1)))),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith (contacto: value),                      
+                            hintText: 'Manager',
+                            hintStyle:
+                                TextStyle(color: Colors.white, fontSize: 14),
+                            labelText: 'Manager',
+                            labelStyle:
+                                TextStyle(color: Colors.white, fontSize: 14),
+                            prefixIcon: Icon(Icons.person_rounded,
+                                color: Colors.white, size: 20),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                            errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                          ),
+                          onChanged: (value) => customerFormProvider
+                              .copyCustomerWith(contacto: value),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Manager is Required';
@@ -213,20 +250,27 @@ class _CustomerViewState extends State<CustomerView> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                           decoration: const InputDecoration(
-                              hintText: 'Phone',
-                              hintStyle:
-                                  TextStyle(color: Colors.white, fontSize: 14),
-                              labelText: 'Phone',
-                              labelStyle:
-                                  TextStyle(color: Colors.white, fontSize: 14),
-                              prefixIcon: Icon(Icons.phone_iphone_rounded,
-                                  color: Colors.white, size: 20),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromRGBO(177, 255, 46, 1)))),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith (telefono: value),                      
+                            hintText: 'Phone',
+                            hintStyle:
+                                TextStyle(color: Colors.white, fontSize: 14),
+                            labelText: 'Phone',
+                            labelStyle:
+                                TextStyle(color: Colors.white, fontSize: 14),
+                            prefixIcon: Icon(Icons.phone_iphone_rounded,
+                                color: Colors.white, size: 20),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                            errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                          ),
+                          onChanged: (value) => customerFormProvider
+                              .copyCustomerWith(telefono: value),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Phone is Required';
@@ -240,20 +284,27 @@ class _CustomerViewState extends State<CustomerView> {
                         style:
                             const TextStyle(color: Colors.white, fontSize: 14),
                         decoration: const InputDecoration(
-                            hintText: 'email',
-                            hintStyle:
-                                TextStyle(color: Colors.white, fontSize: 14),
-                            labelText: 'email',
-                            labelStyle:
-                                TextStyle(color: Colors.white, fontSize: 14),
-                            prefixIcon: Icon(Icons.email_rounded,
-                                color: Colors.white, size: 20),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromRGBO(177, 255, 46, 1)))),
-                        onChanged: (value) => customerFormProvider.copyCustomerWith (correo: value),                      
+                          hintText: 'email',
+                          hintStyle:
+                              TextStyle(color: Colors.white, fontSize: 14),
+                          labelText: 'email',
+                          labelStyle:
+                              TextStyle(color: Colors.white, fontSize: 14),
+                          prefixIcon: Icon(Icons.email_rounded,
+                              color: Colors.white, size: 20),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(177, 255, 46, 1))),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red)),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(177, 255, 46, 1))),
+                        ),
+                        onChanged: (value) => customerFormProvider
+                            .copyCustomerWith(correo: value),
                         validator: (value) {
                           if (!EmailValidator.validate(value ?? '')) {
                             return 'Email not Valid';
@@ -267,20 +318,27 @@ class _CustomerViewState extends State<CustomerView> {
                         style:
                             const TextStyle(color: Colors.white, fontSize: 14),
                         decoration: const InputDecoration(
-                            hintText: 'WebSite',
-                            hintStyle:
-                                TextStyle(color: Colors.white, fontSize: 14),
-                            labelText: 'WebSite',
-                            labelStyle:
-                                TextStyle(color: Colors.white, fontSize: 14),
-                            prefixIcon: Icon(Icons.web_asset,
-                                color: Colors.white, size: 20),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromRGBO(177, 255, 46, 1)))),
-                        onChanged: (value) => customerFormProvider.copyCustomerWith (web: value),                     
+                          hintText: 'WebSite',
+                          hintStyle:
+                              TextStyle(color: Colors.white, fontSize: 14),
+                          labelText: 'WebSite',
+                          labelStyle:
+                              TextStyle(color: Colors.white, fontSize: 14),
+                          prefixIcon: Icon(Icons.web_asset,
+                              color: Colors.white, size: 20),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(177, 255, 46, 1))),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red)),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(177, 255, 46, 1))),
+                        ),
+                        onChanged: (value) =>
+                            customerFormProvider.copyCustomerWith(web: value),
                         validator: (value) {
                           return null;
                         },
@@ -310,22 +368,29 @@ class _CustomerViewState extends State<CustomerView> {
                         style:
                             const TextStyle(color: Colors.white, fontSize: 14),
                         decoration: InputDecoration(
-                            hintText: 'Tax ID',
-                            hintStyle: const TextStyle(
-                                color: Colors.white, fontSize: 14),
-                            labelText: 'Tax ID',
-                            labelStyle: const TextStyle(
-                                color: Colors.white, fontSize: 14),
-                            prefixIcon: customer.idfiscal.isEmpty
-                                ? const Icon(Icons.info_sharp,
-                                    color: Colors.white, size: 20)
-                                : null,
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white)),
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromRGBO(177, 255, 46, 1)))),
-                        onChanged: (value) => customerFormProvider.copyCustomerWith (idfiscal: value),            
+                          hintText: 'Tax ID',
+                          hintStyle: const TextStyle(
+                              color: Colors.white, fontSize: 14),
+                          labelText: 'Tax ID',
+                          labelStyle: const TextStyle(
+                              color: Colors.white, fontSize: 14),
+                          prefixIcon: customer.idfiscal.isEmpty
+                              ? const Icon(Icons.info_sharp,
+                                  color: Colors.white, size: 20)
+                              : null,
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(177, 255, 46, 1))),
+                          errorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red)),
+                          focusedErrorBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(177, 255, 46, 1))),
+                        ),
+                        onChanged: (value) => customerFormProvider
+                            .copyCustomerWith(idfiscal: value),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'TAX is Required';
@@ -343,22 +408,29 @@ class _CustomerViewState extends State<CustomerView> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                           decoration: InputDecoration(
-                              hintText: 'Legal Name',
-                              hintStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              labelText: 'Legal Name',
-                              labelStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              prefixIcon: customer.razons.isEmpty
-                                  ? const Icon(Icons.business_outlined,
-                                      color: Colors.white, size: 20)
-                                  : null,
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromRGBO(177, 255, 46, 1)))),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith (razons: value),                    
+                            hintText: 'Legal Name',
+                            hintStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            labelText: 'Legal Name',
+                            labelStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            prefixIcon: customer.razons.isEmpty
+                                ? const Icon(Icons.business_outlined,
+                                    color: Colors.white, size: 20)
+                                : null,
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                          ),
+                          onChanged: (value) => customerFormProvider
+                              .copyCustomerWith(razons: value),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Legal is Required';
@@ -375,22 +447,29 @@ class _CustomerViewState extends State<CustomerView> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                           decoration: InputDecoration(
-                              hintText: 'Bussiness Name',
-                              hintStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              labelText: 'Bussiness Name',
-                              labelStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              prefixIcon: customer.nombre.isEmpty
-                                  ? const Icon(Icons.burst_mode_sharp,
-                                      color: Colors.white, size: 20)
-                                  : null,
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromRGBO(177, 255, 46, 1)))),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith (nombre: value),                     
+                            hintText: 'Bussiness Name',
+                            hintStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            labelText: 'Bussiness Name',
+                            labelStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            prefixIcon: customer.nombre.isEmpty
+                                ? const Icon(Icons.burst_mode_sharp,
+                                    color: Colors.white, size: 20)
+                                : null,
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                          ),
+                          onChanged: (value) => customerFormProvider
+                              .copyCustomerWith(nombre: value),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Bussiness is Required';
@@ -407,22 +486,29 @@ class _CustomerViewState extends State<CustomerView> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                           decoration: InputDecoration(
-                              hintText: 'Sucursal',
-                              hintStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              labelText: 'Sucursal',
-                              labelStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              prefixIcon: customer.sucursal.isEmpty
-                                  ? const Icon(Icons.point_of_sale_outlined,
-                                      color: Colors.white, size: 20)
-                                  : null,
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromRGBO(177, 255, 46, 1)))),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith (sucursal: value),        
+                            hintText: 'Sucursal',
+                            hintStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            labelText: 'Sucursal',
+                            labelStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            prefixIcon: customer.sucursal.isEmpty
+                                ? const Icon(Icons.point_of_sale_outlined,
+                                    color: Colors.white, size: 20)
+                                : null,
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                          ),
+                          onChanged: (value) => customerFormProvider
+                              .copyCustomerWith(sucursal: value),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Sucursal is Required';
@@ -439,22 +525,29 @@ class _CustomerViewState extends State<CustomerView> {
                           style: const TextStyle(
                               color: Colors.white, fontSize: 14),
                           decoration: InputDecoration(
-                              hintText: 'Address',
-                              hintStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              labelText: 'Address',
-                              labelStyle: const TextStyle(
-                                  color: Colors.white, fontSize: 14),
-                              prefixIcon: customer.direccion.isEmpty
-                                  ? const Icon(Icons.location_city_rounded,
-                                      color: Colors.white, size: 20)
-                                  : null,
-                              enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color.fromRGBO(177, 255, 46, 1)))),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith (direccion: value),                    
+                            hintText: 'Address',
+                            hintStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            labelText: 'Address',
+                            labelStyle: const TextStyle(
+                                color: Colors.white, fontSize: 14),
+                            prefixIcon: customer.direccion.isEmpty
+                                ? const Icon(Icons.location_city_rounded,
+                                    color: Colors.white, size: 20)
+                                : null,
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
+                          ),
+                          onChanged: (value) => customerFormProvider
+                              .copyCustomerWith(direccion: value),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Address is Required';
@@ -497,8 +590,14 @@ class _CustomerViewState extends State<CustomerView> {
                               borderSide: BorderSide(
                                   color: Color.fromRGBO(177, 255, 46, 1)),
                             ),
+                            errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(177, 255, 46, 1))),
                           ),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith (note: value),          
+                          onChanged: (value) => customerFormProvider
+                              .copyCustomerWith(note: value),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Note is Required';
@@ -519,8 +618,14 @@ class _CustomerViewState extends State<CustomerView> {
             Container(
               alignment: Alignment.center,
               child: CustomOutlineButtom(
-                onPressed: () {
-                  customerFormProvider.updateCustomer();
+                onPressed: () async {
+                  final saved = await customerFormProvider.updateCustomer();
+                  if (saved) {
+                    NotificationService.showSnackBa('Customer Updated');
+                  } else {
+                    NotificationService.showSnackBarError(
+                        'Error to Update the Customer');
+                  }
                 },
                 text: 'Save',
                 color: Colors.white,
