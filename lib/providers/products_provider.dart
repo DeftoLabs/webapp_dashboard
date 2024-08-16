@@ -31,13 +31,13 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-    Future<Producto> getProductById (String id) async {
+    Future<Producto?> getProductById (String id) async {
       try {
         final resp = await CafeApi.httpGet('/productos/$id');
         final producto = Producto.fromMap(resp);
         return producto;
       } catch (e) {
-        throw 'Error to Get the Product';
+        return null;
       }
 
   

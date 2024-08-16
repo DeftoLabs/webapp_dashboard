@@ -34,10 +34,16 @@ class _ProductViewState extends State<ProductView> {
 
     productsProvider.getProductById(widget.id).then((productDB) {
       productFormProvider.producto = productDB;
-      setState(() {
+
+      if( productDB !=null ) {
+              setState(() {
         producto = productDB;
         _isLoading = false;
       });
+      }else {
+        NavigationService.navigateTo('/dashboard/products');
+      }
+
     });
   }
 

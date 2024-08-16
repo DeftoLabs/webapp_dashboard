@@ -33,13 +33,11 @@ class CustomersView extends StatelessWidget {
               customerProvider.sortColumnIndex = colIndex;
               customerProvider.sort((customer)=> customer.codigo);
             }),
-            DataColumn(label: const Text('Name'), onSort: (colIndex, _) {
+            DataColumn(label: const Text('Legal Name'), onSort: (colIndex, _) {
               customerProvider.sortColumnIndex = colIndex;
               customerProvider.sort((customer)=> customer.nombre);
             }),
             const DataColumn(label: Text('Branch')),
-            const DataColumn(label: Text('Phone')),
-            const DataColumn(label: Text('Email')),
             const DataColumn(label: Text('Sales')),
             const DataColumn(label: Text('Edit')),
 

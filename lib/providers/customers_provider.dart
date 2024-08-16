@@ -26,13 +26,13 @@ Future<void> getPaginatedCustomers()async {
 }
 
 
- Future<Customer> getCustomerById (String id) async { 
+ Future<Customer?> getCustomerById (String id) async { 
   try {
       final resp = await CafeApi.httpGet('/clientes/$id');
   final customer = Customer.fromMap(resp);
   return customer;
   } catch (e) {
-    rethrow;
+    return null;
   }
 }
 
@@ -52,6 +52,20 @@ void sort<T>( Comparable<T> Function( Customer customer) getField) {
   });
 
   ascending = !ascending;
+
+  notifyListeners();
+}
+
+void refreshCustomer (Customer newCustomer) {
+
+  customers = customers.map(
+    (customer){
+      if (customer.id == newCustomer.id) {
+        customer = newCustomer;
+      }
+      return customer;
+    }
+  ).toList();
 
   notifyListeners();
 }

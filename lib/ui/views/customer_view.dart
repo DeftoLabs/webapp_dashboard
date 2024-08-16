@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/providers/customer_form_provider.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
@@ -30,12 +31,25 @@ class _CustomerViewState extends State<CustomerView> {
     final customerFormProvider =
         Provider.of<CustomerFormProvider>(context, listen: false);
 
-    customerProvider.getCustomerById(widget.id).then((customerDB) {
-      customerFormProvider.customer = customerDB;
-      setState(() {
-        customer = customerDB;
-      });
+    customerProvider.getCustomerById(widget.id)
+    .then((customerDB) {
+
+      if( customerDB !=null ) {
+        customerFormProvider.customer = customerDB;
+          setState(() {
+          customer = customerDB;
+      });   
+      } else {
+        NavigationService.navigateTo('/dashboard/customers');
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    customer = null;
+    Provider.of<CustomerFormProvider>(context, listen: false).customer = null;
+    super.dispose();
   }
 
   @override
@@ -621,7 +635,9 @@ class _CustomerViewState extends State<CustomerView> {
                 onPressed: () async {
                   final saved = await customerFormProvider.updateCustomer();
                   if (saved) {
+                     if(!context.mounted) return;
                     NotificationService.showSnackBa('Customer Updated');
+                    Provider.of<CustomersProvider>(context, listen: false).refreshCustomer(customer);
                   } else {
                     NotificationService.showSnackBarError(
                         'Error to Update the Customer');
