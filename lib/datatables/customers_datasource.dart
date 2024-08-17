@@ -21,7 +21,7 @@ class CustomersDatasource extends DataTableSource {
       DataCell(Text(customer.codigo)),
       DataCell(Text(customer.nombre)),
       DataCell(Text(customer.sucursal)),
-      DataCell(Text(customer.usuario.nombre)),
+      DataCell(Text(customer.zona.nombrezona)),
       DataCell(IconButton(
         icon: const Icon(Icons.edit_outlined),
         onPressed: (){

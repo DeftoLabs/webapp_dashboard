@@ -160,7 +160,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
     final producto = productFormProvider.producto!;
 
     final categoriesProvider =
-        Provider.of<CategoriesProvier>(context, listen: false);
+        Provider.of<CategoriesProvider>(context, listen: false);
     categoriesProvider.getCategories();
 
     return WhiteCardColor(
@@ -304,7 +304,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   },
                 ),
                 const SizedBox(height: 20),
-                Consumer<CategoriesProvier>(
+                Consumer<CategoriesProvider>(
                   builder: (context, categoriesProvider, child) {
                     return DropdownButtonFormField<String>(
                       value: producto.categoria.id,

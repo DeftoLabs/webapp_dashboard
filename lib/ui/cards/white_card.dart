@@ -156,6 +156,7 @@ class WhiteCardCustomer extends StatelessWidget {
                     NavigationService.replaceTo('/dashboard/customers');
                   },
                   icon: const Icon(Icons.arrow_back_rounded)),
+                  Text('Back', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14)),
                     Expanded(
                       child: Center(
                         child: Text(
@@ -167,8 +168,6 @@ class WhiteCardCustomer extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text('Lema de la empresa', style: GoogleFonts.plusJakartaSans ( color: Colors.white),),
-                   const SizedBox(width: 20),
                     ClipOval(
                       child: Image.asset('noimage.jpeg',
                       height: 50,
@@ -178,7 +177,9 @@ class WhiteCardCustomer extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Divider(),
+                const Divider(
+                  color: Color.fromRGBO(177, 255, 46, 1),
+                ),
               ],
             Center(child: child), // Centra el contenido principal
           ],

@@ -38,7 +38,7 @@ class CustomersView extends StatelessWidget {
               customerProvider.sort((customer)=> customer.nombre);
             }),
             const DataColumn(label: Text('Branch')),
-            const DataColumn(label: Text('Sales')),
+            const DataColumn(label: Text('Zone')),
             const DataColumn(label: Text('Edit')),
 
           ], 

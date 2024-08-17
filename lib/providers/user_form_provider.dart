@@ -61,7 +61,7 @@ Future updateUser () async {
     
   };
   try {
-    final resp = await CafeApi.put('/usuarios/${user!.uid}', data);
+    await CafeApi.put('/usuarios/${user!.uid}', data);
     return true;
   } catch (e) {
     return 'Update Error';

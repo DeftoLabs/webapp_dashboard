@@ -10,7 +10,7 @@ import 'package:web_dashboard/services/notification_services.dart';
 class ProductFormProvider extends ChangeNotifier {
 
   Producto? producto;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+ GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 
   copyProductWith({

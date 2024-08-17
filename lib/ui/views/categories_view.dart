@@ -24,14 +24,14 @@ class _CategoriesViewState extends State<CategoriesView> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CategoriesProvier>(context, listen: false).getCategories();
+    Provider.of<CategoriesProvider>(context, listen: false).getCategories();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final categorias = Provider.of<CategoriesProvier>(context).categorias;
-    final categoriasProvider = Provider.of<CategoriesProvier>(context);
+    final categorias = Provider.of<CategoriesProvider>(context).categorias;
+    final categoriasProvider = Provider.of<CategoriesProvider>(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

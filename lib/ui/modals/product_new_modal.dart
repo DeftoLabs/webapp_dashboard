@@ -55,7 +55,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
     _stockController.text = stock.toString();
 
     final categoriesProvider =
-        Provider.of<CategoriesProvier>(context, listen: false);
+        Provider.of<CategoriesProvider>(context, listen: false);
     categoriesProvider.getCategories();
   }
   
@@ -368,7 +368,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         color: Colors.black),
                                   ),
                                   const SizedBox(height: 20),
-                                  Consumer<CategoriesProvier>(
+                                  Consumer<CategoriesProvider>(
                                     builder:
                                         (context, categoriesProvider, child) {
                                       return DropdownButtonFormField<String>(

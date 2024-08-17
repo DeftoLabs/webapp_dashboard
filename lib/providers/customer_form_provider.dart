@@ -1,8 +1,9 @@
-
-
 import 'package:flutter/material.dart';
+
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/customers.dart';
+import 'package:web_dashboard/models/zona.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 class CustomerFormProvider extends ChangeNotifier {
 
@@ -26,6 +27,7 @@ class CustomerFormProvider extends ChangeNotifier {
     int? credito,
     String? note,
     User? usuario,
+    Zona? zona,
   }) 
   { customer = Customer(
     id: id ?? customer!.id,
@@ -43,6 +45,7 @@ class CustomerFormProvider extends ChangeNotifier {
     credito: credito ?? customer!.credito, 
     note: note ?? customer!.note, 
     usuario: usuario ?? customer!.usuario,
+    zona: zona ?? customer!.zona,
     );
       notifyListeners();
   }
@@ -67,17 +70,16 @@ class CustomerFormProvider extends ChangeNotifier {
       'contacto': customer!.contacto,
       'credito': customer!.credito,
       'note': customer!.note,
-      'usuario': customer!.usuario,
+      //'zona': customer!.zona,
     };
 
     try {
       
-      final resp = await CafeApi.put('/clientes/${ customer!.id}', data);
-      print( resp );
+      await CafeApi.put('/clientes/${ customer!.id}', data);
       return true;
 
     } catch (e) {
-      print('error updateCustomer: $e');
+      NotificationService.showSnackBarError('Error with the Customer');
       return false;
       
     }

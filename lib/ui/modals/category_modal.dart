@@ -29,7 +29,7 @@ class _CategoryModalState extends State<CategoryModal> {
 
   @override
   Widget build(BuildContext context) {
-    final categoryProvider = Provider.of<CategoriesProvier>(context, listen: false);
+    final categoryProvider = Provider.of<CategoriesProvider>(context, listen: false);
 
     return Dialog(
       shape: RoundedRectangleBorder(
