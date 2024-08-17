@@ -3,11 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/customers_datasource.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
+import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 
-class CustomersView extends StatelessWidget {
+class CustomersView extends StatefulWidget {
   const CustomersView({super.key});
+
+  @override
+  State<CustomersView> createState() => _CustomersViewState();
+}
+
+class _CustomersViewState extends State<CustomersView> {
+
+   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +52,19 @@ class CustomersView extends StatelessWidget {
 
           ], 
           source: customersDataSource,
-          onPageChanged: (page) {
+          header: const Text('', maxLines:2),
+            onPageChanged: ( page ) {
 
-          },
+            },
+          actions: [
+            CustomIconButton(
+              onPressed: (){
+
+              }, 
+              text: 'Create a Customer', 
+              icon: Icons.add_outlined)
+          ],
+         
           )
         ],
       )

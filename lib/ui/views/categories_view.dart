@@ -19,8 +19,6 @@ class CategoriesView extends StatefulWidget {
 
 class _CategoriesViewState extends State<CategoriesView> {
 
-  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
-
   @override
   void initState() {
     super.initState();
@@ -39,7 +37,6 @@ class _CategoriesViewState extends State<CategoriesView> {
         physics: const ClampingScrollPhysics(),
         children: [
           Text('Categories', style: CustomLabels.h1,),
-
           const SizedBox(height: 10),
 
         PaginatedDataTable(
@@ -54,13 +51,10 @@ class _CategoriesViewState extends State<CategoriesView> {
                 const DataColumn(label: Text('Actions', textAlign: TextAlign.right), numeric: true),                
               ], 
               source: CategoriesDTS(categorias, context),
-              header: const  Text( ' Categories', maxLines: 2),
-              onRowsPerPageChanged: (value) {
-                setState(() {
-                  _rowsPerPage = value ?? 10;
-                });
-              },
-              rowsPerPage: _rowsPerPage,
+              header: const  Text( '', maxLines: 2),
+              onPageChanged: ( page ) {
+
+            },
               actions: [
                 CustomIconButton(
                   onPressed: (){
@@ -71,7 +65,7 @@ class _CategoriesViewState extends State<CategoriesView> {
                               },
                             );
                   }, 
-                  text:'Create', 
+                  text:'Create a Category', 
                   icon: Icons.add_outlined)
               ],
               )

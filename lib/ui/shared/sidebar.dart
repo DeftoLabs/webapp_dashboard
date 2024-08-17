@@ -72,6 +72,7 @@ class Sidebar extends StatelessWidget {
         MenuItem(text: 'Sales', icon: Icons.attach_money_outlined,      onPressed: (){}),
 
         MenuItem(text: 'Routes', icon: Icons.route_rounded,      onPressed: (){}),
+        
         MenuItem(text: 'Catalog', icon: Icons.share_rounded,      onPressed: (){}),
 
         const SizedBox(height: 30),
