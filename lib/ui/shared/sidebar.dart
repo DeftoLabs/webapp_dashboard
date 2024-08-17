@@ -44,8 +44,8 @@ class Sidebar extends StatelessWidget {
           icon: Icons.compass_calibration_outlined, 
           onPressed: ()=> navigateTo(Flurorouter.dashboardRoute)),
 
-        MenuItem(text: 'Orders', icon: Icons.shopping_bag,            onPressed: (){}),
-        MenuItem(text: 'Analityc', icon: Icons.analytics,             onPressed: (){}),
+        MenuItem(text: 'Orders', icon: Icons.list_alt_outlined,            onPressed: (){}),
+        MenuItem(text: 'Analityc', icon: Icons.account_tree_outlined,             onPressed: (){}),
 
         MenuItem(text: 'GPS', icon: Icons.gps_fixed,                  
         onPressed: ()=> navigateTo(Flurorouter.gpsRoute),
@@ -53,7 +53,7 @@ class Sidebar extends StatelessWidget {
 
 
         MenuItem(text: 'Products', 
-        icon: Icons.dashboard_outlined,    
+        icon: Icons.shopping_bag_outlined,    
         onPressed: ()=> navigateTo(Flurorouter.productsRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.productsRoute,),
 
@@ -64,7 +64,7 @@ class Sidebar extends StatelessWidget {
 
 
         MenuItem(text: 'Customers', 
-        icon: Icons.people_rounded,  
+        icon: Icons.add_business_outlined,  
        onPressed: ()=> navigateTo(Flurorouter.customersRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.customersRoute,),
 
@@ -81,18 +81,18 @@ class Sidebar extends StatelessWidget {
         const TextSeparator(text: 'Elements'),
 
         MenuItem(text: 'Users', 
-        icon: Icons.update_outlined,
+        icon: Icons.accessibility_outlined,
         onPressed: ()=> navigateTo(Flurorouter.usersRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.usersRoute,),
 
         MenuItem(text: 'Marketing', 
-        icon: Icons.mark_email_read_outlined,
+        icon: Icons.trending_up_outlined,
         onPressed: ()=> navigateTo(Flurorouter.marketingRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.marketingRoute,
         ),
 
         MenuItem(text: 'Message', 
-        icon: Icons.message_outlined,
+        icon: Icons.sms,
         onPressed: ()=> navigateTo(Flurorouter.messageRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.messageRoute,
         ),
@@ -102,7 +102,7 @@ class Sidebar extends StatelessWidget {
 
         const TextSeparator(text: 'Configuration'),
         MenuItem(text: 'Settings', 
-        icon: Icons.settings_applications_outlined, 
+        icon: Icons.tune_outlined, 
         onPressed: ()=> navigateTo(Flurorouter.settingsRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.settingsRoute,),
 
