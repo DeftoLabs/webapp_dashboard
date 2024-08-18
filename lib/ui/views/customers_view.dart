@@ -16,7 +16,6 @@ class CustomersView extends StatefulWidget {
 
 class _CustomersViewState extends State<CustomersView> {
 
-   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
 
   @override
   Widget build(BuildContext context) {

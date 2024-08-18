@@ -27,6 +27,8 @@ class Flurorouter {
   static String customersRoute = '/dashboard/customers';
   static String customerRoute = '/dashboard/customers/:id';
 
+  static String routesRoute = '/dashboard/routes';
+
 
   static String usersRoute      = '/dashboard/users';
   static String newUserRoute    = '/dashboard/users/newuser';
@@ -69,8 +71,16 @@ class Flurorouter {
     // Users
     router.define (usersRoute, handler:       DashboardHandlers.users,            transitionType: TransitionType.fadeIn);
     router.define (newUserRoute, handler:     DashboardHandlers.newUserRegister,  transitionType: TransitionType.fadeIn);
-    
+
+    // Sales
+
+    // Routes
+    router.define (routesRoute, handler:       DashboardHandlers.routes,            transitionType: TransitionType.fadeIn);
+
+    // Marketing
     router.define (marketingRoute, handler:   DashboardHandlers.marketing,  transitionType: TransitionType.fadeIn);
+
+    // Message
     router.define (messageRoute, handler:     DashboardHandlers.message,    transitionType: TransitionType.fadeIn);
 
     // ELEMENTS 

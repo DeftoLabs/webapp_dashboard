@@ -18,6 +18,7 @@ import 'package:web_dashboard/ui/views/marketing_view.dart';
 import 'package:web_dashboard/ui/views/message_view.dart';
 import 'package:web_dashboard/ui/views/new_user_register.dart';
 import 'package:web_dashboard/ui/views/products_view.dart';
+import 'package:web_dashboard/ui/views/routes_view.dart';
 import 'package:web_dashboard/ui/views/settings_view.dart';
 import 'package:web_dashboard/ui/views/user_view.dart';
 import 'package:web_dashboard/ui/views/users_view.dart';
@@ -109,6 +110,17 @@ class DashboardHandlers {
       } else {
         return const LoginView();
       }
+    }
+  );
+
+    static Handler routes = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routesRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const RoutesView();
+      } return const LoginView();
+
     }
   );
 

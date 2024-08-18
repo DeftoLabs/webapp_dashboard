@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 class Zona {
   String id;
   String codigo;
@@ -13,7 +15,11 @@ class Zona {
   required this.descripcion,
 });
 
+    factory Zona.fromJson(String str) => Zona.fromMap(json.decode(str));
+      String toJson() => json.encode(toMap());
+    
     factory Zona.fromMap(Map<String, dynamic> json) => Zona(
+
         id: json["id"] ?? '',
         codigo: json["codigo"] ?? '',
         nombrezona: json ["nombrezona"] ?? '',
