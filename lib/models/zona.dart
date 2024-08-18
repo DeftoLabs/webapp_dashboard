@@ -20,14 +20,14 @@ class Zona {
     
     factory Zona.fromMap(Map<String, dynamic> json) => Zona(
 
-        id: json["id"] ?? '',
+        id: json["_id"] ?? '',
         codigo: json["codigo"] ?? '',
         nombrezona: json ["nombrezona"] ?? '',
         descripcion: json["descripcion"] ?? '',
     );
 
     Map<String, dynamic> toMap() => {
-        "id": id,
+        "_id": id,
         "codigo": codigo,
         "nombrezona": nombrezona,
         "descripcion": descripcion,

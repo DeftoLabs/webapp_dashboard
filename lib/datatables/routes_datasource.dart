@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/models/zona.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 class RoutesDataSource extends DataTableSource {
 
@@ -17,11 +18,12 @@ class RoutesDataSource extends DataTableSource {
       cells: [
         DataCell(Text(zona.codigo)),
         DataCell(Text(zona.nombrezona)),
+        DataCell(Text(zona.descripcion)),
         DataCell(
           IconButton(
             icon: const Icon(Icons.edit_outlined),
             onPressed: (){
-
+              NavigationService.replaceTo('/dashboard/routes/${zona.id}');
             },
             )
         ),

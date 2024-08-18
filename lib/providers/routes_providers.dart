@@ -27,6 +27,18 @@ class RoutesProviders extends ChangeNotifier {
 
   }
 
+    Future<Zona?> getZonasById ( String id ) async {
+      try {
+      final resp = await CafeApi.httpGet('/zonas/$id');
+    final zona = Zona.fromMap(resp);
+    return zona;
+      } catch (e) {
+        return null;
+      }
+
+
+  }
+
   void sort<T>(Comparable<T> Function (Zona zona) getField) {
 
     zonas.sort((a,b) {

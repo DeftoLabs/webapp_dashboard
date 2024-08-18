@@ -15,10 +15,12 @@ class RoutesResponse {
 
     String toJson() => json.encode(toMap());
 
-    factory RoutesResponse.fromMap(Map<String, dynamic> json) => RoutesResponse(
-        total: json["total"],
-        zonas: List<Zona>.from(json["zonas"].map((x) => Zona.fromMap(x))),
-    );
+factory RoutesResponse.fromMap(Map<String, dynamic> json) {
+  return RoutesResponse(
+    total: json["total"],
+    zonas: List<Zona>.from(json["zonas"].map((x) => Zona.fromMap(x))),
+  );
+}
 
     Map<String, dynamic> toMap() => {
         "total": total,
