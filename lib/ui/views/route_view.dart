@@ -1,14 +1,17 @@
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/zona.dart';
+import 'package:web_dashboard/providers/route_form_provider.dart';
 import 'package:web_dashboard/providers/routes_providers.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
+import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
+import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
-
 class RouteView extends StatefulWidget {
-
   final String id;
 
   const RouteView({super.key, required this.id});
@@ -18,23 +21,39 @@ class RouteView extends StatefulWidget {
 }
 
 class _RouteViewState extends State<RouteView> {
-
   Zona? zona;
 
   @override
   void initState() {
     super.initState();
     final routesProvider = Provider.of<RoutesProviders>(context, listen: false);
+    final routeFormProvider =
+        Provider.of<RouteFormProvider>(context, listen: false);
 
-    routesProvider.getZonasById(widget.id).then((zonaDB) => setState(() {
-      zona = zonaDB;
-    }));
+    routesProvider.getZonasById(widget.id)
+    .then((zonaDB) {
+
+      if( zonaDB != null) {
+      routeFormProvider.zona = zonaDB;
+      routeFormProvider.formKey = GlobalKey<FormState>();
+      setState(() { zona = zonaDB;});     
+      } else {
+        NavigationService.replaceTo('/dashboard/routes');
+      }
+    }
+    );
+  }
+
+  @override
+  void dispose() {
+    zona = null;
+    Provider.of<RouteFormProvider>(context, listen: false).zona = null;
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
-        if (zona == null) {
+    if (zona == null) {
       return const Center(
         child: CircularProgressIndicator(
             color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 4.0),
@@ -46,16 +65,187 @@ class _RouteViewState extends State<RouteView> {
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          Text('Route View', style: CustomLabels.h1,),
-
+          Text(
+            'Route View',
+            style: CustomLabels.h1,
+          ),
           const SizedBox(height: 10),
-      
-      WhiteCardColor(
-        title: 'Test',
-        child: Container(),
-        ),
+          Table(
+            columnWidths: const {
+              0: FixedColumnWidth(350),
+            },
+            children: [
+              TableRow(children: [_RouteViewForm(), _RouteMapView()])
+            ],
+          )
         ],
       ),
     );
+  }
+}
+
+class _RouteMapView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return WhiteCardColor(
+      title: 'Map',
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              CustomIconButtonClear(
+                  onPressed: () {},
+                  text: 'Create a Zone on the Map',
+                  icon: Icons.add_outlined),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Column(
+            children: [
+              Container(
+                width: 600,
+                height: 500,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                height: 10,
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _RouteViewForm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    final routeFormProvider = Provider.of<RouteFormProvider>(context);
+    final zona = routeFormProvider.zona!;
+
+    return WhiteCardColor(
+        title: 'Genereal Information',
+        child: Form(
+          key: routeFormProvider.formKey,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                  initialValue: zona.codigo,
+                  style: const TextStyle(color: Colors.white), // Añade esta línea
+                  decoration: InputDecoration(
+                    hintText: 'Code',
+                    hintStyle: GoogleFonts.plusJakartaSans(
+                        color: Colors.white.withOpacity(0.7)),
+                    labelText: 'Internal Route Code',
+                    labelStyle: GoogleFonts.plusJakartaSans(
+                        color: Colors.white, fontSize: 12),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Code is required';
+                    }else if (value.length >10){
+                      return 'The code cannot exceed 10 characters';
+                    }
+                    return null;
+                  },
+                  onChanged: (value)=> routeFormProvider.copyRouteWith (codigo: value)),
+              const SizedBox(height: 10),
+              TextFormField(
+                  initialValue: zona.nombrezona,
+                  style: const TextStyle(color: Colors.white), // Añade esta línea
+                  decoration: InputDecoration(
+                    hintText: 'Route Name',
+                    hintStyle: GoogleFonts.plusJakartaSans(
+                        color: Colors.white.withOpacity(0.7)),
+                    labelText: 'Route Name',
+                    labelStyle: GoogleFonts.plusJakartaSans(
+                        color: Colors.white, fontSize: 12),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Code Name is required';
+                    }else if (value.length >20){
+                      return 'The description cannot exceed 20 characters';
+                    }
+                    return null;
+                  },
+                  onChanged: (value)=> routeFormProvider.copyRouteWith (nombrezona: value)),
+              const SizedBox(height: 10),
+              TextFormField(
+                  initialValue: zona.descripcion,
+                  style: const TextStyle(color: Colors.white), // Añade esta línea
+                  decoration: InputDecoration(
+                    hintText: 'Route Descripcion',
+                    hintStyle: GoogleFonts.plusJakartaSans(
+                        color: Colors.white.withOpacity(0.7)),
+                    labelText: 'Description',
+                    labelStyle: GoogleFonts.plusJakartaSans(
+                        color: Colors.white, fontSize: 12),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2.0),
+                    ),
+                    border: const OutlineInputBorder(),
+                  ),
+                  maxLines: null,
+                  minLines: 3,
+                  expands: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Description is required';
+                    } else if (value.length >60){
+                      return 'The description cannot exceed 60 characters';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) => routeFormProvider.copyRouteWith (descripcion: value)),
+              const SizedBox(height: 40),
+              Container(
+                alignment: Alignment.center,
+                child: CustomOutlineButtom(
+                  onPressed: () async {
+                    final saved = await routeFormProvider.updateRoute();
+                    if(saved) {
+                      NotificationService.showSnackBa('Route Updated');
+                      
+                      Provider.of<RoutesProviders>(context, listen: false).refreshRoute(zona);
+                      
+                    } else {
+                      NotificationService.showSnackBarError('Could not save the Route');
+                    }
+                  },
+                  text: 'Save',
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 40),
+            ],
+          ),
+        ));
   }
 }

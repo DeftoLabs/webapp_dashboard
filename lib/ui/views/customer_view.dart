@@ -34,6 +34,7 @@ class _CustomerViewState extends State<CustomerView> {
     customerProvider.getCustomerById(widget.id).then((customerDB) {
       if (customerDB != null) {
         customerFormProvider.customer = customerDB;
+        customerFormProvider.formKey = GlobalKey<FormState>();
         setState(() {
           customer = customerDB;
         });

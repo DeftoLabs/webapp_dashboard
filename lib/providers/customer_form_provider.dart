@@ -8,7 +8,7 @@ import 'package:web_dashboard/services/notification_services.dart';
 class CustomerFormProvider extends ChangeNotifier {
 
   Customer? customer;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> formKey;
 
 
   copyCustomerWith({

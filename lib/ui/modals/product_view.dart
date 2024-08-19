@@ -33,10 +33,11 @@ class _ProductViewState extends State<ProductView> {
     final productFormProvider = Provider.of<ProductFormProvider>(context, listen: false);
 
     productsProvider.getProductById(widget.id).then((productDB) {
-      productFormProvider.producto = productDB;
+    productFormProvider.producto = productDB;
 
       if( productDB !=null ) {
-              setState(() {
+        productFormProvider.formKey = GlobalKey<FormState>();
+        setState(() {
         producto = productDB;
         _isLoading = false;
       });

@@ -30,8 +30,8 @@ class RoutesProviders extends ChangeNotifier {
     Future<Zona?> getZonasById ( String id ) async {
       try {
       final resp = await CafeApi.httpGet('/zonas/$id');
-    final zona = Zona.fromMap(resp);
-    return zona;
+      final zona = Zona.fromMap(resp);
+      return zona;
       } catch (e) {
         return null;
       }
@@ -55,5 +55,19 @@ class RoutesProviders extends ChangeNotifier {
     ascending = !ascending;
     notifyListeners();
   } 
+
+  void refreshRoute( Zona newZona) {
+    zonas = zonas.map(
+      (zona) {
+        if(zona.id == newZona.id) {
+          zona = newZona;
+        }
+        return zona;
+      }
+      ).toList();
+
+
+    notifyListeners();
+  }
 
 }
