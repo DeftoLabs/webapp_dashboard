@@ -92,51 +92,7 @@ class _CustomerViewState extends State<CustomerView> {
                           const Divider(
                             color: Color.fromARGB(255, 58, 60, 65),
                           ),
-                          const SizedBox(height: 10),
-                          TextFormField(
-                              initialValue: customer.codigo,
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
-                              decoration: InputDecoration(
-                                hintText: 'Customer Code',
-                                hintStyle: const TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                                labelText: 'Code',
-                                labelStyle: const TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                                prefixIcon: customer.codigo.isEmpty
-                                    ? const Icon(Icons.code,
-                                        color: Colors.black, size: 20)
-                                    : null,
-                                enabledBorder: const OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black)),
-                                focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 58, 60, 65),
-                                )),
-                                errorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red)),
-                                focusedErrorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 58, 60, 65),
-                                )),
-                              ),
-                              onChanged: (value) => customerFormProvider
-                                  .copyCustomerWith(codigo: value),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Code is Required';
-                                }
-                                if (value.length < 2) {
-                                  return 'The Code is required minimum 3 characters';
-                                }
-                                if (value.length > 25) {
-                                  return 'Max 25 characters';
-                                }
-                                return null;
-                              }),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 55),
                           Row(
                             children: [
                               Expanded(
@@ -733,8 +689,8 @@ class _CustomerViewState extends State<CustomerView> {
                   color: const Color.fromRGBO(177, 255, 46, 1),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: const Color.fromARGB(255, 0, 0, 0),
-                    width: 1,
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    width: 2,
                   )),
               child: TextButton(
                 child: Text(

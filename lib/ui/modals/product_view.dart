@@ -202,7 +202,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     hintText: 'Description',
                     labelText: 'Description',
                     labelStyle: GoogleFonts.plusJakartaSans(
-                        color: Colors.white, fontSize: 12),
+                        color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                     hintStyle: GoogleFonts.plusJakartaSans(
                         color: Colors.white.withOpacity(0.7)),
                     focusedBorder: const OutlineInputBorder(
@@ -234,7 +234,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                           color: Colors.white.withOpacity(0.7)),
                       labelText: 'Stock - (Accept 2 Digits )e.g. 10.20',
                       labelStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.white, fontSize: 12),
+                          color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromRGBO(177, 255, 46, 100),
@@ -269,7 +269,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                         hintText: 'Unit',
                         labelText: 'Unit',
                         labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white, fontSize: 12),
+                            color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white.withOpacity(0.7)),
                         focusedBorder: const OutlineInputBorder(
@@ -316,7 +316,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                         hintText: 'Category',
                         labelText: 'Category',
                         labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white, fontSize: 12),
+                            color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white.withOpacity(0.7)),
                         focusedBorder: const OutlineInputBorder(
