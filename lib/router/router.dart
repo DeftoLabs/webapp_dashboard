@@ -17,6 +17,8 @@ class Flurorouter {
   //Dashboard
   static String dashboardRoute  = '/dashboard';
 
+  static String ordersRoute  = '/dashboard/orders';
+
   static String gpsRoute        = '/dashboard/gps';
 
   static String productsRoute   = '/dashboard/products';
@@ -26,11 +28,12 @@ class Flurorouter {
 
   static String customersRoute =    '/dashboard/customers';
   static String customerRoute =     '/dashboard/customers/:id';
+  static String newCustomerRoute =  '/dashboard/newcustomer';
  
 
   static String routesRoute =   '/dashboard/routes';
   static String routeRoute =    '/dashboard/routes/:id';
-
+  static String newRouteRoute = '/dashboard/newroute';
 
 
 
@@ -56,7 +59,8 @@ class Flurorouter {
     // Dashboard
     router.define (dashboardRoute, handler:   DashboardHandlers.dashboard, transitionType: TransitionType.fadeIn);
 
-    //Main
+    //Order
+    router.define (ordersRoute, handler:   DashboardHandlers.orders, transitionType: TransitionType.fadeIn);
 
     // GPS
     router.define (gpsRoute,        handler:  DashboardHandlers.gps,        transitionType: TransitionType.fadeIn);
@@ -73,7 +77,7 @@ class Flurorouter {
     // Customers
     router.define (customersRoute, handler:       DashboardHandlers.customers,            transitionType: TransitionType.fadeIn);
     router.define (customerRoute, handler:        DashboardHandlers.customer,             transitionType: TransitionType.fadeIn);
-    
+    router.define (newCustomerRoute, handler:     DashboardHandlers.newCustomer,         transitionType: TransitionType.fadeIn);
    
     // Users
     router.define (usersRoute, handler:       DashboardHandlers.users,            transitionType: TransitionType.fadeIn);
@@ -84,7 +88,7 @@ class Flurorouter {
     // Routes
     router.define (routesRoute, handler:       DashboardHandlers.routes,            transitionType: TransitionType.fadeIn);
     router.define (routeRoute, handler:        DashboardHandlers.route,             transitionType: TransitionType.fadeIn);
- 
+    router.define (newRouteRoute, handler:     DashboardHandlers.newRoute,             transitionType: TransitionType.fadeIn);
 
 
     // Marketing

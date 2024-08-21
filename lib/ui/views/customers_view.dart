@@ -65,7 +65,7 @@ class _CustomersViewState extends State<CustomersView> {
           actions: [
             CustomIconButton(
               onPressed: (){
-                NavigationService.replaceTo('/dashboard/products/newproduct');
+                NavigationService.replaceTo('/dashboard/newcustomer');
               }, 
               text: 'Create a Customer', 
               icon: Icons.add_outlined)

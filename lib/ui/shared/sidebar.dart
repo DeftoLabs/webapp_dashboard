@@ -44,7 +44,11 @@ class Sidebar extends StatelessWidget {
           icon: Icons.compass_calibration_outlined, 
           onPressed: ()=> navigateTo(Flurorouter.dashboardRoute)),
 
-        MenuItem(text: 'Orders', icon: Icons.list_alt_outlined,            onPressed: (){}),
+        MenuItem(text: 'Orders', 
+        icon: Icons.list_alt_outlined,            
+        onPressed: ()=> navigateTo(Flurorouter.ordersRoute)),
+
+
         MenuItem(text: 'Analityc', icon: Icons.account_tree_outlined,             onPressed: (){}),
 
         MenuItem(text: 'GPS', icon: Icons.gps_fixed,                  
