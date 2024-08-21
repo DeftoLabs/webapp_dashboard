@@ -12,56 +12,22 @@ import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
-class RouteView extends StatefulWidget {
-  final String id;
+class NewRouteView extends StatefulWidget {
 
-  const RouteView({super.key, required this.id});
+
+  const NewRouteView({super.key,});
 
   @override
-  State<RouteView> createState() => _RouteViewState();
+  State<NewRouteView> createState() => _NewRouteViewState();
 }
 
-class _RouteViewState extends State<RouteView> {
+class _NewRouteViewState extends State<NewRouteView> {
   Zona? zona;
   late GoogleMapController _mapController;
 
-  @override
-  void initState() {
-    super.initState();
-    final routesProvider = Provider.of<RoutesProviders>(context, listen: false);
-    final routeFormProvider =
-        Provider.of<RouteFormProvider>(context, listen: false);
-
-    routesProvider.getZonasById(widget.id)
-    .then((zonaDB) {
-
-      if( zonaDB != null) {
-      routeFormProvider.zona = zonaDB;
-      routeFormProvider.formKey = GlobalKey<FormState>();
-      setState(() { zona = zonaDB;});     
-      } else {
-        NavigationService.replaceTo('/dashboard/routes');
-      }
-    }
-    );
-  }
-
-  @override
-  void dispose() {
-    zona = null;
-    Provider.of<RouteFormProvider>(context, listen: false).zona = null;
-    _mapController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (zona == null) {
-      return const Center(
-        child: CircularProgressIndicator(
-            color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 4.0),
-      );
-    }
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -78,7 +44,7 @@ class _RouteViewState extends State<RouteView> {
                   icon: const Icon(Icons.arrow_back_rounded)),
               Expanded(
                   child: Center(
-                child: Text('Route View', style: CustomLabels.h1),
+                child: Text('Create a New Route', style: CustomLabels.h1),
               )),
             ],
           ),

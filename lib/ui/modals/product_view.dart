@@ -59,7 +59,9 @@ class _ProductViewState extends State<ProductView> {
     }
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: ListView(physics: const ClampingScrollPhysics(), children: [
+        child: ListView(
+          physics: const ClampingScrollPhysics(), 
+          children: [
           Row(
             children: [
               IconButton(
@@ -76,7 +78,8 @@ class _ProductViewState extends State<ProductView> {
           ),
           const SizedBox(height: 10),
           _ProductViewBody()
-        ]));
+        ]
+        ));
   }
 }
 

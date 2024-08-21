@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/routes_datasource.dart';
 import 'package:web_dashboard/providers/routes_providers.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
@@ -42,14 +43,14 @@ class RoutesView extends StatelessWidget {
             ], 
             
             source: routesDataSource,
-            header: const Text('', maxLines: 2),
+            header: const Text('List of Routes', maxLines: 2),
             onPageChanged: (page) {
 
             },
               actions: [
                 CustomIconButton(
                   onPressed: (){
-                  
+                  NavigationService.replaceTo('/dashboard/routes/test');
                   }, 
                   text:'Create a Zone', 
                   icon: Icons.add_outlined)

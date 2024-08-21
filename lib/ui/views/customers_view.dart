@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/customers_datasource.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
@@ -58,7 +59,7 @@ class _CustomersViewState extends State<CustomersView> {
           actions: [
             CustomIconButton(
               onPressed: (){
-
+                NavigationService.replaceTo('/dashboard/customers/newcustomer');
               }, 
               text: 'Create a Customer', 
               icon: Icons.add_outlined)

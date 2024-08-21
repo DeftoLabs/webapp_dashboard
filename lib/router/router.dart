@@ -24,11 +24,13 @@ class Flurorouter {
 
   static String categoriesRoute = '/dashboard/categories';
 
-  static String customersRoute = '/dashboard/customers';
-  static String customerRoute =   '/dashboard/customers/:id';
+  static String customersRoute =    '/dashboard/customers';
+  static String customerRoute =     '/dashboard/customers/:id';
 
-  static String routesRoute = '/dashboard/routes';
-  static String routeRoute =  '/dashboard/routes/:id';
+  static String routesRoute =   '/dashboard/routes';
+  static String routeRoute =    '/dashboard/routes/:id';
+
+
 
 
   static String usersRoute      = '/dashboard/users';
@@ -42,6 +44,7 @@ class Flurorouter {
 
   static String settingsRoute         = '/dashboard/settings';
   static String inactiveUserRoute     = '/dashboard/settings/inactiveuser';
+  static String myAccount             = '/dashboard/settings/myaccount';
 
   static void configureRoutes () {
     // Auth Routes
@@ -59,16 +62,16 @@ class Flurorouter {
 
     // Products
     router.define (productsRoute,   handler:  DashboardHandlers.products,   transitionType: TransitionType.fadeIn);    
-    router.define (productRoute,   handler:  DashboardHandlers.product,   transitionType: TransitionType.fadeIn);   
+    router.define (productRoute,    handler:  DashboardHandlers.product,    transitionType: TransitionType.fadeIn);   
 
     // Categories
     router.define (categoriesRoute, handler:  DashboardHandlers.categories, transitionType: TransitionType.fadeIn);
 
 
     // Customers
-    router.define (customersRoute, handler:  DashboardHandlers.customers, transitionType: TransitionType.fadeIn);
-    router.define (customerRoute, handler:  DashboardHandlers.customer, transitionType: TransitionType.fadeIn);
-
+    router.define (customersRoute, handler:   DashboardHandlers.customers,             transitionType: TransitionType.fadeIn);
+    router.define (customerRoute, handler:    DashboardHandlers.customer,             transitionType: TransitionType.fadeIn);
+   
     // Users
     router.define (usersRoute, handler:       DashboardHandlers.users,            transitionType: TransitionType.fadeIn);
     router.define (newUserRoute, handler:     DashboardHandlers.newUserRegister,  transitionType: TransitionType.fadeIn);
@@ -78,6 +81,9 @@ class Flurorouter {
     // Routes
     router.define (routesRoute, handler:       DashboardHandlers.routes,            transitionType: TransitionType.fadeIn);
     router.define (routeRoute, handler:        DashboardHandlers.route,             transitionType: TransitionType.fadeIn);
+ 
+
+
     // Marketing
     router.define (marketingRoute, handler:   DashboardHandlers.marketing,  transitionType: TransitionType.fadeIn);
 
@@ -90,8 +96,9 @@ class Flurorouter {
 
 
     // CONFIGURATION
-    router.define (settingsRoute, handler:     DashboardHandlers.settings,      transitionType: TransitionType.fadeIn);
-    router.define (inactiveUserRoute, handler: DashboardHandlers.inactiveUser,  transitionType: TransitionType.fadeIn);
+    router.define (settingsRoute,     handler: DashboardHandlers.settings,           transitionType: TransitionType.fadeIn);
+    router.define (inactiveUserRoute, handler: DashboardHandlers.inactiveUser,       transitionType: TransitionType.fadeIn);
+    router.define (myAccount,         handler: DashboardHandlers.myAccountSettings,  transitionType: TransitionType.fadeIn);
 
 
     // 404

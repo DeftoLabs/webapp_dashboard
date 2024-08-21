@@ -27,6 +27,22 @@ class SettingsView extends StatelessWidget {
           direction:Axis.horizontal,
           children: [
             RectangularCard(
+              title: 'My Account',
+              width: 200,
+              child: const Center(child: Icon(Icons.supervised_user_circle_outlined),),
+              onTap: (){
+                NavigationService.replaceTo('/dashboard/settings/myaccount');
+              },
+              ),
+
+        ],
+      ),
+
+      Wrap(
+          crossAxisAlignment: WrapCrossAlignment.start,
+          direction:Axis.horizontal,
+          children: [
+            RectangularCard(
               title: 'Inactive Users',
               width: 200,
               child: const Center(child: Icon(Icons.supervised_user_circle_outlined),),

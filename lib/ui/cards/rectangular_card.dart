@@ -59,9 +59,9 @@ class RectangularCard extends StatelessWidget {
   BoxDecoration buildBoxDecoration() => BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
-    boxShadow: [
+    boxShadow: const [
       BoxShadow(
-        color: Colors.indigo.withOpacity(0.4),
+        color: Color.fromRGBO(177, 255, 46, 100),
         blurRadius: 5,
       )
     ]

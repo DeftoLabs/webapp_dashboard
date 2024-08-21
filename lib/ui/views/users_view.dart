@@ -62,7 +62,8 @@ class _UsersViewState extends State<UsersView> {
                   child: TextButton.icon(
                     label: Text('Add a New User', style: GoogleFonts.plusJakartaSans(color: const Color.fromARGB(255, 0, 0, 0)),) ,
                     onPressed: (){
-                      NavigationService.replaceTo('dashboard/users/newuser');
+                     NavigationService.replaceTo('dashboard/users/newuser');
+                   
                     }, 
                     icon: const Icon(Icons.person_add_alt_1, color: Color.fromARGB(255, 0, 0, 0),)),
                 ),
