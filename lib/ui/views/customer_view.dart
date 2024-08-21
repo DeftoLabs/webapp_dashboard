@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/providers/customer_form_provider.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
+import 'package:web_dashboard/providers/routes_providers.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
@@ -100,21 +101,21 @@ class _CustomerViewState extends State<CustomerView> {
                                 child: TextFormField(
                                     initialValue: customer.credito.toString(),
                                     style: const TextStyle(
-                                        color: Colors.black, fontSize: 14),
+                                        color: Colors.black, fontSize: 16),
                                     decoration: const InputDecoration(
                                       hintText: 'Condition Sale',
                                       hintStyle: TextStyle(
-                                          color: Colors.black, fontSize: 14),
+                                          color: Colors.black, fontSize: 16),
                                       labelText: 'Credit (Days) & Cash',
                                       labelStyle: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 14,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                       prefixIcon: Icon(Icons.monetization_on,
                                           color: Colors.black, size: 20),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.black)),
+                                              BorderSide(color: Colors.black, width: 2)),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                         color: Color.fromARGB(255, 58, 60, 65),
@@ -150,45 +151,49 @@ class _CustomerViewState extends State<CustomerView> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                           TextFormField(
-                              initialValue: customer.zona.nombrezona,
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
-                              decoration: const InputDecoration(
-                                hintText: 'Zone',
-                                hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                                labelText: 'Zone',
-                                labelStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold),
-                                prefixIcon: Icon(Icons.person_rounded,
-                                    color: Colors.black, size: 20),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 58, 60, 65),
-                                )),
-                                errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.red)),
-                                focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 58, 60, 65),
-                                )),
-                              ),
-                             // onChanged: (value) {
-                             // 
-                             // },
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Zone is Required';
-                                }
-                                return null;
-                              }),
-                          const SizedBox(height: 10),
+                     Consumer<RoutesProviders>(
+                    builder: (context, zonasProvider, child) {
+                      return DropdownButtonFormField<String>(
+                        value: customer.zona.id,  // Aquí asumimos que `customer.zona.id` es el campo seleccionado
+                        decoration: InputDecoration(
+                          hintText: 'Zona',
+                          labelText: 'Zona',
+                          labelStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                          hintStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.black.withOpacity(0.7)),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.black, width: 2.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black, width: 2.0),
+                          ),
+                        ),
+                        style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                        dropdownColor: Colors.grey[300],
+                        items: zonasProvider.zonas.map((zona) {
+                          return DropdownMenuItem<String>(
+                            value: zona.id,  
+                            child: Text(zona.nombrezona, 
+                                style: const TextStyle(color: Colors.black)),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            customer.zona.id = value!;  // Actualiza el valor seleccionado
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor, selecciona una zona';
+                          }
+                          return null;
+                        },
+                      );
+                    },
+                  ),
+                                            const SizedBox(height: 10),
                         ],
                       )),
                       const SizedBox(height: 54),
@@ -208,21 +213,21 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                               initialValue: customer.contacto,
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
+                                  color: Colors.black, fontSize: 16),
                               decoration: const InputDecoration(
                                 hintText: 'Manager',
                                 hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14),
+                                    color: Colors.black, fontSize: 16),
                                 labelText: 'Manager',
                                 labelStyle: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                                 prefixIcon: Icon(Icons.person_rounded,
                                     color: Colors.black, size: 20),
                                 enabledBorder: OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black)),
+                                        BorderSide(color: Colors.black, width: 2)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -249,11 +254,11 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                               initialValue: customer.telefono,
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
+                                  color: Colors.black, fontSize: 16),
                               decoration: const InputDecoration(
                                 hintText: 'Phone',
                                 hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14),
+                                    color: Colors.black, fontSize: 16),
                                 labelText: 'Phone',
                                 labelStyle: TextStyle(
                                     color: Colors.black,
@@ -263,7 +268,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     color: Colors.black, size: 20),
                                 enabledBorder: OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black)),
+                                        BorderSide(color: Colors.black, width: 2)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -290,11 +295,11 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                             initialValue: customer.correo,
                             style: const TextStyle(
-                                color: Colors.black, fontSize: 14),
+                                color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
                               hintText: 'email',
                               hintStyle:
-                                  TextStyle(color: Colors.black, fontSize: 14),
+                                  TextStyle(color: Colors.black, fontSize: 16),
                               labelText: 'email',
                               labelStyle: TextStyle(
                                   color: Colors.black,
@@ -303,7 +308,7 @@ class _CustomerViewState extends State<CustomerView> {
                               prefixIcon: Icon(Icons.email_rounded,
                                   color: Colors.black, size: 20),
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
+                                  borderSide: BorderSide(color: Colors.black, width: 2)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                 color: Color.fromARGB(255, 58, 60, 65),
@@ -328,11 +333,11 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                             initialValue: customer.web,
                             style: const TextStyle(
-                                color: Colors.black, fontSize: 14),
+                                color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
                               hintText: 'WebSite',
                               hintStyle:
-                                  TextStyle(color: Colors.black, fontSize: 14),
+                                  TextStyle(color: Colors.black, fontSize: 16),
                               labelText: 'WebSite',
                               labelStyle: TextStyle(
                                   color: Colors.black,
@@ -341,7 +346,7 @@ class _CustomerViewState extends State<CustomerView> {
                               prefixIcon: Icon(Icons.web_asset,
                                   color: Colors.black, size: 20),
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
+                                  borderSide: BorderSide(color: Colors.black, width: 2)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                 color: Color.fromARGB(255, 58, 60, 65),
@@ -391,22 +396,22 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                             initialValue: customer.idfiscal,
                             style: const TextStyle(
-                                color: Colors.black, fontSize: 14),
+                                color: Colors.black, fontSize: 16),
                             decoration: InputDecoration(
                               hintText: 'Tax ID',
                               hintStyle: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
+                                  color: Colors.black, fontSize: 16),
                               labelText: 'Tax ID',
                               labelStyle: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 14,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold),
                               prefixIcon: customer.idfiscal.isEmpty
                                   ? const Icon(Icons.info_sharp,
                                       color: Colors.black, size: 20)
                                   : null,
                               enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
+                                  borderSide: BorderSide(color: Colors.black, width: 2)),
                               focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                 color: Color.fromARGB(255, 58, 60, 65),
@@ -435,15 +440,15 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                               initialValue: customer.razons,
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
+                                  color: Colors.black, fontSize: 16),
                               decoration: InputDecoration(
                                 hintText: 'Legal Name',
                                 hintStyle: const TextStyle(
-                                    color: Colors.black, fontSize: 14),
+                                    color: Colors.black, fontSize: 16),
                                 labelText: 'Legal Name',
                                 labelStyle: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                                 prefixIcon: customer.razons.isEmpty
                                     ? const Icon(Icons.business_outlined,
@@ -451,7 +456,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black)),
+                                        BorderSide(color: Colors.black, width: 2)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -481,15 +486,15 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                               initialValue: customer.nombre,
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
+                                  color: Colors.black, fontSize: 16),
                               decoration: InputDecoration(
                                 hintText: 'Bussiness Name',
                                 hintStyle: const TextStyle(
-                                    color: Colors.black, fontSize: 14),
+                                    color: Colors.black, fontSize: 16),
                                 labelText: 'Bussiness Name',
                                 labelStyle: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                                 prefixIcon: customer.nombre.isEmpty
                                     ? const Icon(Icons.burst_mode_sharp,
@@ -497,7 +502,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black)),
+                                        BorderSide(color: Colors.black, width: 2)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -527,15 +532,15 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                               initialValue: customer.sucursal,
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
+                                  color: Colors.black, fontSize: 16),
                               decoration: InputDecoration(
                                 hintText: 'Sucursal',
                                 hintStyle: const TextStyle(
-                                    color: Colors.black, fontSize: 14),
+                                    color: Colors.black, fontSize: 16),
                                 labelText: 'Sucursal',
                                 labelStyle: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                                 prefixIcon: customer.sucursal.isEmpty
                                     ? const Icon(Icons.point_of_sale_outlined,
@@ -543,7 +548,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black)),
+                                        BorderSide(color: Colors.black, width: 2)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -573,15 +578,15 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                               initialValue: customer.direccion,
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
+                                  color: Colors.black, fontSize: 16),
                               decoration: InputDecoration(
                                 hintText: 'Address',
                                 hintStyle: const TextStyle(
-                                    color: Colors.black, fontSize: 14),
+                                    color: Colors.black, fontSize: 16),
                                 labelText: 'Address',
                                 labelStyle: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                                 prefixIcon: customer.direccion.isEmpty
                                     ? const Icon(Icons.location_city_rounded,
@@ -589,7 +594,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black)),
+                                        BorderSide(color: Colors.black, width: 2)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -632,21 +637,21 @@ class _CustomerViewState extends State<CustomerView> {
                           TextFormField(
                               initialValue: customer.note,
                               style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
+                                  color: Colors.black, fontSize: 16),
                               maxLines: 5,
                               decoration: const InputDecoration(
                                 hintText: 'Note',
                                 hintStyle: TextStyle(
-                                    color: Colors.black, fontSize: 14),
+                                    color: Colors.black, fontSize: 16),
                                 labelText: 'Note',
                                 labelStyle: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold),
                                 prefixIcon: Icon(Icons.info_outline_rounded,
                                     color: Colors.black, size: 20),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
+                                  borderSide: BorderSide(color: Colors.black, width: 2),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -669,7 +674,7 @@ class _CustomerViewState extends State<CustomerView> {
                                 if (value.length < 2) {
                                   return 'The note required minimum 3 characters';
                                 }
-                                // if (value.length >= 41) return 'Max 40 characters';
+                                if (value.length > 80) return 'Max 80 characters';
                                 return null;
                               }),
                           const SizedBox(height: 10),

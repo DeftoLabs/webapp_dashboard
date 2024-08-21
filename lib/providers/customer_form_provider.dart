@@ -70,7 +70,7 @@ class CustomerFormProvider extends ChangeNotifier {
       'contacto': customer!.contacto,
       'credito': customer!.credito,
       'note': customer!.note,
-      //'zona': customer!.zona,
+      'zona': customer!.zona.id,
     };
 
     try {
