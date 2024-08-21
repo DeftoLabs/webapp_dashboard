@@ -63,7 +63,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductsProvider>(context);
-    final producto = productProvider.producto;
+    productProvider.producto;
 
     final image = (fileImage == null) 
   ? const Image(image: AssetImage('noimage.jpeg')) 

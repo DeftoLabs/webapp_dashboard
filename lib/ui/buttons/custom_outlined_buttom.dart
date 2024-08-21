@@ -64,7 +64,7 @@ class CustomOutlineButtomColor extends StatelessWidget {
         ),
         side: WidgetStateProperty.all(BorderSide(color: color)),
         backgroundColor: WidgetStateProperty.all(
-          isFilled ? color.withOpacity(0.3) : Colors.transparent,
+          isFilled ? color.withOpacity(0.7) : Colors.transparent,
         )
       ),
       onPressed: () => onPressed(), 

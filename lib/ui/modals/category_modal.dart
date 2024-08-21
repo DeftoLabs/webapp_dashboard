@@ -96,7 +96,7 @@ class _CategoryModalState extends State<CategoryModal> {
                     if(!context.mounted) return;
                     Navigator.of(context).pop();
                   } catch (e) {
-                    if (mounted) NotificationService.showSnackBa('Could not save the category');
+                    if (mounted) NotificationService.showSnackBarError('Could not save the category');
                     if (mounted) Navigator.of(context).pop();
                   }
                 },

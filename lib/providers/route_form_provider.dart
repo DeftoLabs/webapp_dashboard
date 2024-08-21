@@ -9,6 +9,10 @@ class RouteFormProvider extends ChangeNotifier {
   Zona? zona;
   late GlobalKey<FormState> formKey;
 
+   RouteFormProvider() {
+    formKey = GlobalKey<FormState>();
+  }
+
   copyRouteWith({
   String? id,
   String? codigo,

@@ -172,7 +172,7 @@ class _RouteViewForm extends StatelessWidget {
                             color: Colors.white.withOpacity(0.7)),
                         labelText: 'Internal Route Code',
                         labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white, fontSize: 12),
+                            color: Colors.white, fontSize: 16),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -201,7 +201,7 @@ class _RouteViewForm extends StatelessWidget {
                             color: Colors.white.withOpacity(0.7)),
                         labelText: 'Route Name',
                         labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white, fontSize: 12),
+                            color: Colors.white, fontSize: 16),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -230,7 +230,7 @@ class _RouteViewForm extends StatelessWidget {
                             color: Colors.white.withOpacity(0.7)),
                         labelText: 'Description',
                         labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white, fontSize: 12),
+                            color: Colors.white, fontSize: 16),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -241,7 +241,7 @@ class _RouteViewForm extends StatelessWidget {
                         border: const OutlineInputBorder(),
                       ),
                       maxLines: null,
-                      minLines: 3,
+                      minLines: 2,
                       expands: false,
                       validator: (value) {
                         if (value == null || value.isEmpty) {

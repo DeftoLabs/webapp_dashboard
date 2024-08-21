@@ -88,7 +88,7 @@ class Flurorouter {
     // Routes
     router.define (routesRoute, handler:       DashboardHandlers.routes,            transitionType: TransitionType.fadeIn);
     router.define (routeRoute, handler:        DashboardHandlers.route,             transitionType: TransitionType.fadeIn);
-    router.define (newRouteRoute, handler:     DashboardHandlers.newRoute,             transitionType: TransitionType.fadeIn);
+    // router.define (newRouteRoute, handler:     DashboardHandlers.newRoute,             transitionType: TransitionType.fadeIn);
 
 
     // Marketing

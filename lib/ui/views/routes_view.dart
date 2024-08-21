@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/routes_datasource.dart';
 import 'package:web_dashboard/providers/routes_providers.dart';
-import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 import 'package:web_dashboard/ui/modals/route_modal.dart';
+
 
 
 class RoutesView extends StatelessWidget {
@@ -51,9 +51,16 @@ class RoutesView extends StatelessWidget {
               actions: [
                 CustomIconButton(
                   onPressed: (){
-                NavigationService.replaceTo('/dashboard/newroute');
+
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return RouteModal();
+                      },
+                    );
+                //NavigationService.replaceTo('/dashboard/newroute');
                   }, 
-                  text:'Create a Zone', 
+                  text:'Create a Route', 
                   icon: Icons.add_outlined)
               ],
             )

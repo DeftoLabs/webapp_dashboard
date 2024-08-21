@@ -70,4 +70,20 @@ class RoutesProviders extends ChangeNotifier {
     notifyListeners();
   }
 
+    Future newRoute (String codigo, String nombrezona, String descripcion) async {
+    final data = {
+      'codigo': codigo,
+      'nombrezona': nombrezona,
+      'descripcion': descripcion,
+    };
+    try{
+      final json = await CafeApi.post('/zonas', data);
+      final newZona = Zona.fromMap(json);
+      zonas.add(newZona);
+      notifyListeners();
+    } catch (e){
+      throw ' Error to create the Category ';
+    }
+  }
+
 }
