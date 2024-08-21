@@ -17,12 +17,18 @@ class CustomersView extends StatefulWidget {
 
 class _CustomersViewState extends State<CustomersView> {
 
+  @override
+  void initState() {
+    super.initState();
+    final customerProvider = Provider.of<CustomersProvider>(context, listen: false);
+    customerProvider.getPaginatedCustomers();
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
     final customerProvider = Provider.of<CustomersProvider>(context);
-
     final customersDataSource = CustomersDatasource( customerProvider.customers );
 
     return Container(
@@ -59,7 +65,7 @@ class _CustomersViewState extends State<CustomersView> {
           actions: [
             CustomIconButton(
               onPressed: (){
-                NavigationService.replaceTo('/dashboard/customers/newcustomer');
+                NavigationService.replaceTo('/dashboard/products/newproduct');
               }, 
               text: 'Create a Customer', 
               icon: Icons.add_outlined)

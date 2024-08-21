@@ -12,10 +12,6 @@ bool isLoading = true;
 bool ascending = true;
 int? sortColumnIndex;
 
-CustomersProvider () {
-  getPaginatedCustomers();
-}
-
 
 Future<void> getPaginatedCustomers()async { 
   final resp = await CafeApi.httpGet('/clientes');
