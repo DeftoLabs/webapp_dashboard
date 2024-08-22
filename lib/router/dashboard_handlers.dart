@@ -7,7 +7,6 @@ import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
 import 'package:web_dashboard/ui/modals/product_view.dart';
-import 'package:web_dashboard/ui/views/blank_view.dart';
 import 'package:web_dashboard/ui/views/categories_view.dart';
 import 'package:web_dashboard/ui/views/customer_view.dart';
 import 'package:web_dashboard/ui/views/customers_view.dart';
@@ -136,7 +135,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.newCustomerRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const NewCustomerView();
+        return  NewCustomerView();
       } return const LoginView();
 
     }
