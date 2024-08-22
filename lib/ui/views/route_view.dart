@@ -111,6 +111,7 @@ class _RouteMapView extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             children: [
+              const SizedBox(width: 25),
               CustomIconButtonClear(
                   onPressed: () {},
                   text: 'Create a Zone on the Map',
@@ -134,9 +135,18 @@ class _RouteMapView extends StatelessWidget {
                     },
                     ),
               ),
-              const SizedBox(
-                height: 10,
-              )
+              const SizedBox(height: 10),
+              Center(
+              child: SizedBox(
+                child: Text('With version 2.0, you will be able to select areas (Routes) on the map.',   style:GoogleFonts.plusJakartaSans(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                      )
+              ),
+            ),
+            const SizedBox(height: 10),
             ],
           )
         ],
@@ -277,20 +287,6 @@ class _RouteViewForm extends StatelessWidget {
             )
             ),
             const SizedBox(height: 20),
-           WhiteCardColor(
-            child: 
-            Center(
-              child: SizedBox(
-                height: 80,
-                child: Text('With version 2.0, you will be able to select areas (Routes) on the map.',   style:GoogleFonts.plusJakartaSans(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                      )
-              ),
-            )
-            )
       ],
     );
 

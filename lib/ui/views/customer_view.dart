@@ -93,7 +93,7 @@ class _CustomerViewState extends State<CustomerView> {
                           const Divider(
                             color: Color.fromARGB(255, 58, 60, 65),
                           ),
-                          const SizedBox(height: 55),
+                          const SizedBox(height:10),
                           Row(
                             children: [
                               Expanded(
@@ -156,8 +156,8 @@ class _CustomerViewState extends State<CustomerView> {
                       return DropdownButtonFormField<String>(
                         value: customer.zona.id,  // Aquí asumimos que `customer.zona.id` es el campo seleccionado
                         decoration: InputDecoration(
-                          hintText: 'Zona',
-                          labelText: 'Zona',
+                          hintText: 'Route Name',
+                          labelText: 'Route Name',
                           labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
                           hintStyle: GoogleFonts.plusJakartaSans(
@@ -186,17 +186,17 @@ class _CustomerViewState extends State<CustomerView> {
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor, selecciona una zona';
+                            return 'Please, select a Route';
                           }
                           return null;
                         },
                       );
                     },
                   ),
-                                            const SizedBox(height: 10),
+                    const SizedBox(height: 10),
                         ],
                       )),
-                      const SizedBox(height: 54),
+                      const SizedBox(height: 10),
                       WhiteCard(
                           child: Column(
                         children: [
@@ -245,8 +245,8 @@ class _CustomerViewState extends State<CustomerView> {
                                 if (value == null || value.isEmpty) {
                                   return 'Manager is Required';
                                 }
-                                if (value.length > 16) {
-                                  return 'Max 15 characters';
+                                if (value.length > 21) {
+                                  return 'Max 20 characters';
                                 }
                                 return null;
                               }),
@@ -371,7 +371,42 @@ class _CustomerViewState extends State<CustomerView> {
                           ),
                           const SizedBox(height: 10),
                         ],
-                      ))
+                      )
+                      ),
+                      const SizedBox(height: 30),
+                         Container(
+              height: 50,
+              width: 100,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: const Color.fromRGBO(177, 255, 46, 1),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: const Color.fromRGBO(177, 255, 46, 1),
+                    width: 2,
+                  )),
+              child: TextButton(
+                child: Text(
+                  'Save',
+                  style: GoogleFonts.plusJakartaSans(
+                      color: const Color.fromARGB(255, 0, 0, 0)),
+                ),
+                onPressed: () async {
+                  final saved = await customerFormProvider.updateCustomer();
+                  if (saved) {
+                    if (!context.mounted) return;
+                    NotificationService.showSnackBa('Customer Updated');
+                    Provider.of<CustomersProvider>(context, listen: false)
+                        .refreshCustomer(customer);
+                      if(!context.mounted) return;
+                    Navigator.of(context).popAndPushNamed('/dashboard/customers');
+                  } else {
+                    NotificationService.showSnackBarError(
+                        'Error to Update the Customer');
+                  }
+                },
+              ),
+            ),
                     ],
                   ),
                   Column(
@@ -686,37 +721,7 @@ class _CustomerViewState extends State<CustomerView> {
               ],
             ),
             const SizedBox(height: 20),
-            Container(
-              height: 50,
-              width: 100,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: const Color.fromRGBO(177, 255, 46, 1),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    width: 2,
-                  )),
-              child: TextButton(
-                child: Text(
-                  'Save',
-                  style: GoogleFonts.plusJakartaSans(
-                      color: const Color.fromARGB(255, 0, 0, 0)),
-                ),
-                onPressed: () async {
-                  final saved = await customerFormProvider.updateCustomer();
-                  if (saved) {
-                    if (!context.mounted) return;
-                    NotificationService.showSnackBa('Customer Updated');
-                    Provider.of<CustomersProvider>(context, listen: false)
-                        .refreshCustomer(customer);
-                  } else {
-                    NotificationService.showSnackBarError(
-                        'Error to Update the Customer');
-                  }
-                },
-              ),
-            ),
+          
           ],
         ),
       ),

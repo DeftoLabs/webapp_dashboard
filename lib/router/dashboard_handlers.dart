@@ -18,6 +18,7 @@ import 'package:web_dashboard/ui/views/login_view.dart';
 import 'package:web_dashboard/ui/views/marketing_view.dart';
 import 'package:web_dashboard/ui/views/message_view.dart';
 import 'package:web_dashboard/ui/views/my_account_view.dart';
+import 'package:web_dashboard/ui/views/new_customer_view.dart';
 import 'package:web_dashboard/ui/views/new_user_register.dart';
 import 'package:web_dashboard/ui/views/orders_view.dart';
 import 'package:web_dashboard/ui/views/products_view.dart';
@@ -135,7 +136,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.newCustomerRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const BlankView();
+        return const NewCustomerView();
       } return const LoginView();
 
     }
