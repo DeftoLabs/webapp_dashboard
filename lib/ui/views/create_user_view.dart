@@ -162,8 +162,8 @@ class _UserViewForm extends StatelessWidget {
               ),
               onChanged: ( value )=> userFormProvider.copyUserWith( nombre: value ),
               validator: ( value ) {
-                if ( value == null || value.isEmpty ) return 'Ingrese un nombre.';
-                if ( value.length < 2 ) return 'El nombre debe de ser de dos letras como mínimo.';
+                if ( value == null || value.isEmpty ) return 'The name is required';
+                if ( value.length < 2 ) return 'Minimin 2 Characthers';
                 return null;
               },
             ),

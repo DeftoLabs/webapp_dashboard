@@ -56,7 +56,6 @@ bool validateForm() {
       'zona': zone?.id ?? '', 
     };
 
-    print('Data to Send: $data');
 
   CafeApi.post('/clientes', data).then((json) {
 
@@ -65,7 +64,7 @@ bool validateForm() {
     CafeApi.configureDio();
     notifyListeners();
       }).catchError((e) {
-    NotificationService.showSnackBarError('Error to Create a Customer');
+    NotificationService.showSnackBarError('This code is already register');
 
   });
 }

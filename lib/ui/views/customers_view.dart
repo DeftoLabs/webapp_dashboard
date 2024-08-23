@@ -5,7 +5,9 @@ import 'package:web_dashboard/datatables/customers_datasource.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
+import 'package:web_dashboard/ui/inputs/search_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
+
 
 
 class CustomersView extends StatefulWidget {
@@ -58,7 +60,12 @@ class _CustomersViewState extends State<CustomersView> {
 
           ], 
           source: customersDataSource,
-          header: const Text('', maxLines:2),
+          header: Row(
+            children: [
+              const Text('', maxLines:2),
+              //SearchButton()
+            ],
+          ),
             onPageChanged: ( page ) {
 
             },

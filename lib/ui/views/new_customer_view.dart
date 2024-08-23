@@ -6,7 +6,6 @@ import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/zona.dart';
 import 'package:web_dashboard/providers/newcustomer_provider.dart';
 import 'package:web_dashboard/providers/routes_providers.dart';
-import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 
 class NewCustomerView extends StatefulWidget {
@@ -483,8 +482,8 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               if (value.length < 2) {
                                 return 'The Legal required minimum 3 characters';
                               }
-                              if (value.length > 25) {
-                                return 'Mac 25 characters';
+                              if (value.length > 31) {
+                                return 'Max 30 characters';
                               }
                               return null;
                             }),
@@ -522,8 +521,8 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               if (value.length < 2) {
                                 return 'The Bussiness required minimum 3 characters';
                               }
-                              if (value.length > 25) {
-                                return 'Max 25 characters';
+                              if (value.length > 31) {
+                                return 'Max 30 characters';
                               }
                               return null;
                             }),
@@ -649,7 +648,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => newCustomerRegisterProvider.note = value,
+                            onChanged: (value) {
+                              final uppercaseValue = value.toUpperCase();
+                              newCustomerRegisterProvider.note = uppercaseValue;
+                            }, 
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Note is Required';
