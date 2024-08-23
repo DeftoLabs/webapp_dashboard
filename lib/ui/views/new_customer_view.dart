@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/customers.dart';
-import 'package:web_dashboard/providers/customer_form_provider.dart';
+import 'package:web_dashboard/models/zona.dart';
+import 'package:web_dashboard/providers/newcustomer_provider.dart';
 import 'package:web_dashboard/providers/routes_providers.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
@@ -21,21 +22,13 @@ class NewCustomerView extends StatefulWidget {
 class _NewCustomerViewState extends State<NewCustomerView> {
 
   @override
-  void initState() {
-    super.initState();
-    final customerFormProvider = Provider.of<CustomerFormProvider>(context);
-  }
-
-
-  @override
   Widget build(BuildContext context) {
-    final customerFormProvider = Provider.of<CustomerFormProvider>(context);
-
+    final newCustomerRegisterProvider = Provider.of<NewCustomerProvider>(context, listen: false);
 
     return WhiteCardCustomer(
       title: 'Customer View',
       child: Form(
-      key: customerFormProvider.formKey,
+      key: newCustomerRegisterProvider.formKey,
       child: Column(
         children: [
           Table(
@@ -64,7 +57,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             Expanded(
                               flex: 2,
                               child: TextFormField(
-                                  initialValue: widget.customer?.credito.toString(),
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                   decoration: const InputDecoration(
@@ -92,7 +84,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                       color: Color.fromARGB(255, 58, 60, 65),
                                     )),
                                   ),
-                                  onChanged: (value) => customerFormProvider.copyCustomerWith(credito: value as int),
+                                  onChanged: (value) => newCustomerRegisterProvider.credito = int.tryParse(value) ?? 0,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Credit is Required';
@@ -115,7 +107,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         const SizedBox(height: 10),
                         Consumer<RoutesProviders>(
                           builder: (context, zonasProvider, child) {
-                            return DropdownButtonFormField<String>(
+                            return DropdownButtonFormField<Zona>(
                               decoration: InputDecoration(
                                 hintText: 'Route Name',
                                 labelText: 'Route Name',
@@ -137,21 +129,21 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                   color: Colors.black),
                               dropdownColor: Colors.grey[300],
                               items: zonasProvider.zonas.map((zona) {
-                                return DropdownMenuItem<String>(
-                                  value: zona.id,
+                                return DropdownMenuItem<Zona>(
+                                  value: zona,
                                   child: Text(zona.nombrezona,
                                       style:
                                           const TextStyle(color: Colors.black)),
                                 );
                               }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  final selectedZona = zonasProvider.zonas.firstWhere((zona) => zona.id == value);
-                                   customerFormProvider.copyCustomerWith(zona: selectedZona);
-                                 });
-                              },
+                            value: newCustomerRegisterProvider.zone,  
+                            onChanged: (Zona? selectedZona) {
+                                  if (selectedZona != null) {
+                                    newCustomerRegisterProvider.updateZone(selectedZona);
+                                  }
+                                },
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value == null) {
                                   return 'Please, select a Route';
                                 }
                                 return null;
@@ -177,7 +169,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                            initialValue: widget.customer?.contacto,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
@@ -204,7 +195,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider.copyCustomerWith(contacto: value),
+                            onChanged: (value) => newCustomerRegisterProvider.contacto = value,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Manager is Required';
@@ -216,7 +207,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             }),
                         const SizedBox(height: 10),
                         TextFormField(
-                            initialValue: widget.customer?.telefono,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
@@ -243,7 +233,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider.copyCustomerWith(telefono: value),
+                            onChanged: (value) => newCustomerRegisterProvider.telefono,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Phone is Required';
@@ -255,7 +245,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             }),
                         const SizedBox(height: 10),
                         TextFormField(
-                          initialValue: widget.customer?.correo,
                           style: const TextStyle(
                               color: Colors.black, fontSize: 16),
                           decoration: const InputDecoration(
@@ -282,7 +271,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               color: Color.fromARGB(255, 58, 60, 65),
                             )),
                           ),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith(correo: value),
+                          onChanged: (value) => newCustomerRegisterProvider.correo = value,
                           validator: (value) {
                             if (!EmailValidator.validate(value ?? '')) {
                               return 'Email not Valid';
@@ -292,7 +281,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                          initialValue: widget.customer?.web,
                           style: const TextStyle(
                               color: Colors.black, fontSize: 16),
                           decoration: const InputDecoration(
@@ -319,7 +307,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               color: Color.fromARGB(255, 58, 60, 65),
                             )),
                           ),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith(web: value),
+                          onChanged: (value) => newCustomerRegisterProvider.web = value,
                           validator: (value) {
                             return null;
                           },
@@ -346,20 +334,28 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                           style: GoogleFonts.plusJakartaSans(
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
-                        onPressed: () async {
-                          if(customerFormProvider.formKey.currentState!.validate()) return;
+                        onPressed: () {
 
-                          final saved =
-                              await customerFormProvider.updateCustomer();
+                          final validForm = newCustomerRegisterProvider.validateForm();
+                          if(!validForm) return;
 
-                          if (saved) {
-                            if (!context.mounted) return;
-                            Navigator.of(context)
-                                .popAndPushNamed('/dashboard/customers');
-                          } else {
-                            NotificationService.showSnackBarError(
-                                'Error to Update the Customer');
-                          }
+                          newCustomerRegisterProvider.newCustomerRegister(
+                            newCustomerRegisterProvider.codigo, 
+                            newCustomerRegisterProvider.idfiscal, 
+                            newCustomerRegisterProvider.nombre, 
+                            newCustomerRegisterProvider.razons, 
+                            newCustomerRegisterProvider.sucursal, 
+                            newCustomerRegisterProvider.direccion, 
+                            newCustomerRegisterProvider.correo, 
+                            newCustomerRegisterProvider.telefono, 
+                            newCustomerRegisterProvider.web, 
+                            newCustomerRegisterProvider.contacto, 
+                            newCustomerRegisterProvider.credito, 
+                            newCustomerRegisterProvider.note, 
+                            newCustomerRegisterProvider.name, 
+                            newCustomerRegisterProvider.phone,
+                            newCustomerRegisterProvider.zone
+                            );
                         },
                       ),
                     ),
@@ -381,7 +377,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                            initialValue: widget.customer?.codigo,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
@@ -406,7 +401,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider.copyCustomerWith(codigo: value),
+                            onChanged: (value) => newCustomerRegisterProvider.codigo = value,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Manager is Required';
@@ -418,7 +413,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             }),
                         const SizedBox(height: 10),
                         TextFormField(
-                          initialValue: widget.customer?.idfiscal,
                           style: const TextStyle(
                               color: Colors.black, fontSize: 16),
                           decoration: const InputDecoration(
@@ -443,7 +437,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               color: Color.fromARGB(255, 58, 60, 65),
                             )),
                           ),
-                          onChanged: (value) => customerFormProvider.copyCustomerWith(idfiscal: value),
+                          onChanged: (value) => newCustomerRegisterProvider.idfiscal = value,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'TAX is Required';
@@ -457,7 +451,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                            initialValue: widget.customer?.razons,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
@@ -482,7 +475,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider.copyCustomerWith(razons: value),
+                            onChanged: (value) => newCustomerRegisterProvider.razons = value,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Legal is Required';
@@ -497,7 +490,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             }),
                         const SizedBox(height: 10),
                         TextFormField(
-                            initialValue: widget.customer?.nombre,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
@@ -522,7 +514,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider.copyCustomerWith(nombre: value),
+                            onChanged: (value) => newCustomerRegisterProvider.nombre = value,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Bussiness is Required';
@@ -537,7 +529,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             }),
                         const SizedBox(height: 10),
                         TextFormField(
-                            initialValue: widget.customer?.sucursal,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
@@ -562,7 +553,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider.copyCustomerWith(sucursal: value),
+                            onChanged: (value) => newCustomerRegisterProvider.sucursal = value,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Sucursal is Required';
@@ -577,7 +568,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             }),
                         const SizedBox(height: 10),
                         TextFormField(
-                            initialValue: widget.customer?.direccion,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
@@ -602,7 +592,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider.copyCustomerWith(direccion: value),
+                            onChanged: (value) => newCustomerRegisterProvider.direccion = value,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Address is Required';
@@ -630,7 +620,6 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                            initialValue: widget.customer?.note,
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             maxLines: 3,
@@ -660,7 +649,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider.copyCustomerWith(note: value),
+                            onChanged: (value) => newCustomerRegisterProvider.note = value,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Note is Required';
