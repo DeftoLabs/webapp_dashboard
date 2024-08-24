@@ -132,14 +132,18 @@ class _CustomerViewState extends State<CustomerView> {
                                         customerFormProvider.copyCustomerWith(
                                             credito: value as int),
                                     validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Credit is Required';
-                                      }
-                                      if (value.length > 4) {
-                                        return 'Max 3 characters';
-                                      }
-                                      return null;
-                                    }),
+                                if (value == null || value.isEmpty) {
+                                    return 'Credit is Required';
+                                  }
+                                  if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                                    return 'Only numbers are allowed';
+                                  }
+                                  if (value.length > 4) {
+                                    return 'Max 3 characters';
+                                  }
+                                  return null;
+                                }
+                                    ),
                               ),
                               const SizedBox(width: 10),
                               Text('days',
@@ -181,7 +185,7 @@ class _CustomerViewState extends State<CustomerView> {
                         }).toList(),
                         onChanged: (value) {
                           setState(() {
-                            customer.zona.id = value!;  // Actualiza el valor seleccionado
+                            customer.zona.id = value!; 
                           });
                         },
                         validator: (value) {
@@ -239,17 +243,21 @@ class _CustomerViewState extends State<CustomerView> {
                                   color: Color.fromARGB(255, 58, 60, 65),
                                 )),
                               ),
-                              onChanged: (value) => customerFormProvider
-                                  .copyCustomerWith(contacto: value),
+                              onChanged: (value) {
+                              final uppercaseValue = value.toUpperCase();
+                               customerFormProvider.copyCustomerWith(contacto: uppercaseValue);
+                              },
+                            
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Manager is Required';
-                                }
-                                if (value.length > 21) {
-                                  return 'Max 20 characters';
-                                }
-                                return null;
-                              }),
+                                    if (value == null || value.isEmpty) {
+                                return 'Manager is Required';
+                              }
+                              if (value.length > 31) {
+                                return 'Max 30 characters';
+                              }
+                              return null;
+                              }
+                              ),
                           const SizedBox(height: 10),
                           TextFormField(
                               initialValue: customer.telefono,
@@ -283,13 +291,16 @@ class _CustomerViewState extends State<CustomerView> {
                               onChanged: (value) => customerFormProvider
                                   .copyCustomerWith(telefono: value),
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Phone is Required';
-                                }
-                                if (value.length > 15) {
-                                  return 'Max 14 characters';
-                                }
-                                return null;
+                                 if (value == null || value.isEmpty) {
+                                return 'Phone is Required';
+                              }
+                               if (!RegExp(r'^\+?[0-9]+$').hasMatch(value)) {
+                                return 'Only numbers and a leading + are allowed (No space allowed)';
+                              }
+                              if (value.length > 21) {
+                                return 'Max 20 characters';
+                              }
+                              return null;
                               }),
                           const SizedBox(height: 10),
                           TextFormField(
@@ -320,8 +331,10 @@ class _CustomerViewState extends State<CustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider
-                                .copyCustomerWith(correo: value),
+                            onChanged: (value) {
+                            final lowercaseValue = value.toLowerCase();
+                            customerFormProvider.copyCustomerWith(correo: lowercaseValue);
+                            }, 
                             validator: (value) {
                               if (!EmailValidator.validate(value ?? '')) {
                                 return 'Email not Valid';
@@ -358,8 +371,10 @@ class _CustomerViewState extends State<CustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider
-                                .copyCustomerWith(web: value),
+                            onChanged: (value) {
+                            final lowercaseValue = value.toLowerCase();
+                            customerFormProvider.copyCustomerWith(web: lowercaseValue);
+                            }, 
                             validator: (value) {
                               return null;
                             },
@@ -458,17 +473,19 @@ class _CustomerViewState extends State<CustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => customerFormProvider
-                                .copyCustomerWith(idfiscal: value),
+                            onChanged: (value) {
+                            final uppercaseValue = value.toUpperCase();
+                            customerFormProvider.copyCustomerWith(idfiscal: uppercaseValue);
+                            }, 
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'TAX is Required';
-                              }
-                              if (value.length < 2) {
-                                return 'The TAX required minimum 3 characters';
-                              }
-                              if (value.length > 16) return 'Max 15 characters';
-                              return null;
+                                        if (value == null || value.isEmpty) {
+                              return 'TAX ID is Required';
+                            }
+                            if (value.length < 2) {
+                              return 'The TAX required minimum 3 characters';
+                            }
+                            if (value.length > 21) return 'Max 20 characters';
+                            return null;
                             },
                           ),
                           const SizedBox(height: 10),
@@ -503,19 +520,21 @@ class _CustomerViewState extends State<CustomerView> {
                                   color: Color.fromARGB(255, 58, 60, 65),
                                 )),
                               ),
-                              onChanged: (value) => customerFormProvider
-                                  .copyCustomerWith(razons: value),
+                              onChanged: (value) {
+                                final uppercaseValue = value.toUpperCase();
+                                customerFormProvider.copyCustomerWith(razons: uppercaseValue);
+                              },  
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Legal is Required';
-                                }
-                                if (value.length < 2) {
-                                  return 'The Legal required minimum 3 characters';
-                                }
-                                if (value.length > 25) {
-                                  return 'Mac 25 characters';
-                                }
-                                return null;
+                              if (value == null || value.isEmpty) {
+                                return 'Legal Name is Required';
+                              }
+                              if (value.length < 2) {
+                                return 'The Legal required minimum 3 characters';
+                              }
+                              if (value.length > 51) {
+                                return 'Max 50 characters';
+                              }
+                              return null;
                               }),
                           const SizedBox(height: 10),
                           TextFormField(
@@ -549,19 +568,21 @@ class _CustomerViewState extends State<CustomerView> {
                                   color: Color.fromARGB(255, 58, 60, 65),
                                 )),
                               ),
-                              onChanged: (value) => customerFormProvider
-                                  .copyCustomerWith(nombre: value),
+                              onChanged: (value) {
+                                final uppercaseValue = value.toUpperCase();
+                                customerFormProvider.copyCustomerWith(nombre: uppercaseValue);
+                              }, 
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Bussiness is Required';
-                                }
-                                if (value.length < 2) {
-                                  return 'The Bussiness required minimum 3 characters';
-                                }
-                                if (value.length > 25) {
-                                  return 'Max 25 characters';
-                                }
-                                return null;
+                                        if (value == null || value.isEmpty) {
+                                return 'Bussiness Name is Required';
+                              }
+                              if (value.length < 2) {
+                                return 'The Bussiness required minimum 3 characters';
+                              }
+                              if (value.length > 51) {
+                                return 'Max 50 characters';
+                              }
+                              return null;
                               }),
                           const SizedBox(height: 10),
                           TextFormField(
@@ -569,10 +590,10 @@ class _CustomerViewState extends State<CustomerView> {
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16),
                               decoration: InputDecoration(
-                                hintText: 'Sucursal',
+                                hintText: 'Branch',
                                 hintStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                labelText: 'Sucursal',
+                                labelText: 'Branch',
                                 labelStyle: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
@@ -595,19 +616,21 @@ class _CustomerViewState extends State<CustomerView> {
                                   color: Color.fromARGB(255, 58, 60, 65),
                                 )),
                               ),
-                              onChanged: (value) => customerFormProvider
-                                  .copyCustomerWith(sucursal: value),
+                              onChanged: (value) {
+                              final uppercaseValue = value.toUpperCase();
+                              customerFormProvider.copyCustomerWith(sucursal: uppercaseValue);
+                              }, 
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Sucursal is Required';
-                                }
-                                if (value.length < 2) {
-                                  return 'The Sucursal required minimum 3 characters';
-                                }
-                                if (value.length > 15) {
-                                  return 'Max 15 characters';
-                                }
-                                return null;
+                               if (value == null || value.isEmpty) {
+                                return 'Branch is Required';
+                              }
+                              if (value.length < 2) {
+                                return 'The Branch required minimum 3 characters';
+                              }
+                              if (value.length > 41) {
+                                return 'Max 40 characters';
+                              }
+                              return null;
                               }),
                           const SizedBox(height: 10),
                           TextFormField(
@@ -641,17 +664,21 @@ class _CustomerViewState extends State<CustomerView> {
                                   color: Color.fromARGB(255, 58, 60, 65),
                                 )),
                               ),
-                              onChanged: (value) => customerFormProvider
-                                  .copyCustomerWith(direccion: value),
+                              onChanged: (value) {
+                                final uppercaseValue = value.toUpperCase();
+                                customerFormProvider.copyCustomerWith(direccion: uppercaseValue);                  
+                              }, 
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Address is Required';
-                                }
-                                if (value.length < 2) {
-                                  return 'The Address required minimum 3 characters';
-                                }
-                                // if (value.length > 35) return 'Max 35 characters';
-                                return null;
+                              if (value == null || value.isEmpty) {
+                                return 'Address is Required';
+                              }
+                              if (value.length < 2) {
+                                return 'The Address required minimum 3 characters';
+                              }
+                              if (value.length > 61) {
+                                return 'Max 60 characters';
+                              }
+                              return null;
                               }),
                           const SizedBox(height: 30),
                         ],
@@ -700,17 +727,19 @@ class _CustomerViewState extends State<CustomerView> {
                                   color: Color.fromARGB(255, 58, 60, 65),
                                 )),
                               ),
-                              onChanged: (value) => customerFormProvider
-                                  .copyCustomerWith(note: value),
+                              onChanged: (value) {
+                              final uppercaseValue = value.toUpperCase();
+                              customerFormProvider.copyCustomerWith(note: uppercaseValue);
+                              }, 
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Note is Required';
-                                }
-                                if (value.length < 2) {
-                                  return 'The note required minimum 3 characters';
-                                }
-                                if (value.length > 80) return 'Max 80 characters';
-                                return null;
+                              if (value == null || value.isEmpty) {
+                                return 'Note is Required';
+                              }
+                              if (value.length < 2) {
+                                return 'The note required minimum 3 characters';
+                              }
+                              if (value.length > 180) return 'Max 179 characters';
+                              return null;
                               }),
                           const SizedBox(height: 10),
                         ],

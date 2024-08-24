@@ -24,6 +24,8 @@ class _NewCustomerViewState extends State<NewCustomerView> {
   Widget build(BuildContext context) {
     final newCustomerRegisterProvider = Provider.of<NewCustomerProvider>(context, listen: false);
 
+    
+
     return WhiteCardCustomer(
       title: 'Customer View',
       child: Form(
@@ -84,15 +86,19 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                     )),
                                   ),
                                   onChanged: (value) => newCustomerRegisterProvider.credito = int.tryParse(value) ?? 0,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Credit is Required';
-                                    }
-                                    if (value.length > 4) {
-                                      return 'Max 3 characters';
-                                    }
-                                    return null;
-                                  }),
+                             validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Credit is Required';
+                                  }
+                                  if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                                    return 'Only numbers are allowed';
+                                  }
+                                  if (value.length > 4) {
+                                    return 'Max 3 characters';
+                                  }
+                                  return null;
+                                }
+                                  ),
                             ),
                             const SizedBox(width: 10),
                             Text('days',
@@ -194,13 +200,16 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => newCustomerRegisterProvider.contacto = value,
+                            onChanged: (value) {
+                              final uppercaseValue = value.toUpperCase();
+                              newCustomerRegisterProvider.contacto = uppercaseValue;
+                            }, 
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Manager is Required';
                               }
-                              if (value.length > 21) {
-                                return 'Max 20 characters';
+                              if (value.length > 31) {
+                                return 'Max 30 characters';
                               }
                               return null;
                             }),
@@ -237,8 +246,11 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               if (value == null || value.isEmpty) {
                                 return 'Phone is Required';
                               }
-                              if (value.length > 15) {
-                                return 'Max 14 characters';
+                              if (!RegExp(r'^\+?[0-9]+$').hasMatch(value)) {
+                                return 'Only numbers and a leading + are allowed (No space allowed)';
+                              }
+                              if (value.length > 21) {
+                                return 'Max 20 characters';
                               }
                               return null;
                             }),
@@ -270,7 +282,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               color: Color.fromARGB(255, 58, 60, 65),
                             )),
                           ),
-                          onChanged: (value) => newCustomerRegisterProvider.correo = value,
+                          onChanged: (value) {
+                            final lowercaseValue = value.toLowerCase();
+                            newCustomerRegisterProvider.correo = lowercaseValue;
+                          },
                           validator: (value) {
                             if (!EmailValidator.validate(value ?? '')) {
                               return 'Email not Valid';
@@ -306,7 +321,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               color: Color.fromARGB(255, 58, 60, 65),
                             )),
                           ),
-                          onChanged: (value) => newCustomerRegisterProvider.web = value,
+                          onChanged: (value) {
+                          final lowercaseValue = value.toLowerCase();
+                          newCustomerRegisterProvider.web = lowercaseValue;
+                          }, 
                           validator: (value) {
                             return null;
                           },
@@ -400,10 +418,13 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => newCustomerRegisterProvider.codigo = value,
+                            onChanged: (value){
+                              final uppercaseValue = value.toUpperCase();
+                              newCustomerRegisterProvider.codigo = uppercaseValue;
+                            },
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Manager is Required';
+                                return 'Internal Code is Required';
                               }
                               if (value.length > 21) {
                                 return 'Max 20 characters';
@@ -436,15 +457,18 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               color: Color.fromARGB(255, 58, 60, 65),
                             )),
                           ),
-                          onChanged: (value) => newCustomerRegisterProvider.idfiscal = value,
+                          onChanged: (value){
+                            final uppercaseValue = value.toUpperCase();
+                            newCustomerRegisterProvider.idfiscal = uppercaseValue;
+                          }, 
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'TAX is Required';
+                              return 'TAX ID is Required';
                             }
                             if (value.length < 2) {
                               return 'The TAX required minimum 3 characters';
                             }
-                            if (value.length > 16) return 'Max 15 characters';
+                            if (value.length > 21) return 'Max 20 characters';
                             return null;
                           },
                         ),
@@ -474,16 +498,19 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => newCustomerRegisterProvider.razons = value,
+                            onChanged: (value){
+                              final uppercaseValue = value.toUpperCase();
+                              newCustomerRegisterProvider.razons = uppercaseValue;
+                            }, 
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Legal is Required';
+                                return 'Legal Name is Required';
                               }
                               if (value.length < 2) {
                                 return 'The Legal required minimum 3 characters';
                               }
-                              if (value.length > 31) {
-                                return 'Max 30 characters';
+                              if (value.length > 51) {
+                                return 'Max 50 characters';
                               }
                               return null;
                             }),
@@ -513,16 +540,19 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => newCustomerRegisterProvider.nombre = value,
+                            onChanged: (value){
+                              final uppercaseValue = value.toUpperCase();
+                              newCustomerRegisterProvider.nombre = uppercaseValue;
+                            }, 
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Bussiness is Required';
+                                return 'Bussiness Name is Required';
                               }
                               if (value.length < 2) {
                                 return 'The Bussiness required minimum 3 characters';
                               }
-                              if (value.length > 31) {
-                                return 'Max 30 characters';
+                              if (value.length > 51) {
+                                return 'Max 50 characters';
                               }
                               return null;
                             }),
@@ -531,10 +561,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 16),
                             decoration: const InputDecoration(
-                              hintText: 'Sucursal',
+                              hintText: 'Branch',
                               hintStyle:
                                   TextStyle(color: Colors.black, fontSize: 16),
-                              labelText: 'Sucursal',
+                              labelText: 'Branch',
                               labelStyle: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16),
@@ -552,16 +582,19 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => newCustomerRegisterProvider.sucursal = value,
+                            onChanged: (value){
+                              final uppercaseValue = value.toUpperCase();
+                              newCustomerRegisterProvider.sucursal = uppercaseValue;
+                            }, 
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Sucursal is Required';
+                                return 'Branch is Required';
                               }
                               if (value.length < 2) {
-                                return 'The Sucursal required minimum 3 characters';
+                                return 'The Branch required minimum 3 characters';
                               }
-                              if (value.length > 15) {
-                                return 'Max 15 characters';
+                              if (value.length > 41) {
+                                return 'Max 40 characters';
                               }
                               return null;
                             }),
@@ -591,7 +624,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 color: Color.fromARGB(255, 58, 60, 65),
                               )),
                             ),
-                            onChanged: (value) => newCustomerRegisterProvider.direccion = value,
+                            onChanged: (value){
+                              final uppercaseValue = value.toUpperCase();
+                              newCustomerRegisterProvider.direccion = uppercaseValue;
+                            }, 
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Address is Required';
@@ -599,7 +635,9 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               if (value.length < 2) {
                                 return 'The Address required minimum 3 characters';
                               }
-                              // if (value.length > 35) return 'Max 35 characters';
+                              if (value.length > 61) {
+                                return 'Max 60 characters';
+                              }
                               return null;
                             }),
                         const SizedBox(height: 30),
@@ -659,7 +697,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               if (value.length < 2) {
                                 return 'The note required minimum 3 characters';
                               }
-                              if (value.length > 80) return 'Max 80 characters';
+                              if (value.length > 180) return 'Max 179 characters';
                               return null;
                             }),
                         const SizedBox(height: 10),
