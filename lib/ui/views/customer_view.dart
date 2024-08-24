@@ -158,7 +158,7 @@ class _CustomerViewState extends State<CustomerView> {
                      Consumer<RoutesProviders>(
                     builder: (context, zonasProvider, child) {
                       return DropdownButtonFormField<String>(
-                        value: customer.zona.id,  // Aquí asumimos que `customer.zona.id` es el campo seleccionado
+                        value: customer.zona.id, 
                         decoration: InputDecoration(
                           hintText: 'Route Name',
                           labelText: 'Route Name',
