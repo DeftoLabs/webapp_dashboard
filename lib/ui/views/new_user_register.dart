@@ -172,8 +172,8 @@ class _UserFormView extends StatelessWidget {
             TextFormField(
               onChanged: ( value ) => registerFormProvider.zone = value,
               decoration: CustomInputsRegisterUser.loginInputDecoration(
-                hint: 'Zone', 
-                label: 'Zone', 
+                hint: 'Code', 
+                label: 'Code', 
                 icon: Icons.map
               ),
               validator: ( value ) {

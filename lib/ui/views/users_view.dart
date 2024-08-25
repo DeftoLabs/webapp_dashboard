@@ -95,7 +95,7 @@ class _UsersViewState extends State<UsersView> {
                 userProvider.sort((user) => user.phone);
               }),
 
-              DataColumn(label: const Text('Zone'), onSort: (colIndex, _) {
+              DataColumn(label: const Text('Code'), onSort: (colIndex, _) {
                 userProvider.sortColumnIndex = colIndex;
                 userProvider.sort((user) => user.zone);
               }),

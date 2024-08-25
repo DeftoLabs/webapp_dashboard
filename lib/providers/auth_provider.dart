@@ -88,11 +88,10 @@ class AuthProvider extends ChangeNotifier {
       CafeApi.post('/usuarios', data).then((json) {
 
         NotificationService.showSnackBa('User Created Successfully');
-        NavigationService.replaceTo(Flurorouter.usersRoute);
         CafeApi.configureDio();
         notifyListeners();
       }).catchError((e) {
-        NotificationService.showSnackBarError('This email is already registered.');
+        NotificationService.showSnackBarError('This Email or Code is already registered, Try Again');
       }) ;
   }
 

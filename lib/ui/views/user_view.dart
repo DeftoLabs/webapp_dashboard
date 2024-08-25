@@ -210,8 +210,8 @@ class _UserViewForm extends StatelessWidget {
             TextFormField(
               initialValue: user.zone,
               decoration: CustomInput.formInputDecoration(
-                hint: 'Zone', 
-                label: 'Zone', 
+                hint: 'Code', 
+                label: 'Code', 
                 icon: Icons.map
               ),
               onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),

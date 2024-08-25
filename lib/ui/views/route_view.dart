@@ -138,7 +138,7 @@ class _RouteMapView extends StatelessWidget {
               const SizedBox(height: 10),
               Center(
               child: SizedBox(
-                child: Text('With version 2.0, you will be able to select areas (Routes) on the map.',   style:GoogleFonts.plusJakartaSans(
+                child: Text('With version 2.0, you will be able to select areas on the map.',   style:GoogleFonts.plusJakartaSans(
                         fontSize: 18,
                         color: Colors.white,
                       ),
