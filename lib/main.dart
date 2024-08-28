@@ -10,8 +10,9 @@ import 'package:web_dashboard/providers/customers_provider.dart';
 import 'package:web_dashboard/providers/newcustomer_provider.dart';
 import 'package:web_dashboard/providers/product_form_provider.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
-import 'package:web_dashboard/providers/route_form_provider.dart';
-import 'package:web_dashboard/providers/routes_providers.dart';
+import 'package:web_dashboard/providers/profile_provider.dart';
+import 'package:web_dashboard/providers/zone_form_provider.dart';
+import 'package:web_dashboard/providers/zones_providers.dart';
 import 'providers/providers.dart';
 import 'api/cafeapi.dart';
 import 'gps/blocs/blocs.dart';
@@ -66,8 +67,9 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CustomersProvider()),
         ChangeNotifierProvider(create: (_) => CustomerFormProvider()),
         ChangeNotifierProvider(create: (_) => NewCustomerProvider()),
-        ChangeNotifierProvider(create: (_) => RoutesProviders()),
-        ChangeNotifierProvider(create: (_) => RouteFormProvider()),
+        ChangeNotifierProvider(create: (_) => ZonesProviders()),
+        ChangeNotifierProvider(create: (_) => ZoneFormProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
 
       ],
       child: MultiBlocProvider(

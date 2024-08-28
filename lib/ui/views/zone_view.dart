@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/zona.dart';
-import 'package:web_dashboard/providers/route_form_provider.dart';
-import 'package:web_dashboard/providers/routes_providers.dart';
+import 'package:web_dashboard/providers/zone_form_provider.dart';
+import 'package:web_dashboard/providers/zones_providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
@@ -12,25 +12,25 @@ import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
-class RouteView extends StatefulWidget {
+class ZoneView extends StatefulWidget {
   final String id;
 
-  const RouteView({super.key, required this.id});
+  const ZoneView({super.key, required this.id});
 
   @override
-  State<RouteView> createState() => _RouteViewState();
+  State<ZoneView> createState() => _ZoneViewState();
 }
 
-class _RouteViewState extends State<RouteView> {
+class _ZoneViewState extends State<ZoneView> {
   Zona? zona;
   late GoogleMapController _mapController;
 
   @override
   void initState() {
     super.initState();
-    final routesProvider = Provider.of<RoutesProviders>(context, listen: false);
+    final routesProvider = Provider.of<ZonesProviders>(context, listen: false);
     final routeFormProvider =
-        Provider.of<RouteFormProvider>(context, listen: false);
+        Provider.of<ZoneFormProvider>(context, listen: false);
 
     routesProvider.getZonasById(widget.id)
     .then((zonaDB) {
@@ -49,7 +49,7 @@ class _RouteViewState extends State<RouteView> {
   @override
   void dispose() {
     zona = null;
-    Provider.of<RouteFormProvider>(context, listen: false).zona = null;
+    Provider.of<ZoneFormProvider>(context, listen: false).zona = null;
     _mapController.dispose();
     super.dispose();
   }
@@ -78,7 +78,7 @@ class _RouteViewState extends State<RouteView> {
                   icon: const Icon(Icons.arrow_back_rounded)),
               Expanded(
                   child: Center(
-                child: Text('Route View', style: CustomLabels.h1),
+                child: Text('Zone View', style: CustomLabels.h1),
               )),
             ],
           ),
@@ -159,7 +159,7 @@ class _RouteViewForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final routeFormProvider = Provider.of<RouteFormProvider>(context);
+    final routeFormProvider = Provider.of<ZoneFormProvider>(context);
     final zona = routeFormProvider.zona!;
 
     return Column(
@@ -180,7 +180,7 @@ class _RouteViewForm extends StatelessWidget {
                         hintText: 'Code',
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white.withOpacity(0.7)),
-                        labelText: 'Internal Route Code',
+                        labelText: 'Internal Zone Code',
                         labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontSize: 16),
                         focusedBorder: const OutlineInputBorder(
@@ -206,10 +206,10 @@ class _RouteViewForm extends StatelessWidget {
                       initialValue: zona.nombrezona,
                       style: const TextStyle(color: Colors.white), // Añade esta línea
                       decoration: InputDecoration(
-                        hintText: 'Route Name',
+                        hintText: 'Zone Name',
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white.withOpacity(0.7)),
-                        labelText: 'Route Name',
+                        labelText: 'Zone Name',
                         labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontSize: 16),
                         focusedBorder: const OutlineInputBorder(
@@ -223,7 +223,7 @@ class _RouteViewForm extends StatelessWidget {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Code Name is required';
+                          return 'Zone Name is required';
                         }else if (value.length >20){
                           return 'The description cannot exceed 20 characters';
                         }
@@ -231,11 +231,12 @@ class _RouteViewForm extends StatelessWidget {
                       },
                       onChanged: (value)=> routeFormProvider.copyRouteWith (nombrezona: value)),
                   const SizedBox(height: 10),
+           
                   TextFormField(
                       initialValue: zona.descripcion,
                       style: const TextStyle(color: Colors.white), // Añade esta línea
                       decoration: InputDecoration(
-                        hintText: 'Route Descripcion',
+                        hintText: 'Zone Descripcion',
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white.withOpacity(0.7)),
                         labelText: 'Description',
@@ -262,16 +263,16 @@ class _RouteViewForm extends StatelessWidget {
                         return null;
                       },
                       onChanged: (value) => routeFormProvider.copyRouteWith (descripcion: value)),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
                   Container(
                     alignment: Alignment.center,
                     child: CustomOutlineButtom(
                       onPressed: () async {
                         final saved = await routeFormProvider.updateRoute();
                         if(saved) {
-                          NotificationService.showSnackBa('Route Updated');
+                          NotificationService.showSnackBa('Zone Updated');
                           if (!context.mounted) return;
-                          Provider.of<RoutesProviders>(context, listen: false).refreshRoute(zona);
+                          Provider.of<ZonesProviders>(context, listen: false).refreshRoute(zona);
                           
                         } else {
                           NotificationService.showSnackBarError('Could not save the Route');

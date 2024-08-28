@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 import 'package:web_dashboard/api/cafeapi.dart';
-import 'package:web_dashboard/models/http/routes_response.dart';
+import 'package:web_dashboard/models/http/zones_response.dart';
 import 'package:web_dashboard/models/zona.dart';
 
-class RoutesProviders extends ChangeNotifier {
+class ZonesProviders extends ChangeNotifier {
 
   List<Zona> zonas = [];
   bool isLoading = true;
   bool ascending = true;
   int? sortColumnIndex;
 
-  RoutesProviders() {
+  ZonesProviders() {
     getZonas();
   }
 
   getZonas () async {
     final resp = await CafeApi.httpGet('/zonas/');
-    final routesResp = RoutesResponse.fromMap(resp);
+    final routesResp = ZonesResponse.fromMap(resp);
 
     zonas = [... routesResp.zonas];
 

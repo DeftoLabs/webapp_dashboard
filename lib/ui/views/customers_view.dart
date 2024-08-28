@@ -51,7 +51,7 @@ class _CustomersViewState extends State<CustomersView> {
             }),
             DataColumn(label: const Text('Legal Name'), onSort: (colIndex, _) {
               customerProvider.sortColumnIndex = colIndex;
-              customerProvider.sort((customer)=> customer.nombre);
+              customerProvider.sort((customer)=> customer.razons);
             }),
             const DataColumn(label: Text('Branch')),
             const DataColumn(label: Text('Zone')),

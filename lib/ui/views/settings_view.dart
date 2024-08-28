@@ -27,11 +27,11 @@ class SettingsView extends StatelessWidget {
           direction:Axis.horizontal,
           children: [
             RectangularCard(
-              title: 'My Account',
+              title: 'Profile',
               width: 200,
               child: const Center(child: Icon(Icons.supervised_user_circle_outlined),),
               onTap: (){
-                NavigationService.replaceTo('/dashboard/settings/myaccount');
+                NavigationService.replaceTo('/dashboard/settings/profile');
               },
               ),
 

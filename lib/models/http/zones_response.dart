@@ -2,21 +2,21 @@ import 'dart:convert';
 
 import '../zona.dart';
 
-class RoutesResponse {
+class ZonesResponse {
     int total;
     List<Zona> zonas;
 
-    RoutesResponse({
+    ZonesResponse({
         required this.total,
         required this.zonas,
     });
 
-    factory RoutesResponse.fromJson(String str) => RoutesResponse.fromMap(json.decode(str));
+    factory ZonesResponse.fromJson(String str) => ZonesResponse.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-factory RoutesResponse.fromMap(Map<String, dynamic> json) {
-  return RoutesResponse(
+factory ZonesResponse.fromMap(Map<String, dynamic> json) {
+  return ZonesResponse(
     total: json["total"],
     zonas: List<Zona>.from(json["zonas"].map((x) => Zona.fromMap(x))),
   );

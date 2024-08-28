@@ -7,6 +7,8 @@ import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
 import 'package:web_dashboard/ui/modals/product_view.dart';
+import 'package:web_dashboard/ui/views/profile_view.dart';
+import 'package:web_dashboard/ui/views/profiles_view.dart';
 import 'package:web_dashboard/ui/views/categories_view.dart';
 import 'package:web_dashboard/ui/views/customer_view.dart';
 import 'package:web_dashboard/ui/views/customers_view.dart';
@@ -16,13 +18,12 @@ import 'package:web_dashboard/ui/views/inactive_user_view.dart';
 import 'package:web_dashboard/ui/views/login_view.dart';
 import 'package:web_dashboard/ui/views/marketing_view.dart';
 import 'package:web_dashboard/ui/views/message_view.dart';
-import 'package:web_dashboard/ui/views/my_account_view.dart';
 import 'package:web_dashboard/ui/views/new_customer_view.dart';
 import 'package:web_dashboard/ui/views/new_user_register.dart';
 import 'package:web_dashboard/ui/views/orders_view.dart';
 import 'package:web_dashboard/ui/views/products_view.dart';
-import 'package:web_dashboard/ui/views/route_view.dart';
-import 'package:web_dashboard/ui/views/routes_view.dart';
+import 'package:web_dashboard/ui/views/zone_view.dart';
+import 'package:web_dashboard/ui/views/zones_view.dart';
 import 'package:web_dashboard/ui/views/settings_view.dart';
 import 'package:web_dashboard/ui/views/user_view.dart';
 import 'package:web_dashboard/ui/views/users_view.dart';
@@ -148,7 +149,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routesRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const RoutesView();
+        return const ZonesView();
       } return const LoginView();
 
     }
@@ -160,9 +161,9 @@ class DashboardHandlers {
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         if(params['id']?.first != null) {
-          return RouteView(id: params['id']!.first);
+          return ZoneView(id: params['id']!.first);
         }else {
-          return const RoutesView();
+          return const ZonesView();
         }
       } else {
         return const LoginView();
@@ -259,12 +260,27 @@ class DashboardHandlers {
     }
   );
 
-      static Handler myAccountSettings = Handler (
+      static Handler profileSettings = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
-      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.myAccount);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.profile);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const MyAccountView();
+        return const ProfilesView();
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler profile = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.profileId);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if( params['id']?.first !=null){
+           return ProfileView(id: params['id']!.first);
+        }else{
+          return const ProfilesView();
+        }
       } return const LoginView();
 
     }

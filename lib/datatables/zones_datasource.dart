@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:web_dashboard/models/zona.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
-class RoutesDataSource extends DataTableSource {
+class ZonesDataSource extends DataTableSource {
 
   final List<Zona> zonas;
 
-  RoutesDataSource(this.zonas);
+  ZonesDataSource(this.zonas);
 
   @override
   DataRow? getRow(int index) {

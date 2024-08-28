@@ -44,44 +44,59 @@ class Sidebar extends StatelessWidget {
           icon: Icons.compass_calibration_outlined, 
           onPressed: ()=> navigateTo(Flurorouter.dashboardRoute)),
 
+        MenuItem(text: 'Analityc', icon: Icons.account_tree_outlined,             onPressed: (){}),
+
+        const SizedBox(height: 10),
+
+        const TextSeparator(text: 'Orders & Sales'),
+
         MenuItem(text: 'Orders', 
         icon: Icons.list_alt_outlined,            
         onPressed: ()=> navigateTo(Flurorouter.ordersRoute)),
 
+        MenuItem(text: 'Sales', icon: Icons.attach_money_outlined,      onPressed: (){}),
+        
+        const SizedBox(height: 10),
 
-        MenuItem(text: 'Analityc', icon: Icons.account_tree_outlined,             onPressed: (){}),
-
-        MenuItem(text: 'GPS', icon: Icons.gps_fixed,                  
-        onPressed: ()=> navigateTo(Flurorouter.gpsRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.gpsRoute,),
-
+        const TextSeparator(text: 'Product Management'),
 
         MenuItem(text: 'Products', 
         icon: Icons.shopping_bag_outlined,    
         onPressed: ()=> navigateTo(Flurorouter.productsRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.productsRoute,),
 
+        MenuItem(text: 'Catalog', icon: Icons.share_rounded,      onPressed: (){}),
+
         MenuItem(text: 'Categories', 
         icon: Icons.category_outlined,        
         onPressed: ()=> navigateTo(Flurorouter.categoriesRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.categoriesRoute,),
 
+        const SizedBox(height: 10),
+
+        const TextSeparator(text: 'Customer Management'),
 
         MenuItem(text: 'Customers', 
         icon: Icons.add_business_outlined,  
        onPressed: ()=> navigateTo(Flurorouter.customersRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.customersRoute,),
 
+        const SizedBox(height: 10),
 
-        MenuItem(text: 'Sales', icon: Icons.attach_money_outlined,      onPressed: (){}),
+        const TextSeparator(text: 'Sales Representatives'),
 
-        MenuItem(text: 'Routes', icon: Icons.route_rounded,      
+        MenuItem(text: 'GPS', icon: Icons.gps_fixed,                  
+        onPressed: ()=> navigateTo(Flurorouter.gpsRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.gpsRoute,),
+
+        MenuItem(text: 'Route', icon: Icons.route_rounded,      onPressed: (){}),
+
+        MenuItem(text: 'Zone', icon: Icons.landscape_outlined,      
         onPressed: ()=> navigateTo(Flurorouter.routesRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.routesRoute,),
-        
-        MenuItem(text: 'Catalog', icon: Icons.share_rounded,      onPressed: (){}),
+      
 
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
         
 
         const TextSeparator(text: 'Elements'),

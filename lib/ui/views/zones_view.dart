@@ -1,30 +1,30 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/datatables/routes_datasource.dart';
-import 'package:web_dashboard/providers/routes_providers.dart';
+import 'package:web_dashboard/datatables/zones_datasource.dart';
+import 'package:web_dashboard/providers/zones_providers.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
-import 'package:web_dashboard/ui/modals/route_modal.dart';
+import 'package:web_dashboard/ui/modals/zone_modal.dart';
 
 
 
-class RoutesView extends StatelessWidget {
-  const RoutesView({super.key});
+class ZonesView extends StatelessWidget {
+  const ZonesView({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    final routesProvider = Provider.of<RoutesProviders>(context);
+    final routesProvider = Provider.of<ZonesProviders>(context);
 
-    final routesDataSource = RoutesDataSource( routesProvider.zonas );
+    final routesDataSource = ZonesDataSource( routesProvider.zonas );
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          Text('Routes View', style: CustomLabels.h1,),
+          Text('Zones View', style: CustomLabels.h1,),
           const SizedBox(height: 10),
 
           PaginatedDataTable(
@@ -44,7 +44,7 @@ class RoutesView extends StatelessWidget {
             ], 
             
             source: routesDataSource,
-            header: const Text('List of Routes', maxLines: 2),
+            header: const Text('List of Zones', maxLines: 2),
             onPageChanged: (page) {
 
             },
@@ -55,12 +55,12 @@ class RoutesView extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return RouteModal();
+                        return ZoneModal();
                       },
                     );
                 //NavigationService.replaceTo('/dashboard/newroute');
                   }, 
-                  text:'Create a Route', 
+                  text:'Create a Zone', 
                   icon: Icons.add_outlined)
               ],
             )

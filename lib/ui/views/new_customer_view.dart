@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/zona.dart';
 import 'package:web_dashboard/providers/newcustomer_provider.dart';
-import 'package:web_dashboard/providers/routes_providers.dart';
+import 'package:web_dashboard/providers/zones_providers.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 
 class NewCustomerView extends StatefulWidget {
@@ -110,12 +110,12 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Consumer<RoutesProviders>(
+                        Consumer<ZonesProviders>(
                           builder: (context, zonasProvider, child) {
                             return DropdownButtonFormField<Zona>(
                               decoration: InputDecoration(
-                                hintText: 'Route Name',
-                                labelText: 'Route Name',
+                                hintText: 'Zone Name',
+                                labelText: 'Zone Name',
                                 labelStyle: GoogleFonts.plusJakartaSans(
                                     color: Colors.black,
                                     fontSize: 16),
@@ -383,11 +383,25 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                     WhiteCard(
                         child: Column(
                       children: [
-                           Text('Customer Info',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                           Row(
+                             children: [
+                               Text('Customer Info',
+                                style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                                 const Spacer(),
+                                 ElevatedButton.icon(
+                                  onPressed: (){}, 
+                                  icon: const Icon(Icons.map, color: Colors.black,),
+                                  label: const Text('Add Location'),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.all(16),
+                                    backgroundColor: Colors.amber,
+                                  )
+                                  )
+                             ],
+                           ),
                         const SizedBox(height: 10),
                         const Divider(
                           color: Color.fromARGB(255, 58, 60, 65),

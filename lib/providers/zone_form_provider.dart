@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/zona.dart';
 
-class RouteFormProvider extends ChangeNotifier {
+class ZoneFormProvider extends ChangeNotifier {
 
   Zona? zona;
   late GlobalKey<FormState> formKey;
 
-   RouteFormProvider() {
+   ZoneFormProvider() {
     formKey = GlobalKey<FormState>();
   }
 

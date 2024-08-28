@@ -48,7 +48,9 @@ class Flurorouter {
 
   static String settingsRoute         = '/dashboard/settings';
   static String inactiveUserRoute     = '/dashboard/settings/inactiveuser';
-  static String myAccount             = '/dashboard/settings/myaccount';
+
+  static String profile             = '/dashboard/settings/profile';
+  static String profileId           = '/dashboard/settings/profile/:id';
 
   static void configureRoutes () {
     // Auth Routes
@@ -105,7 +107,9 @@ class Flurorouter {
     // CONFIGURATION
     router.define (settingsRoute,     handler: DashboardHandlers.settings,           transitionType: TransitionType.fadeIn);
     router.define (inactiveUserRoute, handler: DashboardHandlers.inactiveUser,       transitionType: TransitionType.fadeIn);
-    router.define (myAccount,         handler: DashboardHandlers.myAccountSettings,  transitionType: TransitionType.fadeIn);
+
+    router.define (profile,           handler: DashboardHandlers.profileSettings,  transitionType: TransitionType.fadeIn);
+    router.define (profileId,         handler: DashboardHandlers.profile,          transitionType: TransitionType.fadeIn);
 
 
     // 404

@@ -60,7 +60,7 @@ Future updateProduct() async {
     await CafeApi.put('/productos/${producto!.id}', data);
     return true;
   } catch (e) {
-    throw 'Error to create New Product: $e';
+    throw 'Error to Update the Product: $e';
   }
 }
 

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/providers/customer_form_provider.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
-import 'package:web_dashboard/providers/routes_providers.dart';
+import 'package:web_dashboard/providers/zones_providers.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
@@ -155,13 +155,13 @@ class _CustomerViewState extends State<CustomerView> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                     Consumer<RoutesProviders>(
+                     Consumer<ZonesProviders>(
                     builder: (context, zonasProvider, child) {
                       return DropdownButtonFormField<String>(
                         value: customer.zona.id, 
                         decoration: InputDecoration(
-                          hintText: 'Route Name',
-                          labelText: 'Route Name',
+                          hintText: 'Zone Name',
+                          labelText: 'Zone Name',
                           labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
                           hintStyle: GoogleFonts.plusJakartaSans(
@@ -445,7 +445,8 @@ class _CustomerViewState extends State<CustomerView> {
                           const SizedBox(height: 10),
                           TextFormField(
                             initialValue: customer.idfiscal,
-                            style: const TextStyle(
+                            style: const TextStyle
+                            (
                                 color: Colors.black, fontSize: 16),
                             decoration: InputDecoration(
                               hintText: 'Tax ID',
@@ -478,7 +479,7 @@ class _CustomerViewState extends State<CustomerView> {
                             customerFormProvider.copyCustomerWith(idfiscal: uppercaseValue);
                             }, 
                             validator: (value) {
-                                        if (value == null || value.isEmpty) {
+                            if (value == null || value.isEmpty) {
                               return 'TAX ID is Required';
                             }
                             if (value.length < 2) {
@@ -675,8 +676,8 @@ class _CustomerViewState extends State<CustomerView> {
                               if (value.length < 2) {
                                 return 'The Address required minimum 3 characters';
                               }
-                              if (value.length > 61) {
-                                return 'Max 60 characters';
+                              if (value.length > 91) {
+                                return 'Max 90 characters';
                               }
                               return null;
                               }),

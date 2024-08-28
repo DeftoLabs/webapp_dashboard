@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/zona.dart';
-import 'package:web_dashboard/providers/route_form_provider.dart';
-import 'package:web_dashboard/providers/routes_providers.dart';
+import 'package:web_dashboard/providers/zone_form_provider.dart';
+import 'package:web_dashboard/providers/zones_providers.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
-class RouteModal extends StatefulWidget {
+class ZoneModal extends StatefulWidget {
   final Zona? zona;
   final formKey = GlobalKey<FormState>();
 
-  RouteModal({super.key, this.zona});
+  ZoneModal({super.key, this.zona});
 
   @override
-  State<RouteModal> createState() => _RouteModalState();
+  State<ZoneModal> createState() => _ZoneModalState();
 }
 
-class _RouteModalState extends State<RouteModal> {
+class _ZoneModalState extends State<ZoneModal> {
   String? id;
   String codigo = '';
   String nombrezona = '';
@@ -39,8 +39,8 @@ class _RouteModalState extends State<RouteModal> {
 
   @override
   Widget build(BuildContext context) {
-    final routeProvider = Provider.of<RoutesProviders>(context, listen: false);
-    final routeFormProvider = Provider.of<RouteFormProvider>(context, listen: false);
+    final routeProvider = Provider.of<ZonesProviders>(context, listen: false);
+    final routeFormProvider = Provider.of<ZoneFormProvider>(context, listen: false);
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -63,7 +63,7 @@ class _RouteModalState extends State<RouteModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Add Route',
+                    'Add Zone',
                     style: CustomLabels.h1.copyWith(color: Colors.white),
                   ),
                   IconButton(
@@ -80,8 +80,8 @@ class _RouteModalState extends State<RouteModal> {
                 initialValue: widget.zona?.codigo ?? '',
                 onChanged: (value) => codigo = value,
                 decoration: InputDecoration(
-                  hintText: 'Internal Route Code',
-                  labelText: 'Route Code',
+                  hintText: 'Internal Zone Code',
+                  labelText: 'Zone Code',
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                   hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
                   focusedBorder:const OutlineInputBorder(
@@ -113,8 +113,8 @@ class _RouteModalState extends State<RouteModal> {
                 initialValue: widget.zona?.nombrezona ?? '',
                 onChanged: (value) => nombrezona = value,
                 decoration: InputDecoration(
-                  hintText: 'Route Name',
-                  labelText: 'Route Name',
+                  hintText: 'Zone Name',
+                  labelText: 'Zone Name',
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                   hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
                   focusedBorder:const OutlineInputBorder(
@@ -134,7 +134,7 @@ class _RouteModalState extends State<RouteModal> {
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                  validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Code Name is required';
+                          return 'Zone Name is required';
                         }else if (value.length >20){
                           return 'The description cannot exceed 20 characters';
                         }

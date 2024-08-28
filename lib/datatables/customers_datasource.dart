@@ -19,7 +19,7 @@ class CustomersDatasource extends DataTableSource {
     index: index,
     cells: [
       DataCell(Text(customer.codigo)),
-      DataCell(Text(customer.nombre)),
+      DataCell(Text(customer.razons)),
       DataCell(Text(customer.sucursal)),
       DataCell(Text(customer.zona.nombrezona)),
       DataCell(IconButton(
