@@ -31,20 +31,20 @@ class Profile {
 
   String toJson() => json.encode(toMap());
 
-  factory Profile.fromMap(Map<String, dynamic> map) => Profile(
-    estado: map["estado"] ?? false,
-    id: map["_id"] ?? '',
-    codigo: map["codigo"] ?? '',
-    idfiscal: map["idfiscal"] ?? '',
-    nombre: map["nombre"] ?? '',
-    razons: map["razons"] ?? '',
-    direccion: map["direccion"] ?? '',
-    telefono: map["telefono"] ?? '',
-    web: map["web"] ?? '',
-    correos: map["correos"] != null
-        ? List<Correo>.from(map["correos"].map((x) => Correo.fromMap(x)))
+  factory Profile.fromMap(Map<String, dynamic> json) => Profile(
+    estado: json["estado"] ?? false,
+    id: json["_id"] ?? '',
+    codigo: json["codigo"] ?? '',
+    idfiscal: json["idfiscal"] ?? '',
+    nombre: json["nombre"] ?? '',
+    razons: json["razons"] ?? '',
+    direccion: json["direccion"] ?? '',
+    telefono: json["telefono"] ?? '',
+    web: json["web"] ?? '',
+    correos: json["correos"] != null
+        ? List<Correo>.from(json["correos"].map((x) => Correo.fromMap(x)))
         : [],
-    img: map["img"],
+    img: json["img"],
   );
 
   Map<String, dynamic> toMap() => {

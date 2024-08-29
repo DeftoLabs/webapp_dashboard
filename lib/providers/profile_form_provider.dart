@@ -1,5 +1,7 @@
 
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/profile.dart';
@@ -60,10 +62,20 @@ class ProfileFormProvider extends ChangeNotifier {
     } catch (e) {
       return false;
     }
+  }
 
-   
+  Future <Profile> uploadProfileImage ( String path, Uint8List bytes) async {
+    
+    try {
+      final resp = await CafeApi.uploadFile(path, bytes);
+      profile = Profile.fromMap(resp);
+      notifyListeners();
 
+      return profile!;
 
+    } catch (e) {
+      throw 'Error to Upload the Image';
+    }
   }
   
   }

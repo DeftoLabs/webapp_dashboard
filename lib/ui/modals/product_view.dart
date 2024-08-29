@@ -444,7 +444,8 @@ class _AvatarState extends State<_Avatar> {
                             } else {
                               NotificationService.showSnackBarError('Failed to Upload Image');
                             }
-                            })),
+                            }
+                            )),
                   )
                 ],
               ),

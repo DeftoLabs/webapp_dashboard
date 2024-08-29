@@ -17,38 +17,37 @@ class ProfilesView extends StatelessWidget {
       return const Center(child: Text('No profile data available'));
     }
 
+    final image = (profile.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
+    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          Text('Profile View', style: CustomLabels.h1),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
+          Center(child: Text('Profile View', style: CustomLabels.h1)),
+          const SizedBox(height: 20),
           Card(
             elevation: 4,
+            color: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
             child: SizedBox(
-              height: 600,
+              height: 700,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                      child: Container(
+                      child: SizedBox(
                         width: 200,
                         height: 200,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 2,
-                          ),
-                        ),
                         child: ClipOval(
-                          child: Image.asset('noimage.jpeg', fit: BoxFit.cover),
+                          child: image,
                         ),
                       ),
                     ),
@@ -58,7 +57,7 @@ class ProfilesView extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: SizedBox(
-                            height: 200,
+                            height: 300,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
@@ -70,11 +69,11 @@ class ProfilesView extends StatelessWidget {
                                 Text('TAX ID:', style: GoogleFonts.plusJakartaSans (fontSize: 16)),
                                 const SizedBox(height: 10),
                                 Text('Address:', style: GoogleFonts.plusJakartaSans (fontSize: 16)),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 33),
                                 Text('Phone:', style: GoogleFonts.plusJakartaSans (fontSize: 16)),
                                 const SizedBox(height: 10),
                                 Text('Web:', style: GoogleFonts.plusJakartaSans (fontSize: 16))
-              
+                              
                               ],
                             ),
                           ),
@@ -83,7 +82,7 @@ class ProfilesView extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: SizedBox(
-                            height: 200,
+                            height: 300,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -106,7 +105,7 @@ class ProfilesView extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: SizedBox(
-                            height: 200,
+                            height: 300,
                             child: Column(
                               children: [
                                 const SizedBox(height: 10),
@@ -139,17 +138,17 @@ class ProfilesView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 70),
                     Center(
                       child:      
                       Container(
-              height: 50,
-              width: 150,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
+                              height: 50,
+                              width: 150,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
                   color:  const Color.fromARGB(255, 58, 60, 65),
                   borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
+                              child: TextButton(
                 child: Text(
                   'Edit Profile',
                   style: GoogleFonts.plusJakartaSans(
@@ -158,8 +157,8 @@ class ProfilesView extends StatelessWidget {
                 onPressed: () {
                   NavigationService.replaceTo('/dashboard/settings/profile/${profile.id}');
                 },
-              ),
-            ),
+                              ),
+                            ),
                     ),
                   ],
                 ),

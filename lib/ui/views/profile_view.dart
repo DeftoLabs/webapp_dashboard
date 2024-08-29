@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -21,34 +22,28 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   Profile? profile;
 
+
   @override
   void initState() {
     super.initState();
     final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
     final profileFormProvider = Provider.of<ProfileFormProvider>(context, listen: false);
 
-    profileProvider.getProfilById(widget.id)
-    .then((profileDB) {
+    profileProvider.getProfilById(widget.id).then((profileDB) {
+      profileFormProvider.profile = profileDB;
 
       if(profileDB != null) {
-          profileFormProvider.profile = profileDB;
           profileFormProvider.formKey = GlobalKey<FormState>();
            setState(() {
              profile = profileDB;
+
       });    
       } else {
         NavigationService.replaceTo('dashboard/settings/profile');
       }
     });
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    profile = null;
-    Provider.of<ProfileFormProvider>(context, listen: false).profile = null;
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -356,8 +351,8 @@ class _CentralContainer extends StatelessWidget {
                  if (value.length < 2) {
                    return 'The Address required minimum 3 characters';
                  }
-                 if (value.length > 91) {
-                   return 'Max 90 characters';
+                 if (value.length > 83) {
+                   return 'Max 82 characters';
                  }
                  return null;
                  },
@@ -461,10 +456,11 @@ class _CentralContainer extends StatelessWidget {
                   if (saved) {
                     NotificationService.showSnackBa('Profile Update');
                     if (context.mounted) {
-                      Provider.of<ProfileProvider>(context).refreshProfile( profile );
+                    Provider.of<ProfileProvider>(context, listen: false).getProfile();
+                    NavigationService.replaceTo('dashboard/settings/profile');
                     }
                   } else {
-                    NotificationService.showSnackBarError('The Prorfile not be Updated');
+                    NotificationService.showSnackBarError('The Profile not be Updated');
                   }
                 },
               ),
@@ -476,8 +472,19 @@ class _CentralContainer extends StatelessWidget {
 }
 
 class _LeftContainer extends StatelessWidget {
+
+
+
   @override
   Widget build(BuildContext context) {
+
+    final profileFormProvider = Provider.of<ProfileFormProvider>(context);
+    final profile = profileFormProvider.profile!;
+
+    final image = (profile.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg')) 
+    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!);
+
     return Column(
       children: [
         WhiteCard(
@@ -495,8 +502,8 @@ class _LeftContainer extends StatelessWidget {
                       height: 160,
                       child: Stack(
                         children: [
-                          const ClipOval(
-                            child: Image(image: AssetImage('noimage.jpeg')),
+                          ClipOval(
+                            child: image
                           ),
                           Positioned(
                             bottom: 5,
@@ -516,7 +523,26 @@ class _LeftContainer extends StatelessWidget {
                                   size: 20,
                                   color: Colors.black,
                                 ),
-                                onPressed: () {},
+                                onPressed: ()async {
+                                   FilePickerResult? result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['jpg', 'jpeg', 'png'],
+                            allowMultiple: false,
+                          );
+                          if (result != null) {
+
+                              if(!context.mounted) return;
+                              NotificationService.showBusyIndicator(context);
+                              final newProfile = await profileFormProvider.uploadProfileImage('/uploads/perfiles/${profile.id}', result.files.first.bytes!,);
+                              if(!context.mounted) return;
+                              Provider.of<ProfileProvider>(context, listen: false).refreshProfile(newProfile);
+
+                              if(!context.mounted) return;
+                              Navigator.of(context).pop();
+                            } else {
+                              NotificationService.showSnackBarError('Failed to Upload Image');
+                            }
+                            },
                               ),
                             ),
                           )

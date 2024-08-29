@@ -1,11 +1,10 @@
 
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/profile_responde.dart';
 import 'package:web_dashboard/models/profile.dart';
-import 'package:web_dashboard/services/notification_services.dart';
+
 
 class ProfileProvider extends ChangeNotifier {
 
@@ -37,11 +36,9 @@ class ProfileProvider extends ChangeNotifier {
   } catch (e) {
     return null;
   }
-
-
 }
 
-void refreshProfile ( Profile newProfile ) {
+void refreshProfile ( Profile newProfile) {
 
   profiles = profiles.map(
     (profile){
@@ -53,21 +50,8 @@ void refreshProfile ( Profile newProfile ) {
   ).toList();
 
   notifyListeners();
+  
 }
 
-Future uploadImage(String path, Uint8List bytes) async {
-  try {
-    final response = await CafeApi.uploadImage(path, bytes);
-    final imageUrl = response['img']; 
-    if (profile != null) {
-    profile = profile!.copyWith(img: imageUrl); 
-      notifyListeners();
-    }
-    NotificationService.showSnackBa('Image Uploaded Successfully');
-    notifyListeners();
-  } catch (e) {
-    NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
-  }
-}
 
 }

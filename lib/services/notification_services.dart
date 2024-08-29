@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NotificationService {
 
@@ -28,12 +29,18 @@ class NotificationService {
   }
 
   static showBusyIndicator (BuildContext context ) {
-    const AlertDialog dialog =  AlertDialog(
+    AlertDialog dialog =  AlertDialog(
       content: SizedBox(
         width: 100,
         height: 100,
         child: Center(
-          child: CircularProgressIndicator(),
+          child: Column(
+            children: [
+              Text('Wait ....', style: GoogleFonts.plusJakartaSans(fontSize: 16),),
+              const SizedBox(height: 20),
+              CircularProgressIndicator(color: Colors.pink[300], strokeWidth: 2),
+            ],
+          ),
         ),
       ),
     );
