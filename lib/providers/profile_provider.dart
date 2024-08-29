@@ -10,50 +10,14 @@ import 'package:web_dashboard/services/notification_services.dart';
 class ProfileProvider extends ChangeNotifier {
 
   Profile? profile;
-  late GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   List <Profile> profiles = [];
   bool isLoading = true;
 
-    Profile copyWith({
-    bool? estado,
-    String? id,
-    String? codigo,
-    String? idfiscal,
-    String? nombre,
-    String? razons,
-    String? direccion,
-    String? telefono,
-    String? web,
-    List<Correo>? correos,
-    String? img,
-  }) {
-    return Profile(
-      estado: estado ?? profile!.estado,
-      id: id ?? profile!.id,
-      codigo: codigo ?? profile!.codigo,
-      idfiscal: idfiscal ?? profile!.idfiscal,
-      nombre: nombre ?? profile!.nombre,
-      razons: razons ?? profile!.razons,
-      direccion: direccion ?? profile!.direccion,
-      telefono: telefono ?? profile!.telefono,
-      web: web ?? profile!.web,
-      correos: correos ?? profile!.correos,
-      img: img ?? profile!.img,
-    );
-  }
 
   ProfileProvider (){
     getProfile();
   }
-
- bool _validForm() {
-  if (formKey.currentState == null) {
-    return false;
-  }
-
-  return formKey.currentState!.validate();
-}
 
  getProfile() async {
   final resp = await CafeApi.httpGet('/perfiles');
@@ -63,45 +27,32 @@ class ProfileProvider extends ChangeNotifier {
   notifyListeners();
 }
 
- Future<Profile> getProfilById(String id) async {
+ Future<Profile?> getProfilById(String id) async {
 
   try {
   final resp = await CafeApi.httpGet('/perfiles/$id');
   final profile = Profile.fromMap(resp);
   return profile;
+
   } catch (e) {
-    rethrow;
+    return null;
   }
 
 
 }
 
-Future updateProfile() async {
-    if (!_validForm()) return false;
+void refreshProfile ( Profile newProfile ) {
 
-  if (profile == null) {
-    throw 'Profile is null';
-  }
+  profiles = profiles.map(
+    (profile){
+      if (profile.id == newProfile.id) {
+        profile = newProfile;
+      }
+      return profile;
+    }
+  ).toList();
 
-  final data = {
-    'estado': profile!.estado,
-    'id': profile!.id,
-    'codigo': profile!.codigo,
-    'idfiscal': profile!.idfiscal,
-    'nombre': profile!.nombre,
-    'razons': profile!.razons,
-    'direccion': profile!.direccion,
-    'telefono': profile!.telefono,
-    'web': profile!.web,
-    'correos': profile!.correos,
-  };
-
-  try {
-    final resp =  await CafeApi.put('/perfiles/${profile!.id}', data);
-    return true;
-  } catch (e) {
-    throw 'Error to Update the Profile: $e';
-  }
+  notifyListeners();
 }
 
 Future uploadImage(String path, Uint8List bytes) async {

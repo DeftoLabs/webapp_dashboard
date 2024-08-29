@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/profile.dart';
 import 'package:web_dashboard/providers/profile_form_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
@@ -22,17 +24,29 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     super.initState();
-    final profileProvider =
-        Provider.of<ProfileProvider>(context, listen: false);
-    final profileFormProvider =
-        Provider.of<ProfileFormProvider>(context, listen: false);
+    final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+    final profileFormProvider = Provider.of<ProfileFormProvider>(context, listen: false);
 
-    profileProvider.getProfilById(widget.id).then((profileDB) {
-      profileFormProvider.profile = profileDB;
-      setState(() {
-        profile = profileDB;
-      });
+    profileProvider.getProfilById(widget.id)
+    .then((profileDB) {
+
+      if(profileDB != null) {
+          profileFormProvider.profile = profileDB;
+          profileFormProvider.formKey = GlobalKey<FormState>();
+           setState(() {
+             profile = profileDB;
+      });    
+      } else {
+        NavigationService.replaceTo('dashboard/settings/profile');
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    profile = null;
+    Provider.of<ProfileFormProvider>(context, listen: false).profile = null;
   }
 
   @override
@@ -42,11 +56,25 @@ class _ProfileViewState extends State<ProfileView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'My Profile View',
-              style: CustomLabels.h1,
+            const SizedBox(height: 20),
+            Center(
+              child: 
+                     Row(
+            children: [
+              IconButton(
+                  color: Colors.black,
+                  onPressed: () {
+                    NavigationService.replaceTo('dashboard/settings/profile');
+                  },
+                  icon: const Icon(Icons.arrow_back_rounded)),
+              Expanded(
+                  child: Center(
+                child: Text('My Profile View', style: CustomLabels.h1),
+              )),
+            ],
+          ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             if (profile == null)
               WhiteCard(
                 child: Container(
@@ -192,18 +220,19 @@ class _CentralContainer extends StatelessWidget {
                 )),
               ),
               onChanged: (value) {
-                // final lowercaseValue = value.toLowerCase();
+                final uppercaseValue = value.toUpperCase();
+                profileFormProvider.copyProfileWith(idfiscal: uppercaseValue);
               },
                validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'TAX ID is Required';
-                            }
-                            if (value.length < 2) {
-                              return 'The TAX required minimum 3 characters';
-                            }
-                            if (value.length > 21) return 'Max 20 characters';
-                            return null;
-                            },
+               if (value == null || value.isEmpty) {
+                 return 'TAX ID is Required';
+               }
+               if (value.length < 2) {
+                 return 'The TAX required minimum 3 characters';
+               }
+               if (value.length > 21) return 'Max 20 characters';
+               return null;
+               },
               onSaved: (value) {},
             ),
             const SizedBox(height: 20),
@@ -231,20 +260,22 @@ class _CentralContainer extends StatelessWidget {
                 )),
               ),
               onChanged: (value) {
-                // final lowercaseValue = value.toLowerCase();
+                final uppercaseValue = value.toUpperCase();
+                profileFormProvider.copyProfileWith(nombre: uppercaseValue);
+
               },
                    validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                return 'Bussiness Name is Required';
-                              }
-                              if (value.length < 2) {
-                                return 'The Bussiness required minimum 3 characters';
-                              }
-                              if (value.length > 51) {
-                                return 'Max 50 characters';
-                              }
-                              return null;
-                              },
+                         if (value == null || value.isEmpty) {
+                 return 'Bussiness Name is Required';
+               }
+               if (value.length < 2) {
+                 return 'The Bussiness required minimum 3 characters';
+               }
+               if (value.length > 51) {
+                 return 'Max 50 characters';
+               }
+               return null;
+               },
               onSaved: (value) {},
             ),
             const SizedBox(height: 20),
@@ -272,20 +303,21 @@ class _CentralContainer extends StatelessWidget {
                 )),
               ),
               onChanged: (value) {
-                // final lowercaseValue = value.toLowerCase();
+                final uppercaseValue = value.toUpperCase();
+                profileFormProvider.copyProfileWith(razons: uppercaseValue);
               },
                 validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Legal Name is Required';
-                              }
-                              if (value.length < 2) {
-                                return 'The Legal required minimum 3 characters';
-                              }
-                              if (value.length > 51) {
-                                return 'Max 50 characters';
-                              }
-                              return null;
-                              },
+                 if (value == null || value.isEmpty) {
+                   return 'Legal Name is Required';
+                 }
+                 if (value.length < 2) {
+                   return 'The Legal required minimum 3 characters';
+                 }
+                 if (value.length > 51) {
+                   return 'Max 50 characters';
+                 }
+                 return null;
+                 },
               onSaved: (value) {},
             ),
             const SizedBox(height: 20),
@@ -314,20 +346,21 @@ class _CentralContainer extends StatelessWidget {
                 )),
               ),
               onChanged: (value) {
-                // final lowercaseValue = value.toLowerCase();
+                final uppercaseValue = value.toUpperCase();
+                profileFormProvider.copyProfileWith(direccion: uppercaseValue);
               },
                validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Address is Required';
-                              }
-                              if (value.length < 2) {
-                                return 'The Address required minimum 3 characters';
-                              }
-                              if (value.length > 91) {
-                                return 'Max 90 characters';
-                              }
-                              return null;
-                              },
+                 if (value == null || value.isEmpty) {
+                   return 'Address is Required';
+                 }
+                 if (value.length < 2) {
+                   return 'The Address required minimum 3 characters';
+                 }
+                 if (value.length > 91) {
+                   return 'Max 90 characters';
+                 }
+                 return null;
+                 },
               onSaved: (value) {},
             ),
             const SizedBox(height: 20),
@@ -355,20 +388,20 @@ class _CentralContainer extends StatelessWidget {
                 )),
               ),
               onChanged: (value) {
-                // final lowercaseValue = value.toLowerCase();
+                profileFormProvider.copyProfileWith(telefono: value);
               },
                   validator: (value) {
-                                 if (value == null || value.isEmpty) {
-                                return 'Phone is Required';
-                              }
-                               if (!RegExp(r'^\+?[0-9]+$').hasMatch(value)) {
-                                return 'Only numbers and a leading + are allowed (No space allowed)';
-                              }
-                              if (value.length > 21) {
-                                return 'Max 20 characters';
-                              }
-                              return null;
-                              },
+                   if (value == null || value.isEmpty) {
+                  return 'Phone is Required';
+                }
+                 if (!RegExp(r'^\+?[0-9]+$').hasMatch(value)) {
+                  return 'Only numbers and a leading + are allowed (No space allowed)';
+                }
+                if (value.length > 21) {
+                  return 'Max 20 characters';
+                }
+                return null;
+                },
               onSaved: (value) {},
             ),
             const SizedBox(height: 20),
@@ -396,17 +429,17 @@ class _CentralContainer extends StatelessWidget {
                 )),
               ),
               onChanged: (value) {
-                // final lowercaseValue = value.toLowerCase();
+                profileFormProvider.copyProfileWith(web: value);
               },
               validator: (value) {
-                                 if (value == null || value.isEmpty) {
-                                return 'WebSite is Required';
-                              }
-                              if (value.length > 41) {
-                                return 'Max 40 characters';
-                              }
-                              return null;
-                              },
+                     if (value == null || value.isEmpty) {
+                    return 'WebSite is Required';
+                  }
+                  if (value.length > 41) {
+                    return 'Max 40 characters';
+                  }
+                  return null;
+                  },
               onSaved: (value) {},
             ),
             const SizedBox(height: 40),
@@ -422,7 +455,18 @@ class _CentralContainer extends StatelessWidget {
                   'Save',
                   style: GoogleFonts.plusJakartaSans(color: Colors.black),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+
+                  final saved = await profileFormProvider.updateProfile();
+                  if (saved) {
+                    NotificationService.showSnackBa('Profile Update');
+                    if (context.mounted) {
+                      Provider.of<ProfileProvider>(context).refreshProfile( profile );
+                    }
+                  } else {
+                    NotificationService.showSnackBarError('The Prorfile not be Updated');
+                  }
+                },
               ),
             ),
             const SizedBox(height: 40),

@@ -36,8 +36,6 @@ class Sidebar extends StatelessWidget {
 
          const SizedBox(height: 10),
 
-         const TextSeparator (text:'Main'),
-
          MenuItem(
           isActive: sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
           text: 'Dashboard', 
@@ -46,9 +44,12 @@ class Sidebar extends StatelessWidget {
 
         MenuItem(text: 'Analityc', icon: Icons.account_tree_outlined,             onPressed: (){}),
 
-        const SizedBox(height: 10),
+        const Divider(
+          indent: 30,
+          endIndent: 30,
+          color: Color.fromRGBO(177, 255, 46, 1),
+        ),
 
-        const TextSeparator(text: 'Orders & Sales'),
 
         MenuItem(text: 'Orders', 
         icon: Icons.list_alt_outlined,            
@@ -58,7 +59,11 @@ class Sidebar extends StatelessWidget {
         
         const SizedBox(height: 10),
 
-        const TextSeparator(text: 'Product Management'),
+        const Divider(
+          indent: 30,
+          endIndent: 30,
+          color: Color.fromRGBO(177, 255, 46, 1),
+        ),
 
         MenuItem(text: 'Products', 
         icon: Icons.shopping_bag_outlined,    
@@ -74,7 +79,11 @@ class Sidebar extends StatelessWidget {
 
         const SizedBox(height: 10),
 
-        const TextSeparator(text: 'Customer Management'),
+        const Divider(
+          indent: 30,
+          endIndent: 30,
+          color: Color.fromRGBO(177, 255, 46, 1),
+        ),
 
         MenuItem(text: 'Customers', 
         icon: Icons.add_business_outlined,  
@@ -83,7 +92,11 @@ class Sidebar extends StatelessWidget {
 
         const SizedBox(height: 10),
 
-        const TextSeparator(text: 'Sales Representatives'),
+        const Divider(
+          indent: 30,
+          endIndent: 30,
+          color: Color.fromRGBO(177, 255, 46, 1),
+        ),
 
         MenuItem(text: 'GPS', icon: Icons.gps_fixed,                  
         onPressed: ()=> navigateTo(Flurorouter.gpsRoute),
@@ -99,7 +112,11 @@ class Sidebar extends StatelessWidget {
         const SizedBox(height: 10),
         
 
-        const TextSeparator(text: 'Elements'),
+        const Divider(
+          indent: 30,
+          endIndent: 30,
+          color: Color.fromRGBO(177, 255, 46, 1),
+        ),
 
         MenuItem(text: 'Users', 
         icon: Icons.accessibility_outlined,
