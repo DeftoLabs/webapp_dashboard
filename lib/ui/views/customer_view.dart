@@ -375,9 +375,15 @@ class _CustomerViewState extends State<CustomerView> {
                             final lowercaseValue = value.toLowerCase();
                             customerFormProvider.copyCustomerWith(web: lowercaseValue);
                             }, 
-                            validator: (value) {
+                             validator: (value) {
+                                 if (value == null || value.isEmpty) {
+                                return 'WebSite is Required';
+                              }
+                              if (value.length > 41) {
+                                return 'Max 40 characters';
+                              }
                               return null;
-                            },
+                              },
                             onSaved: (value) {
                               customer.web = (value == null || value.isEmpty)
                                   ? 'N/A'
@@ -584,7 +590,8 @@ class _CustomerViewState extends State<CustomerView> {
                                 return 'Max 50 characters';
                               }
                               return null;
-                              }),
+                              }
+                              ),
                           const SizedBox(height: 10),
                           TextFormField(
                               initialValue: customer.sucursal,

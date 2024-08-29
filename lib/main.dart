@@ -10,6 +10,7 @@ import 'package:web_dashboard/providers/customers_provider.dart';
 import 'package:web_dashboard/providers/newcustomer_provider.dart';
 import 'package:web_dashboard/providers/product_form_provider.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
+import 'package:web_dashboard/providers/profile_form_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/providers/zone_form_provider.dart';
 import 'package:web_dashboard/providers/zones_providers.dart';
@@ -70,6 +71,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ZonesProviders()),
         ChangeNotifierProvider(create: (_) => ZoneFormProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileFormProvider()),
 
       ],
       child: MultiBlocProvider(

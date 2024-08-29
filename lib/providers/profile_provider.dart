@@ -55,17 +55,25 @@ class ProfileProvider extends ChangeNotifier {
   return formKey.currentState!.validate();
 }
 
-Future<Profile?> getProfile() async {
+ getProfile() async {
   final resp = await CafeApi.httpGet('/perfiles');
   final profileResp = ProfileResponse.fromMap(resp);
-
   profiles = [... profileResp.profile];
-
   isLoading = false;
-  
   notifyListeners();
-  
-  return profile; // Devuelve el perfil
+}
+
+ Future<Profile> getProfilById(String id) async {
+
+  try {
+  final resp = await CafeApi.httpGet('/perfiles/$id');
+  final profile = Profile.fromMap(resp);
+  return profile;
+  } catch (e) {
+    rethrow;
+  }
+
+
 }
 
 Future updateProfile() async {
@@ -90,7 +98,6 @@ Future updateProfile() async {
 
   try {
     final resp =  await CafeApi.put('/perfiles/${profile!.id}', data);
-    print('Response: ${resp.data}');
     return true;
   } catch (e) {
     throw 'Error to Update the Profile: $e';

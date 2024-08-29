@@ -141,7 +141,8 @@ class ProfilesView extends StatelessWidget {
                     ),
                     const SizedBox(height: 50),
                     Center(
-                      child:      Container(
+                      child:      
+                      Container(
               height: 50,
               width: 150,
               padding: const EdgeInsets.all(10),
