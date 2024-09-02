@@ -6,7 +6,7 @@ import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
-import 'package:web_dashboard/ui/modals/product_view.dart';
+import 'package:web_dashboard/ui/views/product_view.dart';
 import 'package:web_dashboard/ui/views/profile_view.dart';
 import 'package:web_dashboard/ui/views/profiles_view.dart';
 import 'package:web_dashboard/ui/views/categories_view.dart';

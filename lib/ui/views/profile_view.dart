@@ -8,7 +8,6 @@ import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
-import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 class ProfileView extends StatefulWidget {
   final String id;
@@ -22,28 +21,28 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   Profile? profile;
 
-
   @override
   void initState() {
     super.initState();
-    final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
-    final profileFormProvider = Provider.of<ProfileFormProvider>(context, listen: false);
+    final profileProvider =
+        Provider.of<ProfileProvider>(context, listen: false);
+    final profileFormProvider =
+        Provider.of<ProfileFormProvider>(context, listen: false);
 
     profileProvider.getProfilById(widget.id).then((profileDB) {
       profileFormProvider.profile = profileDB;
 
-      if(profileDB != null) {
-          profileFormProvider.formKey = GlobalKey<FormState>();
-           setState(() {
-             profile = profileDB;
-
-      });    
+      if (profileDB != null) {
+        profileFormProvider.formKey = GlobalKey<FormState>();
+        setState(() {
+          profile = profileDB;
+        });
       } else {
         NavigationService.replaceTo('dashboard/settings/profile');
       }
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,25 +50,6 @@ class _ProfileViewState extends State<ProfileView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            const SizedBox(height: 20),
-            Center(
-              child: 
-                     Row(
-            children: [
-              IconButton(
-                  color: Colors.black,
-                  onPressed: () {
-                    NavigationService.replaceTo('dashboard/settings/profile');
-                  },
-                  icon: const Icon(Icons.arrow_back_rounded)),
-              Expanded(
-                  child: Center(
-                child: Text('My Profile View', style: CustomLabels.h1),
-              )),
-            ],
-          ),
-            ),
-            const SizedBox(height: 20),
             if (profile == null)
               WhiteCard(
                 child: Container(
@@ -88,19 +68,127 @@ class _ProfileViewState extends State<ProfileView> {
 class _ProfileViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Table(
+    return Column(
+      children: [
+        _LogoProfile(),
+        Table(
           columnWidths: const {
-    0: FixedColumnWidth(250),
-    1: FixedColumnWidth(500),
+            0: FixedColumnWidth(500),
           },
           children: [
-    TableRow(children: [
-      _LeftContainer(),
-      _CentralContainer(),
-      _RigthContainer()
-    ])
+            TableRow(children: [_CentralContainer(), _RigthContainer()])
           ],
-        );
+        ),
+      ],
+    );
+  }
+}
+
+class _LogoProfile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final profileFormProvider = Provider.of<ProfileFormProvider>(context);
+    final profile = profileFormProvider.profile!;
+
+    final image = (profile.img == null)
+        ? const Image(image: AssetImage('noimage.jpeg'))
+        : FadeInImage.assetNetwork(
+            placeholder: 'load.gif', image: profile.img!);
+
+    return Row(
+      children: [
+        Expanded(
+          child: WhiteCardColor(
+              width: 250,
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                            color: Colors.white,
+                            onPressed: () {
+                              NavigationService.replaceTo(
+                                  'dashboard/settings/profile');
+                            },
+                            icon: const Icon(Icons.arrow_back_rounded)),
+                        Text('Back to Profile',
+                            style: GoogleFonts.plusJakartaSans(
+                                color: Colors.white)),
+                                const SizedBox(width: 260),
+                        SizedBox(
+                            width: 150,
+                            height: 160,
+                            child: Stack(
+                              children: [
+                                ClipOval(child: image),
+                                Positioned(
+                                  bottom: 5,
+                                  right: 5,
+                                  child: Container(
+                                    width: 45,
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        border: Border.all(
+                                            color: Colors.white, width: 5)),
+                                    child: FloatingActionButton(
+                                      backgroundColor:
+                                          const Color.fromRGBO(177, 255, 46, 1),
+                                      child: const Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 20,
+                                        color: Colors.black,
+                                      ),
+                                      onPressed: () async {
+                                        FilePickerResult? result =
+                                            await FilePicker.platform.pickFiles(
+                                          type: FileType.custom,
+                                          allowedExtensions: [
+                                            'jpg',
+                                            'jpeg',
+                                            'png'
+                                          ],
+                                          allowMultiple: false,
+                                        );
+                                        if (result != null) {
+                                          if (!context.mounted) return;
+                                          NotificationService.showBusyIndicator(
+                                              context);
+                                          final newProfile =
+                                              await profileFormProvider
+                                                  .uploadProfileImage(
+                                            '/uploads/perfiles/${profile.id}',
+                                            result.files.first.bytes!,
+                                          );
+                                          if (!context.mounted) return;
+                                          Provider.of<ProfileProvider>(context,
+                                                  listen: false)
+                                              .refreshProfile(newProfile);
+
+                                          if (!context.mounted) return;
+                                          Navigator.of(context).pop();
+                                        } else {
+                                          NotificationService.showSnackBarError(
+                                              'Failed to Upload Image');
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              )),
+        )
+      ],
+    );
   }
 }
 
@@ -111,37 +199,59 @@ class _RigthContainer extends StatelessWidget {
     final profile = profileFormProvider.profile!;
 
     return WhiteCard(
+      title: 'Email Accounts',
       child: SizedBox(
         width: double.infinity,
-        height: 620,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Email Account', style: CustomLabels.h2),
-            const SizedBox(height: 20),
             SizedBox(
-              height: 430,
+              height: 410,
               child: ListView.builder(
                 itemCount: profile.correos.length,
                 itemBuilder: (context, index) {
                   final correo = profile.correos[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        Text(
-                          correo.departamento,
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                            initialValue: correo.departamento,
+                            style: const TextStyle(color: Colors.black),
+                            decoration: const InputDecoration(
+                              labelText: 'Department',
+                              labelStyle: TextStyle(color: Colors.black),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              // profileFormProvider.updateCorreo(index, correo.email, value);
+                            },
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          correo.email,
-                          style: GoogleFonts.plusJakartaSans(fontSize: 16),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(
+                            initialValue: correo.email,
+                            style: const TextStyle(color: Colors.black),
+                            decoration: const InputDecoration(
+                              labelText: 'Email',
+                              labelStyle: TextStyle(color: Colors.black),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green),
+                              ),
+                            ),
+                            onChanged: (value) {},
+                          ),
                         ),
                       ],
                     ),
@@ -149,7 +259,7 @@ class _RigthContainer extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 10),
             Container(
               height: 50,
               width: 150,
@@ -160,7 +270,7 @@ class _RigthContainer extends StatelessWidget {
               ),
               child: TextButton(
                 child: Text(
-                  'Edit Emails',
+                  'Save Emails',
                   style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 ),
                 onPressed: () {},
@@ -174,9 +284,6 @@ class _RigthContainer extends StatelessWidget {
   }
 }
 
-
-
-
 class _CentralContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -189,370 +296,287 @@ class _CentralContainer extends StatelessWidget {
         child: Form(
             key: profileFormProvider.formKey,
             child: Column(
-          children: [
-            const SizedBox(height: 20),
-            TextFormField(
-              initialValue: profile.idfiscal,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-              decoration: const InputDecoration(
-                hintText: 'TAX ID',
-                hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                labelText: 'TAX ID',
-                labelStyle: TextStyle(color: Colors.white, fontSize: 14),
-                prefixIcon:
-                    Icon(Icons.info_sharp, color: Colors.white, size: 20),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 2)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.white,
-                )),
-                errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Color.fromARGB(255, 58, 60, 65),
-                )),
-              ),
-              onChanged: (value) {
-                final uppercaseValue = value.toUpperCase();
-                profileFormProvider.copyProfileWith(idfiscal: uppercaseValue);
-              },
-               validator: (value) {
-               if (value == null || value.isEmpty) {
-                 return 'TAX ID is Required';
-               }
-               if (value.length < 2) {
-                 return 'The TAX required minimum 3 characters';
-               }
-               if (value.length > 21) return 'Max 20 characters';
-               return null;
-               },
-              onSaved: (value) {},
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              initialValue: profile.nombre,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-              decoration: const InputDecoration(
-                hintText: 'Bussines Name',
-                hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                labelText: 'Bussines Name',
-                labelStyle: TextStyle(color: Colors.white, fontSize: 14),
-                prefixIcon:
-                    Icon(Icons.burst_mode_sharp, color: Colors.white, size: 20),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 2)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.white,
-                )),
-                errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Color.fromARGB(255, 58, 60, 65),
-                )),
-              ),
-              onChanged: (value) {
-                final uppercaseValue = value.toUpperCase();
-                profileFormProvider.copyProfileWith(nombre: uppercaseValue);
-
-              },
-                   validator: (value) {
-                         if (value == null || value.isEmpty) {
-                 return 'Bussiness Name is Required';
-               }
-               if (value.length < 2) {
-                 return 'The Bussiness required minimum 3 characters';
-               }
-               if (value.length > 51) {
-                 return 'Max 50 characters';
-               }
-               return null;
-               },
-              onSaved: (value) {},
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              initialValue: profile.razons,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-              decoration: const InputDecoration(
-                hintText: 'Legal Name',
-                hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                labelText: 'Legal Name',
-                labelStyle: TextStyle(color: Colors.white, fontSize: 14),
-                prefixIcon: Icon(Icons.business_outlined,
-                    color: Colors.white, size: 20),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 2)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.white,
-                )),
-                errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Color.fromARGB(255, 58, 60, 65),
-                )),
-              ),
-              onChanged: (value) {
-                final uppercaseValue = value.toUpperCase();
-                profileFormProvider.copyProfileWith(razons: uppercaseValue);
-              },
-                validator: (value) {
-                 if (value == null || value.isEmpty) {
-                   return 'Legal Name is Required';
-                 }
-                 if (value.length < 2) {
-                   return 'The Legal required minimum 3 characters';
-                 }
-                 if (value.length > 51) {
-                   return 'Max 50 characters';
-                 }
-                 return null;
-                 },
-              onSaved: (value) {},
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              initialValue: profile.direccion,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-              maxLines: 2,
-              decoration: const InputDecoration(
-                hintText: 'Address',
-                hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                labelText: 'Address',
-                labelStyle: TextStyle(color: Colors.white, fontSize: 14),
-                prefixIcon: Icon(Icons.location_city_rounded,
-                    color: Colors.white, size: 20),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 2)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.white,
-                )),
-                errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Color.fromARGB(255, 58, 60, 65),
-                )),
-              ),
-              onChanged: (value) {
-                final uppercaseValue = value.toUpperCase();
-                profileFormProvider.copyProfileWith(direccion: uppercaseValue);
-              },
-               validator: (value) {
-                 if (value == null || value.isEmpty) {
-                   return 'Address is Required';
-                 }
-                 if (value.length < 2) {
-                   return 'The Address required minimum 3 characters';
-                 }
-                 if (value.length > 83) {
-                   return 'Max 82 characters';
-                 }
-                 return null;
-                 },
-              onSaved: (value) {},
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              initialValue: profile.telefono,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-              decoration: const InputDecoration(
-                hintText: 'Phone',
-                hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                labelText: 'Phone',
-                labelStyle: TextStyle(color: Colors.white, fontSize: 14),
-                prefixIcon: Icon(Icons.phone_iphone_rounded,
-                    color: Colors.white, size: 20),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 2)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.white,
-                )),
-                errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Color.fromARGB(255, 58, 60, 65),
-                )),
-              ),
-              onChanged: (value) {
-                profileFormProvider.copyProfileWith(telefono: value);
-              },
-                  validator: (value) {
-                   if (value == null || value.isEmpty) {
-                  return 'Phone is Required';
-                }
-                 if (!RegExp(r'^\+?[0-9]+$').hasMatch(value)) {
-                  return 'Only numbers and a leading + are allowed (No space allowed)';
-                }
-                if (value.length > 21) {
-                  return 'Max 20 characters';
-                }
-                return null;
-                },
-              onSaved: (value) {},
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              initialValue: profile.web,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-              decoration: const InputDecoration(
-                hintText: 'Web',
-                hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                labelText: 'Web',
-                labelStyle: TextStyle(color: Colors.white, fontSize: 14),
-                prefixIcon:
-                    Icon(Icons.web_asset, color: Colors.white, size: 20),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 2)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.white,
-                )),
-                errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Color.fromARGB(255, 58, 60, 65),
-                )),
-              ),
-              onChanged: (value) {
-                profileFormProvider.copyProfileWith(web: value);
-              },
-              validator: (value) {
-                     if (value == null || value.isEmpty) {
-                    return 'WebSite is Required';
-                  }
-                  if (value.length > 41) {
-                    return 'Max 40 characters';
-                  }
-                  return null;
+              children: [
+                const SizedBox(height: 28),
+                TextFormField(
+                  initialValue: profile.idfiscal,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'TAX ID',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    labelText: 'TAX ID',
+                    labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                    prefixIcon:
+                        Icon(Icons.info_sharp, color: Colors.white, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final uppercaseValue = value.toUpperCase();
+                    profileFormProvider.copyProfileWith(
+                        idfiscal: uppercaseValue);
                   },
-              onSaved: (value) {},
-            ),
-            const SizedBox(height: 40),
-            Container(
-              height: 50,
-              width: 150,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: const Color.fromRGBO(177, 255, 46, 1),
-                  borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                child: Text(
-                  'Save',
-                  style: GoogleFonts.plusJakartaSans(color: Colors.black),
-                ),
-                onPressed: () async {
-
-                  final saved = await profileFormProvider.updateProfile();
-                  if (saved) {
-                    NotificationService.showSnackBa('Profile Update');
-                    if (context.mounted) {
-                    Provider.of<ProfileProvider>(context, listen: false).getProfile();
-                    NavigationService.replaceTo('dashboard/settings/profile');
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'TAX ID is Required';
                     }
-                  } else {
-                    NotificationService.showSnackBarError('The Profile not be Updated');
-                  }
-                },
-              ),
-            ),
-            const SizedBox(height: 40),
-          ],
-        )));
-  }
-}
-
-class _LeftContainer extends StatelessWidget {
-
-
-
-  @override
-  Widget build(BuildContext context) {
-
-    final profileFormProvider = Provider.of<ProfileFormProvider>(context);
-    final profile = profileFormProvider.profile!;
-
-    final image = (profile.img == null) 
-    ? const Image(image: AssetImage('noimage.jpeg')) 
-    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!);
-
-    return Column(
-      children: [
-        WhiteCard(
-            width: 250,
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Logo', style: CustomLabels.h2),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                      width: 150,
-                      height: 160,
-                      child: Stack(
-                        children: [
-                          ClipOval(
-                            child: image
-                          ),
-                          Positioned(
-                            bottom: 5,
-                            right: 5,
-                            child: Container(
-                              width: 45,
-                              height: 45,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                      color: Colors.white, width: 5)),
-                              child: FloatingActionButton(
-                                backgroundColor:
-                                    const Color.fromRGBO(177, 255, 46, 1),
-                                child: const Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 20,
-                                  color: Colors.black,
-                                ),
-                                onPressed: ()async {
-                                   FilePickerResult? result = await FilePicker.platform.pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: ['jpg', 'jpeg', 'png'],
-                            allowMultiple: false,
-                          );
-                          if (result != null) {
-
-                              if(!context.mounted) return;
-                              NotificationService.showBusyIndicator(context);
-                              final newProfile = await profileFormProvider.uploadProfileImage('/uploads/perfiles/${profile.id}', result.files.first.bytes!,);
-                              if(!context.mounted) return;
-                              Provider.of<ProfileProvider>(context, listen: false).refreshProfile(newProfile);
-
-                              if(!context.mounted) return;
-                              Navigator.of(context).pop();
-                            } else {
-                              NotificationService.showSnackBarError('Failed to Upload Image');
-                            }
-                            },
-                              ),
-                            ),
-                          )
-                        ],
-                      )),
-                  const SizedBox(height: 40),
-                ],
-              ),
-            )),
-      ],
-    );
+                    if (value.length < 2) {
+                      return 'The TAX required minimum 3 characters';
+                    }
+                    if (value.length > 21) return 'Max 20 characters';
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  initialValue: profile.nombre,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Bussines Name',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    labelText: 'Bussines Name',
+                    labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                    prefixIcon: Icon(Icons.burst_mode_sharp,
+                        color: Colors.white, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final uppercaseValue = value.toUpperCase();
+                    profileFormProvider.copyProfileWith(nombre: uppercaseValue);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Bussiness Name is Required';
+                    }
+                    if (value.length < 2) {
+                      return 'The Bussiness required minimum 3 characters';
+                    }
+                    if (value.length > 51) {
+                      return 'Max 50 characters';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  initialValue: profile.razons,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Legal Name',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    labelText: 'Legal Name',
+                    labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                    prefixIcon: Icon(Icons.business_outlined,
+                        color: Colors.white, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final uppercaseValue = value.toUpperCase();
+                    profileFormProvider.copyProfileWith(razons: uppercaseValue);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Legal Name is Required';
+                    }
+                    if (value.length < 2) {
+                      return 'The Legal required minimum 3 characters';
+                    }
+                    if (value.length > 51) {
+                      return 'Max 50 characters';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  initialValue: profile.direccion,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  maxLines: 2,
+                  decoration: const InputDecoration(
+                    hintText: 'Address',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    labelText: 'Address',
+                    labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                    prefixIcon: Icon(Icons.location_city_rounded,
+                        color: Colors.white, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final uppercaseValue = value.toUpperCase();
+                    profileFormProvider.copyProfileWith(
+                        direccion: uppercaseValue);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Address is Required';
+                    }
+                    if (value.length < 2) {
+                      return 'The Address required minimum 3 characters';
+                    }
+                    if (value.length > 83) {
+                      return 'Max 82 characters';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  initialValue: profile.telefono,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Phone',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    labelText: 'Phone',
+                    labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                    prefixIcon: Icon(Icons.phone_iphone_rounded,
+                        color: Colors.white, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    profileFormProvider.copyProfileWith(telefono: value);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Phone is Required';
+                    }
+                    if (!RegExp(r'^\+?[0-9]+$').hasMatch(value)) {
+                      return 'Only numbers and a leading + are allowed (No space allowed)';
+                    }
+                    if (value.length > 21) {
+                      return 'Max 20 characters';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  initialValue: profile.web,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Web',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    labelText: 'Web',
+                    labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                    prefixIcon:
+                        Icon(Icons.web_asset, color: Colors.white, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.white,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    profileFormProvider.copyProfileWith(web: value);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'WebSite is Required';
+                    }
+                    if (value.length > 41) {
+                      return 'Max 40 characters';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  height: 50,
+                  width: 150,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: const Color.fromRGBO(177, 255, 46, 1),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: TextButton(
+                    child: Text(
+                      'Save',
+                      style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                    ),
+                    onPressed: () async {
+                      final saved = await profileFormProvider.updateProfile();
+                      if (saved) {
+                        NotificationService.showSnackBa('Profile Update');
+                        if (context.mounted) {
+                          Provider.of<ProfileProvider>(context, listen: false)
+                              .getProfile();
+                          NavigationService.replaceTo(
+                              'dashboard/settings/profile');
+                        }
+                      } else {
+                        NotificationService.showSnackBarError(
+                            'The Profile not be Updated');
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(height: 40),
+              ],
+            )));
   }
 }

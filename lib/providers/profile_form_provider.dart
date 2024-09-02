@@ -77,5 +77,12 @@ class ProfileFormProvider extends ChangeNotifier {
       throw 'Error to Upload the Image';
     }
   }
+
+    void updateCorreo(int index, String email, String departamento) {
+    if (profile != null && profile!.correos != null) {
+      profile!.correos[index] = Correo(email: email, departamento: departamento, id: '');
+      notifyListeners();
+    }
+  }
   
   }
