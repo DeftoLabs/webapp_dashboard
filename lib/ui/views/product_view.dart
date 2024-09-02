@@ -108,9 +108,13 @@ class _PriceProductView extends StatelessWidget {
     return WhiteCardColor(
       title: 'Prices',
       child: SizedBox(
-          height: 330,
-          child: Column(children: [
+          height: 550,
+          child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             const SizedBox(height: 20),
+            Text('Price Level 1', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
             TextFormField(
                 initialValue: producto.precio.toString(),
                 keyboardType:
@@ -146,7 +150,168 @@ class _PriceProductView extends StatelessWidget {
                 },
                 onChanged: (value) {
                   producto.precio = double.tryParse(value) ?? 0.0;
-                }),
+                }
+                ),
+                            const SizedBox(height: 20),
+                             Text('Price Level 2', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            TextFormField(
+                initialValue: producto.precio.toString(),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  hintText: 'Price',
+                  labelText: 'Price - e.g. 10.20',
+                  labelStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white, fontSize: 12),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white.withOpacity(0.7)),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                  border: const OutlineInputBorder(),
+                ),
+                style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Price is required';
+                  }
+                  if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
+                    return 'Invalid price format. Use "." for decimals';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Invalid number';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  producto.precio = double.tryParse(value) ?? 0.0;
+                }
+                ),
+                            const SizedBox(height: 20),
+                             Text('Price Level 3', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            TextFormField(
+                initialValue: producto.precio.toString(),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  hintText: 'Price',
+                  labelText: 'Price - e.g. 10.20',
+                  labelStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white, fontSize: 12),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white.withOpacity(0.7)),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                  border: const OutlineInputBorder(),
+                ),
+                style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Price is required';
+                  }
+                  if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
+                    return 'Invalid price format. Use "." for decimals';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Invalid number';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  producto.precio = double.tryParse(value) ?? 0.0;
+                }
+                ),
+                            const SizedBox(height: 20),
+                             Text('Price Level 4', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            TextFormField(
+                initialValue: producto.precio.toString(),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  hintText: 'Price',
+                  labelText: 'Price - e.g. 10.20',
+                  labelStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white, fontSize: 12),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white.withOpacity(0.7)),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                  border: const OutlineInputBorder(),
+                ),
+                style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Price is required';
+                  }
+                  if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
+                    return 'Invalid price format. Use "." for decimals';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Invalid number';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  producto.precio = double.tryParse(value) ?? 0.0;
+                }
+                ),
+                            const SizedBox(height: 20),
+                             Text('Price Level 5', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            TextFormField(
+                initialValue: producto.precio.toString(),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  hintText: 'Price',
+                  labelText: 'Price - e.g. 10.20',
+                  labelStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white, fontSize: 12),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white.withOpacity(0.7)),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  ),
+                  border: const OutlineInputBorder(),
+                ),
+                style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Price is required';
+                  }
+                  if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
+                    return 'Invalid price format. Use "." for decimals';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Invalid number';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  producto.precio = double.tryParse(value) ?? 0.0;
+                }
+                ),
           ])),
     );
   }
@@ -172,7 +337,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
         child: Form(
           key: productFormProvider.formKey,
           child: Container(
-            height: 450,
+            height: 550,
             padding: const EdgeInsets.all(20),
             child: Form(
               child: Column(children: [
@@ -281,13 +446,17 @@ class _ProductFormViewState extends State<_ProductFormView> {
                           borderSide:
                               BorderSide(color: Colors.white, width: 2.0),
                         ),
-                        border: const OutlineInputBorder(),
+                        border: const OutlineInputBorder(
+                           borderSide:
+                              BorderSide(color: Colors.white, width: 2.0),
+                        ),
                       ),
                       icon: const Icon(
                         Icons.arrow_drop_down,
                         color: Colors.white,
                       ),
-                      dropdownColor: const Color.fromARGB(255, 58, 60, 65),
+                      style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                      dropdownColor: Colors.grey[800],
                       items: productProvider.units.map((unit) {
                         return DropdownMenuItem<String>(
                           value: unit,
@@ -329,6 +498,10 @@ class _ProductFormViewState extends State<_ProductFormView> {
                               BorderSide(color: Colors.white, width: 2.0),
                         ),
                       ),
+                         icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                      ),
                       style: GoogleFonts.plusJakartaSans(color: Colors.white),
                       dropdownColor: Colors.grey[800],
                       items: categoriesProvider.categorias.map((category) {
@@ -352,7 +525,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     );
                   },
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 100),
                 Container(
                   alignment: Alignment.center,
                   child: CustomOutlineButtom(

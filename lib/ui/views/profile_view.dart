@@ -180,7 +180,22 @@ class _LogoProfile extends StatelessWidget {
                                   ),
                                 )
                               ],
-                            )),
+                            )
+                            ),
+                            const SizedBox(width: 30),
+                            Column(
+                              children: [
+                        const SizedBox(height: 120),
+                               Text('Recommended Image Size:',
+                                   style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white)),
+                               Text(
+                                 '450x450 Pixels',
+                                 style: GoogleFonts.plusJakartaSans(
+                                     fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                               ),
+                               const SizedBox(height: 20),
+                                                 ],
+                            )
                       ],
                     ),
                     const SizedBox(height: 10),
