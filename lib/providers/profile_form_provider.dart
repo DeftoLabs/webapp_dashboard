@@ -21,6 +21,11 @@ class ProfileFormProvider extends ChangeNotifier {
     String? direccion,
     String? telefono,
     String? web,
+    String? email1,
+    String? email2,
+    String? email3,
+    String? email4,
+    String? email5,
     List<Correo>? correos,
     String? img,
   }) {
@@ -34,9 +39,15 @@ class ProfileFormProvider extends ChangeNotifier {
       direccion: direccion ?? profile!.direccion,
       telefono: telefono ?? profile!.telefono,
       web: web ?? profile!.web,
+      email1: email1 ?? profile!.email1,
+      email2: email2 ?? profile!.email2,
+      email3: email3 ?? profile!.email3,
+      email4: email4 ?? profile!.email4,
+      email5: email5 ?? profile!.email5,
       correos: correos ?? profile!.correos,
       img: img ?? profile!.img,
     );
+    notifyListeners();
   }
 
   bool validForm() {
@@ -53,7 +64,12 @@ class ProfileFormProvider extends ChangeNotifier {
       'direccion': profile!.direccion,
       'telefono': profile!.telefono,
       'web': profile!.web,
-      'correo': profile!.correos,
+      'email1': profile!.email1,
+      'email2': profile!.email2,
+      'email3': profile!.email3,
+      'email4': profile!.email4,
+      'email5': profile!.email5,
+      'correos': profile!.correos.map((c) => c.toMap()).toList(),
     };
 
     try {
@@ -78,11 +94,17 @@ class ProfileFormProvider extends ChangeNotifier {
     }
   }
 
-    void updateCorreo(int index, String email, String departamento) {
-    if (profile != null && profile!.correos != null) {
-      profile!.correos[index] = Correo(email: email, departamento: departamento, id: '');
-      notifyListeners();
-    }
-  }
+void updateEmail(int index, {String? departamento, String? email}) {
+  final correos = List<Correo>.from(profile!.correos);
+  final updatedCorreo = correos[index].copyWith(
+    departamento: departamento ?? correos[index].departamento,
+    email: email ?? correos[index].email,
+  );
+  correos[index] = updatedCorreo;
+  copyProfileWith(correos: correos);
+  updateProfile();
+}
+
+
   
   }

@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -204,62 +205,182 @@ class _RigthContainer extends StatelessWidget {
         width: double.infinity,
         child: Column(
           children: [
-            SizedBox(
-              height: 410,
-              child: ListView.builder(
-                itemCount: profile.correos.length,
-                itemBuilder: (context, index) {
-                  final correo = profile.correos[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: TextFormField(
-                            initialValue: correo.departamento,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: const InputDecoration(
-                              labelText: 'Department',
-                              labelStyle: TextStyle(color: Colors.black),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green),
-                              ),
-                            ),
-                            onChanged: (value) {
-                              // profileFormProvider.updateCorreo(index, correo.email, value);
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          flex: 3,
-                          child: TextFormField(
-                            initialValue: correo.email,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                              labelStyle: TextStyle(color: Colors.black),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green),
-                              ),
-                            ),
-                            onChanged: (value) {},
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 10),
+               TextFormField(
+                  initialValue: profile.email1,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Email Account # 01',
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 16),
+                    labelText: 'Email Account # 01',
+                    labelStyle: TextStyle(color: Colors.black, fontSize: 14),
+                    prefixIcon:
+                        Icon(Icons.email_outlined, color: Colors.black, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.black,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final lowercaseValue = value.toLowerCase();
+                    profileFormProvider.copyProfileWith(
+                        email1: lowercaseValue);
+                  },
+      validator: ( value ) {
+                    if ( !EmailValidator.validate( value ?? '')) return 'Requiered valid Email';
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+              const SizedBox(height: 15),
+                  TextFormField(
+                  initialValue: profile.email2,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Email Account # 02',
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 16),
+                    labelText: 'Email Account # 02',
+                    labelStyle: TextStyle(color: Colors.black, fontSize: 14),
+                    prefixIcon:
+                        Icon(Icons.email_outlined, color: Colors.black, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.black,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final lowercaseValue = value.toLowerCase();
+                    profileFormProvider.copyProfileWith(
+                        email2: lowercaseValue);
+                  },
+      validator: ( value ) {
+                    if ( !EmailValidator.validate( value ?? '')) return 'Requiered valid Email';
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                   const SizedBox(height: 15),
+                  TextFormField(
+                  initialValue: profile.email3,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Email Account # 03',
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 16),
+                    labelText: 'Email Account # 03',
+                    labelStyle: TextStyle(color: Colors.black, fontSize: 14),
+                    prefixIcon:
+                        Icon(Icons.email_outlined, color: Colors.black, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.black,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final lowercaseValue = value.toLowerCase();
+                    profileFormProvider.copyProfileWith(
+                        email3: lowercaseValue);
+                  },
+      validator: ( value ) {
+                    if ( !EmailValidator.validate( value ?? '')) return 'Requiered valid Email';
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                  const SizedBox(height: 15),
+                  TextFormField(
+                  initialValue: profile.email4,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Email Account # 04',
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 16),
+                    labelText: 'Email Account # 04',
+                    labelStyle: TextStyle(color: Colors.black, fontSize: 14),
+                    prefixIcon:
+                        Icon(Icons.email_outlined, color: Colors.black, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.black,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final lowercaseValue = value.toLowerCase();
+                    profileFormProvider.copyProfileWith(
+                        email4: lowercaseValue);
+                  },
+      validator: ( value ) {
+                    if ( !EmailValidator.validate( value ?? '')) return 'Requiered valid Email';
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                const SizedBox(height: 15),
+                  TextFormField(
+                   initialValue: profile.email5,
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
+                  decoration: const InputDecoration(
+                    hintText: 'Email Account # 05',
+                    hintStyle: TextStyle(color: Colors.black, fontSize: 16),
+                    labelText: 'Email Account # 05',
+                    labelStyle: TextStyle(color: Colors.black, fontSize: 14),
+                    prefixIcon:
+                        Icon(Icons.email_outlined, color: Colors.black, size: 20),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.black,
+                    )),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color.fromARGB(255, 58, 60, 65),
+                    )),
+                  ),
+                  onChanged: (value) {
+                    final lowercaseValue = value.toLowerCase();
+                    profileFormProvider.copyProfileWith(
+                        email5: lowercaseValue);
+                  },
+      validator: ( value ) {
+                    if ( !EmailValidator.validate( value ?? '')) return 'Requiered valid Email';
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+           
+            const SizedBox(height: 110),
             Container(
               height: 50,
               width: 150,
@@ -273,7 +394,21 @@ class _RigthContainer extends StatelessWidget {
                   'Save Emails',
                   style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                    final saved = await profileFormProvider.updateProfile();
+                      if (saved) {
+                        NotificationService.showSnackBa('Email Update');
+                        if (context.mounted) {
+                          Provider.of<ProfileProvider>(context, listen: false)
+                              .getProfile();
+                          NavigationService.replaceTo(
+                              'dashboard/settings/profile');
+                        }
+                      } else {
+                        NotificationService.showSnackBarError(
+                            'The Email not be Updated');
+                      }
+                },
               ),
             ),
             const SizedBox(height: 40),
@@ -297,7 +432,7 @@ class _CentralContainer extends StatelessWidget {
             key: profileFormProvider.formKey,
             child: Column(
               children: [
-                const SizedBox(height: 28),
+                const SizedBox(height: 20),
                 TextFormField(
                   initialValue: profile.idfiscal,
                   style: const TextStyle(color: Colors.white, fontSize: 16),

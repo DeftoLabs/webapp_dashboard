@@ -111,28 +111,23 @@ class ProfilesView extends StatelessWidget {
                                 const SizedBox(height: 10),
                                 Text('Email Account', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
                                 const SizedBox(height: 10),
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemCount: profile.correos.length,
-                                    itemBuilder: (contex, index) {
-                                      final correo = profile.correos[index];
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: 
-                                              Text(correo.email, style: GoogleFonts.plusJakartaSans(fontSize: 16)),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Expanded(
-                                                child:
-                                                Text(correo.departamento, style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)))
-                                          ],
-                                        ),);
-                                    }))
-                              ],
+                                  Column(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                     const SizedBox(height: 10),
+                                     Text(profile.email1, style: GoogleFonts.plusJakartaSans( fontSize: 16),),
+                                     const SizedBox(height: 10),
+                                     Text(profile.email2, style: GoogleFonts.plusJakartaSans( fontSize: 16),),
+                                     const SizedBox(height: 10),
+                                     Text(profile.email3, style: GoogleFonts.plusJakartaSans( fontSize: 16)),
+                                     const SizedBox(height: 10),
+                                     Text(profile.email4, style: GoogleFonts.plusJakartaSans( fontSize: 16)),
+                                     const SizedBox(height: 10),
+                                     Text(profile.email5, style: GoogleFonts.plusJakartaSans( fontSize: 16)),
+                                     const SizedBox(height: 10),
+                                  
+                                   ],),
+                                   ],
                             ),
                           ),
                         ),

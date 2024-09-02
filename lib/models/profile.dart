@@ -10,6 +10,11 @@ class Profile {
   String direccion;
   String telefono;
   String web;
+  String email1;
+  String email2;
+  String email3;
+  String email4;
+  String email5;
   List<Correo> correos;
   String? img;
 
@@ -23,6 +28,11 @@ class Profile {
     required this.direccion,
     required this.telefono,
     required this.web,
+    required this.email1,
+    required this.email2,
+    required this.email3,
+    required this.email4,
+    required this.email5,
     required this.correos,
     this.img,
   });
@@ -41,6 +51,11 @@ class Profile {
     direccion: json["direccion"] ?? '',
     telefono: json["telefono"] ?? '',
     web: json["web"] ?? '',
+    email1: json["email1"] ?? '',
+    email2: json["email2"] ?? '',
+    email3: json["email3"] ?? '',
+    email4: json["email4"] ?? '',
+    email5: json["email5"] ?? '',
     correos: json["correos"] != null
         ? List<Correo>.from(json["correos"].map((x) => Correo.fromMap(x)))
         : [],
@@ -57,6 +72,11 @@ class Profile {
     "direccion": direccion,
     "telefono": telefono,
     "web": web,
+    "email1": email1,
+    "email2": email2,
+    "email3": email3,
+    "email4": email4,
+    "email5": email5,
     "correos": List<dynamic>.from(correos.map((x) => x.toJson())),
     "img": img,
   };
@@ -71,6 +91,11 @@ class Profile {
     String? direccion,
     String? telefono,
     String? web,
+    String? email1,
+    String? email2,
+    String? email3,
+    String? email4,
+    String? email5,
     List<Correo>? correos,
     String? img,
   }) {
@@ -84,6 +109,11 @@ class Profile {
       direccion: direccion ?? this.direccion,
       telefono: telefono ?? this.telefono,
       web: web ?? this.web,
+      email1: email1 ?? this.email1,
+      email2: email2 ?? this.email2,
+      email3: email3 ?? this.email3,
+      email4: email4 ?? this.email4,
+      email5: email5 ?? this.email5,
       correos: correos ?? this.correos,
       img: img ?? this.img,
     );
