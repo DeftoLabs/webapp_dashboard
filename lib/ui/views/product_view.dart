@@ -29,22 +29,23 @@ class _ProductViewState extends State<ProductView> {
   @override
   void initState() {
     super.initState();
-    final productsProvider = Provider.of<ProductsProvider>(context, listen: false);
-    final productFormProvider = Provider.of<ProductFormProvider>(context, listen: false);
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    final productFormProvider =
+        Provider.of<ProductFormProvider>(context, listen: false);
 
     productsProvider.getProductById(widget.id).then((productDB) {
-    productFormProvider.producto = productDB;
+      productFormProvider.producto = productDB;
 
-      if( productDB !=null ) {
+      if (productDB != null) {
         productFormProvider.formKey = GlobalKey<FormState>();
         setState(() {
-        producto = productDB;
-        _isLoading = false;
-      });
-      }else {
+          producto = productDB;
+          _isLoading = false;
+        });
+      } else {
         NavigationService.navigateTo('/dashboard/products');
       }
-
     });
   }
 
@@ -53,15 +54,12 @@ class _ProductViewState extends State<ProductView> {
     if (_isLoading) {
       return const Center(
         child: CircularProgressIndicator(
-        color: Color.fromRGBO(255, 0, 200, 0.612),
-        strokeWidth: 4.0),
-        );
+            color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 4.0),
+      );
     }
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: ListView(
-          physics: const ClampingScrollPhysics(), 
-          children: [
+        child: ListView(physics: const ClampingScrollPhysics(), children: [
           Row(
             children: [
               IconButton(
@@ -78,8 +76,7 @@ class _ProductViewState extends State<ProductView> {
           ),
           const SizedBox(height: 10),
           _ProductViewBody()
-        ]
-        ));
+        ]));
   }
 }
 
@@ -109,11 +106,12 @@ class _PriceProductView extends StatelessWidget {
       title: 'Prices',
       child: SizedBox(
           height: 550,
-          child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const SizedBox(height: 20),
-            Text('Price Level 1', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+            Text('Price Level 1',
+                style: GoogleFonts.plusJakartaSans(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
                 initialValue: producto.precio.toString(),
@@ -150,13 +148,14 @@ class _PriceProductView extends StatelessWidget {
                 },
                 onChanged: (value) {
                   producto.precio = double.tryParse(value) ?? 0.0;
-                }
-                ),
-                            const SizedBox(height: 20),
-                             Text('Price Level 2', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+                }),
+            const SizedBox(height: 20),
+            Text('Price Level 2',
+                style: GoogleFonts.plusJakartaSans(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
-                initialValue: producto.precio.toString(),
+                initialValue: producto.precio2.toString(),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
@@ -189,14 +188,15 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                  producto.precio = double.tryParse(value) ?? 0.0;
-                }
-                ),
-                            const SizedBox(height: 20),
-                             Text('Price Level 3', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+                producto.precio2 = double.tryParse(value) ?? 0.0;
+                }),
+            const SizedBox(height: 20),
+            Text('Price Level 3',
+                style: GoogleFonts.plusJakartaSans(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
-                initialValue: producto.precio.toString(),
+               initialValue: producto.precio3.toString(),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
@@ -229,14 +229,15 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                  producto.precio = double.tryParse(value) ?? 0.0;
-                }
-                ),
-                            const SizedBox(height: 20),
-                             Text('Price Level 4', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+                producto.precio3 = double.tryParse(value) ?? 0.0;
+                }),
+            const SizedBox(height: 20),
+            Text('Price Level 4',
+                style: GoogleFonts.plusJakartaSans(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
-                initialValue: producto.precio.toString(),
+                initialValue: producto.precio4.toString(),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
@@ -269,14 +270,15 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                  producto.precio = double.tryParse(value) ?? 0.0;
-                }
-                ),
-                            const SizedBox(height: 20),
-                             Text('Price Level 5', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontWeight: FontWeight.bold)),
+                 producto.precio4 = double.tryParse(value) ?? 0.0;
+                }),
+            const SizedBox(height: 20),
+            Text('Price Level 5',
+                style: GoogleFonts.plusJakartaSans(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
-                initialValue: producto.precio.toString(),
+              initialValue: producto.precio5.toString(),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
@@ -309,9 +311,8 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                  producto.precio = double.tryParse(value) ?? 0.0;
-                }
-                ),
+                producto.precio5 = double.tryParse(value) ?? 0.0;
+                }),
           ])),
     );
   }
@@ -367,7 +368,9 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     hintText: 'Description',
                     labelText: 'Description',
                     labelStyle: GoogleFonts.plusJakartaSans(
-                        color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                     hintStyle: GoogleFonts.plusJakartaSans(
                         color: Colors.white.withOpacity(0.7)),
                     focusedBorder: const OutlineInputBorder(
@@ -399,7 +402,9 @@ class _ProductFormViewState extends State<_ProductFormView> {
                           color: Colors.white.withOpacity(0.7)),
                       labelText: 'Stock - (Accept 2 Digits )e.g. 10.20',
                       labelStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromRGBO(177, 255, 46, 100),
@@ -434,7 +439,9 @@ class _ProductFormViewState extends State<_ProductFormView> {
                         hintText: 'Unit',
                         labelText: 'Unit',
                         labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white.withOpacity(0.7)),
                         focusedBorder: const OutlineInputBorder(
@@ -447,7 +454,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                               BorderSide(color: Colors.white, width: 2.0),
                         ),
                         border: const OutlineInputBorder(
-                           borderSide:
+                          borderSide:
                               BorderSide(color: Colors.white, width: 2.0),
                         ),
                       ),
@@ -485,7 +492,9 @@ class _ProductFormViewState extends State<_ProductFormView> {
                         hintText: 'Category',
                         labelText: 'Category',
                         labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white.withOpacity(0.7)),
                         focusedBorder: const OutlineInputBorder(
@@ -498,7 +507,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                               BorderSide(color: Colors.white, width: 2.0),
                         ),
                       ),
-                         icon: const Icon(
+                      icon: const Icon(
                         Icons.arrow_drop_down,
                         color: Colors.white,
                       ),
@@ -535,7 +544,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                       if (saved) {
                         NotificationService.showSnackBa(
                             '${producto.descripcion} Updated');
-                            NavigationService.replaceTo('/dashboard/products');
+                        NavigationService.replaceTo('/dashboard/products');
                       } else {
                         NotificationService.showSnackBarError(
                             'Could not save the Product');
@@ -560,16 +569,13 @@ class _Avatar extends StatefulWidget {
 class _AvatarState extends State<_Avatar> {
   @override
   Widget build(BuildContext context) {
-
     final productFormProvider = Provider.of<ProductFormProvider>(context);
     final producto = productFormProvider.producto!;
 
-      final image = (producto.img == null) 
-    ? const Image(image: AssetImage('noimage.jpeg')) 
-    : FadeInImage.assetNetwork(
-      placeholder: 'load.gif', 
-      image: producto.img!);
-
+    final image = (producto.img == null)
+        ? const Image(image: AssetImage('noimage.jpeg'))
+        : FadeInImage.assetNetwork(
+            placeholder: 'load.gif', image: producto.img!);
 
     return WhiteCard(
         width: 250,
@@ -583,8 +589,7 @@ class _AvatarState extends State<_Avatar> {
               height: 160,
               child: Stack(
                 children: [
-                  ClipOval(
-                      child: image),
+                  ClipOval(child: image),
                   Positioned(
                     bottom: 5,
                     right: 5,
@@ -600,25 +605,26 @@ class _AvatarState extends State<_Avatar> {
                             elevation: 0,
                             child: const Icon(Icons.camera_alt_outlined),
                             onPressed: () async {
-                                   FilePickerResult? result = await FilePicker.platform.pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: ['jpg', 'jpeg', 'png'],
-                            allowMultiple: false,
-                          );
-                          if (result != null) {
-                              if(!context.mounted) return;
-                              NotificationService.showBusyIndicator(context);
-                              await productFormProvider.uploadImage(
-                                '/uploads/productos/${producto.id}',
-                                result.files.first.bytes!,
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: ['jpg', 'jpeg', 'png'],
+                                allowMultiple: false,
                               );
-                                if(!context.mounted) return;
-                              Navigator.of(context).pop();
-                            } else {
-                              NotificationService.showSnackBarError('Failed to Upload Image');
-                            }
-                            }
-                            )),
+                              if (result != null) {
+                                if (!context.mounted) return;
+                                NotificationService.showBusyIndicator(context);
+                                await productFormProvider.uploadImage(
+                                  '/uploads/productos/${producto.id}',
+                                  result.files.first.bytes!,
+                                );
+                                if (!context.mounted) return;
+                                Navigator.of(context).pop();
+                              } else {
+                                NotificationService.showSnackBarError(
+                                    'Failed to Upload Image');
+                              }
+                            })),
                   )
                 ],
               ),

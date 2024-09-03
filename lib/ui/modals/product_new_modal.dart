@@ -24,6 +24,10 @@ class ProductNewModal extends StatefulWidget {
 class _ProductNewModalState extends State<ProductNewModal> {
   String nombre = '';
   double precio = 0.0;
+  double precio2 = 0.0;
+  double precio3 = 0.0;
+  double precio4 = 0.0;
+  double precio5 = 0.0;
   String? descripcion;
   String? id;
   double stock = 0.0;
@@ -32,6 +36,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
   Uint8List? fileImage;
 
   final _precioController = TextEditingController();
+  final _precioController2 = TextEditingController();
+  final _precioController3 = TextEditingController();
+  final _precioController4 = TextEditingController();
+  final _precioController5 = TextEditingController();
   final _stockController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -45,6 +53,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
     final producto = widget.producto;
     nombre = producto?.nombre ?? '';
     precio = producto?.precio ?? 0.0;
+    precio2 = producto?.precio2 ?? 0.0;
+    precio3 = producto?.precio3 ?? 0.0;
+    precio4 = producto?.precio4 ?? 0.0;
+    precio5 = producto?.precio5 ?? 0.0;
     descripcion = producto?.descripcion;
     id = producto?.id;
     stock = producto?.stock ?? 0.0;
@@ -435,7 +447,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                         ChangeNotifierProvider.value(
                           value: productProvider,
                           child: WhiteCardNoMargin(
-                            title: 'Price',
+                            title: 'Levels Price',
                             width: 250,
                             child: SizedBox(
                               width: double.infinity,
@@ -525,7 +537,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               fontWeight: FontWeight.bold)),
                                       Expanded(
                                         child: TextFormField(
-                                          controller: _precioController,
+                                          controller: _precioController2,
                                           keyboardType: const TextInputType
                                               .numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
@@ -577,7 +589,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           onChanged: (value) {
                                             if (double.tryParse(value) !=
                                                 null) {
-                                              precio =
+                                              precio2 =
                                                   double.tryParse(value) ?? 0.0;
                                             }
                                           },
@@ -596,7 +608,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               fontWeight: FontWeight.bold)),
                                       Expanded(
                                         child: TextFormField(
-                                          controller: _precioController,
+                                          controller: _precioController3,
                                           keyboardType: const TextInputType
                                               .numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
@@ -648,7 +660,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           onChanged: (value) {
                                             if (double.tryParse(value) !=
                                                 null) {
-                                              precio =
+                                              precio3 =
                                                   double.tryParse(value) ?? 0.0;
                                             }
                                           },
@@ -667,7 +679,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               fontWeight: FontWeight.bold)),
                                       Expanded(
                                         child: TextFormField(
-                                          controller: _precioController,
+                                          controller: _precioController4,
                                           keyboardType: const TextInputType
                                               .numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
@@ -719,7 +731,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           onChanged: (value) {
                                             if (double.tryParse(value) !=
                                                 null) {
-                                              precio =
+                                              precio4 =
                                                   double.tryParse(value) ?? 0.0;
                                             }
                                           },
@@ -738,7 +750,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               fontWeight: FontWeight.bold)),
                                       Expanded(
                                         child: TextFormField(
-                                          controller: _precioController,
+                                          controller: _precioController5,
                                           keyboardType: const TextInputType
                                               .numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
@@ -790,7 +802,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           onChanged: (value) {
                                             if (double.tryParse(value) !=
                                                 null) {
-                                              precio =
+                                              precio5 =
                                                   double.tryParse(value) ?? 0.0;
                                             }
                                           },
@@ -818,6 +830,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
                               await productProvider.newCreateProduct(
                                 nombre: nombre,
                                 precio: precio,
+                                precio2: precio2,
+                                precio3: precio3,
+                                precio4: precio4,
+                                precio5: precio5,
                                 descripcion: descripcion,
                                 stock: stock,
                                 unid: unid!,

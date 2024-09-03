@@ -113,6 +113,10 @@ class ProductsProvider extends ChangeNotifier {
     Future<String?> newCreateProduct({
     required String nombre,
     required double precio,
+    required double precio2,
+    required double precio3,
+    required double precio4,
+    required double precio5,
     String? descripcion,
     required double stock,
     required String unid,
@@ -122,6 +126,10 @@ class ProductsProvider extends ChangeNotifier {
     final data = {
       'nombre': nombre,
       'precio': precio,
+      'precio2': precio2,
+      'precio3': precio3,
+      'precio4': precio4,
+      'precio5': precio5,
       'descripcion': descripcion,
       'stock': stock,
       'unid': unid,
