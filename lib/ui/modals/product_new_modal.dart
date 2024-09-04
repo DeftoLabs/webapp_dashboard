@@ -23,7 +23,7 @@ class ProductNewModal extends StatefulWidget {
 
 class _ProductNewModalState extends State<ProductNewModal> {
   String nombre = '';
-  double precio = 0.0;
+  double precio1 = 0.0;
   double precio2 = 0.0;
   double precio3 = 0.0;
   double precio4 = 0.0;
@@ -35,7 +35,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
   String? categoria;
   Uint8List? fileImage;
 
-  final _precioController = TextEditingController();
+  final _precioController1  = TextEditingController();
   final _precioController2 = TextEditingController();
   final _precioController3 = TextEditingController();
   final _precioController4 = TextEditingController();
@@ -52,7 +52,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
   void _initializeProduct() {
     final producto = widget.producto;
     nombre = producto?.nombre ?? '';
-    precio = producto?.precio ?? 0.0;
+    precio1 = producto?.precio1 ?? 0.0;
     precio2 = producto?.precio2 ?? 0.0;
     precio3 = producto?.precio3 ?? 0.0;
     precio4 = producto?.precio4 ?? 0.0;
@@ -63,7 +63,12 @@ class _ProductNewModalState extends State<ProductNewModal> {
     unid = producto?.unid;
     categoria = producto?.categoria.id;
 
-    _precioController.text = precio.toString();
+    _precioController1.text = precio1.toString();  
+    _precioController2.text = precio2.toString();
+    _precioController3.text = precio3.toString();
+    _precioController4.text = precio4.toString();
+    _precioController5.text = precio5.toString();
+
     _stockController.text = stock.toString();
 
     final categoriesProvider =
@@ -218,7 +223,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   const SizedBox(height: 10),
                                     TextFormField(
                                       initialValue: nombre,
-                                      onChanged: (value) => nombre = value,
+                                      onChanged: (value) {
+                                        final uppercaseValue = value.toUpperCase();
+                                        nombre = uppercaseValue;          
+                                      },
                                       decoration: InputDecoration(
                                         hintText: 'BarCode & Internal Code',
                                         labelText: 'BarCode & Internal Code',
@@ -358,7 +366,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   const SizedBox(height: 20),
                                   TextFormField(
                                     initialValue: descripcion,
-                                    onChanged: (value) => descripcion = value,
+                                      onChanged: (value) {
+                                        final uppercaseValue = value.toUpperCase();
+                                        descripcion = uppercaseValue;          
+                                      },
                                     decoration: InputDecoration(
                                       hintText: 'Description',
                                       labelText: 'Description',
@@ -458,7 +469,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   const SizedBox(height: 10),
 
                                   // Primero
-                                  Row(
+                             Row(
                                     children: [
                                       const Text('1. ',
                                           style: TextStyle(
@@ -466,9 +477,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               fontWeight: FontWeight.bold)),
                                       Expanded(
                                         child: TextFormField(
-                                          controller: _precioController,
-                                          keyboardType: const TextInputType
-                                              .numberWithOptions(decimal: true),
+                                          controller: _precioController1,
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
                                             hintText: 'Price',
                                             labelText: 'Price - e.g. 10.20',
@@ -518,7 +528,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           onChanged: (value) {
                                             if (double.tryParse(value) !=
                                                 null) {
-                                              precio =
+                                              precio1 =
                                                   double.tryParse(value) ?? 0.0;
                                             }
                                           },
@@ -829,7 +839,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                             if (id == null) {
                               await productProvider.newCreateProduct(
                                 nombre: nombre,
-                                precio: precio,
+                                precio1: precio1,
                                 precio2: precio2,
                                 precio3: precio3,
                                 precio4: precio4,

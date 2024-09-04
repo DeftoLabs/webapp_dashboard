@@ -5,7 +5,7 @@ class Producto {
   String nombre;
   bool estado;
   User usuario;
-  double precio;
+  double precio1;
   double precio2;
   double precio3;
   double precio4;
@@ -22,7 +22,7 @@ class Producto {
     required this.nombre,
     required this.estado,
     required this.usuario,
-    required this.precio,
+    required this.precio1,
     required this.precio2,
     required this.precio3,
     required this.precio4,
@@ -43,7 +43,7 @@ class Producto {
     nombre: json["nombre"],
     estado: json["estado"] ?? false,
     usuario: User.fromMap(json["usuario"]),
-    precio: json["precio"]?.toDouble() ?? 0.0,
+    precio1: json["precio1"]?.toDouble() ?? 0.0,
     precio2: json["precio2"]?.toDouble() ?? 0.0,
     precio3: json["precio3"]?.toDouble() ?? 0.0,
     precio4: json["precio4"]?.toDouble() ?? 0.0,
@@ -61,7 +61,7 @@ class Producto {
     "nombre": nombre,
     "estado": estado,
     "usuario": usuario.toMap(),
-    "precio": precio,
+    "precio1": precio1,
     "precio2": precio2,
     "precio3": precio3,
     "precio4": precio4,
@@ -79,7 +79,7 @@ class Producto {
     String? nombre,
     bool? estado,
     User? usuario,
-    double? precio,
+    double? precio1,
     double? precio2,
     double? precio3,
     double? precio4,
@@ -95,11 +95,11 @@ class Producto {
       nombre: nombre ?? this.nombre,
       estado: estado ?? this.estado,
       usuario: usuario ?? this.usuario,
-      precio: precio ?? this.precio,
-      precio2: precio ?? this.precio2,
-      precio3: precio ?? this.precio3,
-      precio4: precio ?? this.precio4,
-      precio5: precio ?? this.precio5,
+      precio1: precio1 ?? this.precio1,
+      precio2: precio2 ?? this.precio2,
+      precio3: precio3 ?? this.precio3,
+      precio4: precio4 ?? this.precio4,
+      precio5: precio5 ?? this.precio5,
       categoria: categoria ?? this.categoria,
       descripcion: descripcion ?? this.descripcion,
       disponible: disponible ?? this.disponible,

@@ -43,7 +43,7 @@ class ProductsDTS extends DataTableSource {
         DataCell (Text(product.descripcion ?? '')),
         DataCell (Text(product.stock.toString())),
         DataCell (Text(product.unid)),
-        DataCell (Text(product.precio.toString())),
+        DataCell (Text(product.precio1.toString())),
         DataCell (Text(product.categoria.nombre)),                
         DataCell (
           Row(

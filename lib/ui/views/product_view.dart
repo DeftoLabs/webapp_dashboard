@@ -114,7 +114,7 @@ class _PriceProductView extends StatelessWidget {
                     color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
-                initialValue: producto.precio.toString(),
+                initialValue: producto.precio1.toString(),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
@@ -147,7 +147,7 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                  producto.precio = double.tryParse(value) ?? 0.0;
+                  producto.precio1 = double.tryParse(value) ?? 0.0;
                 }),
             const SizedBox(height: 20),
             Text('Price Level 2',
@@ -188,7 +188,7 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                producto.precio2 = double.tryParse(value) ?? 0.0;
+                  producto.precio2 = double.tryParse(value) ?? 0.0;
                 }),
             const SizedBox(height: 20),
             Text('Price Level 3',
@@ -196,7 +196,7 @@ class _PriceProductView extends StatelessWidget {
                     color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
-               initialValue: producto.precio3.toString(),
+                initialValue: producto.precio3.toString(),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
@@ -229,7 +229,7 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                producto.precio3 = double.tryParse(value) ?? 0.0;
+                  producto.precio3 = double.tryParse(value) ?? 0.0;
                 }),
             const SizedBox(height: 20),
             Text('Price Level 4',
@@ -270,7 +270,7 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                 producto.precio4 = double.tryParse(value) ?? 0.0;
+                  producto.precio4 = double.tryParse(value) ?? 0.0;
                 }),
             const SizedBox(height: 20),
             Text('Price Level 5',
@@ -278,7 +278,7 @@ class _PriceProductView extends StatelessWidget {
                     color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextFormField(
-              initialValue: producto.precio5.toString(),
+                initialValue: producto.precio5.toString(),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
@@ -311,7 +311,7 @@ class _PriceProductView extends StatelessWidget {
                   return null;
                 },
                 onChanged: (value) {
-                producto.precio5 = double.tryParse(value) ?? 0.0;
+                  producto.precio5 = double.tryParse(value) ?? 0.0;
                 }),
           ])),
     );
@@ -325,86 +325,150 @@ class _ProductFormView extends StatefulWidget {
 
 class _ProductFormViewState extends State<_ProductFormView> {
   @override
-  Widget build(BuildContext context) {
-    final productFormProvider = Provider.of<ProductFormProvider>(context);
-    final producto = productFormProvider.producto!;
+  void initState() {
+    super.initState();
 
     final categoriesProvider =
         Provider.of<CategoriesProvider>(context, listen: false);
     categoriesProvider.getCategories();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final productFormProvider = Provider.of<ProductFormProvider>(context);
+    final producto = productFormProvider.producto!;
 
     return WhiteCardColor(
         title: 'General Information',
         child: Form(
           key: productFormProvider.formKey,
           child: Container(
-            height: 550,
+            height: 600,
             padding: const EdgeInsets.all(20),
-            child: Form(
-              child: Column(children: [
-                Container(
-                  width: 440,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromRGBO(177, 255, 46, 100),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(4),
+            child: Column(children: [
+              Container(
+                width: 460,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color.fromRGBO(177, 255, 46, 100),
+                    width: 2.0,
                   ),
-                  child: Text(
-                    producto.nombre,
-                    style: const TextStyle(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  producto.nombre,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                initialValue: producto.descripcion,
+                onChanged: (value) {
+                  final uppercaseValue = value.toUpperCase();
+                  producto.descripcion = uppercaseValue;
+                },
+                decoration: InputDecoration(
+                  hintText: 'Description',
+                  labelText: 'Description',
+                  labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white,
-                    ),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white.withOpacity(0.7)),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                   ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  initialValue: producto.descripcion,
-                  onChanged: (value) => producto.descripcion = value,
-                  decoration: InputDecoration(
-                    hintText: 'Description',
-                    labelText: 'Description',
-                    labelStyle: GoogleFonts.plusJakartaSans(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                    hintStyle: GoogleFonts.plusJakartaSans(
-                        color: Colors.white.withOpacity(0.7)),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
-                    ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2.0),
                   ),
-                  style: GoogleFonts.plusJakartaSans(color: Colors.white),
-                  validator: (value) {
-                    if (value != null &&
-                        value.trim().isNotEmpty &&
-                        value.length > 20) {
-                      return 'Description cannot be more than 20 characters';
-                    }
-                    return null;
-                  },
+                  errorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                  focusedErrorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                  errorStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.red, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 20),
-                TextFormField(
-                    initialValue: producto.stock.toString(),
-                    style: const TextStyle(
-                        color: Colors.white), // Añade esta línea
+                style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Description is Required';
+                  }
+                  if (value.length >= 26) {
+                    return 'Description cannot be more than 25 characters';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                initialValue: producto.stock.toString(),
+                onChanged: (value) {
+                  producto.stock = double.tryParse(value) ?? 0.0;
+                },
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Stock',
+                  hintStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white.withOpacity(0.7)),
+                  labelText: 'Stock - (Accept up to 4 decimals) e.g. 10.1234',
+                  labelStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                  ),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2.0),
+                  ),
+                  errorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                  focusedErrorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                  errorStyle: GoogleFonts.plusJakartaSans(
+                      color: Colors.red, fontWeight: FontWeight.bold),
+                  border: const OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Stock is required';
+                  }
+                  // Validar que sea un número con hasta 4 decimales
+                  if (!RegExp(r'^\d+(\.\d{0,4})?$').hasMatch(value)) {
+                    return 'Invalid Stock Format (Only Numbers) Use "." / Max 4 Decimals';
+                  }
+                  // Verificar si el valor puede ser convertido a un número
+                  if (double.tryParse(value) == null) {
+                    return 'Invalid number';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+              Consumer<ProductsProvider>(
+                builder: (context, productProvider, child) {
+                  return DropdownButtonFormField<String>(
+                    value: producto.unid,
                     decoration: InputDecoration(
-                      hintText: 'Stock',
-                      hintStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.white.withOpacity(0.7)),
-                      labelText: 'Stock - (Accept 2 Digits )e.g. 10.20',
+                      hintText: 'Unit',
+                      labelText: 'Unit',
                       labelStyle: GoogleFonts.plusJakartaSans(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
+                      hintStyle: GoogleFonts.plusJakartaSans(
+                          color: Colors.white.withOpacity(0.7)),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromRGBO(177, 255, 46, 100),
@@ -413,149 +477,106 @@ class _ProductFormViewState extends State<_ProductFormView> {
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white, width: 2.0),
                       ),
-                      border: const OutlineInputBorder(),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      ),
                     ),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
+                    ),
+                    style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                    dropdownColor: Colors.grey[800],
+                    items: productProvider.units.map((unit) {
+                      return DropdownMenuItem<String>(
+                        value: unit,
+                        child: Text(unit,
+                            style: const TextStyle(color: Colors.white)),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      producto.unid = value!;
+                    },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Stock is required';
-                      }
-                      if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
-                        return 'Invalid Stock Format. Use "." for decimals and Max 2 Decimals';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Invalid number';
+                        return 'Unit is required';
                       }
                       return null;
                     },
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              Consumer<CategoriesProvider>(
+                builder: (context, categoriesProvider, child) {
+                  return DropdownButtonFormField<String>(
+                    value: producto.categoria.id,
+                    decoration: InputDecoration(
+                      hintText: 'Category',
+                      labelText: 'Category',
+                      labelStyle: GoogleFonts.plusJakartaSans(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                      hintStyle: GoogleFonts.plusJakartaSans(
+                          color: Colors.white.withOpacity(0.7)),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromRGBO(177, 255, 46, 100),
+                            width: 2.0),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      ),
+                    ),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
+                    ),
+                    style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                    dropdownColor: Colors.grey[800],
+                    items: categoriesProvider.categorias.map((category) {
+                      return DropdownMenuItem<String>(
+                        value: category.id,
+                        child: Text(category.nombre,
+                            style: const TextStyle(color: Colors.white)),
+                      );
+                    }).toList(),
                     onChanged: (value) {
-                      producto.stock = double.tryParse(value) ?? 0.0;
-                    }),
-                const SizedBox(height: 20),
-                Consumer<ProductsProvider>(
-                  builder: (context, productProvider, child) {
-                    return DropdownButtonFormField<String>(
-                      value: producto.unid,
-                      decoration: InputDecoration(
-                        hintText: 'Unit',
-                        labelText: 'Unit',
-                        labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                        hintStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white.withOpacity(0.7)),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(177, 255, 46, 100),
-                              width: 2.0),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                        ),
-                      ),
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.white,
-                      ),
-                      style: GoogleFonts.plusJakartaSans(color: Colors.white),
-                      dropdownColor: Colors.grey[800],
-                      items: productProvider.units.map((unit) {
-                        return DropdownMenuItem<String>(
-                          value: unit,
-                          child: Text(unit,
-                              style: const TextStyle(color: Colors.white)),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        producto.unid = value!;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Unit is required';
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                Consumer<CategoriesProvider>(
-                  builder: (context, categoriesProvider, child) {
-                    return DropdownButtonFormField<String>(
-                      value: producto.categoria.id,
-                      decoration: InputDecoration(
-                        hintText: 'Category',
-                        labelText: 'Category',
-                        labelStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                        hintStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white.withOpacity(0.7)),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromRGBO(177, 255, 46, 100),
-                              width: 2.0),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                        ),
-                      ),
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.white,
-                      ),
-                      style: GoogleFonts.plusJakartaSans(color: Colors.white),
-                      dropdownColor: Colors.grey[800],
-                      items: categoriesProvider.categorias.map((category) {
-                        return DropdownMenuItem<String>(
-                          value: category.id,
-                          child: Text(category.nombre,
-                              style: const TextStyle(color: Colors.white)),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          producto.categoria.id = value!;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select a Category';
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 100),
-                Container(
-                  alignment: Alignment.center,
-                  child: CustomOutlineButtom(
-                    onPressed: () async {
-                      final saved = await productFormProvider.updateProduct();
-
-                      if (saved) {
-                        NotificationService.showSnackBa(
-                            '${producto.descripcion} Updated');
-                        NavigationService.replaceTo('/dashboard/products');
-                      } else {
-                        NotificationService.showSnackBarError(
-                            'Could not save the Product');
-                      }
+                      setState(() {
+                        producto.categoria.id = value!;
+                      });
                     },
-                    text: 'Save',
-                    color: Colors.white,
-                  ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a Category';
+                      }
+                      return null;
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 100),
+              Container(
+                alignment: Alignment.center,
+                child: CustomOutlineButtom(
+                  onPressed: () async {
+                    final saved = await productFormProvider.updateProduct();
+
+                    if (saved) {
+                      NotificationService.showSnackBa(
+                          '${producto.descripcion} Updated');
+                      NavigationService.replaceTo('/dashboard/products');
+                    } else {
+                      NotificationService.showSnackBarError(
+                          'Could not save the Product');
+                    }
+                  },
+                  text: 'Save',
+                  color: Colors.white,
                 ),
-              ]),
-            ),
+              ),
+            ]),
           ),
         ));
   }

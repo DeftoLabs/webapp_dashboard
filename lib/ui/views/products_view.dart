@@ -97,7 +97,7 @@ class _ProductsViewState extends State<ProductsView> {
                 
                 DataColumn(label: const Text('Price'), onSort: (colIndex, _) {
                   productsProvider.sortColumnIndex = colIndex;
-                  productsProvider.sort((producto) => producto.precio);
+                  productsProvider.sort((producto) => producto.precio1);
                 }),
                 const DataColumn(label: Text('Categories')),
                 const DataColumn(label: Text('Actions')),

@@ -79,7 +79,11 @@ class ProductsProvider extends ChangeNotifier {
   Future updateProduct ({
     required String id,
     required String nombre,
-    required double precio,
+    required double precio1,
+    required double precio2,
+    required double precio3,
+    required double precio4,
+    required double precio5,
     String? descripcion,
     required double stock,
     required String unid,
@@ -87,7 +91,11 @@ class ProductsProvider extends ChangeNotifier {
   })  async {
     final data = {
       'nombre': nombre,
-      'precio': precio,
+      'precio1': precio1,
+      'precio2': precio2,
+      'precio3': precio3,
+      'precio4': precio4,
+      'precio5': precio5,
       'descripcion': descripcion,
       'stock': stock,
       'unid': unid,
@@ -98,7 +106,11 @@ class ProductsProvider extends ChangeNotifier {
       productos = productos.map((product) {
           if(product.id != id) return product;
           product.nombre = nombre;
-          product.precio = precio;
+          product.precio1 = precio1;
+          product.precio2 = precio2;
+          product.precio3 = precio3;
+          product.precio4 = precio4;
+          product.precio5 = precio5;
           product.descripcion = descripcion;
           product.stock = stock;
           product.categoria.id = categoria;
@@ -112,7 +124,7 @@ class ProductsProvider extends ChangeNotifier {
 
     Future<String?> newCreateProduct({
     required String nombre,
-    required double precio,
+    required double precio1,
     required double precio2,
     required double precio3,
     required double precio4,
@@ -125,7 +137,7 @@ class ProductsProvider extends ChangeNotifier {
   }) async {
     final data = {
       'nombre': nombre,
-      'precio': precio,
+      'precio1': precio1,
       'precio2': precio2,
       'precio3': precio3,
       'precio4': precio4,
@@ -137,18 +149,9 @@ class ProductsProvider extends ChangeNotifier {
     };
     
     try {
-      String? imageUrl;
-      if (imageBytes != null) {
-        final response = await CafeApi.uploadImage('/uploads/productos/${''}', imageBytes);
-        imageUrl = response['img'];
-      }
-
-      
-      if (imageUrl != null) {
-        data['img'] = imageUrl;
-      }
       
       final json = await CafeApi.post('/productos', data);
+      print(json);
       final newProduct = Producto.fromMap(json);
       productos.add(newProduct);
       notifyListeners();

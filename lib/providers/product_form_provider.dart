@@ -18,7 +18,7 @@ class ProductFormProvider extends ChangeNotifier {
   String? nombre,
   bool? estado,
   User? usuario,
-  double? precio,
+  double? precio1,
   double? precio2,
   double? precio3,
   double? precio4,
@@ -35,7 +35,7 @@ class ProductFormProvider extends ChangeNotifier {
       nombre: nombre ?? producto!.nombre, 
       estado: estado ?? producto!.estado, 
       usuario: usuario ?? producto!.usuario, 
-      precio: precio ?? producto!.precio, 
+      precio1: precio1 ?? producto!.precio1, 
       precio2: precio2 ?? producto!.precio2, 
       precio3: precio3 ?? producto!.precio3, 
       precio4: precio4 ?? producto!.precio4, 
@@ -57,7 +57,7 @@ Future updateProduct() async {
 
   final data = {
     'nombre': producto!.nombre,
-    'precio': producto!.precio,
+    'precio1': producto!.precio1,
     'precio2': producto!.precio2,
     'precio3': producto!.precio3,
     'precio4': producto!.precio4,
