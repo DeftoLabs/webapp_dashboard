@@ -105,8 +105,8 @@ class Sidebar extends StatelessWidget {
         MenuItem(text: 'Route', icon: Icons.route_rounded,      onPressed: (){}),
 
         MenuItem(text: 'Zone', icon: Icons.landscape_outlined,      
-        onPressed: ()=> navigateTo(Flurorouter.routesRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.routesRoute,),
+        onPressed: ()=> navigateTo(Flurorouter.zoneZones),
+        isActive: sideMenuProvider.currentPage == Flurorouter.zoneZones,),
       
 
         const SizedBox(height: 10),

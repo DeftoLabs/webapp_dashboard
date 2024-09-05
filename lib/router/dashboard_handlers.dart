@@ -144,10 +144,10 @@ class DashboardHandlers {
 
 
 
-    static Handler routes = Handler (
+    static Handler zones = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
-      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routesRoute);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.zoneZones);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return const ZonesView();
       } return const LoginView();
@@ -155,10 +155,10 @@ class DashboardHandlers {
     }
   );
 
-    static Handler route = Handler (
+    static Handler zone = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
-      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoute);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.zoneZone);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         if(params['id']?.first != null) {
           return ZoneView(id: params['id']!.first);

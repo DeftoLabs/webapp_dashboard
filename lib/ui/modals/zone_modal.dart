@@ -78,7 +78,10 @@ class _ZoneModalState extends State<ZoneModal> {
           
                TextFormField(
                 initialValue: widget.zona?.codigo ?? '',
-                onChanged: (value) => codigo = value,
+                onChanged: (value) {
+                  final uppercaseValue = value.toUpperCase();
+                  codigo = uppercaseValue;
+                  },
                 decoration: InputDecoration(
                   hintText: 'Internal Zone Code',
                   labelText: 'Zone Code',
@@ -111,7 +114,10 @@ class _ZoneModalState extends State<ZoneModal> {
               const SizedBox(height: 10),
                            TextFormField(
                 initialValue: widget.zona?.nombrezona ?? '',
-                onChanged: (value) => nombrezona = value,
+                  onChanged: (value) {
+                  final uppercaseValue = value.toUpperCase();
+                  nombrezona = uppercaseValue;
+                  },
                 decoration: InputDecoration(
                   hintText: 'Zone Name',
                   labelText: 'Zone Name',
@@ -145,7 +151,10 @@ class _ZoneModalState extends State<ZoneModal> {
                 const SizedBox(height: 10),
                            TextFormField(
                 initialValue: widget.zona?.descripcion ?? '',
-                onChanged: (value) => descripcion = value,
+                onChanged: (value) {
+                  final uppercaseValue = value.toUpperCase();
+                  descripcion = uppercaseValue;
+                  },
                 decoration: InputDecoration(
                   hintText: 'Description',
                   labelText: 'Description',

@@ -23,7 +23,7 @@ class ZonesDataSource extends DataTableSource {
           IconButton(
             icon: const Icon(Icons.edit_outlined),
             onPressed: (){
-              NavigationService.replaceTo('/dashboard/routes/${zona.id}');
+              NavigationService.replaceTo('/dashboard/zones/${zona.id}');
             },
             )
         ),

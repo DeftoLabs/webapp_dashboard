@@ -28,19 +28,19 @@ class _ZoneViewState extends State<ZoneView> {
   @override
   void initState() {
     super.initState();
+    
     final routesProvider = Provider.of<ZonesProviders>(context, listen: false);
     final routeFormProvider =
         Provider.of<ZoneFormProvider>(context, listen: false);
 
     routesProvider.getZonasById(widget.id)
     .then((zonaDB) {
-
       if( zonaDB != null) {
       routeFormProvider.zona = zonaDB;
       routeFormProvider.formKey = GlobalKey<FormState>();
       setState(() { zona = zonaDB;});     
       } else {
-        NavigationService.replaceTo('/dashboard/routes');
+        NavigationService.replaceTo('/dashboard/zones');
       }
     }
     );
@@ -48,14 +48,13 @@ class _ZoneViewState extends State<ZoneView> {
 
   @override
   void dispose() {
-    zona = null;
-    Provider.of<ZoneFormProvider>(context, listen: false).zona = null;
     _mapController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    
     if (zona == null) {
       return const Center(
         child: CircularProgressIndicator(
@@ -73,7 +72,7 @@ class _ZoneViewState extends State<ZoneView> {
               IconButton(
                   color: Colors.black,
                   onPressed: () {
-                    NavigationService.replaceTo('/dashboard/routes');
+                    NavigationService.replaceTo('/dashboard/zones');
                   },
                   icon: const Icon(Icons.arrow_back_rounded)),
               Expanded(
@@ -200,7 +199,11 @@ class _RouteViewForm extends StatelessWidget {
                         }
                         return null;
                       },
-                      onChanged: (value)=> routeFormProvider.copyRouteWith (codigo: value)),
+                      onChanged: (value) {
+                      final uppercaseValue = value.toUpperCase();
+                      routeFormProvider.copyRouteWith (codigo: uppercaseValue);
+                      } 
+                      ),
                   const SizedBox(height: 10),
                   TextFormField(
                       initialValue: zona.nombrezona,
@@ -229,7 +232,11 @@ class _RouteViewForm extends StatelessWidget {
                         }
                         return null;
                       },
-                      onChanged: (value)=> routeFormProvider.copyRouteWith (nombrezona: value)),
+                      onChanged: (value) {
+                         final uppercaseValue = value.toUpperCase();
+                      routeFormProvider.copyRouteWith (nombrezona: uppercaseValue);
+                      } 
+                      ),
                   const SizedBox(height: 10),
            
                   TextFormField(
@@ -262,7 +269,12 @@ class _RouteViewForm extends StatelessWidget {
                         }
                         return null;
                       },
-                      onChanged: (value) => routeFormProvider.copyRouteWith (descripcion: value)),
+                      onChanged: (value) {
+                      final uppercaseValue = value.toUpperCase();
+                      routeFormProvider.copyRouteWith (descripcion: uppercaseValue);
+                      } 
+                      
+                      ),
                   const SizedBox(height: 30),
                   Container(
                     alignment: Alignment.center,
@@ -273,7 +285,7 @@ class _RouteViewForm extends StatelessWidget {
                           NotificationService.showSnackBa('Zone Updated');
                           if (!context.mounted) return;
                           Provider.of<ZonesProviders>(context, listen: false).refreshRoute(zona);
-                          
+                          NavigationService.replaceTo('/dashboard/zones');
                         } else {
                           NotificationService.showSnackBarError('Could not save the Route');
                         }

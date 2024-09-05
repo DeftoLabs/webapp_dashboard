@@ -105,7 +105,7 @@ class _PriceProductView extends StatelessWidget {
     return WhiteCardColor(
       title: 'Prices',
       child: SizedBox(
-          height: 550,
+          height: 600,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const SizedBox(height: 20),
