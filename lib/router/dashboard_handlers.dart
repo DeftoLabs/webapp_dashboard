@@ -22,6 +22,7 @@ import 'package:web_dashboard/ui/views/new_customer_view.dart';
 import 'package:web_dashboard/ui/views/new_user_register.dart';
 import 'package:web_dashboard/ui/views/orders_view.dart';
 import 'package:web_dashboard/ui/views/products_view.dart';
+import 'package:web_dashboard/ui/views/rutas_view.dart';
 import 'package:web_dashboard/ui/views/zone_view.dart';
 import 'package:web_dashboard/ui/views/zones_view.dart';
 import 'package:web_dashboard/ui/views/settings_view.dart';
@@ -137,6 +138,17 @@ class DashboardHandlers {
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.newCustomerRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return  NewCustomerView();
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler routes = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const RutasView();
       } return const LoginView();
 
     }

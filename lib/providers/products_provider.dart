@@ -150,8 +150,7 @@ class ProductsProvider extends ChangeNotifier {
     
     try {
       
-      final json = await CafeApi.post('/productos', data);
-      print(json);
+      final json = await CafeApi.post('/productos', data);      
       final newProduct = Producto.fromMap(json);
       productos.add(newProduct);
       notifyListeners();

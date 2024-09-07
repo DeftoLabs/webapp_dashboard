@@ -25,20 +25,22 @@ class Usuario {
         this.location
     });
 
-    factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
-        rol: json["rol"],
-        estado: json["estado"],
-        google: json["google"],
-        nombre: json["nombre"],
-        correo: json["correo"],
-        uid: json["uid"],
-        img: json["img"],
+    factory Usuario.fromMap(Map<String, dynamic> json) {
+      
+      return Usuario(
+        rol: json["rol"] ?? '',
+        estado: json["estado"] ?? false,
+        google: json["google"] ?? false,
+        nombre: json["nombre"] ?? '',
+        correo: json["correo"] ?? '',
+        uid: json["uid"] ?? '',
+        img: json["img"] ?? '',
         phone: json ["phone"] ?? '',
         zone: json ["zone"] ?? '',
         location: json ["location"] != null ? Location.fromMap(json["location"]) : null,
-
-
     );
+
+    } 
 
     Map<String, dynamic> toMap() => {
         "rol": rol,

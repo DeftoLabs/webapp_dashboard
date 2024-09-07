@@ -39,8 +39,10 @@ class Customer {
     required this.zona,
   });
 
-  factory Customer.fromMap(Map<String, dynamic> json) => Customer(
-    id: json["_id"],
+  factory Customer.fromMap(Map<String, dynamic> json) {
+  
+  return Customer(
+    id: json["_id"] ?? '',
     estado: json["estado"] ?? false,
     codigo: json["codigo"] ?? '',
     idfiscal: json["idfiscal"] ?? '',
@@ -55,8 +57,10 @@ class Customer {
     credito: json["credito"] ?? 0,
     note: json["note"] ?? ' ',
     usuario: json["usuario"] != null ? User.fromMap(json["usuario"]) : User(id: '', nombre: 'Not Usuario'),
-    zona: Zona.fromMap(json["zona"]),
+    zona: json["zona"] != null ? Zona.fromMap(json["zona"]) : Zona(id: '', codigo: '', nombrezona: '', descripcion: ''),
   );
+
+  } 
 
   Map<String, dynamic> toMap() => {
     "_id": id,
