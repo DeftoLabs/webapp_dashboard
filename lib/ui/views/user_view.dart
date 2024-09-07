@@ -95,8 +95,9 @@ class UserViewState extends State<UserView> {
             WhiteCard(
               child: Container(
                 alignment: Alignment.center,
-                height: 300,
-                child: const CircularProgressIndicator(),
+                height: 400,
+                child: const CircularProgressIndicator(
+            color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 4.0),
               )
             ),
           

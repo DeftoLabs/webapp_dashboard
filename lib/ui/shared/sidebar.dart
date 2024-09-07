@@ -103,8 +103,8 @@ class Sidebar extends StatelessWidget {
         isActive: sideMenuProvider.currentPage == Flurorouter.gpsRoute,),
 
         MenuItem(text: 'Route', icon: Icons.route_rounded,
-        onPressed: ()=> navigateTo(Flurorouter.routeRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.routeRoute,),   
+        onPressed: ()=> navigateTo(Flurorouter.routeRoutes),
+        isActive: sideMenuProvider.currentPage == Flurorouter.routeRoutes,),   
 
         MenuItem(text: 'Zone', icon: Icons.landscape_outlined,      
         onPressed: ()=> navigateTo(Flurorouter.zoneZones),

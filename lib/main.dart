@@ -12,6 +12,7 @@ import 'package:web_dashboard/providers/product_form_provider.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/providers/profile_form_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
+import 'package:web_dashboard/providers/ruta_form_provider.dart';
 import 'package:web_dashboard/providers/ruta_provider.dart';
 import 'package:web_dashboard/providers/zone_form_provider.dart';
 import 'package:web_dashboard/providers/zones_providers.dart';
@@ -74,6 +75,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => ProfileFormProvider()),
         ChangeNotifierProvider(create: (_) => RutaProvider()),
+        ChangeNotifierProvider(create: (_) => RutaFormProvider()),
 
       ],
       child: MultiBlocProvider(

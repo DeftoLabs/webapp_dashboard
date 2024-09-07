@@ -23,18 +23,33 @@ class RutasView extends StatelessWidget {
         children: [
           Text('Routes View', style: CustomLabels.h1,),
 
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
 
           PaginatedDataTable(
-            columns: const [
-              DataColumn(label: Text('Image')),
-              DataColumn(label: Text('Code')),
-              DataColumn(label: Text('Route Name')),
-              DataColumn(label: Text('Customers')),
-              DataColumn(label: Text('Sales Representative')),
-              DataColumn(label: Text('Edit')),
+            sortAscending: rutasProvider.ascending,
+            sortColumnIndex: rutasProvider.sortColumnIndex,
+            columns: [
+              const DataColumn(label: Text('Route')),
+              DataColumn(label: const Text('Code', style: TextStyle(
+                fontWeight: FontWeight.bold)), 
+              onSort: (colIndex, _) {
+                rutasProvider.sortColumnIndex = colIndex;
+                rutasProvider.sort<String>((ruta) => ruta.codigoRuta);
+              }),
+              DataColumn(label: const Text('Route Name', style: TextStyle(fontWeight: FontWeight.bold)), 
+              onSort: (colIndex, _) {
+                rutasProvider.sortColumnIndex = colIndex;
+                rutasProvider.sort<String>((ruta) => ruta.nombreRuta);
+              }),
+              const DataColumn(label: Text('Customers')),
+              const DataColumn(label: Text('Sales Representative')),
+              const DataColumn(label: Text('Edit')),
             ], 
-            source: routeDataSource)
+            source: routeDataSource,
+            onPageChanged: (page) {
+
+            },
+            )
 
         ],
       )

@@ -22,6 +22,7 @@ import 'package:web_dashboard/ui/views/new_customer_view.dart';
 import 'package:web_dashboard/ui/views/new_user_register.dart';
 import 'package:web_dashboard/ui/views/orders_view.dart';
 import 'package:web_dashboard/ui/views/products_view.dart';
+import 'package:web_dashboard/ui/views/ruta_view.dart';
 import 'package:web_dashboard/ui/views/rutas_view.dart';
 import 'package:web_dashboard/ui/views/zone_view.dart';
 import 'package:web_dashboard/ui/views/zones_view.dart';
@@ -146,9 +147,24 @@ class DashboardHandlers {
     static Handler routes = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
-      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoute);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoutes);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return const RutasView();
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler route = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if( params['id']?.first !=null){
+           return RutaView(id: params['id']!.first);
+        }else{
+          return const RutasView();
+        }
       } return const LoginView();
 
     }

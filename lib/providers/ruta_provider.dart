@@ -7,6 +7,8 @@ class RutaProvider extends ChangeNotifier {
 
   List <Ruta>rutas = [];
   bool isLoading = true;
+  bool ascending = true;
+  int? sortColumnIndex;
 
   RutaProvider() {
     getPaginatedRoutes();
@@ -17,10 +19,30 @@ getPaginatedRoutes() async {
   final rutaResp = RutaResponse.fromMap(resp);
 
   rutas = [ ... rutaResp.rutas];
-
   isLoading = false;
-
   notifyListeners();
 
 }
+
+Future <Ruta> getRouteById(String id) async {
+
+  try {
+  final resp = await CafeApi.httpGet('/rutas/$id');
+  final ruta = Ruta.fromMap(resp);
+  return ruta;
+  } catch (e) {
+    rethrow;
+  }
+}
+
+
+void sort<T>(Comparable<T> Function( Ruta ruta) getField) {
+  rutas.sort( (a , b) {
+    final aValue = getField ( a );
+    final bValue = getField ( b );
+    return ascending ? Comparable.compare(aValue, bValue) : Comparable.compare(bValue, aValue);
+  });
+  ascending = !ascending;
+  notifyListeners();
+} 
 }

@@ -30,7 +30,8 @@ class Flurorouter {
   static String customerRoute =     '/dashboard/customers/:id';
   static String newCustomerRoute =  '/dashboard/newcustomer';
  
-  static String routeRoute =      '/dashboard/routes';
+  static String routeRoutes =      '/dashboard/routes';
+  static String routeRoute =      '/dashboard/routes/:id';
 
   static String zoneZones =     '/dashboard/zones';
   static String zoneZone =      '/dashboard/zones/:id';
@@ -89,7 +90,8 @@ class Flurorouter {
     router.define (newUserRoute, handler:     DashboardHandlers.newUserRegister,  transitionType: TransitionType.fadeIn);
 
     // Route
-    router.define (routeRoute, handler:        DashboardHandlers.routes,            transitionType: TransitionType.fadeIn);
+    router.define (routeRoutes, handler:        DashboardHandlers.routes,            transitionType: TransitionType.fadeIn);
+    router.define (routeRoute, handler:        DashboardHandlers.route,             transitionType: TransitionType.fadeIn);
 
     // Zones
     router.define (zoneZones, handler:        DashboardHandlers.zones,            transitionType: TransitionType.fadeIn);

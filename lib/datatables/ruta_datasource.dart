@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/models/ruta.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 class RutaDatasource extends DataTableSource {
 
@@ -27,7 +28,7 @@ class RutaDatasource extends DataTableSource {
           IconButton(
             icon: const Icon(Icons.edit_outlined),
             onPressed: () {
-
+              NavigationService.replaceTo('/dashboard/routes/${ruta.id}');
             },
             )
         ),
