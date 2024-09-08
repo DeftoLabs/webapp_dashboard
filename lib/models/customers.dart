@@ -15,6 +15,7 @@ class Customer {
   String telefono;
   String web;
   String contacto;
+  String? diasemana;
   int credito;
   String note;
   User usuario;
@@ -33,6 +34,7 @@ class Customer {
     required this.telefono,
     required this.web,
     required this.contacto,
+    this.diasemana,
     required this.credito,
     required this.note,
     required this.usuario,
@@ -46,7 +48,7 @@ class Customer {
     estado: json["estado"] ?? false,
     codigo: json["codigo"] ?? '',
     idfiscal: json["idfiscal"] ?? '',
-    nombre: json["nombre"] ?? 'N/A',
+    nombre: json["nombre"] ?? 'Sin Nombre',
     razons: json["razons"] ?? '',
     sucursal: json["sucursal"] ?? 'N/A',
     direccion: json["direccion"] ?? '',
@@ -54,6 +56,7 @@ class Customer {
     telefono: json["telefono"] ?? '',
     web: json["web"] ?? 'N/A',
     contacto: json["contacto"] ?? '',
+    diasemana: json["diasemana"] ?? '',
     credito: json["credito"] ?? 0,
     note: json["note"] ?? ' ',
     usuario: json["usuario"] != null ? User.fromMap(json["usuario"]) : User(id: '', nombre: 'Not Usuario'),
@@ -75,6 +78,7 @@ class Customer {
     "telefono": telefono,
     "web": web,
     "contacto": contacto,
+    "diasemana": diasemana,
     "credito": credito,
     "note": note,
     "usuario": usuario.toMap(),

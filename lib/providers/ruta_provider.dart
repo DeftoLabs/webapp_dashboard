@@ -28,6 +28,7 @@ Future <Ruta> getRouteById(String id) async {
 
   try {
   final resp = await CafeApi.httpGet('/rutas/$id');
+  print('Respuesta del Backend: $resp');
   final ruta = Ruta.fromMap(resp);
   return ruta;
   } catch (e) {

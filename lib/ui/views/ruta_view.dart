@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/ruta.dart';
+import 'package:web_dashboard/providers/customers_provider.dart';
 import 'package:web_dashboard/providers/ruta_form_provider.dart';
 import 'package:web_dashboard/providers/ruta_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -98,10 +100,24 @@ class _RutaViewBody extends StatelessWidget {
             children: [
               TableRow(
                 children:[
-                  Container(
-                    width: 300,
-                    height: 300,
-                    color: Colors.blue
+                  WhiteCard(
+                    child: SizedBox(
+                      width: 300,
+                      height: 250,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          Text('General Information', style: GoogleFonts.plusJakartaSans(fontSize: 20, fontWeight: FontWeight.bold),),
+                          const SizedBox(height: 15),
+                          Text(ruta!.codigoRuta, style: GoogleFonts.plusJakartaSans(fontSize: 16),),
+                          const SizedBox(height: 10),
+                          Text(ruta.nombreRuta, style: GoogleFonts.plusJakartaSans(fontSize: 16),),
+                          const SizedBox(height: 10),
+                          Text(ruta.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 16),),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
+                    ),
                   ),
                   Container(
                     height: 300,
@@ -114,17 +130,33 @@ class _RutaViewBody extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        RutaPerDayView()
+        _RutaPerDayView(clientes: ruta.clientes),
       ],
     );
   }
 }
 
-class RutaPerDayView extends StatelessWidget {
+class _RutaPerDayView extends StatefulWidget {
+
+final List<Customer> clientes;
+
+  const _RutaPerDayView({required this.clientes});
+
+  @override
+  State<_RutaPerDayView> createState() => _RutaPerDayViewState();
+}
+
+class _RutaPerDayViewState extends State<_RutaPerDayView> {
 
   final ScrollController _scrollController = ScrollController();
+  
 
-  RutaPerDayView({super.key});
+  @override
+  void initState() {
+    super.initState();
+    final customerProvider = Provider.of<CustomersProvider>(context, listen: false);
+    customerProvider.getPaginatedCustomers();
+  }
 
   void _scrollLeft() {
     if (_scrollController.hasClients) {
@@ -149,8 +181,8 @@ class RutaPerDayView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-  final rutaFormProvider = Provider.of<RutaFormProvider>(context);
-  final ruta = rutaFormProvider.ruta;
+  final rutaProvider = Provider.of<RutaProvider>(context);
+  final ruta = rutaProvider.rutas;
 
     final diasSemana = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -167,6 +199,8 @@ class RutaPerDayView extends StatelessWidget {
                 itemCount: diasSemana.length,
                 itemBuilder: (context, index) {
                   String dia = diasSemana [index];
+
+                  List<Customer> clientesDelDia = widget.clientes.where((cliente) => cliente.diasemana == dia).toList();
 
                   return Container(
                     width: 350,
@@ -192,11 +226,18 @@ class RutaPerDayView extends StatelessWidget {
                           color: Colors.black,
                           thickness: 2,
                         ),
-                       const Column(
-                          children: [
-                           Text('Clientes')
-                          ],
+                       Expanded(
+                        child: ListView.builder(
+                          itemCount: clientesDelDia.length,
+                          itemBuilder: (context, index) {
+                            final cliente = clientesDelDia[index];
+                            return ListTile(
+                              title: Text(cliente.id),
+                              subtitle: Text(cliente.nombre),
+                            );
+                          })
                         )
+                      
                       ],
                     ),
                   );
