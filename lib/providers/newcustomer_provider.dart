@@ -16,13 +16,12 @@ class NewCustomerProvider extends ChangeNotifier {
   String sucursal = '';
   String direccion = '';
   String correo = '';
-  String? telefono = '';
+  String telefono = '';
   String web ='';
   String contacto = '';
   int credito = 0;
   String note = '';
   String name = '';
-  String phone ='';
   Zona? zone;
 
   void updateZone(Zona newZone) {
@@ -35,9 +34,21 @@ bool validateForm() {
   return formKey.currentState!.validate();
 }
 
-   void newCustomerRegister( String codigo, String idfiscal, String nombre, String razons, 
-   String sucursal, String direccion, String correo, String? telefono, String web, String contacto,
-  int credito, String note, String name, String phone, Zona? zone
+   void newCustomerRegister( 
+    String codigo, 
+    String idfiscal, 
+    String nombre, 
+    String razons, 
+    String sucursal, 
+    String direccion, 
+    String correo, 
+    String telefono, 
+    String web, 
+    String contacto,
+    int credito, 
+    String note, 
+    String name, 
+    Zona? zone
    )  {
    
     final data = {
@@ -48,7 +59,7 @@ bool validateForm() {
       'sucursal': sucursal,
       'direccion': direccion,
       'correo': correo,
-      'telefono': telefono ?? '',
+      'telefono': telefono,
       'web': web,
       'contacto': contacto,
       'credito': credito,

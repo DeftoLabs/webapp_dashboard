@@ -236,8 +236,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                           itemBuilder: (context, index) {
                             final cliente = clientesDelDia[index];
                             return ListTile(
-                              title: Text(cliente.id),
-                              subtitle: Text(cliente.nombre),
+                              title: Text(cliente.nombre),
                             );
                           })
                         )
