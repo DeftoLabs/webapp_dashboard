@@ -89,6 +89,10 @@ class _RutaViewBody extends StatelessWidget {
   final rutaFormProvider = Provider.of<RutaFormProvider>(context);
   final ruta = rutaFormProvider.ruta;
 
+    for (var cliente in ruta!.clientes) {
+      print('Cliente Nombre: ${cliente.nombre}, Razon: ${cliente.razons}, Sucursal: ${cliente.sucursal}');
+    }
+
     return Column(
       children: [
         SizedBox(
@@ -109,7 +113,7 @@ class _RutaViewBody extends StatelessWidget {
                           const SizedBox(height: 10),
                           Text('General Information', style: GoogleFonts.plusJakartaSans(fontSize: 20, fontWeight: FontWeight.bold),),
                           const SizedBox(height: 15),
-                          Text(ruta!.codigoRuta, style: GoogleFonts.plusJakartaSans(fontSize: 16),),
+                          Text(ruta.codigoRuta, style: GoogleFonts.plusJakartaSans(fontSize: 16),),
                           const SizedBox(height: 10),
                           Text(ruta.nombreRuta, style: GoogleFonts.plusJakartaSans(fontSize: 16),),
                           const SizedBox(height: 10),

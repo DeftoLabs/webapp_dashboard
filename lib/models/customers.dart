@@ -42,15 +42,16 @@ class Customer {
   });
 
   factory Customer.fromMap(Map<String, dynamic> json) {
-  
+
+
   return Customer(
     id: json["_id"] ?? '',
     estado: json["estado"] ?? false,
     codigo: json["codigo"] ?? '',
     idfiscal: json["idfiscal"] ?? '',
-    nombre: json["nombre"] ?? 'Sin Nombre',
-    razons: json["razons"] ?? '',
-    sucursal: json["sucursal"] ?? 'N/A',
+    nombre: json.containsKey("cliente") ? json["cliente"]["nombre"] ?? 'Sin Nombre' : json["nombre"] ?? 'Sin Nombre',
+    razons: json.containsKey("cliente") ? json["cliente"]["razons"] ?? '' : json["razons"] ?? '',
+    sucursal: json.containsKey("cliente") ? json["cliente"]["sucursal"] ?? 'N/A' : json["sucursal"] ?? 'N/A',
     direccion: json["direccion"] ?? '',
     correo: json["correo"] ?? '',
     telefono: json["telefono"] ?? '',
