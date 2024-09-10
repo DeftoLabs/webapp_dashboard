@@ -232,7 +232,7 @@ class _RouteView extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'Route Name',
                       hintStyle: TextStyle(color: Colors.black, fontSize: 16),
-                      labelText: 'Internal Code',
+                      labelText: 'Route Name',
                       labelStyle: TextStyle(color: Colors.black, fontSize: 16),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1),

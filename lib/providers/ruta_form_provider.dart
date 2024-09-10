@@ -18,6 +18,7 @@ bool validForm(){
 
 
 copyRutaWith ({
+   String? id,
     bool? estado,
     String? codigoRuta,
     String? nombreRuta,
@@ -28,6 +29,7 @@ copyRutaWith ({
     String? img,
 }) {
   ruta = Ruta (
+    id: id ?? ruta!.id,
     estado: estado ?? ruta!.estado,
     codigoRuta:  codigoRuta ?? ruta!.codigoRuta,
     nombreRuta:  nombreRuta ?? ruta!.nombreRuta,
@@ -49,10 +51,11 @@ Future updateRuta ()async {
   };
 
   try {
-    final resp = await CafeApi.put('/rutas/${ ruta!.id}', data);
+    await CafeApi.put('/rutas/${ruta!.id}', data);
     return true;
   } catch (e) {
-    
+  print('Error updating route: $e');
+  return false;
   }
 
 }

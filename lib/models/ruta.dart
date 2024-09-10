@@ -39,8 +39,8 @@ class Ruta {
       return Ruta(
         estado: json["estado"] ?? false,
         id: json["_id"] ?? '',
-        codigoRuta: json["codigo_ruta"] ?? '',
-        nombreRuta: json["nombre_ruta"] ?? '',
+        codigoRuta: json["codigoRuta"] ?? '',
+        nombreRuta: json["nombreRuta"] ?? '',
         zona: json["zona"] ?? '',
         diasemana: json["diasemana"] ?? '',
         clientes: json["clientes"] != null 
@@ -58,8 +58,8 @@ class Ruta {
     Map<String, dynamic> toMap() => {
         "estado": estado,
         "_id": id,
-        "codigo_ruta": codigoRuta,
-        "nombre_ruta": nombreRuta,
+        "codigoRuta": codigoRuta,
+        "nombreRuta": nombreRuta,
         "zona": zona,
         "diasemana": diasemana,
         "clientes": List<dynamic>.from(clientes.map((x) => x.toMap())),
