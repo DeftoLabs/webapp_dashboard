@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/ruta.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
+import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/providers/ruta_form_provider.dart';
 import 'package:web_dashboard/providers/ruta_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -90,104 +91,35 @@ class _RutaViewBody extends StatelessWidget {
         SizedBox(
           height: 350,
           child: Table(
-            columnWidths: const {0: FixedColumnWidth(300)},
+            columnWidths: 
+            const {
+              0: FixedColumnWidth(370),
+              1: FixedColumnWidth(370),
+            
+            },
             children: [
               TableRow(children: [
-                WhiteCardColor(
+                _RutaViewGeneralInfo(ruta: ruta),
+                _RouteView(),
+            WhiteCardColor(
                   child: SizedBox(
                     width: 300,
                     height: 300,
                     child: Column(
                       children: [
                         Text(
-                          'General Information',
+                          '',
                           style: GoogleFonts.plusJakartaSans(
                               fontSize: 16,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(height: 10),
-                        const Divider(
-                          indent: 30,
-                          endIndent: 30,
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                        const SizedBox(height: 15),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Route Code',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, color: Colors.white),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            ruta.codigoRuta,
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Route Name:',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, color: Colors.white),
-                          ),
-                        ),
-                            Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                             ruta.nombreRuta,
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                         Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Sale Representative:',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, color: Colors.white),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            ruta.usuarioZona.nombre,
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Total Customer',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, color: Colors.white),
-                          ),
-                        ),
-                          Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            ruta.clientes.length.toString(),
-                            style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
                       ],
                     ),
                   ),
                 ),
-                _RouteView()
-              ])
+              ]
+              )
             ],
           ),
         ),
@@ -198,11 +130,124 @@ class _RutaViewBody extends StatelessWidget {
   }
 }
 
-class _RouteView extends StatelessWidget {
+class _RutaViewGeneralInfo extends StatelessWidget {
+  const _RutaViewGeneralInfo({
+    required this.ruta,
+  });
+
+  final Ruta ruta;
+
+  @override
+  Widget build(BuildContext context) {
+    return WhiteCardColor(
+      child: SizedBox(
+        width: 300,
+        height: 300,
+        child: Column(
+          children: [
+            Text(
+              'General Information',
+              style: GoogleFonts.plusJakartaSans(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            const Divider(
+              indent: 30,
+              endIndent: 30,
+              color: Colors.white,
+              thickness: 2,
+            ),
+            const SizedBox(height: 15),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Route Code',
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, color: Colors.white),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                ruta.codigoRuta,
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Route Name:',
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, color: Colors.white),
+              ),
+            ),
+                Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                 ruta.nombreRuta,
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 15),
+             Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Sale Representative:',
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, color: Colors.white),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                ruta.usuarioZona.nombre,
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Total Customer',
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, color: Colors.white),
+              ),
+            ),
+              Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                ruta.clientes.length.toString(),
+                style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RouteView extends StatefulWidget {
+  @override
+  State<_RouteView> createState() => _RouteViewState();
+}
+
+class _RouteViewState extends State<_RouteView> {
   @override
   Widget build(BuildContext context) {
     final rutaFormProvider = Provider.of<RutaFormProvider>(context);
     final ruta = rutaFormProvider.ruta!;
+
+    final userProvider = Provider.of<UsersProvider>(context);
+    final user = userProvider.users;
 
     return Column(
       children: [
@@ -264,7 +309,54 @@ class _RouteView extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
+                Consumer<UsersProvider>(
+                builder: (context, categoriesProvider, child) {
+                  return DropdownButtonFormField<String>(
+                    value: ruta.usuarioZona.uid,
+                    decoration: InputDecoration(
+                      hintText: 'Sales Representative',
+                      labelText: 'Sales Representative',
+                      labelStyle: GoogleFonts.plusJakartaSans(
+                          color: Colors.black,
+                          fontSize: 16),
+                      hintStyle: GoogleFonts.plusJakartaSans(
+                          color: Colors.black),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1.0),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 1.0),
+                      ),
+                    ),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black,
+                    ),
+                    style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                    dropdownColor: Colors.white,
+                    items: userProvider.users.map((user) {
+                      return DropdownMenuItem<String>(
+                        value: user.uid,
+                        child: Text(user.nombre,
+                            style: const TextStyle(color: Colors.black)),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      rutaFormProvider.copyRutaWith(usuarioZona: userProvider.users.firstWhere((user) => user.uid == value));
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a Sales Representative';
+                      }
+                      return null;
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 10),
                   Container(
                     height: 50,
                     width: 100,
