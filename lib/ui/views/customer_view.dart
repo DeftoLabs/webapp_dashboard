@@ -115,7 +115,7 @@ class _CustomerViewState extends State<CustomerView> {
                                           color: Colors.black, size: 20),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                              BorderSide(color: Colors.black, width: 2)),
+                                              BorderSide(color: Colors.black, width: 1)),
                                       focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                         color: Color.fromARGB(255, 58, 60, 65),
@@ -168,10 +168,10 @@ class _CustomerViewState extends State<CustomerView> {
                             color: Colors.black.withOpacity(0.7)),
                           focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Colors.black, width: 2.0),
+                                color: Colors.black, width: 1.0),
                           ),
                           enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black, width: 2.0),
+                            borderSide: BorderSide(color: Colors.black, width: 1.0),
                           ),
                         ),
                         style: GoogleFonts.plusJakartaSans(color: Colors.black),
@@ -231,7 +231,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     color: Colors.black, size: 20),
                                 enabledBorder: OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black, width: 2)),
+                                        BorderSide(color: Colors.black, width: 1)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -276,7 +276,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     color: Colors.black, size: 20),
                                 enabledBorder: OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black, width: 2)),
+                                        BorderSide(color: Colors.black, width: 1)),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -319,7 +319,7 @@ class _CustomerViewState extends State<CustomerView> {
                               prefixIcon: Icon(Icons.email_rounded,
                                   color: Colors.black, size: 20),
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black, width: 2)),
+                                  borderSide: BorderSide(color: Colors.black, width: 1)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                 color: Color.fromARGB(255, 58, 60, 65),
@@ -359,7 +359,7 @@ class _CustomerViewState extends State<CustomerView> {
                               prefixIcon: Icon(Icons.web_asset,
                                   color: Colors.black, size: 20),
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black, width: 2)),
+                                  borderSide: BorderSide(color: Colors.black, width: 1)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                 color: Color.fromARGB(255, 58, 60, 65),
@@ -468,7 +468,7 @@ class _CustomerViewState extends State<CustomerView> {
                                       color: Colors.black, size: 20)
                                   : null,
                               enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black, width: 2)),
+                                  borderSide: BorderSide(color: Colors.black, width: 1)),
                               focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                 color: Color.fromARGB(255, 58, 60, 65),
@@ -515,7 +515,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black, width: 2)),
+                                        BorderSide(color: Colors.black, width: 1)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -563,7 +563,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black, width: 2)),
+                                        BorderSide(color: Colors.black, width: 1)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -612,7 +612,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black, width: 2)),
+                                        BorderSide(color: Colors.black, width: 1)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -660,7 +660,7 @@ class _CustomerViewState extends State<CustomerView> {
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Colors.black, width: 2)),
+                                        BorderSide(color: Colors.black, width: 1)),
                                 focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                   color: Color.fromARGB(255, 58, 60, 65),
@@ -721,7 +721,7 @@ class _CustomerViewState extends State<CustomerView> {
                                 prefixIcon: Icon(Icons.info_outline_rounded,
                                     color: Colors.black, size: 20),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black, width: 2),
+                                  borderSide: BorderSide(color: Colors.black, width: 1),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(

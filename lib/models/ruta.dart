@@ -6,7 +6,7 @@ import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/usuario.dart';
 
 class Ruta {
-    String id;
+    String? id;
     bool estado;
     String codigoRuta;
     String nombreRuta;
@@ -19,7 +19,7 @@ class Ruta {
 
 
     Ruta({
-        required this.id,
+        this.id,
         required this.estado,
         required this.codigoRuta,
         required this.nombreRuta,

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/profile_form_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
 class WhiteCard extends StatelessWidget {
@@ -118,7 +120,7 @@ class WhiteCardColor extends StatelessWidget {
       );
 }
 
-class WhiteCardCustomer extends StatelessWidget {
+class WhiteCardCustomer extends StatefulWidget {
   final String? title;
   final Widget child;
   final double? width;
@@ -134,10 +136,35 @@ class WhiteCardCustomer extends StatelessWidget {
     this.titleColor = Colors.white,
   });
 
+  @override
+  State<WhiteCardCustomer> createState() => _WhiteCardCustomerState();
+}
+
+class _WhiteCardCustomerState extends State<WhiteCardCustomer> {
  @override
   Widget build(BuildContext context) {
+
+     final profileFormProvider = Provider.of<ProfileFormProvider>(context);
+    final profile = profileFormProvider.profile;
+
+    final image = (profile?.img?.isEmpty ?? true)
+    ? const SizedBox(
+        width: 55,
+        height: 55,
+        child: Image(image: AssetImage('noimage.jpeg')),
+      )
+    : SizedBox(
+        width: 35,
+        height: 35,
+        child: FadeInImage.assetNetwork(
+          placeholder: 'load.gif',
+          image: profile!.img!,
+          fit: BoxFit.cover, // Asegura que la imagen se ajuste bien al contenedor
+        ),
+      );
+
     return Container(
-      width: width,
+      width: widget.width,
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.all(10),
       decoration: buildBoxDecoration(),
@@ -146,7 +173,7 @@ class WhiteCardCustomer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            if (title != null)
+            if (widget.title != null)
               ...[
                 Row(
                   children: [
@@ -160,20 +187,16 @@ class WhiteCardCustomer extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: Text(
-                          title!,
+                          widget.title!,
                           style: GoogleFonts.plusJakartaSans(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: titleColor), // Usa el color del título aquí
+                              color: widget.titleColor), // Usa el color del título aquí
                         ),
                       ),
                     ),
-                    ClipOval(
-                      child: Image.asset('noimage.jpeg',
-                      height: 50,
-                      width: 50,),
-                    ),
-                    const SizedBox(width: 20,)
+                    ClipOval(child: image),
+                    const SizedBox(width: 20)
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -181,7 +204,7 @@ class WhiteCardCustomer extends StatelessWidget {
                   color: Color.fromRGBO(177, 255, 46, 1),
                 ),
               ],
-            Center(child: child), // Centra el contenido principal
+            Center(child: widget.child), // Centra el contenido principal
           ],
         ),
       ),
@@ -189,7 +212,7 @@ class WhiteCardCustomer extends StatelessWidget {
   }
 
   BoxDecoration buildBoxDecoration() => BoxDecoration(
-        color: backgroundColor, // Usa el color de fondo aquí
+        color: widget.backgroundColor, // Usa el color de fondo aquí
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
