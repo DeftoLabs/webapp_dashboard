@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/ruta.dart';
 import 'package:web_dashboard/models/usuario.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 import '../models/customers.dart';
 
@@ -48,14 +49,15 @@ Future updateRuta ()async {
 
   final data = {
     'nombreRuta': ruta!.nombreRuta,
+    'usuarioZona': ruta!.usuarioZona.uid, 
   };
 
   try {
     await CafeApi.put('/rutas/${ruta!.id}', data);
     return true;
   } catch (e) {
-  print('Error updating route: $e');
-  return false;
+     NotificationService.showSnackBarError('Error to Update the Route');
+      return false;
   }
 
 }

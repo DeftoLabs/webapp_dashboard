@@ -46,8 +46,8 @@ class Ruta {
         clientes: json["clientes"] != null 
             ? List<Customer>.from(json["clientes"].map((x) => Customer.fromMap(x)))
             : [],
-        usuarioZona: json["usuario_zona"] != null 
-        ? Usuario.fromMap(json["usuario_zona"]) 
+        usuarioZona: json["usuarioZona"] != null 
+        ? Usuario.fromMap(json["usuarioZona"]) 
         : Usuario(rol: '', estado: false, google: false, nombre: '', correo: '', uid: '', phone: '', zone: ''),
    
         img: json["img"],
@@ -63,7 +63,7 @@ class Ruta {
         "zona": zona,
         "diasemana": diasemana,
         "clientes": List<dynamic>.from(clientes.map((x) => x.toMap())),
-        "usuario_zona": usuarioZona,
+        "usuarioZona": usuarioZona.toMap(),
         "img": img,
 
     };

@@ -344,9 +344,12 @@ class _RouteViewState extends State<_RouteView> {
                             style: const TextStyle(color: Colors.black)),
                       );
                     }).toList(),
-                    onChanged: (value) {
-                      rutaFormProvider.copyRutaWith(usuarioZona: userProvider.users.firstWhere((user) => user.uid == value));
-                    },
+                        onChanged: (value) {
+                          setState(() {
+                            ruta.usuarioZona.uid = value!; 
+                            print(value);
+                          });
+                        },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please select a Sales Representative';
