@@ -28,8 +28,8 @@ class _RutaViewState extends State<RutaView> {
   void initState() {
     super.initState();
     final rutaProvider = Provider.of<RutaProvider>(context, listen: false);
-    final rutaFormProvider =
-        Provider.of<RutaFormProvider>(context, listen: false);
+    final rutaFormProvider = Provider.of<RutaFormProvider>(context, listen: false);
+    Provider.of<UsersProvider>(context, listen: false).loadUsersNoEnRutas();
 
     rutaProvider.getRouteById(widget.id).then((rutaDB) {
       rutaFormProvider.ruta = rutaDB;
@@ -91,41 +91,80 @@ class _RutaViewBody extends StatelessWidget {
         SizedBox(
           height: 350,
           child: Table(
-            columnWidths: 
-            const {
+            columnWidths: const {
               0: FixedColumnWidth(370),
               1: FixedColumnWidth(370),
-            
             },
             children: [
               TableRow(children: [
                 _RutaViewGeneralInfo(ruta: ruta),
                 _RouteView(),
-            WhiteCardColor(
-                  child: SizedBox(
-                    width: 300,
-                    height: 300,
-                    child: Column(
-                      children: [
-                        Text(
-                          '',
-                          style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ]
-              )
+                _RouteCustomerView(),
+              ])
             ],
           ),
         ),
         const SizedBox(height: 10),
         _RutaPerDayView(clientes: ruta.clientes),
       ],
+    );
+  }
+}
+
+class _RouteCustomerView extends StatelessWidget {
+  const _RouteCustomerView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return WhiteCardColor(
+      child: SizedBox(
+        width: 300,
+        height: 300,
+        child: Column(
+          children: [
+           Text(
+              'Edit Customer Route',
+              style: GoogleFonts.plusJakartaSans(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            const Divider(
+              indent: 30,
+              endIndent: 30,
+              color: Colors.white,
+              thickness: 2,
+            ),
+            const SizedBox(height: 45),
+              const SizedBox(height: 10),
+                    Container(
+                    height: 100,
+                    width: 150,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(177, 255, 46, 1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromRGBO(177, 255, 46, 1),
+                          width: 2,
+                        )),
+                    child: TextButton(
+                      child: Text(
+                        'Edit Customer (Add or Delete)',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: const Color.fromARGB(255, 0, 0, 0)),
+                      ),
+                      onPressed: () async {
+                    
+                      },
+                    ),
+                  ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -173,7 +212,9 @@ class _RutaViewGeneralInfo extends StatelessWidget {
               child: Text(
                 ruta.codigoRuta,
                 style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 15),
@@ -185,16 +226,18 @@ class _RutaViewGeneralInfo extends StatelessWidget {
                     fontSize: 14, color: Colors.white),
               ),
             ),
-                Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                 ruta.nombreRuta,
+                ruta.nombreRuta,
                 style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 15),
-             Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Sale Representative:',
@@ -207,7 +250,9 @@ class _RutaViewGeneralInfo extends StatelessWidget {
               child: Text(
                 ruta.usuarioZona.nombre,
                 style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 15),
@@ -219,12 +264,14 @@ class _RutaViewGeneralInfo extends StatelessWidget {
                     fontSize: 14, color: Colors.white),
               ),
             ),
-              Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 ruta.clientes.length.toString(),
                 style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 10),
@@ -247,7 +294,6 @@ class _RouteViewState extends State<_RouteView> {
     final ruta = rutaFormProvider.ruta!;
 
     final userProvider = Provider.of<UsersProvider>(context);
-    final user = userProvider.users;
 
     return Column(
       children: [
@@ -296,8 +342,7 @@ class _RouteViewState extends State<_RouteView> {
                     ),
                     onChanged: (value) {
                       final uppercaseValue = value.toUpperCase();
-                      rutaFormProvider.copyRutaWith( nombreRuta: uppercaseValue);
-
+                      rutaFormProvider.copyRutaWith(nombreRuta: uppercaseValue);
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -310,56 +355,53 @@ class _RouteViewState extends State<_RouteView> {
                     },
                   ),
                   const SizedBox(height: 20),
-                Consumer<UsersProvider>(
-                builder: (context, categoriesProvider, child) {
-                  return DropdownButtonFormField<String>(
-                    value: ruta.usuarioZona.uid,
-                    decoration: InputDecoration(
-                      hintText: 'Sales Representative',
-                      labelText: 'Sales Representative',
-                      labelStyle: GoogleFonts.plusJakartaSans(
+                  Consumer<UsersProvider>(
+                    builder: (context, userProvider, child) {
+                       if (userProvider.usersNoEnRutas.isEmpty) {
+                      return const CircularProgressIndicator(); 
+                    }
+                    final currentUid = ruta.usuarioZona.uid;
+                    final isValidUid = userProvider.usersNoEnRutas.any((user) => user.uid == currentUid);
+                      return DropdownButtonFormField<String>(
+                        value: isValidUid ? currentUid : null, 
+                        decoration: InputDecoration(
+                          hintText: 'Sales Representative',
+                          labelText: ruta.usuarioZona.nombre,
+                          labelStyle: GoogleFonts.plusJakartaSans(
+                              color: Colors.black, fontSize: 16),
+                          hintStyle:
+                              GoogleFonts.plusJakartaSans(color: Colors.black),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                        ),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
                           color: Colors.black,
-                          fontSize: 16),
-                      hintStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.black),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.black,
-                            width: 1.0),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1.0),
-                      ),
-                    ),
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black,
-                    ),
-                    style: GoogleFonts.plusJakartaSans(color: Colors.black),
-                    dropdownColor: Colors.white,
-                    items: userProvider.users.map((user) {
-                      return DropdownMenuItem<String>(
-                        value: user.uid,
-                        child: Text(user.nombre,
-                            style: const TextStyle(color: Colors.black)),
-                      );
-                    }).toList(),
+                        ),
+                        style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                        dropdownColor: Colors.white,
+                        items: userProvider.usersNoEnRutas.map((user) {
+                          return DropdownMenuItem<String>(
+                            value: user.uid,
+                            child: Text(user.nombre,
+                                style: const TextStyle(color: Colors.black)),
+                          );
+                        }).toList(),
                         onChanged: (value) {
                           setState(() {
-                            ruta.usuarioZona.uid = value!; 
-                            print(value);
+                            ruta.usuarioZona.uid = value!;
                           });
                         },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select a Sales Representative';
-                      }
-                      return null;
+                      );
                     },
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
+                  ),
+                  const SizedBox(height: 50),
                   Container(
                     height: 50,
                     width: 100,
@@ -379,14 +421,15 @@ class _RouteViewState extends State<_RouteView> {
                       ),
                       onPressed: () async {
                         final saved = await rutaFormProvider.updateRuta();
-                        if(saved) {
-                           if (!context.mounted) return;
-                            NotificationService.showSnackBa('Route Updated');
-                            Navigator.of(context).popAndPushNamed('/dashboard/routes');
+                        if (saved) {
+                          if (!context.mounted) return;
+                          NotificationService.showSnackBa('Route Updated');
+                          Navigator.of(context)
+                              .popAndPushNamed('/dashboard/routes');
                         } else {
-                    NotificationService.showSnackBarError(
-                        'Error to Update the Route');
-                  }
+                          NotificationService.showSnackBarError(
+                              'Error to Update the Route');
+                        }
                       },
                     ),
                   ),

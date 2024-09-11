@@ -12,6 +12,9 @@ class UsersProvider extends ChangeNotifier {
   bool ascending = true;
   int? sortColumnIndex;
 
+  List<Usuario> _usersNoEnRutas = [];
+  List<Usuario> get usersNoEnRutas => _usersNoEnRutas; 
+
   UsersProvider(){
     getPaginatedUsers();
   }
@@ -38,6 +41,7 @@ class UsersProvider extends ChangeNotifier {
       return null;
     }
   }
+
 
   void sort<T>( Comparable<T> Function (Usuario user) getField) {
     users.sort( (a , b) {
@@ -73,6 +77,19 @@ class UsersProvider extends ChangeNotifier {
     final usersResp = UsersResponse.fromMap(resp);
     users = usersResp.usuarios;
     notifyListeners();
+  }
+
+ Future<void> loadUsersNoEnRutas() async {
+    try {
+      final response = await CafeApi.httpGet('/rutas/usuarios/noenrutas');
+      final List<Usuario> users = (response['usuarios'] as List)
+          .map((user) => Usuario.fromMap(user))
+          .toList();
+      _usersNoEnRutas = users;
+      notifyListeners();
+    } catch (e) {
+      print('Error loading users: $e');
+    }
   }
 
 }
