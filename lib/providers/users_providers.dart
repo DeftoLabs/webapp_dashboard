@@ -88,8 +88,7 @@ class UsersProvider extends ChangeNotifier {
       _usersNoEnRutas = users;
       notifyListeners();
     } catch (e) {
-      print('Error loading users: $e');
+        throw ' Error to Consult the Sale Representative ';
     }
   }
-
 }

@@ -30,6 +30,7 @@ class _RutaViewState extends State<RutaView> {
     final rutaProvider = Provider.of<RutaProvider>(context, listen: false);
     final rutaFormProvider = Provider.of<RutaFormProvider>(context, listen: false);
     Provider.of<UsersProvider>(context, listen: false).loadUsersNoEnRutas();
+    Provider.of<CustomersProvider>(context, listen: false).loadCustomerNoEnRutas();
 
     rutaProvider.getRouteById(widget.id).then((rutaDB) {
       rutaFormProvider.ruta = rutaDB;
@@ -89,20 +90,39 @@ class _RutaViewBody extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 350,
           child: Table(
             columnWidths: const {
-              0: FixedColumnWidth(370),
-              1: FixedColumnWidth(370),
+              0: FixedColumnWidth(350),
+              1: FixedColumnWidth(350),
             },
             children: [
               TableRow(children: [
                 _RutaViewGeneralInfo(ruta: ruta),
                 _RouteView(),
-                _RouteCustomerView(),
+                const WhiteCardColor(
+                  child: 
+                  SizedBox (height: 265,))
               ])
             ],
           ),
+        ),
+        Column(
+          children: [
+            SizedBox(
+              child: Table(
+                columnWidths: const {
+                  0: FixedColumnWidth(500),
+                },
+                children: const [
+                  TableRow( children: [
+                     _AddRouteCustomerView(),
+                      _DeleteRouteCustomerView()
+
+                  ])
+                ],
+              ),
+            )
+          ],
         ),
         const SizedBox(height: 10),
         _RutaPerDayView(clientes: ruta.clientes),
@@ -111,25 +131,59 @@ class _RutaViewBody extends StatelessWidget {
   }
 }
 
-class _RouteCustomerView extends StatelessWidget {
-  const _RouteCustomerView({
-    super.key,
-  });
+class _DeleteRouteCustomerView extends StatelessWidget {
+  const _DeleteRouteCustomerView();
 
   @override
   Widget build(BuildContext context) {
+    return const WhiteCardColor(
+              child: 
+          SizedBox (height:250,));
+  }
+}
+
+class _AddRouteCustomerView extends StatefulWidget {
+  const _AddRouteCustomerView();
+
+  @override
+  State<_AddRouteCustomerView> createState() => _AddRouteCustomerViewState();
+}
+
+class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
+  String? selectedCustomerId;
+  String? selectedDiaSemana;
+
+  final List<String> diasSemana = [
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final customerProvider = Provider.of<CustomersProvider>(context, listen: false);
+      customerProvider.loadCustomerNoEnRutas();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final customerProvider = Provider.of<CustomersProvider>(context);
+    final customersNoEnRutas = customerProvider.customerNoEnRutas;
+
     return WhiteCardColor(
       child: SizedBox(
-        width: 300,
-        height: 300,
+        width: 420,
+        height: 260,
         child: Column(
           children: [
-           Text(
-              'Edit Customer Route',
+            Text(
+              'Add a Customer Route',
               style: GoogleFonts.plusJakartaSans(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 10),
             const Divider(
@@ -138,11 +192,94 @@ class _RouteCustomerView extends StatelessWidget {
               color: Colors.white,
               thickness: 2,
             ),
-            const SizedBox(height: 45),
-              const SizedBox(height: 10),
-                    Container(
-                    height: 100,
-                    width: 150,
+            const SizedBox(height: 10),
+            customerProvider.isLoading
+              ? const CircularProgressIndicator()
+              : customersNoEnRutas.isEmpty
+                  ? Text('No Customers Available', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16))
+                  : SizedBox(
+                    width: double.infinity,
+                    child: DropdownButtonFormField<String>(
+                        value: selectedCustomerId,
+                        decoration: InputDecoration(
+                          hintText: 'Select Customer',
+                          labelText: 'Select Customer',
+                          labelStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white, 
+                            fontSize: 16,
+                          ),
+                          hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white, width: 1.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white, width: 1.0),
+                          ),
+                        ),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                        dropdownColor: Colors.grey[800],
+                        items: customersNoEnRutas.map((customer) {
+                          return DropdownMenuItem<String>(
+                            value: customer.id,
+                            child: Text(customer.nombre,
+                                style: const TextStyle(color: Colors.white)),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedCustomerId = value;
+                          });
+                        },
+                      ),
+                  ),
+                  const SizedBox(height: 15),
+                        SizedBox(
+                        width: double.infinity,
+                        child: DropdownButtonFormField<String>(
+                          value: selectedDiaSemana,
+                          decoration: InputDecoration(
+                            hintText: 'Select Day of the Week',
+                            labelText: 'Day of the Week',
+                            labelStyle: GoogleFonts.plusJakartaSans(
+                              color: Colors.white, 
+                              fontSize: 16,
+                            ),
+                            hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white, width: 1.0),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white, width: 1.0),
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.white,
+                          ),
+                          style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                          dropdownColor: Colors.grey[800],
+                          items: diasSemana.map((dia) {
+                            return DropdownMenuItem<String>(
+                              value: dia,
+                              child: Text(dia,
+                                  style: const TextStyle(color: Colors.white)),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedDiaSemana = value;
+                            });
+                          },
+                        ),
+                      ),
+                  const SizedBox(height: 25),
+                  Container(
+                    height: 50,
+                    width: 100,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: const Color.fromRGBO(177, 255, 46, 1),
@@ -153,21 +290,23 @@ class _RouteCustomerView extends StatelessWidget {
                         )),
                     child: TextButton(
                       child: Text(
-                        'Edit Customer (Add or Delete)',
+                        'Save',
                         style: GoogleFonts.plusJakartaSans(
                             color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
                       onPressed: () async {
-                    
+                      
                       },
                     ),
                   ),
           ],
         ),
       ),
+      
     );
   }
 }
+
 
 class _RutaViewGeneralInfo extends StatelessWidget {
   const _RutaViewGeneralInfo({
@@ -180,8 +319,7 @@ class _RutaViewGeneralInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return WhiteCardColor(
       child: SizedBox(
-        width: 300,
-        height: 300,
+        height: 260,
         child: Column(
           children: [
             Text(
@@ -191,14 +329,14 @@ class _RutaViewGeneralInfo extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             const Divider(
               indent: 30,
               endIndent: 30,
               color: Colors.white,
               thickness: 2,
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -217,7 +355,7 @@ class _RutaViewGeneralInfo extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -236,7 +374,7 @@ class _RutaViewGeneralInfo extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -255,7 +393,7 @@ class _RutaViewGeneralInfo extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -293,12 +431,10 @@ class _RouteViewState extends State<_RouteView> {
     final rutaFormProvider = Provider.of<RutaFormProvider>(context);
     final ruta = rutaFormProvider.ruta!;
 
-    final userProvider = Provider.of<UsersProvider>(context);
-
     return Column(
       children: [
         SizedBox(
-          height: 355,
+          height: 320,
           child: WhiteCard(
             child: Form(
               key: rutaFormProvider.formKey,
@@ -401,7 +537,7 @@ class _RouteViewState extends State<_RouteView> {
                       );
                     },
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 25),
                   Container(
                     height: 50,
                     width: 100,
@@ -486,8 +622,6 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
 
   @override
   Widget build(BuildContext context) {
-    final rutaProvider = Provider.of<RutaProvider>(context);
-    final ruta = rutaProvider.rutas;
 
     final diasSemana = [
       'Monday',

@@ -60,8 +60,12 @@ class Customer {
     diasemana: json["diasemana"] ?? '',
     credito: json["credito"] ?? 0,
     note: json["note"] ?? ' ',
-    usuario: json["usuario"] != null ? User.fromMap(json["usuario"]) : User(id: '', nombre: 'Not Usuario'),
-    zona: json["zona"] != null ? Zona.fromMap(json["zona"]) : Zona(id: '', codigo: '', nombrezona: '', descripcion: ''),
+    usuario: json["usuario"] is String
+        ? User(id: json["usuario"], nombre: 'Desconocido')
+        : User.fromMap(json["usuario"] ?? {}),
+      zona: json["zona"] is String
+        ? Zona(id: json["zona"], codigo: 'Desconocido', nombrezona: 'Desconocido', descripcion: '')
+        : Zona.fromMap(json["zona"] ?? {}),
   );
 
   } 

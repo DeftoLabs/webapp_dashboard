@@ -12,6 +12,9 @@ bool isLoading = true;
 bool ascending = true;
 int? sortColumnIndex;
 
+  List<Customer> _customerNoEnRutas = [];
+  List<Customer> get customerNoEnRutas => _customerNoEnRutas; 
+
 
 Future<void> getPaginatedCustomers()async { 
   final resp = await CafeApi.httpGet('/clientes');
@@ -66,4 +69,21 @@ void refreshCustomer (Customer newCustomer) {
   notifyListeners();
 }
 
+Future<void> loadCustomerNoEnRutas() async {
+  try {
+    final response = await CafeApi.httpGet('/rutas/clientes/noenrutas');// Imprime la respuesta completa
+
+    if (response != null && response.containsKey('clientes')) {
+      final List<dynamic> clientes = response['clientes'];
+
+      _customerNoEnRutas = clientes.map((customer) => Customer.fromMap(customer)).toList();
+    } else {
+      throw 'Unexpected response format';
+    }
+
+    notifyListeners();
+  } catch (e) {
+    throw 'Error to Consult the Customer';
+  }
+}
 }
