@@ -116,7 +116,7 @@ class _RutaViewBody extends StatelessWidget {
                 children: const [
                   TableRow( children: [
                      _AddRouteCustomerView(),
-                      _DeleteRouteCustomerView()
+                    _DeleteRouteCustomerView()
 
                   ])
                 ],
@@ -131,14 +131,161 @@ class _RutaViewBody extends StatelessWidget {
   }
 }
 
-class _DeleteRouteCustomerView extends StatelessWidget {
+class _DeleteRouteCustomerView extends StatefulWidget {
   const _DeleteRouteCustomerView();
 
   @override
+  State<_DeleteRouteCustomerView> createState() => _DeleteRouteCustomerViewState();
+}
+
+class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
+
+  String? selectedCustomerId;
+  String? selectedDiaSemana;
+
+  final List<String> diasSemana = [
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    return const WhiteCardColor(
-              child: 
-          SizedBox (height:250,));
+    final customerProvider = Provider.of<CustomersProvider>(context);
+    final customersNoEnRutas = customerProvider.customerNoEnRutas;
+
+    return WhiteCardColor(
+      child: SizedBox(
+        width: 420,
+        height: 260,
+        child: Column(
+          children: [
+            Text(
+              'Remove a Customer from Route',
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Divider(
+              indent: 30,
+              endIndent: 30,
+              color: Colors.white,
+              thickness: 2,
+            ),
+            const SizedBox(height: 10),
+            customerProvider.isLoading
+              ? const CircularProgressIndicator()
+              : customersNoEnRutas.isEmpty
+                  ? Text('No Customers Available', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16))
+                  : SizedBox(
+                    width: double.infinity,
+                    child: DropdownButtonFormField<String>(
+                        value: selectedCustomerId,
+                        decoration: InputDecoration(
+                          hintText: 'Select Customer',
+                          labelText: 'Select Customer',
+                          labelStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white, 
+                            fontSize: 16,
+                          ),
+                          hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white, width: 1.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white, width: 1.0),
+                          ),
+                        ),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                        dropdownColor: Colors.grey[800],
+                        items: customersNoEnRutas.map((customer) {
+                          return DropdownMenuItem<String>(
+                            value: customer.id,
+                            child: Text(customer.nombre,
+                                style: const TextStyle(color: Colors.white)),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedCustomerId = value;
+                          });
+                        },
+                      ),
+                  ),
+                  const SizedBox(height: 15),
+                        SizedBox(
+                        width: double.infinity,
+                        child: DropdownButtonFormField<String>(
+                          value: selectedDiaSemana,
+                          decoration: InputDecoration(
+                            hintText: 'Select Day of the Week',
+                            labelText: 'Day of the Week',
+                            labelStyle: GoogleFonts.plusJakartaSans(
+                              color: Colors.white, 
+                              fontSize: 16,
+                            ),
+                            hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white, width: 1.0),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white, width: 1.0),
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.white,
+                          ),
+                          style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                          dropdownColor: Colors.grey[800],
+                          items: diasSemana.map((dia) {
+                            return DropdownMenuItem<String>(
+                              value: dia,
+                              child: Text(dia,
+                                  style: const TextStyle(color: Colors.white)),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedDiaSemana = value;
+                            });
+                          },
+                        ),
+                      ),
+                  const SizedBox(height: 25),
+                  Container(
+                    height: 50,
+                    width: 150,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 152, 0, 1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromRGBO(255, 152, 0, 1),
+                          width: 2,
+                        )),
+                    child: TextButton.icon(
+                      icon:   const Icon(Icons.remove_circle_outline, color: Colors.black),
+                      label:  Text(
+                        'Remove',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
+                      ),  
+                      onPressed: () async {
+                      
+                      },
+                    ),
+                  ),
+          ],
+        ),
+      ),
+      
+    );
   }
 }
 
@@ -154,7 +301,13 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
   String? selectedDiaSemana;
 
   final List<String> diasSemana = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+    'Monday', 
+    'Tuesday', 
+    'Wednesday', 
+    'Thursday', 
+    'Friday', 
+    'Saturday', 
+    'Sunday'
   ];
 
   @override
@@ -279,21 +432,22 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                   const SizedBox(height: 25),
                   Container(
                     height: 50,
-                    width: 100,
+                    width: 150,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        color: const Color.fromRGBO(177, 255, 46, 1),
+                        color: const Color.fromRGBO(0, 200, 83, 1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: const Color.fromRGBO(177, 255, 46, 1),
+                          color: const Color.fromRGBO(0, 200, 83, 1),
                           width: 2,
                         )),
-                    child: TextButton(
-                      child: Text(
-                        'Save',
+                    child: TextButton.icon(
+                      icon:   const Icon(Icons.add_circle_outline_outlined, color: Colors.black),
+                      label:  Text(
+                        'Add',
                         style: GoogleFonts.plusJakartaSans(
-                            color: const Color.fromARGB(255, 0, 0, 0)),
-                      ),
+                            color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
+                      ),  
                       onPressed: () async {
                       
                       },
@@ -540,13 +694,13 @@ class _RouteViewState extends State<_RouteView> {
                   const SizedBox(height: 25),
                   Container(
                     height: 50,
-                    width: 100,
+                    width: 150,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        color: const Color.fromRGBO(177, 255, 46, 1),
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: const Color.fromRGBO(177, 255, 46, 1),
+                          color: const Color.fromARGB(255, 58, 60, 65),
                           width: 2,
                         )),
                     child: TextButton(
