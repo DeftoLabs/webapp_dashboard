@@ -142,6 +142,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
 
   String? selectedCustomerId;
   String? selectedDiaSemana;
+  List<Customer> clientesEnRuta = [];
 
   final List<String> diasSemana = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
@@ -149,8 +150,12 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
 
   @override
   Widget build(BuildContext context) {
-    final customerProvider = Provider.of<CustomersProvider>(context);
-    final customersNoEnRutas = customerProvider.customerNoEnRutas;
+
+    final rutaFormProvider = Provider.of<RutaFormProvider>(context);
+    final ruta = rutaFormProvider.ruta!;
+
+    clientesEnRuta = ruta.clientes;
+
 
     return WhiteCardColor(
       child: SizedBox(
@@ -159,7 +164,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
         child: Column(
           children: [
             Text(
-              'Remove a Customer from Route',
+              'Remove or Edit a Customer from Route',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
                 color: Colors.white,
@@ -174,10 +179,8 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
               thickness: 2,
             ),
             const SizedBox(height: 10),
-            customerProvider.isLoading
+            clientesEnRuta.isEmpty
               ? const CircularProgressIndicator()
-              : customersNoEnRutas.isEmpty
-                  ? Text('No Customers Available', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16))
                   : SizedBox(
                     width: double.infinity,
                     child: DropdownButtonFormField<String>(
@@ -203,13 +206,12 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                         ),
                         style: GoogleFonts.plusJakartaSans(color: Colors.black),
                         dropdownColor: Colors.grey[800],
-                        items: customersNoEnRutas.map((customer) {
-                          return DropdownMenuItem<String>(
-                            value: customer.id,
-                            child: Text(customer.nombre,
-                                style: const TextStyle(color: Colors.white)),
-                          );
-                        }).toList(),
+                        items: ruta.clientes.map((customer) {
+                            return DropdownMenuItem<String>(
+                              value: customer.id,
+                              child: Text(customer.nombre, style: const TextStyle(color: Colors.white)),
+                            );
+                          }).toList(),
                         onChanged: (value) {
                           setState(() {
                             selectedCustomerId = value;
@@ -258,28 +260,75 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                         ),
                       ),
                   const SizedBox(height: 25),
-                  Container(
-                    height: 50,
-                    width: 150,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: const Color.fromRGBO(255, 152, 0, 1),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: const Color.fromRGBO(255, 152, 0, 1),
-                          width: 2,
-                        )),
-                    child: TextButton.icon(
-                      icon:   const Icon(Icons.remove_circle_outline, color: Colors.black),
-                      label:  Text(
-                        'Remove',
-                        style: GoogleFonts.plusJakartaSans(
-                            color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
-                      ),  
-                      onPressed: () async {
-                      
-                      },
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 50,
+                        width: 150,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: const Color.fromRGBO(255, 152, 0, 1),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color:const Color.fromARGB(255, 255, 194, 102),
+                              width: 2,
+                            )),
+                        child: TextButton.icon(
+                          icon:   const Icon(Icons.remove_circle_outline, color: Colors.black),
+                          label:  Text(
+                            'Remove',
+                            style: GoogleFonts.plusJakartaSans(
+                                color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
+                          ),  
+                          onPressed: () {
+                            final dialog = AlertDialog(
+                              title: const Text('Are you sure you want to remove this customer from the route?'),
+                              content: Text('$selectedCustomerId'),
+                              actions: [
+                                TextButton(
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  }, 
+                                  child: const Text('No')),
+                                TextButton(
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  }, 
+                                  child: const Text('Yes'))  
+                              ],
+                            );
+
+                            showDialog(context: context, builder: ( _ ) => dialog);
+                          
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 30),
+                       Container(
+                        height: 50,
+                        width: 150,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 52, 149, 251),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color:  const Color.fromARGB(255, 88, 164, 246),
+                              width: 2,
+                            )),
+                        child: TextButton.icon(
+                          icon:   const Icon(Icons.edit, color: Colors.black),
+                          label:  Text(
+                            'Save',
+                            style: GoogleFonts.plusJakartaSans(
+                                color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
+                          ),  
+                          onPressed: () async {
+                          
+                          },
+                        ),
+                      ),
+                    ],
                   ),
           ],
         ),
@@ -438,7 +487,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                         color: const Color.fromRGBO(0, 200, 83, 1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: const Color.fromRGBO(0, 200, 83, 1),
+                          color: const Color.fromRGBO(177, 255, 46, 100),
                           width: 2,
                         )),
                     child: TextButton.icon(
@@ -714,8 +763,8 @@ class _RouteViewState extends State<_RouteView> {
                         if (saved) {
                           if (!context.mounted) return;
                           NotificationService.showSnackBa('Route Updated');
-                          Navigator.of(context)
-                              .popAndPushNamed('/dashboard/routes');
+                          Navigator.of(context).popAndPushNamed('/dashboard/routes');
+                          Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes();
                         } else {
                           NotificationService.showSnackBarError(
                               'Error to Update the Route');
