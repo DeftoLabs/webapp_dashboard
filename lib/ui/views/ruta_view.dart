@@ -282,20 +282,44 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                 color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                           ),  
                           onPressed: () {
+                            final selectedCustomer = clientesEnRuta.firstWhere((customer) => customer.id == selectedCustomerId );
+
                             final dialog = AlertDialog(
-                              title: const Text('Are you sure you want to remove this customer from the route?'),
-                              content: Text('$selectedCustomerId'),
+                              backgroundColor: const Color.fromARGB(255, 98, 99, 103),
+                              title: Text('Are you sure to remove this customer from the route?', 
+                              style: GoogleFonts.plusJakartaSans( fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
+                              content: SizedBox(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    const Divider(
+                                        indent: 30,
+                                        endIndent: 30,
+                                        color: Colors.white,
+                                        thickness: 2,
+                                      ),
+                                    const SizedBox(height: 10),
+                                    Text(selectedCustomer.nombre,
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
+                                    ),
+                                  ],
+                                )),
                               actions: [
                                 TextButton(
                                   onPressed: (){
                                     Navigator.of(context).pop();
                                   }, 
-                                  child: const Text('No')),
+                                  child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white))),
                                 TextButton(
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  }, 
-                                  child: const Text('Yes'))  
+                                  onPressed: () async {
+                                   Navigator.of(context).pop();
+                                   final rutaId = ruta.id;
+                                   if(selectedCustomerId != null && rutaId !=null) {
+                                    await Provider.of<RutaProvider>(context, listen: false).deleteCustomerRuta(rutaId, selectedCustomerId!);
+                                   }
+                                  },
+                                  child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white)))  
                               ],
                             );
 
