@@ -60,7 +60,7 @@ Future<void> deleteCustomerRuta(String rutaId, String customerId) async {
     }).toList();
     notifyListeners();
   } catch (e) {
-    print('Error al eliminar cliente de la ruta: $e');
+    throw('Error to Delete a Customer / Route');
   }
 }
 }

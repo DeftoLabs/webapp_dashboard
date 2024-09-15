@@ -313,10 +313,19 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                   child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white))),
                                 TextButton(
                                   onPressed: () async {
-                                   Navigator.of(context).pop();
                                    final rutaId = ruta.id;
                                    if(selectedCustomerId != null && rutaId !=null) {
+                                    try {
                                     await Provider.of<RutaProvider>(context, listen: false).deleteCustomerRuta(rutaId, selectedCustomerId!);
+                                    NotificationService.showSnackBa('The customer has been removed from the route.');
+                                    if(!context.mounted) return;
+                                    Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes();
+                                    Navigator.of(context).pop();        
+                                    } catch (e) {
+                                      NotificationService.showSnackBarError('Failed to remove the customer. Please try again.');
+                                    }
+                                   } else {
+                                    NotificationService.showSnackBarError('Please select a customer and a route.');
                                    }
                                   },
                                   child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white)))  
@@ -396,6 +405,8 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
   Widget build(BuildContext context) {
     final customerProvider = Provider.of<CustomersProvider>(context);
     final customersNoEnRutas = customerProvider.customerNoEnRutas;
+
+    final rutaFormProvider = Provider.of<RutaFormProvider>(context);
 
     return WhiteCardColor(
       child: SizedBox(
@@ -521,11 +532,21 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                         style: GoogleFonts.plusJakartaSans(
                             color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                       ),  
-                      onPressed: () async {
-                      
-                      },
-                    ),
-                  ),
+                     onPressed: () async {
+                          if (selectedCustomerId != null && selectedDiaSemana != null) {
+                          final saved = await rutaFormProvider.updateRutaWithCustomer(selectedCustomerId!, selectedDiaSemana!);  
+                            if (saved) {
+                              NotificationService.showSnackBa('Route Updated');
+                              
+                            } else {
+                              NotificationService.showSnackBarError('Error to Update the Route');
+                            }
+                          } else {
+                            NotificationService.showSnackBarError('Please select a customer and a day of the week.');
+                          }
+                        },
+                              ),
+                            ),
           ],
         ),
       ),
@@ -824,7 +845,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
     super.initState();
     final customerProvider =
         Provider.of<CustomersProvider>(context, listen: false);
-    customerProvider.getPaginatedCustomers();
+        customerProvider.getPaginatedCustomers();
   }
 
   void _scrollLeft() {

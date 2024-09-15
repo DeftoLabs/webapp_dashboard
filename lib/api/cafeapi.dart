@@ -69,6 +69,25 @@ class CafeApi {
     }
   }
 
+  static Future putJson(String path, Map<String, dynamic> data) async {
+  try {
+    // Enviar los datos como JSON, sin usar FormData
+    final resp = await _dio.put(
+      path,
+      data: data, // Enviar el map directamente
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json', // Especifica que estás enviando JSON
+        },
+      ),
+    );
+    
+    return resp.data; // Retorna los datos de la respuesta
+  } catch (e) {
+    throw('Error in the PUT');
+  }
+}
+
    static Future delete ( String path, Map<String, dynamic> data ) async {
 
       final formData = FormData.fromMap(data);

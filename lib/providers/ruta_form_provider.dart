@@ -25,7 +25,7 @@ copyRutaWith ({
     String? nombreRuta,
     String? zona,
     String? diasemana,
-    final List <Customer>? clientes,
+    List <Customer>? clientes,
     Usuario? usuarioZona,
     String? img,
 }) {
@@ -51,7 +51,6 @@ Future updateRuta ()async {
     'nombreRuta': ruta!.nombreRuta,
     'usuarioZona': ruta!.usuarioZona.uid, 
   };
-
   try {
     await CafeApi.put('/rutas/${ruta!.id}', data);
     return true;
@@ -59,7 +58,27 @@ Future updateRuta ()async {
      NotificationService.showSnackBarError('Error to Update the Route');
       return false;
   }
+}
 
+Future updateRutaWithCustomer( String clienteId, String diasemana) async { // ID de la ruta
+
+  Map<String, dynamic> data = {
+    "clientes": [
+      {
+        "cliente": clienteId,  // ID del cliente
+        "diasemana": diasemana  // Día de la semana
+      }
+    ]
+  };
+
+  try {
+     await CafeApi.putJson('/rutas/${ruta!.id}', data);
+     return  true;
+  } catch (e) {
+    return false;
+  }
 }
 
 }
+
+
