@@ -126,6 +126,7 @@ class _RutaViewBody extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         _RutaPerDayView(clientes: ruta.clientes),
+        const SizedBox(height: 30)
       ],
     );
   }
@@ -843,8 +844,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
   @override
   void initState() {
     super.initState();
-    final customerProvider =
-        Provider.of<CustomersProvider>(context, listen: false);
+    final customerProvider = Provider.of<CustomersProvider>(context, listen: false);
         customerProvider.getPaginatedCustomers();
   }
 
@@ -871,6 +871,12 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
   @override
   Widget build(BuildContext context) {
 
+    final rutaProvider = Provider.of<RutaProvider>(context);
+
+     final List<Customer> clientes = rutaProvider.rutas.isNotEmpty 
+        ? rutaProvider.rutas.first.clientes
+        : [];
+
     final diasSemana = [
       'Monday',
       'Tuesday',
@@ -884,7 +890,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
     return Column(
       children: [
         SizedBox(
-          height: 350,
+          height: 400,
           child: Stack(
             children: [
               ListView.builder(
@@ -894,7 +900,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                 itemBuilder: (context, index) {
                   String dia = diasSemana[index];
 
-                  List<Customer> clientesDelDia = widget.clientes
+                  List<Customer> clientesDelDia = clientes
                       .where((cliente) => cliente.diasemana == dia)
                       .toList();
 
@@ -910,7 +916,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              dia,
+                              '$dia - Customers: (${clientesDelDia.length})',
                               style: GoogleFonts.plusJakartaSans(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -926,7 +932,12 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                           thickness: 2,
                         ),
                         Expanded(
-                            child: ListView.builder(
+                            child: clientesDelDia.isEmpty ? 
+                            Center(
+                              child: Text('No Customer for this day', 
+                              style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold))
+                            ) : 
+                            ListView.builder(
                                 itemCount: clientesDelDia.length,
                                 itemBuilder: (context, index) {
                                   final cliente = clientesDelDia[index];
@@ -934,12 +945,11 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 1),
                                     child: ListTile(
-                                        title: Text(
-                                          cliente.nombre,
-                                          style: GoogleFonts.plusJakartaSans(
-                                            fontSize: 12,
+                                        title: Text( cliente.nombre,
+                                          style: GoogleFonts.plusJakartaSans( fontSize: 12)),
+                                          subtitle: Text(cliente.sucursal,
+                                          style: GoogleFonts.plusJakartaSans( fontSize: 10, fontWeight: FontWeight.bold)
                                           ),
-                                        ),
                                         visualDensity: const VisualDensity(
                                             horizontal: -4, vertical: -4)),
                                   );

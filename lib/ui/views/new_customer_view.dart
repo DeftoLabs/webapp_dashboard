@@ -533,8 +533,8 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 if (value.length < 2) {
                                   return 'The Legal Name requires a minimum of 2 characters';
                                 }
-                                if (value.length > 50) {
-                                  return 'Max 50 characters';
+                                if (value.length > 40) {
+                                  return 'Max 40 characters';
                                 }
                                 return null;
                               },
@@ -578,8 +578,8 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 if (value.length < 2) {
                                   return 'The Business Name requires a minimum of 2 characters';
                                 }
-                                if (value.length > 50) {
-                                  return 'Max 50 characters';
+                                if (value.length > 40) {
+                                  return 'Max 40 characters';
                                 }
                                 return null;
                               },
@@ -618,7 +618,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Branch is Required';
+                                  return null;
                                 }
                                 if (value.length < 2) {
                                   return 'The Branch requires a minimum of 2 characters';

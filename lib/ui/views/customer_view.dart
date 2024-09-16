@@ -27,10 +27,8 @@ class _CustomerViewState extends State<CustomerView> {
   void initState() {
     super.initState();
 
-    final customerProvider =
-        Provider.of<CustomersProvider>(context, listen: false);
-    final customerFormProvider =
-        Provider.of<CustomerFormProvider>(context, listen: false);
+    final customerProvider = Provider.of<CustomersProvider>(context, listen: false);
+    final customerFormProvider = Provider.of<CustomerFormProvider>(context, listen: false);
 
     customerProvider.getCustomerById(widget.id).then((customerDB) {
       if (customerDB != null) {
@@ -538,8 +536,8 @@ class _CustomerViewState extends State<CustomerView> {
                               if (value.length < 2) {
                                 return 'The Legal required minimum 3 characters';
                               }
-                              if (value.length > 51) {
-                                return 'Max 50 characters';
+                              if (value.length > 40) {
+                                return 'Max 40 characters';
                               }
                               return null;
                               }),
@@ -586,8 +584,8 @@ class _CustomerViewState extends State<CustomerView> {
                               if (value.length < 2) {
                                 return 'The Bussiness required minimum 3 characters';
                               }
-                              if (value.length > 51) {
-                                return 'Max 50 characters';
+                              if (value.length > 40) {
+                                return 'Max 40 characters';
                               }
                               return null;
                               }
@@ -604,10 +602,9 @@ class _CustomerViewState extends State<CustomerView> {
                                 labelText: 'Branch',
                                 labelStyle: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 16),
                                 prefixIcon: customer.sucursal.isEmpty
-                                    ? const Icon(Icons.point_of_sale_outlined,
+                                    ? const Icon(Icons.business_outlined,
                                         color: Colors.black, size: 20)
                                     : null,
                                 enabledBorder: const OutlineInputBorder(
@@ -630,13 +627,13 @@ class _CustomerViewState extends State<CustomerView> {
                               }, 
                               validator: (value) {
                                if (value == null || value.isEmpty) {
-                                return 'Branch is Required';
+                                return null;
                               }
                               if (value.length < 2) {
                                 return 'The Branch required minimum 3 characters';
                               }
-                              if (value.length > 41) {
-                                return 'Max 40 characters';
+                              if (value.length > 30) {
+                                return 'Max 30 characters';
                               }
                               return null;
                               }),

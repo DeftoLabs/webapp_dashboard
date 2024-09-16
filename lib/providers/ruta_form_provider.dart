@@ -73,6 +73,7 @@ Future updateRutaWithCustomer( String clienteId, String diasemana) async { // ID
 
   try {
      await CafeApi.putJson('/rutas/${ruta!.id}', data);
+     notifyListeners(); 
      return  true;
   } catch (e) {
     return false;
