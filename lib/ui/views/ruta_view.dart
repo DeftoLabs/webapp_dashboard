@@ -106,24 +106,44 @@ class _RutaViewBody extends StatelessWidget {
             ],
           ),
         ),
-        Column(
-          children: [
-            SizedBox(
-              child: Table(
-                columnWidths: const {
-                  0: FixedColumnWidth(500),
-                },
-                children: const [
-                  TableRow( children: [
-                     _AddRouteCustomerView(),
-                    _DeleteRouteCustomerView()
+Column(
+  children: [
+    Builder(
+      builder: (context) {
+        // Obtener el ancho de la pantalla usando MediaQuery
+        final screenWidth = MediaQuery.of(context).size.width;
 
-                  ])
+        // Verificar si el ancho de la pantalla es menor a 1180
+        if (screenWidth < 1180) {
+          // Si es menor a 1180, los widgets se organizan verticalmente
+          return const Column(
+            children: [
+              _AddRouteCustomerView(),
+              SizedBox(height: 10), // Espacio entre los widgets
+              _DeleteRouteCustomerView(),
+            ],
+          );
+        } else {
+          // Si es mayor o igual a 1180, los widgets se organizan en una fila
+          return Table(
+            columnWidths: const {
+              0: FixedColumnWidth(500),
+              1: FixedColumnWidth(500),
+            },
+            children: const [
+              TableRow(
+                children: [
+                  _AddRouteCustomerView(),
+                  _DeleteRouteCustomerView(),
                 ],
               ),
-            )
-          ],
-        ),
+            ],
+          );
+        }
+      },
+    )
+  ],
+),
         const SizedBox(height: 10),
         _RutaPerDayView(clientes: ruta.clientes),
         const SizedBox(height: 30)
@@ -287,6 +307,13 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
 
                             final dialog = AlertDialog(
                               backgroundColor: const Color.fromARGB(255, 98, 99, 103),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: const BorderSide(
+                                  color:   Color.fromRGBO(255, 152, 0, 1),
+                                  width: 2
+                                )
+                              ),
                               title: Text('Are you sure to remove this customer from the route?', 
                               style: GoogleFonts.plusJakartaSans( fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
                               content: SizedBox(
@@ -311,7 +338,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                   onPressed: (){
                                     Navigator.of(context).pop();
                                   }, 
-                                  child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white))),
+                                  child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
                                 TextButton(
                                   onPressed: () async {
                                    final rutaId = ruta.id;
@@ -329,7 +356,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                     NotificationService.showSnackBarError('Please select a customer and a route.');
                                    }
                                   },
-                                  child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white)))  
+                                  child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
                               ],
                             );
 
@@ -535,17 +562,102 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                       ),  
                      onPressed: () async {
                           if (selectedCustomerId != null && selectedDiaSemana != null) {
-                          final saved = await rutaFormProvider.updateRutaWithCustomer(selectedCustomerId!, selectedDiaSemana!);  
-                            if (saved) {
-                              NotificationService.showSnackBa('Route Updated');
-                              
-                            } else {
-                              NotificationService.showSnackBarError('Error to Update the Route');
-                            }
-                          } else {
-                            NotificationService.showSnackBarError('Please select a customer and a day of the week.');
-                          }
-                        },
+
+                             final customer = customersNoEnRutas.firstWhere(
+                            (c) => c.id == selectedCustomerId,
+                          );
+                          
+                          final dialog = AlertDialog(
+                              backgroundColor: const Color.fromARGB(255, 98, 99, 103),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: const BorderSide(
+                                  color:  Color.fromRGBO(177, 255, 46, 100),
+                                  width: 2
+                                )
+                              ),
+                              title: Text('Are you sure you want to ADD this customer to the route?', 
+                              style: GoogleFonts.plusJakartaSans( fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
+                              content: SizedBox(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    const Divider(
+                                        indent: 30,
+                                        endIndent: 30,
+                                        color: Colors.white,
+                                        thickness: 2,
+                                      ),
+                                    const SizedBox(height: 10),
+                                    Text(customer.nombre,
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text( 'Branch: ${customer.sucursal}',
+                                    style: GoogleFonts.plusJakartaSans(
+                                      color: Colors.white,
+                                      fontSize: 16,),
+                                    ),
+                                    const SizedBox(height: 10),
+                                       const Divider(
+                                        indent: 70,
+                                        endIndent: 70,
+                                        color: Colors.white,
+                                        thickness: 2,
+                                      ),
+                                       const SizedBox(height: 10),
+                                      Text.rich(
+                                  TextSpan(
+                                    text: 'Day of the Week: ', // Texto normal
+                                    style: GoogleFonts.plusJakartaSans(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: selectedDiaSemana!, // Texto en negritas
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontWeight: FontWeight.bold, // Aplica solo negritas aquí
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                
+                                ],
+                                )),
+                              actions: [
+                                TextButton(
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  }, 
+                                  child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
+                                TextButton(
+                                  onPressed: () async {
+                                 
+                                     if (selectedCustomerId != null && selectedDiaSemana != null) {
+                                    try {
+                                    await rutaFormProvider.updateRutaWithCustomer(selectedCustomerId!, selectedDiaSemana!);  
+                                    NotificationService.showSnackBa('The customer has been Added from the route.');
+                                    if(!context.mounted) return;
+                                    Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes();
+                                    Navigator.of(context).pop();        
+                                    } catch (e) {
+                                      NotificationService.showSnackBarError('Error to Update the Route');
+                                    }
+                                   } else {
+                                    NotificationService.showSnackBarError('Please select a customer and a route.');
+                                   }
+                                  },
+                                  child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
+                              ],
+                            );
+
+                            showDialog(context: context, builder: ( _ ) => dialog);
+                     }},
                               ),
                             ),
           ],

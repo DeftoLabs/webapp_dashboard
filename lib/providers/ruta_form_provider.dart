@@ -53,6 +53,7 @@ Future updateRuta ()async {
   };
   try {
     await CafeApi.put('/rutas/${ruta!.id}', data);
+    notifyListeners(); 
     return true;
   } catch (e) {
      NotificationService.showSnackBarError('Error to Update the Route');

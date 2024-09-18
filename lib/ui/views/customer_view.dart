@@ -22,6 +22,7 @@ class CustomerView extends StatefulWidget {
 
 class _CustomerViewState extends State<CustomerView> {
   Customer? customer;
+  
 
   @override
   void initState() {
