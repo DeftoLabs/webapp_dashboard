@@ -521,23 +521,23 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                   }, 
                                   child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
                                 TextButton(
-                                  onPressed: () async {
-                                if (selectedCustomerId != null && selectedDiaSemana != null) {
-                                  final rutaId = ruta.id;
-                                  final isUpdated = await Provider.of<RutaFormProvider>(context, listen: false)
-                                      .updateDayOfWeekForCustomer(rutaId!, selectedCustomerId!, selectedDiaSemana!);
+                                 onPressed: () async {
+                                    if (selectedCustomerId != null && selectedDiaSemana != null) {
+                                      final rutaId = ruta.id;// Día de la semana seleccionado
 
-                                  if (isUpdated) {
-                                    NotificationService.showSnackBa('Day of the week updated successfully.');
-                                    Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes(); // Recarga las rutas actualizadas
-                                  } else {
-                                    NotificationService.showSnackBarError('Failed to update the day of the week. Please try again.');
-                                  }
-                                } else {
-                                  NotificationService.showSnackBarError('Please select a customer and a day of the week.');
-                                }
-                              },
+                                      final isUpdated = await Provider.of<RutaFormProvider>(context, listen: false)
+                                          .updateDayOfWeekForCustomer(rutaId!, selectedCustomerId!, selectedDiaSemana!);
 
+                                      if (isUpdated) {
+                                        NotificationService.showSnackBa('Día de la semana actualizado exitosamente.');
+                                        Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes(); // Recarga las rutas actualizadas
+                                      } else {
+                                        NotificationService.showSnackBarError('Error al actualizar el día de la semana. Por favor, inténtalo de nuevo.');
+                                      }
+                                    } else {
+                                      NotificationService.showSnackBarError('Por favor, selecciona un cliente y un día de la semana.');
+                                    }
+                                  },
                                   child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
                               ],
                             );

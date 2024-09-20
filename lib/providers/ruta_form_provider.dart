@@ -80,26 +80,21 @@ Future updateRutaWithCustomer( String clienteId, String diasemana) async { // ID
     return false;
   }
 }
-Future<bool> updateDayOfWeekForCustomer(String rutaId, String clienteId, String nuevoDiaSemana) async {
+Future<bool> updateDayOfWeekForCustomer(
+  String rutaId, String clienteId, String diasemana) async {
   Map<String, dynamic> data = {
-    "clientes": [
-      {
-        "cliente": clienteId,
-        "diasemana": nuevoDiaSemana
-      }
-    ]
+    "diasemana": diasemana
   };
 
   try {
-    await CafeApi.putJson('/rutas/$rutaId', data); // Actualiza la ruta en la base de datos
-    notifyListeners();  // Notifica a los listeners de la actualización
-    return true;
+     await CafeApi.putJson('/rutas/$rutaId/clientes/$clienteId/diasemana', data);
+
+  notifyListeners(); 
+     return  true;
   } catch (e) {
-    print("Error actualizando el día de la semana: $e");
     return false;
   }
 }
-
 
 }
 
