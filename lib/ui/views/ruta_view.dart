@@ -230,8 +230,15 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                         items: ruta.clientes.map((customer) {
                             return DropdownMenuItem<String>(
                               value: customer.id,
-                              child: Text(customer.nombre, style: const TextStyle(color: Colors.white)),
-                            );
+                              child: Row(
+                              children: [
+                                Text(customer.nombre,
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12)),
+                                const SizedBox(width: 5),    
+                                Text(customer.sucursal,
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)), 
+                              ],
+                            ));
                           }).toList(),
                         onChanged: (value) {
                           setState(() {
@@ -305,6 +312,11 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                           onPressed: () {
                             final selectedCustomer = clientesEnRuta.firstWhere((customer) => customer.id == selectedCustomerId );
 
+                          final customer = ruta.clientes.firstWhere(
+                            (c) => c.id == selectedCustomerId,
+                          );
+                          
+
                             final dialog = AlertDialog(
                               backgroundColor: const Color.fromARGB(255, 98, 99, 103),
                               shape: RoundedRectangleBorder(
@@ -314,7 +326,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                   width: 2
                                 )
                               ),
-                              title: Text('Are you sure to remove this customer from the route?', 
+                              title: Text('Are you sure to REMOVE this customer from the route?', 
                               style: GoogleFonts.plusJakartaSans( fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
                               content: SizedBox(
                                 child: Column(
@@ -331,6 +343,21 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                     Text(selectedCustomer.nombre,
                                     style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
                                     ),
+                                   const SizedBox(height: 10),
+                                    Text( 'Branch: ${customer.sucursal}',
+                                    style: GoogleFonts.plusJakartaSans(
+                                      color: Colors.white,
+                                      fontSize: 16,),
+                                    ),
+                                    const SizedBox(height: 10),
+                                       const Divider(
+                                        indent: 70,
+                                        endIndent: 70,
+                                        color: Colors.white,
+                                        thickness: 2,
+                                      ),
+                                       const SizedBox(height: 10),
+                                       
                                   ],
                                 )),
                               actions: [
@@ -385,6 +412,137 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                 color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                           ),  
                           onPressed: () async {
+                            final selectedCustomer = clientesEnRuta.firstWhere((customer) => customer.id == selectedCustomerId );
+
+                          final customer = ruta.clientes.firstWhere(
+                            (c) => c.id == selectedCustomerId,
+                          );
+                          
+
+                            final dialog = AlertDialog(
+                              backgroundColor: const Color.fromARGB(255, 98, 99, 103),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: const BorderSide(
+                                  color:   Color.fromARGB(255, 88, 164, 246),
+                                  width: 2
+                                )
+                              ),
+                              title: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Are you sure you want to ',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'MODIFY',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: const Color.fromARGB(255, 88, 164, 246), // Cambia el color aquí
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' this customer from the route?',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                              content: SizedBox(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    const Divider(
+                                        indent: 30,
+                                        endIndent: 30,
+                                        color: Colors.white,
+                                        thickness: 2,
+                                      ),
+                                    const SizedBox(height: 10),
+                                    Text(selectedCustomer.nombre,
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
+                                    ),
+                                   const SizedBox(height: 10),
+                                    customer.sucursal.isNotEmpty 
+                                      ? Text(
+                                          'Branch: ${customer.sucursal}',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
+                                    const SizedBox(height: 10),
+                                       const Divider(
+                                        indent: 70,
+                                        endIndent: 70,
+                                        color: Colors.white,
+                                        thickness: 2,
+                                      ),
+                                       const SizedBox(height: 10),
+                                       Text('Mostrar Dia de la semana en DB'),
+                                       Text.rich(
+                                  TextSpan(
+                                    text: 'Day of the Week: ', // Texto normal
+                                    style: GoogleFonts.plusJakartaSans(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: selectedDiaSemana!, // Texto en negritas
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontWeight: FontWeight.bold, // Aplica solo negritas aquí
+                                          color: const Color.fromARGB(255, 88, 164, 246), 
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ) 
+                                       
+                                  ],
+                                )),
+                              actions: [
+                                TextButton(
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  }, 
+                                  child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
+                                TextButton(
+                                  onPressed: () async {
+                                if (selectedCustomerId != null && selectedDiaSemana != null) {
+                                  final rutaId = ruta.id;
+                                  final isUpdated = await Provider.of<RutaFormProvider>(context, listen: false)
+                                      .updateDayOfWeekForCustomer(rutaId!, selectedCustomerId!, selectedDiaSemana!);
+
+                                  if (isUpdated) {
+                                    NotificationService.showSnackBa('Day of the week updated successfully.');
+                                    Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes(); // Recarga las rutas actualizadas
+                                  } else {
+                                    NotificationService.showSnackBarError('Failed to update the day of the week. Please try again.');
+                                  }
+                                } else {
+                                  NotificationService.showSnackBarError('Please select a customer and a day of the week.');
+                                }
+                              },
+
+                                  child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
+                              ],
+                            );
+
+                            showDialog(context: context, builder: ( _ ) => dialog);
                           
                           },
                         ),
@@ -490,8 +648,15 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                         items: customersNoEnRutas.map((customer) {
                           return DropdownMenuItem<String>(
                             value: customer.id,
-                            child: Text(customer.nombre,
-                                style: const TextStyle(color: Colors.white)),
+                            child: Row(
+                              children: [
+                                Text(customer.nombre,
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12)),
+                                const SizedBox(width: 5),    
+                                Text(customer.sucursal,
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)), 
+                              ],
+                            ),
                           );
                         }).toList(),
                         onChanged: (value) {
@@ -594,11 +759,15 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                     style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
                                     ),
                                     const SizedBox(height: 10),
-                                    Text( 'Branch: ${customer.sucursal}',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      color: Colors.white,
-                                      fontSize: 16,),
-                                    ),
+                                    customer.sucursal.isNotEmpty 
+                                      ? Text(
+                                          'Branch: ${customer.sucursal}',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
                                     const SizedBox(height: 10),
                                        const Divider(
                                         indent: 70,
@@ -607,7 +776,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                         thickness: 2,
                                       ),
                                        const SizedBox(height: 10),
-                                      Text.rich(
+                                            Text.rich(
                                   TextSpan(
                                     text: 'Day of the Week: ', // Texto normal
                                     style: GoogleFonts.plusJakartaSans(
@@ -619,13 +788,13 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                         text: selectedDiaSemana!, // Texto en negritas
                                         style: GoogleFonts.plusJakartaSans(
                                           fontWeight: FontWeight.bold, // Aplica solo negritas aquí
-                                          color: Colors.white,
+                                          color: const Color.fromRGBO(177, 255, 46, 100),
                                           fontSize: 16,
                                         ),
                                       ),
                                     ],
                                   ),
-                                )
+                                ) 
                                 
                                 ],
                                 )),

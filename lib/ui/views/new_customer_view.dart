@@ -623,8 +623,8 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 if (value.length < 2) {
                                   return 'The Branch requires a minimum of 2 characters';
                                 }
-                                if (value.length > 40) {
-                                  return 'Max 40 characters';
+                                if (value.length > 17) {
+                                  return 'Max 17 characters';
                                 }
                                 return null;
                               },
