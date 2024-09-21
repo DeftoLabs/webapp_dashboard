@@ -310,6 +310,11 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                 color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                           ),  
                           onPressed: () {
+
+                              if (selectedCustomerId == null) {
+                              NotificationService.showSnackBarError('Select a valid Customer and Day of the week');
+                              return;
+                            }
                             final selectedCustomer = clientesEnRuta.firstWhere((customer) => customer.id == selectedCustomerId );
 
                           final customer = ruta.clientes.firstWhere(
@@ -326,8 +331,36 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                   width: 2
                                 )
                               ),
-                              title: Text('Are you sure to REMOVE this customer from the route?', 
-                              style: GoogleFonts.plusJakartaSans( fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
+                              title: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Are you sure to ',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'REMOVE',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: const Color.fromRGBO(255, 152, 0, 1), // Cambia el color aquí
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' this customer from the route?',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                               content: SizedBox(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
@@ -344,11 +377,15 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                     style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)
                                     ),
                                    const SizedBox(height: 10),
-                                    Text( 'Branch: ${customer.sucursal}',
-                                    style: GoogleFonts.plusJakartaSans(
-                                      color: Colors.white,
-                                      fontSize: 16,),
-                                    ),
+                                   customer.sucursal.isNotEmpty 
+                                      ? Text(
+                                          'Branch: ${customer.sucursal}',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
                                     const SizedBox(height: 10),
                                        const Divider(
                                         indent: 70,
@@ -412,6 +449,11 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                 color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                           ),  
                           onPressed: () async {
+
+                             if (selectedCustomerId == null || selectedDiaSemana == null) {
+                              NotificationService.showSnackBarError('Select a valid Customer and Day of the week');
+                              return;
+  }
                             final selectedCustomer = clientesEnRuta.firstWhere((customer) => customer.id == selectedCustomerId );
 
                           final customer = ruta.clientes.firstWhere(
@@ -491,7 +533,6 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                         thickness: 2,
                                       ),
                                        const SizedBox(height: 10),
-                                       Text('Mostrar Dia de la semana en DB'),
                                        Text.rich(
                                   TextSpan(
                                     text: 'Day of the Week: ', // Texto normal
@@ -515,33 +556,39 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                   ],
                                 )),
                               actions: [
-                                TextButton(
+                                 TextButton(
                                   onPressed: (){
                                     Navigator.of(context).pop();
                                   }, 
                                   child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
-                                TextButton(
-                                 onPressed: () async {
-                                    if (selectedCustomerId != null && selectedDiaSemana != null) {
-                                      final rutaId = ruta.id;// Día de la semana seleccionado
-
-                                      final isUpdated = await Provider.of<RutaFormProvider>(context, listen: false)
-                                          .updateDayOfWeekForCustomer(rutaId!, selectedCustomerId!, selectedDiaSemana!);
-
-                                      if (isUpdated) {
-                                        NotificationService.showSnackBa('Día de la semana actualizado exitosamente.');
-                                        Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes(); // Recarga las rutas actualizadas
-                                      } else {
-                                        NotificationService.showSnackBarError('Error al actualizar el día de la semana. Por favor, inténtalo de nuevo.');
-                                      }
+                                
+                              TextButton(
+                                onPressed: () async {
+                                  if (selectedCustomerId != null && selectedDiaSemana != null) {
+                                    final rutaId = ruta.id;
+                              
+                                    final isUpdated = await Provider.of<RutaFormProvider>(context, listen: false)
+                                        .updateDayOfWeekForCustomer(rutaId!, selectedCustomerId!, selectedDiaSemana!);
+                              
+                                    if (isUpdated) {
+                                      NotificationService.showSnackBa('Day of the week successfully updated');
+                                      if (!context.mounted) return;
+                                      Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes(); // Recarga las rutas actualizadas
                                     } else {
-                                      NotificationService.showSnackBarError('Por favor, selecciona un cliente y un día de la semana.');
+                                      NotificationService.showSnackBarError('Error updating the day of the week. Please try again.');
                                     }
-                                  },
-                                  child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
+                                  } else {
+                                    // Mostrar el mensaje si no se selecciona un cliente o día
+                                    NotificationService.showSnackBarError('Please select a client and a day of the week.');
+                                  }
+                                },
+                                child: Text(
+                                  'Yes',
+                                  style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white),
+                                ),
+                              )
                               ],
                             );
-
                             showDialog(context: context, builder: ( _ ) => dialog);
                           
                           },
@@ -726,6 +773,10 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                             color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                       ),  
                      onPressed: () async {
+                        if (selectedCustomerId == null || selectedDiaSemana == null) {
+                          NotificationService.showSnackBarError('Select a valid Customer and Day of the week');
+                          return;
+                        }
                           if (selectedCustomerId != null && selectedDiaSemana != null) {
 
                              final customer = customersNoEnRutas.firstWhere(
@@ -741,8 +792,36 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                   width: 2
                                 )
                               ),
-                              title: Text('Are you sure you want to ADD this customer to the route?', 
-                              style: GoogleFonts.plusJakartaSans( fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
+                              title: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'Are you sure you want to ',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'ADD',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: const Color.fromRGBO(177, 255, 46, 100),// Cambia el color aquí
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' this customer from the route?',
+                                          style: GoogleFonts.plusJakartaSans(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),              
                               content: SizedBox(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
