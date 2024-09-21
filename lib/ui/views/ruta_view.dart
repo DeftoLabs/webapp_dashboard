@@ -884,8 +884,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                   }, 
                                   child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
                                 TextButton(
-                                  onPressed: () async {
-                                 
+                                  onPressed: () async {                              
                                      if (selectedCustomerId != null && selectedDiaSemana != null) {
                                     try {
                                     await rutaFormProvider.updateRutaWithCustomer(selectedCustomerId!, selectedDiaSemana!);  

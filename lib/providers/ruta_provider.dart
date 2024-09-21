@@ -63,4 +63,18 @@ Future<void> deleteCustomerRuta(String rutaId, String customerId) async {
     throw('Error to Delete a Customer / Route');
   }
 }
+    Future newRoute (String codigoRuta, String nombreRuta) async {
+    final data = {
+      'codigoRuta': codigoRuta,
+      'nombreRuta': nombreRuta,
+    };
+    try{
+      final json = await CafeApi.post('/rutas', data);
+      final newRuta = Ruta.fromMap(json);
+      rutas.add(newRuta);
+      notifyListeners();
+    } catch (e){
+      throw ' Error to create the Route ';
+    }
+  }
 }

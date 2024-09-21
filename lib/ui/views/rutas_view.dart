@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/ruta_datasource.dart';
 import 'package:web_dashboard/providers/ruta_provider.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
+import 'package:web_dashboard/ui/modals/ruta_modal.dart';
 
 
 class RutasView extends StatelessWidget {
@@ -51,6 +52,12 @@ class RutasView extends StatelessWidget {
                             color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
                       onPressed: () {
+                          showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return RutaModal();
+                      },
+                    );
                         
                       },
                       icon: const Icon(
@@ -70,7 +77,7 @@ class RutasView extends StatelessWidget {
             sortAscending: rutasProvider.ascending,
             sortColumnIndex: rutasProvider.sortColumnIndex,
             columns: [
-              const DataColumn(label: Text('Route')),
+              const DataColumn(label: Text('#')),
               DataColumn(label: const Text('Code', style: TextStyle(
                 fontWeight: FontWeight.bold)), 
               onSort: (colIndex, _) {

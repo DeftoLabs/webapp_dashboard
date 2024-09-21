@@ -13,13 +13,11 @@ class RutaDatasource extends DataTableSource {
 
     final Ruta ruta = rutas[index];
 
-    const image = Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35);
 
     return DataRow.byIndex(
       index: index,
       cells: [
-        const DataCell( 
-          ClipOval( child: image) ),
+        DataCell( Text((index + 1).toString(),)),
         DataCell( Text( ruta.codigoRuta)),
         DataCell( Text( ruta.nombreRuta)),
         DataCell( Text( ruta.clientes.length.toString())),

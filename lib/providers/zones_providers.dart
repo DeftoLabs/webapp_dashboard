@@ -82,7 +82,7 @@ class ZonesProviders extends ChangeNotifier {
       zonas.add(newZona);
       notifyListeners();
     } catch (e){
-      throw ' Error to create the Category ';
+      throw ' Error to create the Zone ';
     }
   }
 
