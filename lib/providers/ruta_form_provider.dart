@@ -6,12 +6,12 @@ import 'package:web_dashboard/services/notification_services.dart';
 
 import '../models/customers.dart';
 
-
-
 class RutaFormProvider extends ChangeNotifier {
 
 Ruta? ruta;
 GlobalKey<FormState> formKey = GlobalKey<FormState>();
+bool isLoading = true;
+
 
 bool validForm(){
   return formKey.currentState!.validate();
@@ -61,8 +61,11 @@ Future updateRuta ()async {
   }
 }
 
-Future updateRutaWithCustomer( String clienteId, String diasemana) async { // ID de la ruta
-
+Future updateRutaWithCustomer( String clienteId, String diasemana) async { 
+  
+    isLoading = true;
+    notifyListeners();
+  
   Map<String, dynamic> data = {
     "clientes": [
       {
@@ -72,14 +75,19 @@ Future updateRutaWithCustomer( String clienteId, String diasemana) async { // ID
     ]
   };
 
+
   try {
      await CafeApi.putJson('/rutas/${ruta!.id}', data);
-     notifyListeners(); 
      return  true;
   } catch (e) {
+    NotificationService.showSnackBarError('Error: $e'); 
     return false;
+  } finally {
+    isLoading = false; 
+    notifyListeners();
   }
 }
+
 Future<bool> updateDayOfWeekForCustomer(
   String rutaId, String clienteId, String diasemana) async {
   Map<String, dynamic> data = {
@@ -89,6 +97,7 @@ Future<bool> updateDayOfWeekForCustomer(
   try {
      await CafeApi.putJson('/rutas/$rutaId/clientes/$clienteId/diasemana', data);
 
+  isLoading = false;
   notifyListeners(); 
      return  true;
   } catch (e) {

@@ -892,7 +892,6 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                     await rutaFormProvider.updateRutaWithCustomer(selectedCustomerId!, selectedDiaSemana!);  
                                     NotificationService.showSnackBa('The customer has been Added from the route.');
                                     if(!context.mounted) return;
-                                    Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes();
                                     Navigator.of(context).pop();        
                                     } catch (e) {
                                       NotificationService.showSnackBarError('Error to Update the Route');
