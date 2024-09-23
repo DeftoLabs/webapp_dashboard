@@ -70,9 +70,11 @@ void refreshCustomer (Customer newCustomer) {
 }
 
 Future<void> loadCustomerNoEnRutas() async {
-  try {
-    final response = await CafeApi.httpGet('/rutas/clientes/noenrutas');// Imprime la respuesta completa
+    isLoading = true;
+    notifyListeners();
 
+  try {
+    final response = await CafeApi.httpGet('/rutas/clientes/noenrutas');
     if (response != null && response.containsKey('clientes')) {
       final List<dynamic> clientes = response['clientes'];
 
@@ -80,7 +82,7 @@ Future<void> loadCustomerNoEnRutas() async {
     } else {
       throw 'Unexpected response format';
     }
-
+    isLoading = false;
     notifyListeners();
   } catch (e) {
     throw 'Error to Consult the Customer';

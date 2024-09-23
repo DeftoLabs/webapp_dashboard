@@ -12,7 +12,7 @@ class Ruta {
     String nombreRuta;
     String zona;
     String diasemana;
-    final List <Customer> clientes;
+    List <Customer> clientes;
     Usuario usuarioZona;
     String? img;
 

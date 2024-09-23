@@ -145,7 +145,7 @@ Column(
   ],
 ),
         const SizedBox(height: 10),
-        _RutaPerDayView(clientes: ruta.clientes),
+        _RutaPerDayView(id: ruta.id! ),
         const SizedBox(height: 30)
       ],
     );
@@ -201,7 +201,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
             ),
             const SizedBox(height: 10),
             clientesEnRuta.isEmpty
-              ? const CircularProgressIndicator()
+              ? const CircularProgressIndicator(color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 2)
                   : SizedBox(
                     width: double.infinity,
                     child: DropdownButtonFormField<String>(
@@ -615,6 +615,8 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
   String? selectedCustomerId;
   String? selectedDiaSemana;
 
+
+
   final List<String> diasSemana = [
     'Monday', 
     'Tuesday', 
@@ -664,7 +666,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
             ),
             const SizedBox(height: 10),
             customerProvider.isLoading
-              ? const CircularProgressIndicator()
+              ? const CircularProgressIndicator(color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 2)
               : customersNoEnRutas.isEmpty
                   ? Text('No Customers Available', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16))
                   : SizedBox(
@@ -1102,7 +1104,7 @@ class _RouteViewState extends State<_RouteView> {
                   Consumer<UsersProvider>(
                     builder: (context, userProvider, child) {
                        if (userProvider.usersNoEnRutas.isEmpty) {
-                      return const CircularProgressIndicator(); 
+                      return const CircularProgressIndicator(color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 2); 
                     }
                     final currentUid = ruta.usuarioZona.uid;
                     final isValidUid = userProvider.usersNoEnRutas.any((user) => user.uid == currentUid);
@@ -1189,9 +1191,9 @@ class _RouteViewState extends State<_RouteView> {
 }
 
 class _RutaPerDayView extends StatefulWidget {
-  final List<Customer> clientes;
+  final String id;
 
-  const _RutaPerDayView({required this.clientes});
+  const _RutaPerDayView({required this.id});
 
   @override
   State<_RutaPerDayView> createState() => _RutaPerDayViewState();
@@ -1199,12 +1201,17 @@ class _RutaPerDayView extends StatefulWidget {
 
 class _RutaPerDayViewState extends State<_RutaPerDayView> {
   final ScrollController _scrollController = ScrollController();
+   Ruta? ruta;
 
-  @override
+@override
   void initState() {
     super.initState();
-    final customerProvider = Provider.of<CustomersProvider>(context, listen: false);
-        customerProvider.getPaginatedCustomers();
+    final rutaProvider = Provider.of<RutaProvider>(context, listen: false);
+    rutaProvider.getRouteById(widget.id).then((rutaDB) {
+      setState(() {
+        ruta = rutaDB; // Almacenar la ruta obtenida
+      });
+    });
   }
 
   void _scrollLeft() {
@@ -1230,11 +1237,13 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
   @override
   Widget build(BuildContext context) {
 
-    final rutaProvider = Provider.of<RutaProvider>(context);
+    if(ruta == null) {
+      return const Center(
+        child: CircularProgressIndicator(color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 2),
+      );
+    }
 
-     final List<Customer> clientes = rutaProvider.rutas.isNotEmpty 
-        ? rutaProvider.rutas.first.clientes
-        : [];
+     final List<Customer> clientes = ruta!.clientes;
 
     final diasSemana = [
       'Monday',
