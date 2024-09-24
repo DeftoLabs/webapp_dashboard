@@ -53,7 +53,7 @@ class _RutaViewState extends State<RutaView> {
                 IconButton(
                     color: Colors.black,
                     onPressed: () {
-                      NavigationService.replaceTo('/dashboard/routes');
+                      NavigationService.navigateTo('/dashboard/routes');
                     },
                     icon: const Icon(Icons.arrow_back_rounded)),
                 Expanded(
@@ -1201,6 +1201,7 @@ class _RutaPerDayView extends StatefulWidget {
 class _RutaPerDayViewState extends State<_RutaPerDayView> {
   final ScrollController _scrollController = ScrollController();
    Ruta? ruta;
+   
 
 @override
   void initState() {
@@ -1208,7 +1209,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
     final rutaProvider = Provider.of<RutaProvider>(context, listen: false);
     rutaProvider.getRouteById(widget.id).then((rutaDB) {
       setState(() {
-        ruta = rutaDB; // Almacenar la ruta obtenida
+        ruta = rutaDB;
       });
     });
   }

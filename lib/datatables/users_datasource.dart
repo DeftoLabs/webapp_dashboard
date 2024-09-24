@@ -16,7 +16,7 @@ class UserDatasource extends DataTableSource {
 
     final Usuario user = users[index];
 
-    final image = (user.img == null) 
+    final image = (user.img == null || !Uri.parse(user.img!).isAbsolute)
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35,) 
     : FadeInImage.assetNetwork(
       placeholder: 'load.gif', 

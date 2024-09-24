@@ -296,7 +296,7 @@ class _AvatarContainer extends StatelessWidget {
     final userFormProvider = Provider.of<UserFormProvider>(context);
     final user = userFormProvider.user!;
 
-    final image = (user.img == null) 
+    final image = (user.img == null || !Uri.parse(user.img!).isAbsolute)
     ? const Image(image: AssetImage('noimage.jpeg')) 
     : FadeInImage.assetNetwork(
       placeholder: 'load.gif', 
