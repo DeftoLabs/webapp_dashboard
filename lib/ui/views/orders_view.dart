@@ -129,23 +129,22 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Contenido del scroll
         SingleChildScrollView(
           controller: _scrollController,
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
               RectangularCard(
-                title: 'Profile',
+                title: 'Order Records',
                 width: 200,
-                child: const Center(child: Icon(Icons.supervised_user_circle_outlined)),
+                child: const Center(child: Icon(Icons.push_pin_rounded)),
                 onTap: () {
-                  NavigationService.replaceTo('');
+                  NavigationService.replaceTo('/dashboard/orders/records');
                 },
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Settings',
+                title: 'Status',
                 width: 200,
                 child: const Center(child: Icon(Icons.settings)),
                 onTap: () {
