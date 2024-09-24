@@ -20,7 +20,7 @@ class SettingsView extends StatelessWidget {
         children: [
           Text('Settings', style: CustomLabels.h1,),
 
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
 
         Wrap(
           crossAxisAlignment: WrapCrossAlignment.start,

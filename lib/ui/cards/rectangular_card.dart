@@ -61,7 +61,7 @@ class RectangularCard extends StatelessWidget {
     borderRadius: BorderRadius.circular(20),
     boxShadow: const [
       BoxShadow(
-        color: Color.fromRGBO(177, 255, 46, 100),
+        color: Colors.grey,
         blurRadius: 5,
       )
     ]

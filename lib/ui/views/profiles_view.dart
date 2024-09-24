@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
-import 'package:web_dashboard/ui/labels/custom_labels.dart';
+
 
 class ProfilesView extends StatelessWidget {
   const ProfilesView({super.key});
@@ -27,7 +27,7 @@ class ProfilesView extends StatelessWidget {
         physics: const ClampingScrollPhysics(),
         children: [
           const SizedBox(height: 20),
-          Center(child: Text('Profile View', style: CustomLabels.h1)),
+          Center(child: Text('Profile View', style: GoogleFonts.plusJakartaSans(fontSize: 30),)),
           const SizedBox(height: 20),
           Card(
             elevation: 4,
