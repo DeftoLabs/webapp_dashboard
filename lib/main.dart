@@ -5,17 +5,6 @@ import 'package:universal_html/html.dart' as html;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/providers/customer_form_provider.dart';
-import 'package:web_dashboard/providers/customers_provider.dart';
-import 'package:web_dashboard/providers/newcustomer_provider.dart';
-import 'package:web_dashboard/providers/product_form_provider.dart';
-import 'package:web_dashboard/providers/products_provider.dart';
-import 'package:web_dashboard/providers/profile_form_provider.dart';
-import 'package:web_dashboard/providers/profile_provider.dart';
-import 'package:web_dashboard/providers/ruta_form_provider.dart';
-import 'package:web_dashboard/providers/ruta_provider.dart';
-import 'package:web_dashboard/providers/zone_form_provider.dart';
-import 'package:web_dashboard/providers/zones_providers.dart';
 import 'providers/providers.dart';
 import 'api/cafeapi.dart';
 import 'gps/blocs/blocs.dart';
@@ -76,6 +65,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProfileFormProvider()),
         ChangeNotifierProvider(create: (_) => RutaProvider()),
         ChangeNotifierProvider(create: (_) => RutaFormProvider()),
+        ChangeNotifierProvider(create: (_) => OrdenesProvider()),
 
       ],
       child: MultiBlocProvider(

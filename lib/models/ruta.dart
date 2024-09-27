@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:web_dashboard/models/customers.dart';
@@ -48,7 +46,7 @@ class Ruta {
             : [],
         usuarioZona: json["usuarioZona"] != null 
         ? Usuario.fromMap(json["usuarioZona"]) 
-        : Usuario(rol: '', estado: false, google: false, nombre: '', correo: '', uid: '', phone: '', zone: ''),
+        : Usuario(rol: '', estado: false, google: false, nombre: 'vacio', correo: '', uid: '', phone: '', zone: ''),
    
         img: json["img"],
 

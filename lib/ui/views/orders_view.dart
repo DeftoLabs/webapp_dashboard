@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_datasource.dart';
-import 'package:web_dashboard/providers/profile_provider.dart';
+import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/cards/rectangular_card.dart';
 
@@ -19,6 +19,8 @@ class OrdersView extends StatelessWidget {
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
 
+    final ordenesProvider = Provider.of<OrdenesProvider>(context);
+
     if (profile == null) {
     return const Center(child: Text(''));
     }
@@ -30,7 +32,7 @@ class OrdersView extends StatelessWidget {
      String todayDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     
-    final ordersDataSource = OrdersDataSource();
+    final ordersDataSource = OrdersDataSource( ordenesProvider.ordenes );
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

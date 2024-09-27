@@ -38,23 +38,24 @@ class Producto {
  
 
 
-  factory Producto.fromMap(Map<String, dynamic> json) => Producto(
-    id: json["_id"],
-    nombre: json["nombre"],
-    estado: json["estado"] ?? false,
-    usuario: User.fromMap(json["usuario"]),
-    precio1: json["precio1"]?.toDouble() ?? 0.0,
-    precio2: json["precio2"]?.toDouble() ?? 0.0,
-    precio3: json["precio3"]?.toDouble() ?? 0.0,
-    precio4: json["precio4"]?.toDouble() ?? 0.0,
-    precio5: json["precio5"]?.toDouble() ?? 0.0,
-    categoria: Categoria.fromMap(json["categoria"]),
-    descripcion: json["descripcion"],
-    disponible: json["disponible"] ?? true,
-    stock: json["stock"]?.toDouble() ?? 0.0,
-    unid: json["unid"] ?? '',
-    img: json["img"],
-  );
+ factory Producto.fromMap(Map<String, dynamic> json) => Producto(
+  id: json["_id"] ?? '',
+  nombre: json["nombre"] ?? '',
+  estado: json["estado"] ?? false,
+  usuario: json["usuario"] != null ? User.fromMap(json["usuario"]) : User(id: '', nombre: ''),
+  precio1: json["precio1"]?.toDouble() ?? 0.0,
+  precio2: json["precio2"]?.toDouble() ?? 0.0,
+  precio3: json["precio3"]?.toDouble() ?? 0.0,
+  precio4: json["precio4"]?.toDouble() ?? 0.0,
+  precio5: json["precio5"]?.toDouble() ?? 0.0,
+  categoria: json["categoria"] != null ? Categoria.fromMap(json["categoria"]) : Categoria(id: '', nombre: ''),
+  descripcion: json["descripcion"],
+  disponible: json["disponible"] ?? true,
+  stock: json["stock"]?.toDouble() ?? 0.0,
+  unid: json["unid"] ?? '',
+  img: json["img"],
+);
+
 
   Map<String, dynamic> toMap() => {
     "_id": id,

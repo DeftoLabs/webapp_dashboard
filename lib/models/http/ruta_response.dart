@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:web_dashboard/models/ruta.dart';
 
-
 class RutaResponse {
     int total;
     List<Ruta> rutas;

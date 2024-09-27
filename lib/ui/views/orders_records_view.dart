@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_records_datasource.dart';
+import 'package:web_dashboard/providers/ordenes_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
@@ -17,6 +18,8 @@ class OrdersRecordsView extends StatelessWidget {
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
 
+      final ordenesProvider = Provider.of<OrdenesProvider>(context);
+
     if (profile == null) {
     return const Center(child: Text(''));
     }
@@ -26,7 +29,7 @@ class OrdersRecordsView extends StatelessWidget {
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
     
-    final ordersDataSource = OrdersRecordsDataSource();
+    final ordersDataSource = OrdersRecordsDataSource(ordenesProvider.ordenes);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -61,29 +64,21 @@ class OrdersRecordsView extends StatelessWidget {
           const SizedBox(height: 10),
           Column(
             children: [
-              Container(
-              decoration: BoxDecoration(
-              color:Colors.grey[300],
-              
-              borderRadius: BorderRadius.circular(15)
-              ),
-                child: PaginatedDataTable(
-                  header: Text('Order Records', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),),
-                  columns:const [
-                    DataColumn(label: Text('# Order')),
-                    DataColumn(label: Text('Date')),
-                    DataColumn(label: Text('Customer')),
-                    DataColumn(label: Text('Total')),
-                    DataColumn(label: Text('Status')),
-                    DataColumn(label: Text('Sales')),
-                    DataColumn(label: Text('Edit')),
-                  ], 
-                  source: ordersDataSource,
-                  columnSpacing: 100,
-                  rowsPerPage: 10,
-                  
-                  ),
-              ),
+              PaginatedDataTable(
+                header: Text('Order Records', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),),
+                columns:const [
+                  DataColumn(label: Text('# Order')),
+                  DataColumn(label: Text('Date')),
+                  DataColumn(label: Text('Customer')),
+                  DataColumn(label: Text('Total')),
+                  DataColumn(label: Text('Status')),
+                  DataColumn(label: Text('Sales')),
+                  DataColumn(label: Text('Edit')),
+                ], 
+                source: ordersDataSource,
+                rowsPerPage: 10,
+                
+                ),
             ],
           )
         ],
