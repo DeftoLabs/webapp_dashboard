@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:web_dashboard/models/ordenes.dart';
@@ -21,11 +19,8 @@ class OrdersRecordsDataSource extends DataTableSource {
       if(orden.clientes.isNotEmpty) {
         clienteNombre = orden.clientes.first.nombre;
       }
-      print('Test Ruta Completa: ${jsonEncode(orden.ruta.first)}');
 
 
-
-    
     
     return DataRow.byIndex(
       
@@ -34,9 +29,9 @@ class OrdersRecordsDataSource extends DataTableSource {
         DataCell(Text(orden.control)),
         DataCell(Text(formattedDate)),
         DataCell(Text(clienteNombre)),
-        DataCell(Text(orden.ruta.first.usuarioZona.nombre)),
+        DataCell(Text('')),
         DataCell(Text(orden.status)),
-        DataCell(Text(orden.ruta.first.id.toString())), 
+        DataCell(Text(orden.ruta.first.usuarioZona.nombre)),
         DataCell(
           IconButton(icon: const Icon(Icons.edit_outlined), 
           onPressed: (){

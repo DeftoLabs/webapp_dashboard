@@ -46,9 +46,9 @@ class Ruta {
             : [],
         usuarioZona: json["usuarioZona"] != null 
         ? Usuario.fromMap(json["usuarioZona"]) 
-        : Usuario(rol: '', estado: false, google: false, nombre: 'vacio', correo: '', uid: '', phone: '', zone: ''),
+        : Usuario(rol: '', estado: false, google: false, nombre: '', correo: '', uid: '', phone: '', zone: ''),
    
-        img: json["img"],
+        img: json["img"] as String?,
 
     );
     } 

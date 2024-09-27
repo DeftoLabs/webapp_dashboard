@@ -24,9 +24,9 @@ class OrdersRecordsView extends StatelessWidget {
     return const Center(child: Text(''));
     }
 
-    final image = (profile.img == null) 
-    ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
-    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
+  //  final image = (profile.img == null) 
+  //  ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
+  //  : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
     
     final ordersDataSource = OrdersRecordsDataSource(ordenesProvider.ordenes);
@@ -49,13 +49,13 @@ class OrdersRecordsView extends StatelessWidget {
               Expanded
               (
                 child: Text('Orders Records', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: ClipOval(
-                  child: image,
-                ),
-              ),
+             // SizedBox(
+             //   width: 60,
+             //   height: 60,
+             //   child: ClipOval(
+             //     child: image,
+             //   ),
+             // ),
               const SizedBox(width: 20),
             ],
           ),

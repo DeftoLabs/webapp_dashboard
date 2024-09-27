@@ -45,16 +45,16 @@ class Ordenes {
     factory Ordenes.fromJson(String str) => Ordenes.fromMap(json.decode(str));
     String toJson() => json.encode(toMap());
 
-factory Ordenes.fromMap(Map<String, dynamic> json) {
+factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás recibiendo
   return Ordenes(
     location: json["location"] != null ? Location.fromMap(json["location"]) : null,
     estado: json["estado"] ?? false,
     clientes: json["clientes"] != null 
       ? List<Customer>.from(json["clientes"].map((x) => Customer.fromMap(x)))
       : [],
-    ruta: json["ruta"] != null 
-      ? List<Ruta>.from(json["ruta"].map((x) => Ruta.fromMap(x)))
-      : [],
+     ruta: json["ruta"] != null 
+        ? List<Ruta>.from(json["ruta"].map((x) => Ruta.fromMap(x))) // Convierte en una lista
+        : [],
     perfil: json["perfil"] != null 
       ? List<String>.from(json["perfil"].map((x) => x.toString()))
       : [],
