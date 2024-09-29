@@ -11,7 +11,9 @@ class OrdersRecordsDataSource extends DataTableSource {
   @override
   DataRow getRow(int index) {
 
-      final Ordenes orden = ordenes[index];
+      final ordenesOrdenadas = List.from(ordenes)..sort((a, b) => b.fechacreado.compareTo(a.fechacreado));
+
+      final Ordenes orden = ordenesOrdenadas[index];
 
       final formattedDate = DateFormat('dd/MM/yy').format(orden.fechacreado);
 
@@ -20,8 +22,6 @@ class OrdersRecordsDataSource extends DataTableSource {
         clienteNombre = orden.clientes.first.nombre;
       }
 
-
-    
     return DataRow.byIndex(
       
       index: index,
@@ -29,7 +29,7 @@ class OrdersRecordsDataSource extends DataTableSource {
         DataCell(Text(orden.control)),
         DataCell(Text(formattedDate)),
         DataCell(Text(clienteNombre)),
-        DataCell(Text('')),
+        DataCell(Text(orden.total.toString())),
         DataCell(Text(orden.status)),
         DataCell(Text(orden.ruta.first.usuarioZona.nombre)),
         DataCell(

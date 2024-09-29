@@ -15,6 +15,9 @@ class Ordenes {
     String id;
     String control;
     List<Producto> productos;
+    double subtotal;
+    double tax;
+    double total;
     DateTime fechaentrega;
     Usuario usuario;
     String tipo;
@@ -33,6 +36,9 @@ class Ordenes {
         required this.id,
         required this.control,
         required this.productos,
+        required this.subtotal,
+        required this.tax,
+        required this.total,
         required this.fechaentrega,
         required this.usuario,
         required this.tipo,
@@ -64,6 +70,9 @@ factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás reci
     productos: json["productos"] != null 
       ? List<Producto>.from(json["productos"].map((x) => Producto.fromMap(x)))
       : [],
+    subtotal: json["subtotal"] is String ? double.tryParse(json["subtotal"]) ?? 0.0 : (json["subtotal"] ?? 0.0),
+    tax: json["tax"] is String ? double.tryParse(json["tax"]) ?? 0.0 : (json["tax"] ?? 0.0),
+    total: json["total"] is String ? double.tryParse(json["total"]) ?? 0.0 : (json["total"] ?? 0.0),    
     fechaentrega: json["fechaentrega"] != null ? DateTime.parse(json["fechaentrega"]) : DateTime.now(),
     usuario: json["usuario"] != null ? Usuario.fromMap(json["usuario"]) : Usuario(uid: '', nombre: '', rol: '', estado:true, google:true, correo:'', phone:'', zone:''),
     tipo: json["tipo"] ?? '', 
@@ -85,6 +94,9 @@ factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás reci
         "_id": id,
         "control": control,
         "productos": List<dynamic>.from(productos.map((x) => x.toMap())),
+        "subtotal": subtotal,
+        "tax": tax,
+        "total":total,
         "fechaentrega": fechaentrega.toIso8601String(),
         "usuario": usuario.toMap(),
         "tipo": tipo,
