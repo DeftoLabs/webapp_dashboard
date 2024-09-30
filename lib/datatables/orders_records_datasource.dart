@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:web_dashboard/models/ordenes.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 class OrdersRecordsDataSource extends DataTableSource {
 
@@ -35,7 +36,7 @@ class OrdersRecordsDataSource extends DataTableSource {
         DataCell(
           IconButton(icon: const Icon(Icons.edit_outlined), 
           onPressed: (){
-
+            NavigationService.replaceTo('/dashboard/orders/${orden.id}');
           },)),
       ]);
       

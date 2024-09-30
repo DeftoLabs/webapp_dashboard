@@ -19,6 +19,7 @@ class Flurorouter {
 
   static String ordersRoute         = '/dashboard/orders';
   static String ordersRecordsRoute  = '/dashboard/orders/records';
+  static String ordenRoute         = '/dashboard/orders/:id';
 
   static String gpsRoute        = '/dashboard/gps';
 
@@ -53,6 +54,7 @@ class Flurorouter {
 
   static String settingsRoute         = '/dashboard/settings';
   static String inactiveUserRoute     = '/dashboard/settings/inactiveuser';
+  static String financeRoute          = '/dashboard/settings/finance';
 
   static String profile             = '/dashboard/settings/profile';
   static String profileId           = '/dashboard/settings/profile/:id';
@@ -69,6 +71,7 @@ class Flurorouter {
     //Order
     router.define (ordersRoute,         handler:   DashboardHandlers.orders, transitionType: TransitionType.fadeIn);
     router.define (ordersRecordsRoute,  handler:   DashboardHandlers.ordersRecords, transitionType: TransitionType.fadeIn);
+    router.define (ordenRoute,          handler:   DashboardHandlers.orden, transitionType: TransitionType.fadeIn);
 
     // GPS
     router.define (gpsRoute,        handler:  DashboardHandlers.gps,        transitionType: TransitionType.fadeIn);
@@ -112,10 +115,12 @@ class Flurorouter {
 
 
 
-    // CONFIGURATION
+    // Settings
     router.define (settingsRoute,     handler: DashboardHandlers.settings,           transitionType: TransitionType.fadeIn);
     router.define (inactiveUserRoute, handler: DashboardHandlers.inactiveUser,       transitionType: TransitionType.fadeIn);
+    router.define (financeRoute,      handler: DashboardHandlers.finance,            transitionType: TransitionType.fadeIn);
 
+    // Profile
     router.define (profile,           handler: DashboardHandlers.profileSettings,  transitionType: TransitionType.fadeIn);
     router.define (profileId,         handler: DashboardHandlers.profile,          transitionType: TransitionType.fadeIn);
 

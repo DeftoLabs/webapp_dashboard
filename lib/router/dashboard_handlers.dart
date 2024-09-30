@@ -6,6 +6,8 @@ import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
+import 'package:web_dashboard/ui/views/finance_view.dart';
+import 'package:web_dashboard/ui/views/orden_view.dart';
 import 'package:web_dashboard/ui/views/orders_records_view.dart';
 import 'package:web_dashboard/ui/views/product_view.dart';
 import 'package:web_dashboard/ui/views/profile_view.dart';
@@ -63,6 +65,21 @@ class DashboardHandlers {
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersRecordsRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return const OrdersRecordsView();
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler orden = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordenRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if( params['id']?.first !=null){
+           return OrdenView(id: params['id']!.first);
+        }else{
+          return const OrdersView();
+        }
       } return const LoginView();
 
     }
@@ -334,6 +351,17 @@ class DashboardHandlers {
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.inactiveUserRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return const InactiveUserView();
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler finance = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.financeRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const FinanceView();
       } return const LoginView();
 
     }
