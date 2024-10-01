@@ -48,121 +48,256 @@ class _FinanceViewState extends State<FinanceView> {
   }
 }
 
-class TaxesViewBody extends StatelessWidget {
-  const TaxesViewBody({
-    super.key,
-  });
+class TaxesViewBody extends StatefulWidget {
+  const TaxesViewBody({super.key});
+
+  @override
+  State<TaxesViewBody> createState() => _TaxesViewBodyState();
+}
+
+class _TaxesViewBodyState extends State<TaxesViewBody> {
+  Currency? mainCurrency;
+  Currency? secondaryCurrency;
 
   @override
   Widget build(BuildContext context) {
-
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return Container(
-      height: 300,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3)
-          )
-        ]
-      ),
-      child: Column(
-        children: [
-            const SizedBox(height: 20),
-                Text(
-                  'TAXES',
-                  style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold),
+    return Table(
+      columnWidths: const {
+        0: FixedColumnWidth(350),
+        1: FixedColumnWidth(350),
+      },
+      children: [
+        TableRow(
+          children: [
+            Container(
+              width: 250,
+              height: 330,
+              margin: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3)
+                  )
+                ]
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    'TAXES',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
+                  const Divider(
+                  indent: 40,
+                  endIndent: 40,
+                    color: Colors.black,
+                  ),
+                  const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                          height: 200,
-                         child: 
-                         Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                              const Text('TAX 01'),
-
-    // TextFormField para TAX 01
-    SizedBox(
-      width: MediaQuery.of(context).size.width * 0.2, // Ajusta el tamaño de forma responsive
-      child: TextFormField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter TAX 01',
-        ),
-      ),
-    ),
-
-    // Espacio entre los campos
-    const SizedBox(width: 20),
-
-    // TAX 01 Name Label
-    const Text('TAX 01 Name'),
-
-    // TextFormField para TAX 01 Name
-    SizedBox(
-      width: MediaQuery.of(context).size.width * 0.2, // Ajusta el tamaño de forma responsive
-      child: TextFormField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter TAX 01 Name',
-        ),
-      ),
-    ),
-                              ],),
-
-
-                            Row(children: [Text('TAX 02'), Text('TAX 02 Name')],),
-                            Row(children: [Text('TAX 03'), Text('TAX 03 Name')],),
-                            Row(children: [Text('TAX 04'), Text('TAX 04 Name')],),
-                          ],
-                         ),
+                      Text('TAX 01 %', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: 70, // Estableces el ancho
+                        height: 40, // Estableces el alto
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'TAX 01',
+                            labelStyle: TextStyle(
+                              fontSize: 12
+                            )
+                          ),
                         ),
                       ),
-                        Flexible(
-                          flex: 2,
-                          child: Container(
-                            height: 50,
-                            width: 150,
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: const Color.fromRGBO(0, 200, 83, 1),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
+                      const SizedBox(width: 10),
+                      Text('TYPE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                       SizedBox(
+                        width: 80, // Estableces el ancho
+                        height: 40, // Estableces el alto
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'VAT',
+                             labelStyle: TextStyle(
+                              fontSize: 12
+                            )
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('TAX 02 %', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: 70, // Estableces el ancho
+                        height: 40, // Estableces el alto
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'TAX 02',
+                            labelStyle: TextStyle(
+                              fontSize: 12
+                            )
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text('TYPE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                       SizedBox(
+                        width: 80, // Estableces el ancho
+                        height: 40, // Estableces el alto
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'VAT',
+                             labelStyle: TextStyle(
+                              fontSize: 12
+                            )
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                   const SizedBox(height: 5),
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('TAX 03 %', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: 70, // Estableces el ancho
+                        height: 40, // Estableces el alto
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'TAX 03',
+                            labelStyle: TextStyle(
+                              fontSize: 12
+                            )
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text('TYPE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                       SizedBox(
+                        width: 80, // Estableces el ancho
+                        height: 40, // Estableces el alto
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'VAT',
+                             labelStyle: TextStyle(
+                              fontSize: 12
+                            )
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                 
+                  const SizedBox(height: 20),
+                    Container(
+                    height: 50,
+                    width: 150,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(0, 200, 83, 1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
                           color: const Color.fromRGBO(177, 255, 46, 100),
                           width: 2,
-                                                  )),
-                                              child: TextButton(
-                                                child:  Text(
-                                                  'SAVE',
-                                                  style: GoogleFonts.plusJakartaSans(
+                        )),
+                    child: TextButton(
+                      child:  Text(
+                        'SAVE',
+                        style: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontWeight: FontWeight.bold),
-                                                ),  
-                                               onPressed: () {
-                          
-                                               }),
+                      ),  
+                     onPressed: () {
+
+                     }),
                             ),
-                        ),
-                    ],
+                ],
+              ),
+            ),
+            Container(
+              height: 330,
+              margin: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3)
+                  ),
+                ]
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    '',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 40),
+               
+                  const SizedBox(height: 20),
+                  ]
                   )
-        ],
-      ),
+            ),
+              Container(
+              height: 330,
+              margin: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3)
+                  ),
+                ]
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    '',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 40),
+
+                  const SizedBox(height: 20),
+                  ]
+                  )
+            )
+          ],
+        ),
+      ],
     );
   }
 }
+
 
 class FinanceViewBody extends StatefulWidget {
   const FinanceViewBody({super.key});
@@ -186,8 +321,8 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
           children: [
             Container(
               width: 250,
-              height: 400,
-              margin: const EdgeInsets.only(right: 20),
+              height: 350,
+               margin: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -207,13 +342,13 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                     'Select the Currency',
                     style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                   const Divider(
                   indent: 40,
                   endIndent: 40,
                     color: Colors.black,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Text('Main Currency:', style: GoogleFonts.plusJakartaSans(fontSize: 14)),
                   const SizedBox(height: 10),
                   SizedBox(
@@ -281,7 +416,7 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                           : 'Select Secondary Currency'),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                     Container(
                     height: 50,
                     width: 150,
@@ -307,7 +442,8 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
               ),
             ),
             Container(
-              height: 400,
+              height: 350,
+              margin: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -327,7 +463,7 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                     'General Info',
                     style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 20),
                   const Divider(
                   indent: 40,
                   endIndent: 40,
