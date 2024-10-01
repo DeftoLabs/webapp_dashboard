@@ -27,7 +27,6 @@ class OrdenesProvider extends ChangeNotifier {
   }
 
    Future<Ordenes> getOrdenById (String id) async {
-
       try {
         final resp = await CafeApi.httpGet('/ordens/$id');
         final orden = Ordenes.fromMap(resp);
@@ -35,9 +34,6 @@ class OrdenesProvider extends ChangeNotifier {
       } catch (e) {
         rethrow;
       }
-
-
-
   }
 
 void sort<T>(Comparable<T> Function(Ordenes ordenes) getField) {

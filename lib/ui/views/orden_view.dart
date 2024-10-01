@@ -26,9 +26,14 @@ class _OrdenViewState extends State<OrdenView> {
   void initState() {
     super.initState();
     final ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
+    final ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
 
     ordenesProvider.getOrdenById(widget.id)
-    .then((ordenDB) => setState(() { orden = ordenDB;}));
+    .then((ordenDB) {
+        ordenFormProvider.orden = ordenDB;
+        setState(() { orden = ordenDB;});
+      }
+    );   
   }
 
   @override
@@ -77,13 +82,244 @@ class _OrdenViewState extends State<OrdenView> {
 
 class _OrdenViewBody extends StatelessWidget {
 
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Table(
 
-      )
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    final profile = profileProvider.profiles.isNotEmpty
+        ? profileProvider.profiles[0]
+        : null;
+
+    if (profile == null) {
+      return const Center(child: Text(''));
+    }
+
+    final ordenFormProvider = Provider.of<OrdenFormProvider>(context);
+    final orden = ordenFormProvider.orden!;
+    
+
+    final image = (profile.img == null)
+        ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35)
+        : FadeInImage.assetNetwork(
+            placeholder: 'load.gif',
+            image: profile.img!,
+            width: 35,
+            height: 35);
+
+    return Container(
+        width: 250,
+        height: 700,
+              margin: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3)
+                  )
+                ]
+              ),
+          child: Column(
+            children: [
+             const SizedBox(height: 20),
+              Row(
+              children: [
+                const SizedBox(width: 20),
+                Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text( profile.razons,
+                        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 2),
+                        Text( profile.direccion,
+                        style: GoogleFonts.plusJakartaSans(fontSize: 12)),
+                        const SizedBox(height: 2),
+                        Text( 'Phone: ${profile.telefono}',
+                        style: GoogleFonts.plusJakartaSans(fontSize: 12)),
+                        const SizedBox(height: 2),
+                        Text( 'email: ${profile.email1}',
+                        style: GoogleFonts.plusJakartaSans(fontSize: 12)),
+                      ],
+                    )),
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: ClipOval(
+                    child: image,
+                  ),
+                ),
+                const SizedBox(width: 20),
+              ],
+            ),
+            const SizedBox(height: 20),
+             Row(
+  children: [
+    const SizedBox(width: 10),
+    // Primer cuadro responsivo
+    Flexible(
+      flex: 2,
+      child: Container(
+        height: 200,
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 9,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Text('CUSTOMER INFO', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Text('CODE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.clientes.first.codigo, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text(orden.clientes.first.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 5),
+                    Text(orden.clientes.first.sucursal, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text('ADDRESS:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.clientes.first.direccion, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                 Row(
+                  children: [
+                    Text('PHONE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.clientes.first.telefono, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                 Row(
+                  children: [
+                    Text('email:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.clientes.first.correo, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    ),
+    
+    const SizedBox(width: 10),
+
+    // Segundo cuadro responsivo
+    Flexible(
+      flex: 2,
+      child: Container(
+        height: 200,
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 9,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Text('CREDIT:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.clientes.first.credito.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                    const SizedBox(width: 5),
+                    Text('DAYS', style: GoogleFonts.plusJakartaSans(fontSize: 14,fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text(orden.clientes.first.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 5),
+                    Text(orden.clientes.first.sucursal, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text('ADDRESS:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.clientes.first.direccion, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                 Row(
+                  children: [
+                    Text('PHONE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.clientes.first.telefono, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                 Row(
+                  children: [
+                    Text('email:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.clientes.first.correo, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    ),
+
+    const SizedBox(width: 10),
+  ],
+),
+
+              Divider(),
+              Text('Datos del producto + Cuadro'),
+              Divider(),
+              Text('Observaciones'),
+              Text('Boton de Safe')
+            ],
+          ),
     );
   }
 }

@@ -66,6 +66,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RutaProvider()),
         ChangeNotifierProvider(create: (_) => RutaFormProvider()),
         ChangeNotifierProvider(create: (_) => OrdenesProvider()),
+        ChangeNotifierProvider(create: (_) => OrdenFormProvider()),
 
       ],
       child: MultiBlocProvider(
@@ -73,6 +74,7 @@ class AppState extends StatelessWidget {
           BlocProvider(create: (context) => GpsBloc()),
           BlocProvider(create: (context) => LocationBloc()),
           BlocProvider(create: (context) => MapBloc()),
+          
       
         ],
         child: const MyApp(),

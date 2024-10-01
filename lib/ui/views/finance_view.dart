@@ -108,12 +108,15 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                         width: 70, // Estableces el ancho
                         height: 40, // Estableces el alto
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15), 
+                            ),
                             labelText: 'TAX 01',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               fontSize: 12
-                            )
+                            ),
+                            
                           ),
                         ),
                       ),
@@ -124,10 +127,12 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                         width: 80, // Estableces el ancho
                         height: 40, // Estableces el alto
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15), 
+                            ),
                             labelText: 'VAT',
-                             labelStyle: TextStyle(
+                             labelStyle: const TextStyle(
                               fontSize: 12
                             )
                           ),
@@ -145,12 +150,15 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                         width: 70, // Estableces el ancho
                         height: 40, // Estableces el alto
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15), 
+                            ),
                             labelText: 'TAX 02',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               fontSize: 12
-                            )
+                            ),
+                            
                           ),
                         ),
                       ),
@@ -161,10 +169,12 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                         width: 80, // Estableces el ancho
                         height: 40, // Estableces el alto
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15), 
+                            ),
                             labelText: 'VAT',
-                             labelStyle: TextStyle(
+                             labelStyle: const TextStyle(
                               fontSize: 12
                             )
                           ),
@@ -173,7 +183,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                     ],
                   ),
                    const SizedBox(height: 5),
-                    Row(
+                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('TAX 03 %', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
@@ -182,12 +192,15 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                         width: 70, // Estableces el ancho
                         height: 40, // Estableces el alto
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15), 
+                            ),
                             labelText: 'TAX 03',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               fontSize: 12
-                            )
+                            ),
+                            
                           ),
                         ),
                       ),
@@ -198,10 +211,12 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                         width: 80, // Estableces el ancho
                         height: 40, // Estableces el alto
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15), 
+                            ),
                             labelText: 'VAT',
-                             labelStyle: TextStyle(
+                             labelStyle: const TextStyle(
                               fontSize: 12
                             )
                           ),
@@ -209,7 +224,6 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       ),
                     ],
                   ),
-                 
                   const SizedBox(height: 20),
                     Container(
                     height: 50,
