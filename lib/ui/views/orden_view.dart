@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/providers/providers.dart';
@@ -145,6 +146,54 @@ class _OrdenViewBody extends StatelessWidget {
                         style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                       ],
                     )),
+
+                Container(
+                  height: 100,
+                  width: 200,
+                   margin: const EdgeInsets.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Text('Create:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 5),
+                Text(
+                 DateFormat('dd/MM/yy - HH:mm').format(orden.fechacreado),
+                 style: GoogleFonts.plusJakartaSans(
+                   fontSize: 14,
+                   fontWeight: FontWeight.normal,
+                 ),
+                 ),
+              ],
+            ),
+                  Row(
+              children: [
+                Text('Modify:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 5),
+                Text(
+                 DateFormat('dd/MM/yy - HH:mm').format(orden.updatedAt),
+                 style: GoogleFonts.plusJakartaSans(
+                   fontSize: 14,
+                   fontWeight: FontWeight.normal,
+                 ),
+                 ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            Row(
+              children: [
+                Text('# CONTROL', style: GoogleFonts.plusJakartaSans(fontSize: 16)),
+                const SizedBox(width: 5),
+                Text(orden.control, style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
+              ],
+            )
+                 ],
+        ),
+                ),
+                const SizedBox(width: 80),
+
                 SizedBox(
                   width: 100,
                   height: 100,
@@ -163,7 +212,7 @@ class _OrdenViewBody extends StatelessWidget {
     Flexible(
       flex: 2,
       child: Container(
-        height: 200,
+        height: 220,
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -205,9 +254,20 @@ class _OrdenViewBody extends StatelessWidget {
                 const SizedBox(height: 5),
                 Row(
                   children: [
-                    Text('ADDRESS:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    Text('ADDRESS:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                     const SizedBox(width: 5),
-                    Text(orden.clientes.first.direccion, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.25, 
+                    child: Text(
+                      orden.clientes.first.direccion,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      maxLines: null,
+                      softWrap: true, 
+                    ),
+                  ),
                   ],
                 ),
                 const SizedBox(height: 5),
@@ -239,7 +299,7 @@ class _OrdenViewBody extends StatelessWidget {
     Flexible(
       flex: 2,
       child: Container(
-        height: 200,
+        height: 220,
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -273,33 +333,62 @@ class _OrdenViewBody extends StatelessWidget {
                 const SizedBox(height: 5),
                 Row(
                   children: [
-                    Text(orden.clientes.first.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text(orden.ruta.first.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                   const SizedBox(width: 5),
-                    Text(orden.clientes.first.sucursal, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text(orden.ruta.first.usuarioZona.zone, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 5),
+                    Text('ROUTE:', style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                    const SizedBox(width: 5),
+                    Text(orden.ruta.first.nombreRuta, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 const SizedBox(height: 5),
                 Row(
                   children: [
-                    Text('ADDRESS:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    Text('DELIVERY:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
                     const SizedBox(width: 5),
-                    Text(orden.clientes.first.direccion, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                        SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.25, 
+                    child: Text(
+                      orden.clientes.first.direccion,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      maxLines: null,
+                      softWrap: true, 
+                    ),
+                  ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                 Row(
+                  children: [
+                    Text('TYPE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(orden.tipo, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 const SizedBox(height: 5),
                  Row(
                   children: [
-                    Text('PHONE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    Text('STATUS:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
                     const SizedBox(width: 5),
-                    Text(orden.clientes.first.telefono, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text(orden.status, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                   ],
                 ),
                 const SizedBox(height: 5),
-                 Row(
+                     Row(
                   children: [
-                    Text('email:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                    Text('DELIVERY DATE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
                     const SizedBox(width: 5),
-                    Text(orden.clientes.first.correo, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                     Text(
+                    DateFormat('dd/MM/yy').format(orden.fechaentrega),
+                    style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                 ),
+                 ),
                   ],
                 ),
               ],
@@ -312,8 +401,11 @@ class _OrdenViewBody extends StatelessWidget {
     const SizedBox(width: 10),
   ],
 ),
-
-              Divider(),
+          const Divider(
+          indent: 30,
+          endIndent: 30,
+          color: Colors.black
+        ),
               Text('Datos del producto + Cuadro'),
               Divider(),
               Text('Observaciones'),
