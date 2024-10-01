@@ -193,7 +193,6 @@ class _OrdenViewBody extends StatelessWidget {
         ),
                 ),
                 const SizedBox(width: 80),
-
                 SizedBox(
                   width: 100,
                   height: 100,
@@ -204,7 +203,38 @@ class _OrdenViewBody extends StatelessWidget {
                 const SizedBox(width: 20),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('STATUS', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)), 
+                const SizedBox(width: 10),
+                Container(
+                    width: 100,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(0, 200, 83, 1),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: const Color.fromRGBO(177, 255, 46, 100), // Define el color del borde
+                        width: 2,          // Define el grosor del borde
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 9,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                  child: Center(
+                    child: Text(orden.status, style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)))
+                  ), 
+                const SizedBox(width: 120),
+              ],
+             ),
+             const SizedBox(height: 10),
              Row(
   children: [
     const SizedBox(width: 10),
@@ -334,12 +364,19 @@ class _OrdenViewBody extends StatelessWidget {
                 Row(
                   children: [
                     Text(orden.ruta.first.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: 15),
+                    Text('COD:', style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                  const SizedBox(width: 5),  
                     Text(orden.ruta.first.usuarioZona.zone, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 5),
+                     ],
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
                     Text('ROUTE:', style: GoogleFonts.plusJakartaSans(fontSize: 14)),
                     const SizedBox(width: 5),
                     Text(orden.ruta.first.nombreRuta, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                 
                   ],
                 ),
                 const SizedBox(height: 5),
@@ -369,15 +406,7 @@ class _OrdenViewBody extends StatelessWidget {
                     Text(orden.tipo, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                   ],
                 ),
-                const SizedBox(height: 5),
-                 Row(
-                  children: [
-                    Text('STATUS:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
-                    const SizedBox(width: 5),
-                    Text(orden.status, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 15),
                      Row(
                   children: [
                     Text('DELIVERY DATE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
@@ -386,7 +415,7 @@ class _OrdenViewBody extends StatelessWidget {
                     DateFormat('dd/MM/yy').format(orden.fechaentrega),
                     style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
-                    fontWeight: FontWeight.normal,
+                    fontWeight: FontWeight.bold,
                  ),
                  ),
                   ],
