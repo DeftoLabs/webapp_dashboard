@@ -210,7 +210,7 @@ class _OrdenViewBody extends StatelessWidget {
                 Text('STATUS', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)), 
                 const SizedBox(width: 10),
                 Container(
-                    width: 100,
+                    width: 120,
                     height: 50,
                     decoration: BoxDecoration(
                       color: const Color.fromRGBO(0, 200, 83, 1),
@@ -234,7 +234,7 @@ class _OrdenViewBody extends StatelessWidget {
                 const SizedBox(width: 120),
               ],
              ),
-             const SizedBox(height: 10),
+             const SizedBox(height: 20),
              Row(
   children: [
     const SizedBox(width: 10),
