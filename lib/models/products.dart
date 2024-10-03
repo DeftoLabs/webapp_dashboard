@@ -16,6 +16,9 @@ class Producto {
   double stock;
   String unid;
   String? img;
+  double? precio;
+  double? cantidad;
+  double? totalitem;
   
   Producto({
     required this.id,
@@ -33,6 +36,9 @@ class Producto {
     required this.stock,
     required this.unid,
     this.img,
+    this.precio,
+    this.cantidad,
+    this.totalitem,
   });
 
  
@@ -40,7 +46,7 @@ class Producto {
 
  factory Producto.fromMap(Map<String, dynamic> json) => Producto(
   id: json["_id"] ?? '',
-  nombre: json["nombre"] ?? '',
+  nombre: json.containsKey("producto") ? json["producto"]["nombre"] ?? 'CODE ERROR' : json["nombre"] ?? 'CODE ERROR',
   estado: json["estado"] ?? false,
   usuario: json["usuario"] != null ? User.fromMap(json["usuario"]) : User(id: '', nombre: ''),
   precio1: json["precio1"]?.toDouble() ?? 0.0,
@@ -49,11 +55,14 @@ class Producto {
   precio4: json["precio4"]?.toDouble() ?? 0.0,
   precio5: json["precio5"]?.toDouble() ?? 0.0,
   categoria: json["categoria"] != null ? Categoria.fromMap(json["categoria"]) : Categoria(id: '', nombre: ''),
-  descripcion: json["descripcion"],
+  descripcion: json.containsKey("producto") ? json["producto"]["descripcion"] ?? 'ERROR' : json["descripcion"] ?? 'ERROR',
   disponible: json["disponible"] ?? true,
   stock: json["stock"]?.toDouble() ?? 0.0,
   unid: json["unid"] ?? '',
   img: json["img"],
+  precio: json["precio"]?.toDouble() ?? 0.0,
+  cantidad: json["cantidad"]?.toDouble() ?? 0.0,
+  totalitem: json["totalitem"]?.toDouble() ?? 0.0,
 );
 
 
@@ -73,6 +82,9 @@ class Producto {
     "stock": stock,
     "unid": unid,
     "img": img,
+    "precio": precio,
+    "cantidad": cantidad,
+    "totalitem": totalitem
   };
 
   Producto copyWith({

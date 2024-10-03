@@ -18,7 +18,7 @@ class CustomTitle extends StatelessWidget {
 
           FittedBox(
             fit: BoxFit.contain,
-            child: Text('Fuel your Sales !!',
+            child: Text('A',
             style: GoogleFonts.plusJakartaSans(
               fontSize: 40,
               fontWeight: FontWeight.bold,

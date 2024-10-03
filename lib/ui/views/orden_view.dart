@@ -109,7 +109,6 @@ class _OrdenViewBody extends StatelessWidget {
 
     return Container(
         width: 250,
-        height: 700,
               margin: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -238,11 +237,11 @@ class _OrdenViewBody extends StatelessWidget {
              Row(
   children: [
     const SizedBox(width: 10),
-    // Primer cuadro responsivo
+    
     Flexible(
       flex: 2,
       child: Container(
-        height: 220,
+        height: 240,
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -328,103 +327,7 @@ class _OrdenViewBody extends StatelessWidget {
     // Segundo cuadro responsivo
     Flexible(
       flex: 2,
-      child: Container(
-        height: 220,
-        margin: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 9,
-              offset: const Offset(0, 1),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Text('CREDIT:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
-                    const SizedBox(width: 5),
-                    Text(orden.clientes.first.credito.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                    const SizedBox(width: 5),
-                    Text('DAYS', style: GoogleFonts.plusJakartaSans(fontSize: 14,fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Text(orden.ruta.first.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 15),
-                    Text('COD:', style: GoogleFonts.plusJakartaSans(fontSize: 14)),
-                  const SizedBox(width: 5),  
-                    Text(orden.ruta.first.usuarioZona.zone, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                     ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Text('ROUTE:', style: GoogleFonts.plusJakartaSans(fontSize: 14)),
-                    const SizedBox(width: 5),
-                    Text(orden.ruta.first.nombreRuta, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                 
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Text('DELIVERY:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
-                    const SizedBox(width: 5),
-                        SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25, 
-                    child: Text(
-                      orden.clientes.first.direccion,
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      maxLines: null,
-                      softWrap: true, 
-                    ),
-                  ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                 Row(
-                  children: [
-                    Text('TYPE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
-                    const SizedBox(width: 5),
-                    Text(orden.tipo, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                const SizedBox(height: 15),
-                     Row(
-                  children: [
-                    Text('DELIVERY DATE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
-                    const SizedBox(width: 5),
-                     Text(
-                    DateFormat('dd/MM/yy').format(orden.fechaentrega),
-                    style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                 ),
-                 ),
-                  ],
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
+      child: CreditInfo(orden: orden),
     ),
 
     const SizedBox(width: 10),
@@ -435,12 +338,190 @@ class _OrdenViewBody extends StatelessWidget {
           endIndent: 30,
           color: Colors.black
         ),
-              Text('Datos del producto + Cuadro'),
-              Divider(),
-              Text('Observaciones'),
-              Text('Boton de Safe')
+              Container(
+                      margin: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 9,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    columns: const [
+                      DataColumn(label: Text('CODE')),
+                      DataColumn(label: Text('DESCRIPTION')),
+                      DataColumn(label: Text('QTY')),
+                      DataColumn(label: Text('EDIT')),
+                      DataColumn(label: Text('PRICE')),
+                      DataColumn(label: Text('EDIT')),
+                      DataColumn(label: Text('TOTAL')),
+                  
+                    ], rows:orden.productos.map((producto) {
+                      return DataRow(
+                        cells: [
+                        DataCell(Text(orden.productos.first.nombre)),
+                        DataCell(Text(orden.productos.first.descripcion.toString())),
+                        DataCell(Text(orden.productos.first.cantidad.toString())),
+                        DataCell(
+                          SizedBox(
+                            width: 45,
+                            height: 40, 
+                            child: TextFormField(
+                              maxLength: 4, 
+                              decoration: InputDecoration(
+                                counterText: "", 
+                                contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15)
+                                ), 
+                                  focusedBorder: OutlineInputBorder(
+                                   borderRadius: BorderRadius.circular(15), // Borde redondeado cuando está enfocado
+                                   borderSide: const BorderSide(color: Colors.blue, width: 2), // Color del borde al enfocarse
+                                 ),
+                                 enabledBorder: OutlineInputBorder(
+                                   borderRadius: BorderRadius.circular(15), // Borde redondeado cuando no está enfocado
+                                   borderSide: const BorderSide(color: Colors.grey, width: 1), // Color del borde por defecto
+                                 ),
+                              ),
+                              keyboardType: TextInputType.number, 
+                            ),
+                          ),
+                        ),
+                        DataCell(Text(orden.productos.first.precio.toString())),
+                        const DataCell(Text('EDIT')),
+                        DataCell(Text(producto.totalitem.toString())),
+                        
+                      ]);
+                    }).toList(),
+                   ),
+                ),
+              ),
+              Text(orden.subtotal.toString()),
+              Text(orden.tax.toString()),
+              Text(orden.total.toString()),
+              const Divider(),
+              const Text('Observaciones'),
+              const Text('Boton de Safe')
             ],
           ),
+    );
+  }
+}
+
+class CreditInfo extends StatelessWidget {
+  const CreditInfo({
+    super.key,
+    required this.orden,
+  });
+
+  final Ordenes orden;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 240,
+      margin: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 9,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Text('CREDIT:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                  const SizedBox(width: 5),
+                  Text(orden.clientes.first.credito.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 5),
+                  Text('DAYS', style: GoogleFonts.plusJakartaSans(fontSize: 14,fontWeight: FontWeight.bold)),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  Text(orden.ruta.first.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 15),
+                  Text('COD:', style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                const SizedBox(width: 5),  
+                  Text(orden.ruta.first.usuarioZona.zone, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                   ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  Text('ROUTE:', style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                  const SizedBox(width: 5),
+                  Text(orden.ruta.first.nombreRuta, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+               
+                ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  Text('DELIVERY:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                  const SizedBox(width: 5),
+                      SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.25, 
+                  child: Text(
+                    orden.clientes.first.direccion,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    maxLines: null,
+                    softWrap: true, 
+                  ),
+                ),
+                ],
+              ),
+              const SizedBox(height: 10),
+               Row(
+                children: [
+                  Text('TYPE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                  const SizedBox(width: 5),
+                  Text(orden.tipo, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                ],
+              ),
+              const SizedBox(height: 15),
+                   Row(
+                children: [
+                  Text('DELIVERY DATE:', style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                  const SizedBox(width: 5),
+                   Text(
+                  DateFormat('dd/MM/yy').format(orden.fechaentrega),
+                  style: GoogleFonts.plusJakartaSans(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+               ),
+               ),
+                ],
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
