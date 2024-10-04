@@ -81,10 +81,18 @@ class _OrdenViewState extends State<OrdenView> {
   }
 }
 
-class _OrdenViewBody extends StatelessWidget {
+class _OrdenViewBody extends StatefulWidget {
 
   @override
+  State<_OrdenViewBody> createState() => _OrdenViewBodyState();
+}
+
+class _OrdenViewBodyState extends State<_OrdenViewBody> {
+  
+  @override
   Widget build(BuildContext context) {
+
+    double? selectedPrice;
 
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty
@@ -360,6 +368,7 @@ class _OrdenViewBody extends StatelessWidget {
                       DataColumn(label: Text('DESCRIPTION')),
                       DataColumn(label: Text('QTY')),
                       DataColumn(label: Text('EDIT')),
+                      DataColumn(label: Text('UNID')),
                       DataColumn(label: Text('PRICE')),
                       DataColumn(label: Text('EDIT')),
                       DataColumn(label: Text('TOTAL')),
@@ -367,10 +376,10 @@ class _OrdenViewBody extends StatelessWidget {
                     ], rows:orden.productos.map((producto) {
                       return DataRow(
                         cells: [
-                        DataCell(Text(orden.productos.first.nombre)),
-                        DataCell(Text(orden.productos.first.descripcion.toString())),
-                        DataCell(Text(orden.productos.first.cantidad.toString())),
-                        DataCell(
+                        DataCell(Text(producto.nombre)),
+                        DataCell(Text(producto.descripcion.toString())),
+                        DataCell(Text(producto.cantidad.toString())),
+                         DataCell(
                           SizedBox(
                             width: 45,
                             height: 40, 
@@ -383,20 +392,56 @@ class _OrdenViewBody extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(15)
                                 ), 
                                   focusedBorder: OutlineInputBorder(
-                                   borderRadius: BorderRadius.circular(15), // Borde redondeado cuando está enfocado
-                                   borderSide: const BorderSide(color: Colors.blue, width: 2), // Color del borde al enfocarse
+                                   borderRadius: BorderRadius.circular(15), 
+                                   borderSide: const BorderSide(color: Colors.blue, width: 2), 
                                  ),
                                  enabledBorder: OutlineInputBorder(
-                                   borderRadius: BorderRadius.circular(15), // Borde redondeado cuando no está enfocado
-                                   borderSide: const BorderSide(color: Colors.grey, width: 1), // Color del borde por defecto
+                                   borderRadius: BorderRadius.circular(15), 
+                                   borderSide: const BorderSide(color: Colors.grey, width: 1), 
                                  ),
                               ),
                               keyboardType: TextInputType.number, 
                             ),
                           ),
                         ),
-                        DataCell(Text(orden.productos.first.precio.toString())),
-                        const DataCell(Text('EDIT')),
+                        DataCell(Text(producto.unid)),
+                        DataCell(Text(producto.precio!.toStringAsFixed(2))),
+                        DataCell(
+                          DropdownButton<double>(
+                            value: selectedPrice, 
+                            onChanged: (double? newValue) {
+                              setState(() {
+                                selectedPrice = newValue!;
+                              });
+                            },
+                            style: const TextStyle(
+                              color: Colors.black
+                            ),
+                            dropdownColor: Colors.white,
+                            items: [
+                              DropdownMenuItem(
+                                value: producto.precio1,
+                                child: Text(producto.precio1.toStringAsFixed(2)),
+                              ),
+                              DropdownMenuItem(
+                                value: producto.precio2,
+                                child: Text(producto.precio2.toStringAsFixed(2)),
+                              ),
+                              DropdownMenuItem(
+                                value: producto.precio3,
+                                child: Text(producto.precio3.toStringAsFixed(2)),
+                              ),
+                              DropdownMenuItem(
+                                value: producto.precio4,
+                                child: Text(producto.precio4.toStringAsFixed(2)),
+                              ),
+                              DropdownMenuItem(
+                                value: producto.precio5,
+                                child: Text(producto.precio5.toStringAsFixed(2)),
+                              ),
+                            ],
+                          ),
+                        ),
                         DataCell(Text(producto.totalitem.toString())),
                         
                       ]);
