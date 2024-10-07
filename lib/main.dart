@@ -67,6 +67,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RutaFormProvider()),
         ChangeNotifierProvider(create: (_) => OrdenesProvider()),
         ChangeNotifierProvider(create: (_) => OrdenFormProvider()),
+        ChangeNotifierProvider(create: (_) => FinanceProvider()),
 
       ],
       child: MultiBlocProvider(

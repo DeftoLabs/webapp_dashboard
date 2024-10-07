@@ -2,10 +2,14 @@
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/ui/cards/white_card.dart';
 
 
 class FinanceView extends StatefulWidget {
+  
   const FinanceView({super.key});
 
   @override
@@ -16,6 +20,26 @@ class _FinanceViewState extends State<FinanceView> {
 
   @override
   Widget build(BuildContext context) {
+
+    final financeProvider = Provider.of<FinanceProvider>(context);
+    final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances[0] : null;
+
+     if (finance == null) {
+    return WhiteCard(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: const Column(
+          children: [
+            SizedBox(height: 20),
+            FinanceViewBody(), 
+            SizedBox(height: 20),
+            TaxesViewBody() 
+          ],
+        ),
+      ),
+    );
+  }
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -166,8 +190,8 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       Text('TYPE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 10),
                        SizedBox(
-                        width: 80, // Estableces el ancho
-                        height: 40, // Estableces el alto
+                        width: 80, 
+                        height: 40, 
                         child: TextFormField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -314,6 +338,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
 
 
 class FinanceViewBody extends StatefulWidget {
+  
   const FinanceViewBody({super.key});
 
   @override
@@ -326,6 +351,11 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
 
   @override
   Widget build(BuildContext context) {
+
+    final financeProvider = Provider.of<FinanceProvider>(context);
+    final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances[0] : null;
+
+
     return Table(
       columnWidths: const {
         0: FixedColumnWidth(500),
@@ -455,47 +485,128 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                 ],
               ),
             ),
-            Container(
-              height: 350,
-              margin: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3)
-                  ),
-                ]
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Text(
-                    'General Info',
-                    style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 20),
-                  const Divider(
-                  indent: 40,
-                  endIndent: 40,
-                    color: Colors.black,
-                  ),
-                  const SizedBox(height: 20),
-                    mainCurrency != null && secondaryCurrency != null
-                      ? Text(
-                          'Main Currency: ${mainCurrency!.name} (${mainCurrency!.symbol})\n'
-                          'Secondary Currency: ${secondaryCurrency!.name} (${secondaryCurrency!.symbol})',
-                          style: GoogleFonts.plusJakartaSans(fontSize: 14),
-                        ) : Container(),
-                  ]
-                  )
+            SizedBox(
+              child: finance == null ? 
+              WhiteCard(
+              child: Container(
+                alignment: Alignment.center,
+                height: 100,
+                width: 100,
+                child: const CircularProgressIndicator(
+            color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 4.0),
+              )
+            ) : 
+              const GeneralInfo(), 
             )
           ],
         ),
       ],
+    );
+  }
+}
+
+class GeneralInfo extends StatelessWidget {
+  const GeneralInfo({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    final financeProvider = Provider.of<FinanceProvider>(context);
+    final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances[0] : null;
+
+    return Container(
+      height: 350,
+      margin: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3)
+          ),
+        ]
+      ),
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          Text(
+            'General Info',
+            style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+          const Divider(
+          indent: 40,
+          endIndent: 40,
+            color: Colors.black,
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              const SizedBox(width: 20),
+              Text('Main Currency:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(finance!.mainCurrency.name),
+              const SizedBox(width: 10),
+              Text(finance.mainCurrency.symbol, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+            ],
+          ),
+          const SizedBox(height: 10),
+           Row(
+            children: [
+              const SizedBox(width: 20),
+              Text('Secondary Currency:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(finance.secondaryCurrency.name),
+              const SizedBox(width: 10),
+              Text(finance.secondaryCurrency.symbol, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+            ],
+          ),
+           const SizedBox(height: 30),
+           Row(
+            children: [
+              const SizedBox(width: 20),
+              Text('TAX:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(finance.tax1.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+              const SizedBox(width: 05),
+              Text('%', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(finance.tax1.first.name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
+            ],
+          ),
+           const SizedBox(height: 10),
+           Row(
+            children: [
+              const SizedBox(width: 20),
+              Text('TAX:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(finance.tax2.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+              const SizedBox(width: 05),
+              Text('%', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(finance.tax2.first.name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
+            ],
+          ),
+            const SizedBox(height: 10),
+           Row(
+            children: [
+              const SizedBox(width: 20),
+              Text('TAX:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(finance.tax3.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+              const SizedBox(width: 05),
+              Text('%', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(finance.tax3.first.name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
+            ],
+          ),
+          ]
+          )
     );
   }
 }
