@@ -85,6 +85,10 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
 
   @override
   Widget build(BuildContext context) {
+
+    final financeProvider = Provider.of<FinanceProvider>(context);
+    final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances[0] : null;
+
     return Table(
       columnWidths: const {
         0: FixedColumnWidth(350),
@@ -129,18 +133,18 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       Text('TAX 01 %', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 10),
                       SizedBox(
-                        width: 70, // Estableces el ancho
-                        height: 40, // Estableces el alto
+                        width: 70, 
+                        height: 40, 
                         child: TextFormField(
+                         initialValue: finance != null 
+                          ? finance.tax1.first.percentage.toString() 
+                          : 'TAX 01',
+                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15), 
                             ),
-                            labelText: 'TAX 01',
-                            labelStyle: const TextStyle(
-                              fontSize: 12
-                            ),
-                            
+                             contentPadding: const EdgeInsets.symmetric(vertical: 10),
                           ),
                         ),
                       ),
@@ -148,17 +152,21 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       Text('TYPE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 10),
                        SizedBox(
-                        width: 80, // Estableces el ancho
-                        height: 40, // Estableces el alto
+                        width: 80, 
+                        height: 40, 
                         child: TextFormField(
+                        initialValue: finance != null 
+                          ? finance.tax2.first.name 
+                          : 'VAT',
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15), 
                             ),
-                            labelText: 'VAT',
+                              labelText: 'VAT',
                              labelStyle: const TextStyle(
                               fontSize: 12
-                            )
+                            ),
+                             contentPadding: const EdgeInsets.symmetric(vertical: 10),
                           ),
                         ),
                       ),
@@ -171,18 +179,18 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       Text('TAX 02 %', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 10),
                       SizedBox(
-                        width: 70, // Estableces el ancho
-                        height: 40, // Estableces el alto
+                        width: 70, 
+                        height: 40, 
                         child: TextFormField(
+                        initialValue: finance != null 
+                          ? finance.tax2.first.percentage.toString() 
+                          : 'TAX 02',
+                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15), 
                             ),
-                            labelText: 'TAX 02',
-                            labelStyle: const TextStyle(
-                              fontSize: 12
-                            ),
-                            
+                             contentPadding: const EdgeInsets.symmetric(vertical: 10),
                           ),
                         ),
                       ),
@@ -213,18 +221,18 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       Text('TAX 03 %', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 10),
                       SizedBox(
-                        width: 70, // Estableces el ancho
-                        height: 40, // Estableces el alto
+                        width: 70,
+                        height: 40, 
                         child: TextFormField(
+                        initialValue: finance != null 
+                          ? finance.tax3.first.percentage.toString() 
+                          : 'TAX 03',
+                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15), 
                             ),
-                            labelText: 'TAX 03',
-                            labelStyle: const TextStyle(
-                              fontSize: 12
-                            ),
-                            
+                             contentPadding: const EdgeInsets.symmetric(vertical: 10),
                           ),
                         ),
                       ),
