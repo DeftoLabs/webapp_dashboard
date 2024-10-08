@@ -7,6 +7,7 @@ import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
 import 'package:web_dashboard/ui/views/finance_view.dart';
+import 'package:web_dashboard/ui/views/finances_view.dart';
 import 'package:web_dashboard/ui/views/orden_view.dart';
 import 'package:web_dashboard/ui/views/orders_records_view.dart';
 import 'package:web_dashboard/ui/views/product_view.dart';
@@ -361,10 +362,25 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.financeRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const FinanceView();
+        return const FinancesView();
       } return const LoginView();
 
     }
   );
+    static Handler financebyID = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.financeID);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if( params['id']?.first !=null){
+           return FinanceView(id: params['id']!.first);
+        }else{
+          return const FinancesView();
+        }
+      } return const LoginView();
+
+    }
+  );
+
 }
 

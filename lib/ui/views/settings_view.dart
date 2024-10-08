@@ -14,6 +14,8 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -48,7 +50,7 @@ class SettingsView extends StatelessWidget {
         const SizedBox(height: 10),
         Text('Account Settings', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
         const SizedBox(height: 20),
-              Row(
+              Row(            
                 children: [
                   Wrap(
                   crossAxisAlignment: WrapCrossAlignment.start,

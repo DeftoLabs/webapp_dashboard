@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Finance {
-    String id;
+    final String id;
     Currency mainCurrency;
     Currency secondaryCurrency;
     List<Tax> tax1;
@@ -10,7 +10,7 @@ class Finance {
     List<Tax> tax4;
 
     Finance({
-       required this.id,
+        required this.id,
         required this.mainCurrency,
         required this.secondaryCurrency,
         required this.tax1,
