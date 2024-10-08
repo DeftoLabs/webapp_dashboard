@@ -2,8 +2,8 @@ import 'dart:convert';
 
 class Finance {
     final String id;
-    Currency mainCurrency;
-    Currency secondaryCurrency;
+    Currencys mainCurrency;
+    Currencys secondaryCurrency;
     List<Tax> tax1;
     List<Tax> tax2;
     List<Tax> tax3;
@@ -25,8 +25,8 @@ class Finance {
 
 factory Finance.fromMap(Map<String, dynamic> json) => Finance(
     id: json["_id"] ?? '',
-    mainCurrency: Currency.fromMap(json["mainCurrency"] ?? '') , 
-    secondaryCurrency: Currency.fromMap(json["secondaryCurrency"] ?? ''),  
+    mainCurrency: Currencys.fromMap(json["mainCurrency"] ?? '') , 
+    secondaryCurrency: Currencys.fromMap(json["secondaryCurrency"] ?? ''),  
     tax1: List<Tax>.from(json["tax1"].map((x) => Tax.fromMap(x)) ?? ''),  
     tax2: List<Tax>.from(json["tax2"].map((x) => Tax.fromMap(x)) ?? ''), 
     tax3: List<Tax>.from(json["tax3"].map((x) => Tax.fromMap(x)) ?? ''),  
@@ -45,13 +45,13 @@ factory Finance.fromMap(Map<String, dynamic> json) => Finance(
     };
 }
 
-class Currency {
+class Currencys {
     String name;
     String symbol;
 
-    Currency({required this.name, required this.symbol});
+    Currencys({required this.name, required this.symbol});
 
-    factory Currency.fromMap(Map<String, dynamic> json) => Currency(
+    factory Currencys.fromMap(Map<String, dynamic> json) => Currencys(
         name: json["name"] ?? '',
         symbol: json["symbol"] ?? '',
     );
