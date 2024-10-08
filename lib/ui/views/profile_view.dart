@@ -25,10 +25,8 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     super.initState();
-    final profileProvider =
-        Provider.of<ProfileProvider>(context, listen: false);
-    final profileFormProvider =
-        Provider.of<ProfileFormProvider>(context, listen: false);
+    final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+    final profileFormProvider = Provider.of<ProfileFormProvider>(context, listen: false);
 
     profileProvider.getProfilById(widget.id).then((profileDB) {
       profileFormProvider.profile = profileDB;

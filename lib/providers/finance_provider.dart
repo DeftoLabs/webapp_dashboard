@@ -31,6 +31,7 @@ class FinanceProvider extends ChangeNotifier {
   try {
   final resp = await CafeApi.httpGet('/finance/$id');
   final finance = Finance.fromMap(resp);
+  print(finance);
   return finance;
 
   } catch (e) {

@@ -25,12 +25,12 @@ class Finance {
 
 factory Finance.fromMap(Map<String, dynamic> json) => Finance(
     id: json["_id"] ?? '',
-    mainCurrency: Currency.fromMap(json["mainCurrency"]),  // Cambiado de fromJson a fromMap
-    secondaryCurrency: Currency.fromMap(json["secondaryCurrency"]),  // Cambiado de fromJson a fromMap
-    tax1: List<Tax>.from(json["tax1"].map((x) => Tax.fromMap(x))),  // Cambiado de fromJson a fromMap
-    tax2: List<Tax>.from(json["tax2"].map((x) => Tax.fromMap(x))),  // Cambiado de fromJson a fromMap
-    tax3: List<Tax>.from(json["tax3"].map((x) => Tax.fromMap(x))),  // Cambiado de fromJson a fromMap
-    tax4: List<Tax>.from(json["tax4"].map((x) => Tax.fromMap(x))),  // Cambiado de fromJson a fromMap
+    mainCurrency: Currency.fromMap(json["mainCurrency"] ?? '') , 
+    secondaryCurrency: Currency.fromMap(json["secondaryCurrency"] ?? ''),  
+    tax1: List<Tax>.from(json["tax1"].map((x) => Tax.fromMap(x)) ?? ''),  
+    tax2: List<Tax>.from(json["tax2"].map((x) => Tax.fromMap(x)) ?? ''), 
+    tax3: List<Tax>.from(json["tax3"].map((x) => Tax.fromMap(x)) ?? ''),  
+    tax4: List<Tax>.from(json["tax4"].map((x) => Tax.fromMap(x)) ?? ''),  
 );
 
 
@@ -52,8 +52,8 @@ class Currency {
     Currency({required this.name, required this.symbol});
 
     factory Currency.fromMap(Map<String, dynamic> json) => Currency(
-        name: json["name"],
-        symbol: json["symbol"],
+        name: json["name"] ?? '',
+        symbol: json["symbol"] ?? '',
     );
 
     Map<String, dynamic> toJson() => {
@@ -69,7 +69,7 @@ class Tax {
     Tax({required this.name, required this.percentage});
 
     factory Tax.fromMap(Map<String, dynamic> json) => Tax(
-        name: json["name"],
+        name: json["name"] ?? '',
         percentage: json["percentage"]?.toDouble() ?? 0.0,
     );
 
