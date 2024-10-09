@@ -14,10 +14,8 @@ class FinancesView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final financeProvider = Provider.of<FinanceProvider>(context);
-
     final financesDataSource = FinanceDataSource(financeProvider.finances);
     
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(

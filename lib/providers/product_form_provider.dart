@@ -1,5 +1,3 @@
-
-
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -9,7 +7,7 @@ import 'package:web_dashboard/services/notification_services.dart';
 
 class ProductFormProvider extends ChangeNotifier {
 
-  Producto? producto;
+Producto? producto;
  late GlobalKey<FormState> formKey;
 
 

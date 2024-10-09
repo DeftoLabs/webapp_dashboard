@@ -26,13 +26,19 @@ class _FinanceViewState extends State<FinanceView> {
   @override
   void initState() {
     super.initState();
-    final financeProvider = Provider.of<FinanceProvider>(context, listen: false);
+    final financeProvider     = Provider.of<FinanceProvider>(context, listen: false);
+    final financeFormProvider = Provider.of<FinanceFormProvider>(context, listen: false);
 
-    financeProvider.getFinanceById(widget.id).then((financeDB) => setState(() {
-      finance = financeDB;}));
+    financeProvider.getFinanceById(widget.id)
+    .then((financeDB) { 
+        financeFormProvider.finance = financeDB;
+        setState(() { finance = financeDB;});
+    }
+    );
   }
   @override
   Widget build(BuildContext context) {
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -43,7 +49,7 @@ class _FinanceViewState extends State<FinanceView> {
                 IconButton(
                     color: Colors.black,
                     onPressed: () {
-                      NavigationService.navigateTo('/dashboard/settings');
+                      NavigationService.navigateTo('/dashboard/settings/finance');
                     },
                     icon: const Icon(Icons.arrow_back_rounded)),
                 Expanded(
@@ -55,8 +61,6 @@ class _FinanceViewState extends State<FinanceView> {
                 )
               ],
             ),
-            const SizedBox(height: 20),
-            const FinanceViewBody(),
             if( finance == null) 
              WhiteCard(
                   child: Container(
@@ -66,10 +70,13 @@ class _FinanceViewState extends State<FinanceView> {
                     color: Color.fromRGBO(255, 0, 200, 0.612),
                     strokeWidth: 4.0),
               )),
-              if (finance != null)
-              const SizedBox(height: 20),
-              const TaxesViewBody()
-
+              if (finance != null) ...[
+                const SizedBox(height: 20),
+                const FinanceViewBody(),
+                const SizedBox(height: 20),
+                const TaxesViewBody(),
+              ]
+           
         ],
       )
     );
@@ -92,8 +99,8 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
   @override
   Widget build(BuildContext context) {
 
-    final financeProvider = Provider.of<FinanceProvider>(context);
-    final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances[0] : null;
+    final financeFormProvider = Provider.of<FinanceFormProvider>(context);
+    final finance = financeFormProvider.finance!;
 
 
     return Table(
@@ -225,38 +232,7 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                 ],
               ),
             ),
-            SizedBox(
-              child: finance == null ? 
-              WhiteCard(
-              child: Container(
-                alignment: Alignment.center,
-                height: 100,
-                width: 100,
-                child: const CircularProgressIndicator(
-            color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 4.0),
-              )
-            ) : 
-              const GeneralInfo(), 
-            )
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class GeneralInfo extends StatelessWidget {
-  const GeneralInfo({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-
-    final financeProvider = Provider.of<FinanceProvider>(context);
-    final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances[0] : null;
-
-    return Container(
+      Container(
       height: 350,
       margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
@@ -290,7 +266,7 @@ class GeneralInfo extends StatelessWidget {
               const SizedBox(width: 20),
               Text('Main Currency:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance!.mainCurrency.name),
+              Text(finance.mainCurrency.name),
               const SizedBox(width: 10),
               Text(finance.mainCurrency.symbol, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
             ],
@@ -347,10 +323,13 @@ class GeneralInfo extends StatelessWidget {
           ),
           ]
           )
+          )
+          ],
+        ),
+      ],
     );
   }
 }
-
 
 class TaxesViewBody extends StatefulWidget {
   const TaxesViewBody({super.key});
@@ -362,25 +341,13 @@ class TaxesViewBody extends StatefulWidget {
 class _TaxesViewBodyState extends State<TaxesViewBody> {
   Currency? mainCurrency;
   Currency? secondaryCurrency;
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
 
-    final financeProvider = Provider.of<FinanceProvider>(context);
-    final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances[0] : null;
-
-    if(finance == null) {
-      return WhiteCard(
-        child: Container(
-          alignment: Alignment.center,
-          height: 300,
-          child: const CircularProgressIndicator(
-            color: Color.fromRGBO(255, 0, 200, 0.612),
-            strokeWidth: 4.0,
-          ),
-        ),
-      );
-    }
+    final financeFormProvider = Provider.of<FinanceFormProvider>(context);
+    final finance = financeFormProvider.finance;
 
     return Table(
       columnWidths: const {
@@ -409,7 +376,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
               child: Column(
                 children: [
                   Form(
-                   //key: financeProvider.formKey,
+                   //key: financeFormProvider.formKey,
                     child: Column(
                       children: [
                         const SizedBox(height: 20),
@@ -431,7 +398,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       width: 70, 
                       height: 40, 
                       child: TextFormField(
-                       initialValue: finance.tax1.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                       initialValue: finance!.tax1.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -463,7 +430,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       width: 80, 
                       height: 40, 
                       child: TextFormField(
-                      initialValue: finance.tax1.first.name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                     initialValue: finance.tax1.first.name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -488,7 +455,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       width: 70, 
                       height: 40, 
                       child: TextFormField(
-                       initialValue: finance.tax2.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                    initialValue: finance.tax2.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -532,7 +499,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       width: 70,
                       height: 40, 
                       child: TextFormField(
-                      initialValue: finance.tax3.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                     initialValue: finance.tax3.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -552,7 +519,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       width: 80, // Estableces el ancho
                       height: 40, // Estableces el alto
                       child: TextFormField(
-                      initialValue: finance.tax3.first.name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                     initialValue: finance.tax3.first.name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -585,7 +552,6 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),  
                    onPressed: () {
-
                    }),
                           ),
                                   ],
