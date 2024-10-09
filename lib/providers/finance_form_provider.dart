@@ -5,12 +5,18 @@ class FinanceFormProvider extends ChangeNotifier {
 
   Finance? finance;
 
-  
-
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  bool validForm() {
+  bool _validForm() {
     return formKey.currentState!.validate();
+  }
+
+  updateTax(){
+    if(!_validForm()) return;
+
+    print('Info a postear');
+    print (finance!.tax1.first.percentage);
+    print (finance!.tax1.first.name);
   }
 
 }
