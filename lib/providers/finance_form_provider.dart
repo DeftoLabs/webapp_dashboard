@@ -9,6 +9,10 @@ class FinanceFormProvider extends ChangeNotifier {
   bool isLoading = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  bool validForm(){
+  return formKey.currentState!.validate();
+}
+
    copyFinanceWith({
     String? id,
     String? mainCurrencyname,
@@ -44,29 +48,29 @@ class FinanceFormProvider extends ChangeNotifier {
   }
 
 
-Future updateTax(String taxType, String name, double percentage) async {
-    
-    isLoading = true;
-    notifyListeners();
+Future updateTax() async {
+
+  if(!validForm()) return; 
   
-  Map<String, dynamic> data = {
-    taxType: [
-      {
-        "name": name,
-        "percentage": percentage
-      }
-    ]
-  };
- try {
-    await CafeApi.putJson('/finance/${finance!.id}', data);
+  final data = {
+    'tax1name': finance!.tax1name,
+    'tax1number' : finance!.tax1number,
+    'tax2name': finance!.tax2name,
+    'tax2number' : finance!.tax2number,
+    'tax3name': finance!.tax3name,
+    'tax3number' : finance!.tax3number,
+  }; 
+    print('Data being sent: $data');
+  try {
+    await CafeApi.put('/finance/${finance!.id}', data);
     return true;
+    
   } catch (e) {
     NotificationService.showSnackBarError('Error: $e'); 
     return false;
-  } finally {
-    isLoading = false; 
-    notifyListeners();
   }
+   
+
 }
 
 }

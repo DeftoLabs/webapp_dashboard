@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/finance.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 
 
@@ -430,6 +431,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null; 
                             },
                             onChanged: (value) {
+                             finance.tax1number = double.parse(value);
                              
                             },
                           ),
@@ -460,7 +462,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null;
                             },
                             onChanged: (value) {
-                            
+                            finance.tax1name = value;
                             },
                           ),
                         ],
@@ -509,7 +511,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null; 
                             },
                             onChanged: (value) {
-                             
+                             finance.tax2number = double.parse(value);
                             },
                           ),
                         ],
@@ -538,8 +540,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null;
                             },
                             onChanged: (value) {
-                            
-                              
+                            finance.tax2name = value;
                             },
                           ),
                         ],
@@ -588,7 +589,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null; 
                             },
                             onChanged: (value) {
-                          
+                          finance.tax3number = double.parse(value);
                             },
                           ),
                         ],
@@ -617,7 +618,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null;
                             },
                             onChanged: (value) {
-                             
+                             finance.tax3name = value;
                             },
                           ),
                         ],
@@ -643,8 +644,13 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       style: GoogleFonts.plusJakartaSans(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),  
-                   onPressed: () {
-                  
+                   onPressed: () async {
+                        final saved = await financeFormProvider.updateTax();
+                        if(saved) {
+                          NotificationService.showSnackBa('TAXES Updated');
+                        } else {
+                          NotificationService.showSnackBarError('Error: The TAXES were not updated');
+                        }
                    }),
                           ),
                                   ],
