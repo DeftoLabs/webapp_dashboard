@@ -60,7 +60,6 @@ Future updateTax() async {
     'tax3name': finance!.tax3name,
     'tax3number' : finance!.tax3number,
   }; 
-    print('Data being sent: $data');
   try {
     await CafeApi.put('/finance/${finance!.id}', data);
     return true;
