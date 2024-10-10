@@ -266,9 +266,9 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
               const SizedBox(width: 20),
               Text('Main Currency:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance.mainCurrency.name),
+              Text(finance.mainCurrencyname),
               const SizedBox(width: 10),
-              Text(finance.mainCurrency.symbol, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              Text(finance.mainCurrencysymbol, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
             ],
           ),
           const SizedBox(height: 10),
@@ -277,9 +277,9 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
               const SizedBox(width: 20),
               Text('Secondary Currency:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance.secondaryCurrency.name),
+              Text(finance.secondCurrencyname),
               const SizedBox(width: 10),
-              Text(finance.secondaryCurrency.symbol, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+              Text(finance.secondCurrencysymbol, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
             ],
           ),
            const SizedBox(height: 30),
@@ -288,11 +288,11 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
               const SizedBox(width: 20),
               Text('TAX:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance.tax1.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+              Text(finance.tax1number.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
               const SizedBox(width: 05),
               Text('%', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance.tax1.first.name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
+              Text(finance.tax1name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
             ],
           ),
            const SizedBox(height: 10),
@@ -301,11 +301,11 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
               const SizedBox(width: 20),
               Text('TAX:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance.tax2.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+              Text(finance.tax2number.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
               const SizedBox(width: 05),
               Text('%', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance.tax2.first.name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
+              Text(finance.tax2name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
             ],
           ),
             const SizedBox(height: 10),
@@ -314,11 +314,11 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
               const SizedBox(width: 20),
               Text('TAX:', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance.tax3.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+              Text(finance.tax3number.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14)),
               const SizedBox(width: 05),
               Text('%', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Text(finance.tax3.first.name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
+              Text(finance.tax3name, style:GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),),
             ],
           ),
           ]
@@ -401,7 +401,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextFormField(
-                           initialValue: finance.tax1.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                           initialValue: finance.tax1number.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -430,7 +430,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null; 
                             },
                             onChanged: (value) {
-                              finance.tax1.first.percentage = value as double;
+                             
                             },
                           ),
                         ],
@@ -446,7 +446,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                          mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextFormField(
-                            initialValue: finance.tax1.first.name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                            initialValue: finance.tax1name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -460,7 +460,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null;
                             },
                             onChanged: (value) {
-                              finance.tax1.first.name = value;
+                            
                             },
                           ),
                         ],
@@ -480,7 +480,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                          mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextFormField(
-                            initialValue: finance.tax2.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                            initialValue: finance.tax2number.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -509,7 +509,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null; 
                             },
                             onChanged: (value) {
-                              
+                             
                             },
                           ),
                         ],
@@ -525,7 +525,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                          mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextFormField(
-                          initialValue: finance.tax2.first.name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                          initialValue: finance.tax2name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -538,6 +538,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null;
                             },
                             onChanged: (value) {
+                            
                               
                             },
                           ),
@@ -558,7 +559,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                          mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextFormField(
-                            initialValue: finance.tax3.first.percentage.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                            initialValue: finance.tax3number.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -587,7 +588,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null; 
                             },
                             onChanged: (value) {
-                              
+                          
                             },
                           ),
                         ],
@@ -603,7 +604,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                          mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextFormField(
-                            initialValue: finance.tax3.first.name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+                            initialValue: finance.tax3name, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -616,7 +617,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                               return null;
                             },
                             onChanged: (value) {
-                              
+                             
                             },
                           ),
                         ],
@@ -643,7 +644,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),  
                    onPressed: () {
-                    financeFormProvider.updateTax();
+                  
                    }),
                           ),
                                   ],

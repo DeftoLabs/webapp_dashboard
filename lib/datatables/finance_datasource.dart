@@ -17,11 +17,14 @@ class FinanceDataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(Text(finance.mainCurrency.name)),
-        DataCell(Text(finance.secondaryCurrency.name)),  
-        DataCell(Text(finance.tax1.first.percentage.toString())),
-        DataCell(Text(finance.tax2.first.percentage.toString())), 
-        DataCell(Text(finance.tax3.first.percentage.toString())), 
+        DataCell(Text(finance.mainCurrencyname)),
+        DataCell(Text(finance.secondCurrencyname)), 
+        DataCell(Text(finance.tax1number.toString())),
+        DataCell(Text(finance.tax1name)),
+        DataCell(Text(finance.tax2number.toString())), 
+        DataCell(Text(finance.tax2name)),
+        DataCell(Text(finance.tax3number.toString())), 
+        DataCell(Text(finance.tax3name)),
         DataCell(
           IconButton(
             icon: const Icon(Icons.edit_outlined), 

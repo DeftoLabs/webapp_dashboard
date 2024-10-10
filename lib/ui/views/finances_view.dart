@@ -49,8 +49,11 @@ class FinancesView extends StatelessWidget {
               DataColumn(label: Text('MAIN CURRENCY')),
               DataColumn(label: Text('SECOND CURRENCY')),
               DataColumn(label: Text('TAX')),
+              DataColumn(label: Text('VAT')),
               DataColumn(label: Text('TAX')),
+              DataColumn(label: Text('VAT')),
               DataColumn(label: Text('TAX')),
+              DataColumn(label: Text('VAT')),
               DataColumn(label: Text('EDIT')),
             ], 
             source: financesDataSource)

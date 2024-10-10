@@ -1,22 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/finance.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 class FinanceFormProvider extends ChangeNotifier {
 
   Finance? finance;
-
+  bool isLoading = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  bool _validForm() {
-    return formKey.currentState!.validate();
+   copyFinanceWith({
+    String? id,
+    String? mainCurrencyname,
+    String? mainCurrencysymbol,
+    String? secondCurrencyname,
+    String? secondCurrencysymbol,
+    String? tax1name,
+    double? tax1number,
+    String? tax2name,
+    double? tax2number,
+    String? tax3name,
+    double? tax3number,
+    String? tax4name,
+    double? tax4number,
+  }) {
+    finance =  Finance(
+      id: id ?? finance!.id,
+      mainCurrencyname: mainCurrencyname ?? finance!.mainCurrencyname,
+      mainCurrencysymbol: mainCurrencysymbol ?? finance!.mainCurrencysymbol,
+      secondCurrencyname: secondCurrencyname ?? finance!.secondCurrencyname,
+      secondCurrencysymbol: secondCurrencysymbol ?? finance!.secondCurrencysymbol,
+      tax1name  : tax1name   ?? finance!.tax1name,
+      tax1number: tax1number ?? finance!.tax1number,
+      tax2name  : tax2name   ?? finance!.tax2name,
+      tax2number: tax2number ?? finance!.tax2number,
+      tax3name  : tax3name   ?? finance!.tax3name,
+      tax3number: tax3number ?? finance!.tax3number,
+      tax4name  : tax4name   ?? finance!.tax4name,
+      tax4number: tax4number ?? finance!.tax4number,
+      
+    );
+    notifyListeners();
   }
 
-  updateTax(){
-    if(!_validForm()) return;
 
-    print('Info a postear');
-    print (finance!.tax1.first.percentage);
-    print (finance!.tax1.first.name);
+Future updateTax(String taxType, String name, double percentage) async {
+    
+    isLoading = true;
+    notifyListeners();
+  
+  Map<String, dynamic> data = {
+    taxType: [
+      {
+        "name": name,
+        "percentage": percentage
+      }
+    ]
+  };
+ try {
+    await CafeApi.putJson('/finance/${finance!.id}', data);
+    return true;
+  } catch (e) {
+    NotificationService.showSnackBarError('Error: $e'); 
+    return false;
+  } finally {
+    isLoading = false; 
+    notifyListeners();
   }
+}
 
 }
