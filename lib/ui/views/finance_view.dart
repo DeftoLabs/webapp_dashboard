@@ -89,8 +89,10 @@ class FinanceViewBody extends StatefulWidget {
 }
 
 class _FinanceViewBodyState extends State<FinanceViewBody> {
-  Currency? mainCurrency;
-  Currency? secondaryCurrency;
+  String? mainCurrencyname;
+  String? mainCurrencysymbol;
+  String? secondCurrencyname;
+  String? secondCurrencysymbol;
 
   @override
   Widget build(BuildContext context) {
@@ -163,13 +165,14 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                           showCurrencyCode: true,
                           onSelect: (Currency currency) {
                             setState(() {
-                              mainCurrency = currency;
+                              mainCurrencyname = currency.name;
+                              mainCurrencysymbol = currency.symbol;
                             });
                           },
                         );
                       },
-                      child: Text(mainCurrency != null
-                          ? 'Main: ${mainCurrency!.name} (${mainCurrency!.symbol})'
+                     child: Text(mainCurrencyname != null
+                          ? 'Main: $mainCurrencyname ($mainCurrencysymbol)'
                           : 'Select Main Currency'),
                     ),
                   ),
@@ -204,13 +207,14 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                           showCurrencyCode: true,
                           onSelect: (Currency currency) {
                             setState(() {
-                              secondaryCurrency = currency;
+                              secondCurrencyname = currency.name;
+                              secondCurrencysymbol = currency.symbol;
                             });
                           },
                         );
                       },
-                      child: Text(secondaryCurrency != null
-                          ? 'Secondary: ${secondaryCurrency!.name} (${secondaryCurrency!.symbol})'
+                      child: Text(secondCurrencyname != null
+                          ? 'Secondary: $secondCurrencyname ($secondCurrencysymbol)'
                           : 'Select Secondary Currency'),
                     ),
                   ),
@@ -232,12 +236,33 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                           style: GoogleFonts.plusJakartaSans(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
-                        onPressed: () {
-                          print(mainCurrency!.name);
-                          print(mainCurrency!.symbol);
-                          print(secondaryCurrency!.name);
-                          print(secondaryCurrency!.symbol);
-                        }),
+                         onPressed: () async {
+                                if (financeFormProvider.validForm()) {
+                                    financeFormProvider.setMainCurrency(
+                                        name: mainCurrencyname.toString(),
+                                        symbol: mainCurrencysymbol.toString(),
+                                    );
+                                     financeFormProvider.setSecondaryCurrency(
+                                          name: secondCurrencyname.toString(),
+                                          symbol: secondCurrencysymbol.toString(),
+                                    );
+
+                                  final saved = await financeFormProvider.updateCurrency();
+                                  if (saved) {
+                                    NotificationService.showSnackBa('Currency Updated');
+                                    if (!context.mounted) return;
+                                    Provider.of<FinanceProvider>(context,listen: false).getFinance();
+                                    NavigationService.replaceTo('/dashboard/settings/finance');
+                                  } else {
+                                    NotificationService.showSnackBarError(
+                                        'Error: The Currencys were not updated');
+                                  }
+                                } else {
+                                  NotificationService.showSnackBarError(
+                                      'Please fill all fields correctly');
+                                }
+                              },
+                        ),
                   ),
                 ],
               ),

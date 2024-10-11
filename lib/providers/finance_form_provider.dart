@@ -68,6 +68,39 @@ Future updateTax() async {
     NotificationService.showSnackBarError('Error: $e'); 
     return false;
   }
+}
+
+  void setMainCurrency({required String name, required String symbol}) {
+    copyFinanceWith(
+      mainCurrencyname: name,
+      mainCurrencysymbol: symbol,
+    );
+  }
+    void setSecondaryCurrency({required String name, required String symbol}) {
+    copyFinanceWith(
+      secondCurrencyname: name,
+      secondCurrencysymbol: symbol,
+    );
+  }
+
+Future updateCurrency() async {
+
+  if(!validForm()) return; 
+  
+  final data = {
+    'mainCurrencyname': finance!.mainCurrencyname,
+    'mainCurrencysymbol' : finance!.mainCurrencysymbol,
+    'secondCurrencyname': finance!.secondCurrencyname,
+    'secondCurrencysymbol' : finance!.secondCurrencysymbol,
+  }; 
+  try {
+    await CafeApi.put('/finance/${finance!.id}', data);
+    return true;
+    
+  } catch (e) {
+    NotificationService.showSnackBarError('Error: $e'); 
+    return false;
+  }
    
 
 }

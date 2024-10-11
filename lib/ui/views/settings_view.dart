@@ -64,7 +64,21 @@ class SettingsView extends StatelessWidget {
                     NavigationService.replaceTo('/dashboard/settings/finance');
                   },
                   ),
-                  
+                  ],
+                  ),
+                  const SizedBox(width: 10),
+                  Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  direction:Axis.horizontal,
+                  children: [
+                    RectangularCard(
+                  title: 'Bank Account',
+                  width: 200,
+                  child: const Center(child: Icon(Icons.account_balance_outlined),),
+                  onTap: (){
+                    // NavigationService.replaceTo('/dashboard/settings/finance');
+                  },
+                  ),
                           ],
                         ),
                 ],

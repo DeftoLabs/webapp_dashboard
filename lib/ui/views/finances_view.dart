@@ -13,6 +13,17 @@ class FinancesView extends StatelessWidget {
     final financeProvider = Provider.of<FinanceProvider>(context);
     final financesDataSource = FinanceDataSource(financeProvider.finances);
 
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
+
+    if (profile == null) {
+    return const Center(child: Text(''));
+    }
+
+    final image = (profile.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
+    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final isSmallScreen = constraints.maxWidth < 600;
@@ -41,10 +52,18 @@ class FinancesView extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                SizedBox(
+                width: 60,
+                height: 60,
+                child: ClipOval(
+                  child: image,
+                ),
+              ),
+              const SizedBox(width: 20),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 60),
               SingleChildScrollView(
                 scrollDirection: isSmallScreen ? Axis.horizontal : Axis.vertical,
                 child: DataTable(
@@ -132,6 +151,9 @@ class FinancesView extends StatelessWidget {
                       .toList(),
                 ),
               ),
+              const Divider(),
+              const SizedBox(height: 20),
+              
             ],
           ),
         );
