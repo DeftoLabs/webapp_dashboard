@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/finance_datasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/ui/modals/finance_modal.dart';
 
 class FinancesView extends StatelessWidget {
   const FinancesView({super.key});
@@ -63,7 +64,42 @@ class FinancesView extends StatelessWidget {
               const SizedBox(width: 20),
                 ],
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 20),
+              //if (financesDataSource.finances.isEmpty)
+                 Padding(
+                  padding: const EdgeInsets.all(20),
+                   child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                       height: 50,
+                       width: 170,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(177, 255, 46, 100),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          width: 0.6,
+                        )),
+                      child: TextButton(
+                        child: Text(
+                          'Create Finances',
+                          style: GoogleFonts.plusJakartaSans(
+                              color: const Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const FinanceModal();
+                              },
+                            );
+                        },
+                      ),
+                    ),
+                                   ),
+                 ),
+              const SizedBox(height: 20),
               SingleChildScrollView(
                 scrollDirection: isSmallScreen ? Axis.horizontal : Axis.vertical,
                 child: DataTable(

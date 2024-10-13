@@ -96,7 +96,7 @@ class Flurorouter {
     router.define (newUserRoute, handler:     DashboardHandlers.newUserRegister,  transitionType: TransitionType.fadeIn);
 
     // Route
-    router.define (routeRoutes, handler:        DashboardHandlers.routes,            transitionType: TransitionType.fadeIn);
+    router.define (routeRoutes, handler:       DashboardHandlers.routes,            transitionType: TransitionType.fadeIn);
     router.define (routeRoute, handler:        DashboardHandlers.route,             transitionType: TransitionType.fadeIn);
 
     // Zones
@@ -121,6 +121,7 @@ class Flurorouter {
     router.define (inactiveUserRoute, handler: DashboardHandlers.inactiveUser,       transitionType: TransitionType.fadeIn);
     router.define (financeRoute,      handler: DashboardHandlers.finance,            transitionType: TransitionType.fadeIn);
     router.define (financeID,         handler: DashboardHandlers.financebyID,        transitionType: TransitionType.fadeIn);
+  
 
     // Profile
     router.define (profile,           handler: DashboardHandlers.profileSettings,  transitionType: TransitionType.fadeIn);
