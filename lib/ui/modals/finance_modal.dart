@@ -21,10 +21,6 @@ class _FinanceModalState extends State<FinanceModal> {
   String? secondCurrencyname;
   String? secondCurrencysymbol;
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +58,16 @@ class _FinanceModalState extends State<FinanceModal> {
             const SizedBox(height: 40),
             Center(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    height: 300,
-                    width: 300,
+                    height: 350,
+                    width: 350,
                     color: Colors.amber
                   ),
-                  const SizedBox(width: 10),
                   Container(
-                    height: 300,
-                    width: 300,
+                    height: 350,
+                    width: 350,
                     color: Colors.amber
                   ),
                   
