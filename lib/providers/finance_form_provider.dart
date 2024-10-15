@@ -6,6 +6,7 @@ import 'package:web_dashboard/services/notification_services.dart';
 class FinanceFormProvider extends ChangeNotifier {
 
   Finance? finance;
+  List<Finance> finances = [];
   bool isLoading = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -101,8 +102,40 @@ Future updateCurrency() async {
     NotificationService.showSnackBarError('Error: $e'); 
     return false;
   }
-   
-
 }
+
+ Future newFinance (
+          String mainCurrencyname, 
+          String mainCurrencysymbol, 
+          String secondCurrencyname,
+          String secondCurrencysymbol,
+          String tax1name,
+          double tax1number,
+          String tax2name,
+          double tax2number,
+          String tax3name,
+          double tax3number) async {
+
+    final data = {
+      'mainCurrencyname':     mainCurrencyname,
+      'mainCurrencysymbol':   mainCurrencysymbol,
+      'secondCurrencyname':   secondCurrencyname,
+      'secondCurrencysymbol': secondCurrencysymbol,
+      'tax1name'  : tax1name,
+      'tax1number': tax1number,
+      'tax2name'  : tax2name,
+      'tax2number': tax2number,
+      'tax3name'  : tax3name,
+      'tax3number': tax3number,
+    };
+    try{
+      final json = await CafeApi.post('/finance', data);
+      final newFinance = Finance.fromMap(json);
+      finances.add(newFinance);
+      notifyListeners();
+    } catch (e){
+      throw ' Error to create the Zone ';
+    }
+  }
 
 }

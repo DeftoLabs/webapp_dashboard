@@ -136,16 +136,17 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                   ),
                   const SizedBox(height: 10),
                   Text('Main Currency:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
                   SizedBox(
                     width: 250,
+                    height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey, // Color de fondo
                         foregroundColor: Colors.white, // Color del texto
                         textStyle: GoogleFonts.plusJakartaSans(
-                            fontSize: 12), // Estilo de texto
+                            fontSize: 16), // Estilo de texto
                         padding: const EdgeInsets.symmetric(
                             vertical: 12.0,
                             horizontal: 20.0), // Padding interno
@@ -172,22 +173,23 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                         );
                       },
                      child: Text(mainCurrencyname != null
-                          ? 'Main: $mainCurrencyname ($mainCurrencysymbol)'
-                          : 'Select Main Currency'),
+                          ? '$mainCurrencyname ($mainCurrencysymbol)'
+                          : 'Select Currency'),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Text('Secondary Currency:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
                   SizedBox(
                     width: 250,
+                    height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey, // Color de fondo
                         foregroundColor: Colors.white, // Color del texto
                         textStyle: GoogleFonts.plusJakartaSans(
-                            fontSize: 12), // Estilo de texto
+                            fontSize: 16), // Estilo de texto
                         padding: const EdgeInsets.symmetric(
                             vertical: 12.0,
                             horizontal: 20.0), // Padding interno
@@ -214,8 +216,8 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                         );
                       },
                       child: Text(secondCurrencyname != null
-                          ? 'Secondary: $secondCurrencyname ($secondCurrencysymbol)'
-                          : 'Select Secondary Currency'),
+                          ? '$secondCurrencyname ($secondCurrencysymbol)'
+                          : 'Select Currency'),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -807,7 +809,8 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       ),
                     )
                   ],
-                )),
+                )
+                ),
             Container(
                 height: 400,
                 margin: const EdgeInsets.all(5),
