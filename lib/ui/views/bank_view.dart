@@ -93,10 +93,231 @@ class _BankViewState extends State<BankView> {
                 strokeWidth: 4.0),
               )
               ),
+              if (bank != null) ...[
+              const SizedBox(height: 20),
+              const BankViewBody(),
+              const SizedBox(height: 20),
+            
+            ]
 
-              Text('${bank?.nombre}'),
+            
     ]
     )
+    );
+  }
+}
+
+class BankViewBody extends StatelessWidget {
+  const BankViewBody({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 600,
+      margin: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Table(
+            columnWidths: const {
+              0: FixedColumnWidth(200),
+              1: FixedColumnWidth(20),
+
+            },
+            children: [
+              TableRow(
+                children: [
+                  SizedBox(
+                    height: 500,
+                    child: 
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const SizedBox(height: 40),
+                        Text('BANK',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 16,)),
+                        const SizedBox(height: 35),
+                        Text('ACCOUNT NUMBER',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 16,)),
+                        const SizedBox(height: 35),
+                        Text('TYPE',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 16,)),
+                        const SizedBox(height: 35),
+                        Text('CURRENCY',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 16,)),
+                        const SizedBox(height: 35),
+                        Text('HOST',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 16,)),
+                        const SizedBox(height: 35),
+                        Text('HOST ID',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 16)),
+                        const SizedBox(height: 35),
+                        Text('COMMENTS',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 16,)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 500,
+                    child:Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 30),
+                        SizedBox(
+                          height: 40,
+                          width: 300,
+                          child: TextFormField(
+                        decoration: InputDecoration(
+                        hintText: 'Bank Name',
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                        )
+                          )
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          height: 40,
+                          width: 300,
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                        hintText: 'Account Number',
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                        )
+                          )
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          height: 40,
+                          width: 300,
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                        hintText: 'TYPE',
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                        )
+                          )
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          height: 40,
+                          width: 300,
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                        hintText: 'Currency',
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                        )
+                          )
+                        ),
+                          const SizedBox(height: 20),
+                        SizedBox(
+                          height: 40,
+                          width: 300,
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                        hintText: 'Host Name / Legal Name',
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                        )
+                          )
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          height: 40,
+                          width: 300,
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                        hintText: 'Host ID',
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                        )
+                          )
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          height: 40,
+                          width: 300,
+                          child: TextFormField(
+                              decoration: InputDecoration(
+                        hintText: 'Comments',
+                        border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                        )
+                          )
+                        ),
+                      ],
+                    ),
+                   
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+                height: 50,
+                width: 150,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: const Color.fromRGBO(0, 200, 83, 1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color:
+                          const Color.fromRGBO(177, 255, 46, 100),
+                      width: 2,
+                    )),
+                child: TextButton(
+                  child: Text(
+                    'SAVE',
+                    style: GoogleFonts.plusJakartaSans(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () async {
+                   
+                  },
+                ),
+              ),
+          ),
+        ],
+      ),
     );
   }
 }
