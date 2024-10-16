@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/models/bank.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 class BankDataSource extends DataTableSource {
 
@@ -22,7 +23,10 @@ class BankDataSource extends DataTableSource {
         DataCell(Text(bank.numero)),
         DataCell(Text(bank.currencySymbol)),
         DataCell(
-         IconButton(onPressed: (){}, icon: const Icon(Icons.edit_outlined))
+         IconButton(
+          onPressed: (){
+          NavigationService.replaceTo('/dashboard/settings/bankaccount/${bank.id}');
+         }, icon: const Icon(Icons.edit_outlined))
         ),
       ]);
   

@@ -100,12 +100,12 @@ class BanksView extends StatelessWidget {
                  ),
               const SizedBox(height: 20),
             PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('Bank')),
-                DataColumn(label: Text('Account Holder')),
-                DataColumn(label: Text('# Account')),
-                DataColumn(label: Text('Currency')),
-                DataColumn(label: Text('Edit')),
+              columns:[
+                DataColumn(label: Text('Bank', style: GoogleFonts.plusJakartaSans( fontSize: 14, fontWeight: FontWeight.bold))),
+                DataColumn(label: Text('Account Holder', style: GoogleFonts.plusJakartaSans( fontSize: 14, fontWeight: FontWeight.bold))),
+                DataColumn(label: Text('# Account', style: GoogleFonts.plusJakartaSans( fontSize: 14, fontWeight: FontWeight.bold))),
+                DataColumn(label: Text('Currency', style: GoogleFonts.plusJakartaSans( fontSize: 14, fontWeight: FontWeight.bold))),
+                DataColumn(label: Text('Edit', style: GoogleFonts.plusJakartaSans( fontSize: 14, fontWeight: FontWeight.bold))),
               ], 
               source: bankDataSource)
               

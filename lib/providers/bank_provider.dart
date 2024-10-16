@@ -18,6 +18,17 @@ class BankProvider extends ChangeNotifier {
     banks = [... bankResp.banks];
     isLoading = false;
     notifyListeners();
+  }
+
+  Future <Bank?> getBankById (String id) async {
+
+    try {
+    final resp = await CafeApi.httpGet('/bankaccount/$id');
+    final bank = Bank.fromMap(resp);
+    return bank;
+    } catch (e) {
+      return null;
+    }
 
   }
 
