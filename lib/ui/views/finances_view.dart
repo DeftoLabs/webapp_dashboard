@@ -65,7 +65,7 @@ class FinancesView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              //if (financesDataSource.finances.isEmpty)
+              if (financesDataSource.finances.isEmpty)
                  Padding(
                   padding: const EdgeInsets.all(20),
                    child: Align(

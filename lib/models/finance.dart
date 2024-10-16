@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Finance {
-    final String id;
+    final String? id;
     String mainCurrencyname;
     String mainCurrencysymbol;
     String secondCurrencyname;
@@ -16,7 +16,7 @@ class Finance {
     double tax4number;
 
     Finance({
-        required this.id,
+        this.id,
         required this.mainCurrencyname,
         required this.mainCurrencysymbol,
         required this.secondCurrencyname,
@@ -54,7 +54,7 @@ factory Finance.fromMap(Map<String, dynamic> json) => Finance(
 
 
     Map<String, dynamic> toMap() => {
-        "_id": id,
+    "_id": id,
     "mainCurrencyname": mainCurrencyname,
     "mainCurrencysymbol" :mainCurrencysymbol,
     "secondCurrencyname": secondCurrencyname,

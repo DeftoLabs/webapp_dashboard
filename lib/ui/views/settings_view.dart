@@ -76,7 +76,7 @@ class SettingsView extends StatelessWidget {
                   width: 200,
                   child: const Center(child: Icon(Icons.account_balance_outlined),),
                   onTap: (){
-                    // NavigationService.replaceTo('/dashboard/settings/finance');
+                    NavigationService.replaceTo('/dashboard/settings/bankaccount');
                   },
                   ),
                           ],
