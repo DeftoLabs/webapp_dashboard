@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'finance.dart';
 
 class Bank {
-    bool estado;
-    String id;
+    bool? estado;
+    String? id;
     String nombre;
     String numero;
     String tipo;
@@ -16,8 +15,8 @@ class Bank {
 
 
     Bank({
-        required this.estado,
-        required this.id,
+        this.estado,
+        this.id,
         required this.nombre,
         required this.numero,
         required this.tipo,

@@ -6,6 +6,9 @@ import 'package:web_dashboard/models/http/bank_response.dart';
 class BankProvider extends ChangeNotifier {
 
   List<Bank> banks= [];
+
+  final List<String> _tipo = ['SAVING', 'CHECKING', 'CRIPTO'];
+  List<String> get tipo => _tipo;
   bool isLoading = true;
 
   BankProvider() {

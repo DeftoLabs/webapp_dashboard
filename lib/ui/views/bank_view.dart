@@ -26,10 +26,16 @@ class _BankViewState extends State<BankView> {
   void initState() {
     super.initState();
     final bankProvider = Provider.of<BankProvider>(context, listen: false);
+    final bankFormProvider = Provider.of<BankFormProvider>(context, listen: false);
     
     bankProvider.getBankById(widget.id)
-    .then((bankDB) => setState(() { bank = bankDB; })); 
+    .then((bankDB) {
+        bankFormProvider.bank = bankDB;
+        setState(() { bank = bankDB; });   
+      }
+    ); 
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -114,11 +120,15 @@ class BankViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final bankFormProvider = Provider.of<BankFormProvider>(context);
+    final bank = bankFormProvider.bank!;
+
     return Container(
-      height: 600,
+      height: 700,
       margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:  const Color.fromARGB(255, 58, 60, 65),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -131,9 +141,10 @@ class BankViewBody extends StatelessWidget {
       ),
       child: Column(
         children: [
+          const SizedBox(height: 40),
           Table(
             columnWidths: const {
-              0: FixedColumnWidth(200),
+              0: FixedColumnWidth(400),
               1: FixedColumnWidth(20),
 
             },
@@ -141,7 +152,7 @@ class BankViewBody extends StatelessWidget {
               TableRow(
                 children: [
                   SizedBox(
-                    height: 500,
+                    height: 550,
                     child: 
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -149,139 +160,376 @@ class BankViewBody extends StatelessWidget {
                         const SizedBox(height: 40),
                         Text('BANK',
                           style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,)),
-                        const SizedBox(height: 35),
+                              fontSize: 14, color: Colors.white)),
+                        const SizedBox(height: 50),
                         Text('ACCOUNT NUMBER',
                           style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,)),
-                        const SizedBox(height: 35),
+                              fontSize: 14, color: Colors.white)),
+                        const SizedBox(height: 50),
                         Text('TYPE',
                           style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,)),
-                        const SizedBox(height: 35),
+                              fontSize: 14,color: Colors.white)),
+                        const SizedBox(height: 50),
                         Text('CURRENCY',
                           style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,)),
-                        const SizedBox(height: 35),
-                        Text('HOST',
+                              fontSize: 14, color: Colors.white)),
+                        const SizedBox(height: 50),
+                        Text('BENEFICIARY',
                           style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,)),
-                        const SizedBox(height: 35),
-                        Text('HOST ID',
+                              fontSize: 14, color: Colors.white)),
+                        const SizedBox(height: 50),
+                        Text('BENEFICIARY ID',
                           style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16)),
-                        const SizedBox(height: 35),
+                              fontSize: 14, color: Colors.white)),
+                        const SizedBox(height: 50),
                         Text('COMMENTS',
                           style: GoogleFonts.plusJakartaSans(
-                              fontSize: 16,)),
+                              fontSize: 14, color: Colors.white)),
                       ],
                     ),
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    height: 500,
-                    child:Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 30),
-                        SizedBox(
-                          height: 40,
+                    height: 550,
+                    child:Form(
+                      key: bankFormProvider.formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 30),
+                          SizedBox(
+                            height: 60,
+                            width: 300,
+                            child: TextFormField(
+                          initialValue: bank.nombre,
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14),
+                          decoration: InputDecoration(
+                          hintText: 'Bank Name',
+                          hintStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white, width: 1),
+                            borderRadius: BorderRadius.circular(8.0),),
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0), // Color del borde enfocado
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold // Ajusta el tamaño del texto del error
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                          ),
+                          onChanged: (value){
+                            bank.nombre = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Bank name cannot be empty.';
+                            } else if (value.length > 25) {
+                              return 'Name cannot exceed 25 characters.';
+                            }
+                            return null; // Validation successful
+                          },
+                            )
+                          ),
+                          const SizedBox(height: 10),
+                            SizedBox(
+                            height: 60,
+                            width: 300,
+                            child: TextFormField(
+                          initialValue: bank.numero,
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14),
+                          decoration: InputDecoration(
+                          hintText: 'Account Number',
+                          hintStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white, width: 1),
+                            borderRadius: BorderRadius.circular(8.0),),
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0), // Color del borde enfocado
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold // Ajusta el tamaño del texto del error
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                          ),
+                         onChanged: (value){
+                            bank.numero = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'The number Account cannot be empty.';
+                            } else if (value.length > 25) {
+                              return 'The Number Account cannot exceed 25 characters.';
+                            }
+                            return null; // Validation successful
+                          },
+                            )
+                              ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                          height: 60,
                           width: 300,
-                          child: TextFormField(
-                        decoration: InputDecoration(
-                        hintText: 'Bank Name',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        )
+                          child: Consumer<BankProvider>(
+                            builder: (context, bankProvider, child) {
+                              return DropdownButtonFormField<String>(
+                                value: bank.tipo,
+                                icon: const Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.white, // Color de la flecha
+                                ),
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(color: Colors.white, width: 1),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color.fromRGBO(177, 255, 46, 100),
+                                      width: 2.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0,
+                                    vertical: 12.0,
+                                  ),
+                                ),
+                                dropdownColor: Colors.black, 
+                                style: GoogleFonts.plusJakartaSans(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                                items: bankProvider.tipo.map((tipo) {
+                                  return DropdownMenuItem<String>(
+                                    value: tipo,
+                                    child: Text(
+                                      tipo,
+                                      style: GoogleFonts.plusJakartaSans(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  bank.tipo = value!;
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Account type is required';
+                                  }
+                                  return null;
+                                },
+                              );
+                            },
+                          ),
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 60,
+                            width: 300,
+                            child: TextFormField(
+                          initialValue: bank.currencySymbol,
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14),
+                          decoration: InputDecoration(
+                          hintText: 'Euro, USD, BTC',
+                          hintStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white, width: 1),
+                            borderRadius: BorderRadius.circular(8.0),),
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0), // Color del borde enfocado
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold // Ajusta el tamaño del texto del error
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                          ),
+                          onChanged: (value){
+                            bank.currencySymbol = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'The Currency cannot be empty.';
+                            } else if (value.length > 10) {
+                              return 'Currency cannot exceed 10 characters.';
+                            }
+                            return null; // Validation successful
+                          },
                           )
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                        hintText: 'Account Number',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        )
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 60,
+                            width: 300,
+                            child: TextFormField(
+                          initialValue: bank.titular,
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14),
+                          decoration: InputDecoration(
+                          hintText: 'Beneficiary',
+                          hintStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white, width: 1),
+                            borderRadius: BorderRadius.circular(8.0),),
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0), // Color del borde enfocado
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold // Ajusta el tamaño del texto del error
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                          ),
+                          onChanged: (value){
+                            bank.titular = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Beneficiary cannot be empty.';
+                            } else if (value.length > 25) {
+                              return 'Beneficiary Name cannot exceed 25 characters.';
+                            }
+                            return null; // Validation successful
+                          },
                           )
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                        hintText: 'TYPE',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        )
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 60,
+                            width: 300,
+                            child: TextFormField(
+                          initialValue: bank.idtitular,
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14),
+                          decoration: InputDecoration(
+                          hintText: 'Beneficiary ID',
+                          hintStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white, width: 1),
+                            borderRadius: BorderRadius.circular(8.0),),
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0), // Color del borde enfocado
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold // Ajusta el tamaño del texto del error
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                          ),
+                          onChanged: (value){
+                            bank.idtitular = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Beneficiary ID cannot be empty.';
+                            } else if (value.length > 20) {
+                              return 'Beneficiary ID cannot exceed 20 characters.';
+                            }
+                            return null; // Validation successful
+                          },
                           )
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                        hintText: 'Currency',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        )
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 60,
+                            width: 300,
+                            child: TextFormField(
+                          initialValue: bank.comentarios,    
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14),
+                          decoration: InputDecoration(
+                          hintText: 'Comments',
+                          hintStyle: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white, width: 1),
+                            borderRadius: BorderRadius.circular(8.0),),
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0), // Color del borde enfocado
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold // Ajusta el tamaño del texto del error
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                          ),
+                          onChanged: (value){
+                            bank.comentarios = value;
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Comments cannot be empty.';
+                            } else if (value.length > 40) {
+                              return 'Comments cannot exceed 40 characters.';
+                            }
+                            return null; // Validation successful
+                          },
                           )
-                        ),
-                          const SizedBox(height: 20),
-                        SizedBox(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                        hintText: 'Host Name / Legal Name',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        )
-                          )
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                        hintText: 'Host ID',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        )
-                          )
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 40,
-                          width: 300,
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                        hintText: 'Comments',
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
-                        )
-                          )
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                    
                   ),
@@ -311,7 +559,7 @@ class BankViewBody extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () async {
-                   
+                   bankFormProvider.updateBank();
                   },
                 ),
               ),
