@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class Bank {
     bool? estado;
-    String? id;
+    String id;
     String nombre;
     String numero;
     String tipo;
@@ -16,7 +16,7 @@ class Bank {
 
     Bank({
         this.estado,
-        this.id,
+        required this.id,
         required this.nombre,
         required this.numero,
         required this.tipo,

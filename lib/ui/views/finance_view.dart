@@ -23,10 +23,8 @@ class _FinanceViewState extends State<FinanceView> {
   @override
   void initState() {
     super.initState();
-    final financeProvider =
-        Provider.of<FinanceProvider>(context, listen: false);
-    final financeFormProvider =
-        Provider.of<FinanceFormProvider>(context, listen: false);
+    final financeProvider = Provider.of<FinanceProvider>(context, listen: false);
+    final financeFormProvider = Provider.of<FinanceFormProvider>(context, listen: false);
 
     financeProvider.getFinanceById(widget.id).then((financeDB) {
       financeFormProvider.finance = financeDB;

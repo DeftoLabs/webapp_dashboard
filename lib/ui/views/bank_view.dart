@@ -6,6 +6,7 @@ import 'package:web_dashboard/models/bank.dart';
 import 'package:web_dashboard/providers/providers.dart';
 
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 
 
@@ -28,10 +29,11 @@ class _BankViewState extends State<BankView> {
     final bankProvider = Provider.of<BankProvider>(context, listen: false);
     final bankFormProvider = Provider.of<BankFormProvider>(context, listen: false);
     
-    bankProvider.getBankById(widget.id)
-    .then((bankDB) {
+    bankProvider.getBankById(widget.id).then((bankDB) {
         bankFormProvider.bank = bankDB;
-        setState(() { bank = bankDB; });   
+        setState(() { 
+          bank = bankDB; 
+          });   
       }
     ); 
   }
@@ -100,9 +102,9 @@ class _BankViewState extends State<BankView> {
               )
               ),
               if (bank != null) ...[
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const BankViewBody(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
             
             ]
 
@@ -125,7 +127,7 @@ class BankViewBody extends StatelessWidget {
     final bank = bankFormProvider.bank!;
 
     return Container(
-      height: 700,
+      height: 670,
       margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color:  const Color.fromARGB(255, 58, 60, 65),
@@ -188,7 +190,7 @@ class BankViewBody extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   SizedBox(
                     height: 550,
                     child:Form(
@@ -199,12 +201,13 @@ class BankViewBody extends StatelessWidget {
                           const SizedBox(height: 30),
                           SizedBox(
                             height: 60,
-                            width: 300,
+                            width: 320,
                             child: TextFormField(
                           initialValue: bank.nombre,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
-                            fontSize: 14),
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
                           decoration: InputDecoration(
                           hintText: 'Bank Name',
                           hintStyle: GoogleFonts.plusJakartaSans(
@@ -228,9 +231,9 @@ class BankViewBody extends StatelessWidget {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                          onChanged: (value){
-                            bank.nombre = value;
-                          },
+                          onChanged: (value) {
+                              bankFormProvider.copyBankwith(nombre: value.toUpperCase());
+                            },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Bank name cannot be empty.';
@@ -244,12 +247,13 @@ class BankViewBody extends StatelessWidget {
                           const SizedBox(height: 10),
                             SizedBox(
                             height: 60,
-                            width: 300,
+                            width: 320,
                             child: TextFormField(
                           initialValue: bank.numero,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
-                            fontSize: 14),
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
                           decoration: InputDecoration(
                           hintText: 'Account Number',
                           hintStyle: GoogleFonts.plusJakartaSans(
@@ -273,9 +277,9 @@ class BankViewBody extends StatelessWidget {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                         onChanged: (value){
-                            bank.numero = value;
-                          },
+                         onChanged: (value) {
+                              bankFormProvider.copyBankwith(numero: value.toUpperCase());
+                            },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'The number Account cannot be empty.';
@@ -289,7 +293,7 @@ class BankViewBody extends StatelessWidget {
                           const SizedBox(height: 10),
                           SizedBox(
                           height: 60,
-                          width: 300,
+                          width: 320,
                           child: Consumer<BankProvider>(
                             builder: (context, bankProvider, child) {
                               return DropdownButtonFormField<String>(
@@ -336,7 +340,7 @@ class BankViewBody extends StatelessWidget {
                                   );
                                 }).toList(),
                                 onChanged: (value) {
-                                  bank.tipo = value!;
+                                   bankFormProvider.copyBankwith( tipo: value);
                                 },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -351,12 +355,14 @@ class BankViewBody extends StatelessWidget {
                           const SizedBox(height: 10),
                           SizedBox(
                             height: 60,
-                            width: 300,
+                            width: 320,
                             child: TextFormField(
                           initialValue: bank.currencySymbol,
                           style: GoogleFonts.plusJakartaSans(
-                            color: Colors.white,
-                            fontSize: 14),
+                            color: const Color.fromRGBO(177, 255, 46, 100),
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold
+                            ),
                           decoration: InputDecoration(
                           hintText: 'Euro, USD, BTC',
                           hintStyle: GoogleFonts.plusJakartaSans(
@@ -380,8 +386,8 @@ class BankViewBody extends StatelessWidget {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                          onChanged: (value){
-                            bank.currencySymbol = value;
+                          onChanged: (value) {
+                            bankFormProvider.copyBankwith(currencySymbol: value.toUpperCase());
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -396,7 +402,7 @@ class BankViewBody extends StatelessWidget {
                           const SizedBox(height: 10),
                           SizedBox(
                             height: 60,
-                            width: 300,
+                            width: 320,
                             child: TextFormField(
                           initialValue: bank.titular,
                           style: GoogleFonts.plusJakartaSans(
@@ -407,6 +413,7 @@ class BankViewBody extends StatelessWidget {
                           hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontSize: 14,
+                            fontWeight: FontWeight.bold
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: Colors.white, width: 1),
@@ -425,14 +432,14 @@ class BankViewBody extends StatelessWidget {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                          onChanged: (value){
-                            bank.titular = value;
-                          },
+                          onChanged: (value) {
+                              bankFormProvider.copyBankwith(titular: value.toUpperCase());
+                            },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Beneficiary cannot be empty.';
-                            } else if (value.length > 25) {
-                              return 'Beneficiary Name cannot exceed 25 characters.';
+                            } else if (value.length > 35) {
+                              return 'Beneficiary Name cannot exceed 35 characters.';
                             }
                             return null; // Validation successful
                           },
@@ -441,7 +448,7 @@ class BankViewBody extends StatelessWidget {
                           const SizedBox(height: 10),
                           SizedBox(
                             height: 60,
-                            width: 300,
+                            width: 320,
                             child: TextFormField(
                           initialValue: bank.idtitular,
                           style: GoogleFonts.plusJakartaSans(
@@ -470,9 +477,9 @@ class BankViewBody extends StatelessWidget {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                          onChanged: (value){
-                            bank.idtitular = value;
-                          },
+                          onChanged: (value) {
+                              bankFormProvider.copyBankwith(idtitular: value.toUpperCase());
+                            },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Beneficiary ID cannot be empty.';
@@ -486,14 +493,14 @@ class BankViewBody extends StatelessWidget {
                           const SizedBox(height: 10),
                           SizedBox(
                             height: 60,
-                            width: 300,
+                            width: 320,
                             child: TextFormField(
                           initialValue: bank.comentarios,    
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontSize: 14),
                           decoration: InputDecoration(
-                          hintText: 'Comments',
+                          hintText: '',
                           hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontSize: 14,
@@ -516,7 +523,7 @@ class BankViewBody extends StatelessWidget {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
                           onChanged: (value){
-                            bank.comentarios = value;
+                             bankFormProvider.copyBankwith( comentarios: value);
                           },
                           validator: (value) {
                             if (value == null) {
@@ -547,8 +554,7 @@ class BankViewBody extends StatelessWidget {
                     color: const Color.fromRGBO(0, 200, 83, 1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color:
-                          const Color.fromRGBO(177, 255, 46, 100),
+                      color: const Color.fromRGBO(177, 255, 46, 100),
                       width: 2,
                     )),
                 child: TextButton(
@@ -559,7 +565,21 @@ class BankViewBody extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () async {
-                   bankFormProvider.updateBank();
+                    if (bankFormProvider.validForm()) {
+                      final saved = await bankFormProvider.updateBank();
+                       if (saved) {
+                         NotificationService.showSnackBa('Bank Account Updated');
+                         if (!context.mounted) return;
+                         Provider.of<BankProvider>(context,listen: false).getPaginatedBank();
+                         NavigationService.replaceTo('/dashboard/settings/bankaccount');
+                       } else {
+                         NotificationService.showSnackBarError(
+                             'Error: The Bank Account were not updated');
+                       }
+                        } else {
+                          NotificationService.showSnackBarError(
+                              'Please fill all fields correctly');
+                        }
                   },
                 ),
               ),
