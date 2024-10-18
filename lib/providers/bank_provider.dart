@@ -9,9 +9,11 @@ class BankProvider extends ChangeNotifier {
 
   final List<String> _tipo = ['SAVING', 'CHECKING', 'CRIPTO'];
   List<String> get tipo => _tipo;
+  String? selectedTipo;
   bool isLoading = true;
 
   BankProvider() {
+    selectedTipo = _tipo.isNotEmpty ? _tipo.first : null;
     getPaginatedBank();
   }
 
@@ -20,6 +22,10 @@ class BankProvider extends ChangeNotifier {
     final bankResp = BankResponse.fromMap(resp);
     banks = [... bankResp.banks];
     isLoading = false;
+    notifyListeners();
+  }
+    void setSelectedTipo(String? value) {
+    selectedTipo = value;
     notifyListeners();
   }
 

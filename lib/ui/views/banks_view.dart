@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/bank_datasource.dart';
-
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
-import 'package:web_dashboard/ui/modals/finance_modal.dart';
+import 'package:web_dashboard/ui/modals/bank_modal.dart';
+
 
 class BanksView extends StatelessWidget {
   const BanksView({super.key});
@@ -90,7 +90,7 @@ class BanksView extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return const FinanceModal();
+                                return const BankModal();
                               },
                             );
                         },

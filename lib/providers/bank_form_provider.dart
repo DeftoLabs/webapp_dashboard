@@ -5,7 +5,9 @@ import 'package:web_dashboard/models/bank.dart';
 class BankFormProvider extends ChangeNotifier {
 
   Bank? bank;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  List<Bank> banks = [];
+
+  late GlobalKey<FormState> formKey;
 
   copyBankwith ({
     String? id,
@@ -29,12 +31,14 @@ class BankFormProvider extends ChangeNotifier {
     idtitular: idtitular ?? bank!.idtitular,
     comentarios: comentarios ?? bank!.comentarios,
     );
+    formKey = GlobalKey<FormState>();
     notifyListeners();
   }
 
   bool validForm() {
     return formKey.currentState!.validate();
   }
+
 
   Future updateBank () async {
     if (!validForm()) return false;
@@ -49,15 +53,40 @@ class BankFormProvider extends ChangeNotifier {
       'comentarios': bank!.comentarios,
     };
     try {
-      print('Updating bank with ID: ${bank!.id}');
       await CafeApi.put('/bankaccount/${bank!.id}', data);
       return true;
     } catch (e) {
-      print('Error updating bank: $e');
       return false;
     }
+  }
 
+   Future newBank (
+        String nombre,
+        String numero,
+        String tipo,
+        String currencySymbol,
+        String titular,
+        String idtitular,
+        String comentarios,   
+          ) async {
 
+    final data = {
+        'nombre'          : nombre,
+        'numero'          : numero,
+        'tipo'            : tipo,
+        'currencySymbol'  : currencySymbol,
+        'titular'         : titular,
+        'idtitular'       : idtitular,
+        'comentarios'     : comentarios,
+    };
+    try{
+      final json = await CafeApi.post('/bankaccount', data);
+      final newBank = Bank.fromMap(json);
+      banks.add(newBank);
+      notifyListeners();
+    } catch (e){
+      throw ' Error to create the Bank Account ';
+    }
   }
 
 

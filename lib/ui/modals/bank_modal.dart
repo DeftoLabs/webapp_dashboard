@@ -1,171 +1,101 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/bank.dart';
 import 'package:web_dashboard/providers/providers.dart';
-
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
-import 'package:web_dashboard/ui/cards/white_card.dart';
 
+class BankModal extends StatefulWidget {
+  final Bank? bank;
 
-
-class BankView extends StatefulWidget {
-  final String id;
-
-  const BankView({super.key, required this.id, });
+  const BankModal({super.key, this.bank});
 
   @override
-  State<BankView> createState() => _BankViewState();
+  State<BankModal> createState() => _BankModalState();
 }
 
-class _BankViewState extends State<BankView> {
-  Bank? bank;
+class _BankModalState extends State<BankModal> {
+  String? id;
+  String nombre = '';
+  String numero = '';
+  String? tipo;
+  String currencySymbol = '';
+  String titular = '';
+  String idtitular = '';
+  String comentarios = '';
+
+  late TextEditingController nombreController;
+  late TextEditingController numeroController;
+  late TextEditingController currencySymbolController;
+  late TextEditingController titularController;
+  late TextEditingController idtitularController;
+  late TextEditingController comentariosController;
 
   @override
   void initState() {
     super.initState();
-    final bankProvider = Provider.of<BankProvider>(context, listen: false);
-    final bankFormProvider = Provider.of<BankFormProvider>(context, listen: false);
-    
-    bankProvider.getBankById(widget.id)
-    .then((bankDB) {
-
-      if(bankDB != null) {
-        bankFormProvider.bank = bankDB;
-        bankFormProvider.formKey = GlobalKey<FormState>();
-        setState(() { bank = bankDB;});   
-      }else {
-        NavigationService.replaceTo('/dashboard/settings/bankaccount');
-      }
-      }
-    ); 
+    nombreController =         TextEditingController(text: widget.bank?.nombre ?? '');
+    numeroController =         TextEditingController(text: widget.bank?.numero ?? '');
+    currencySymbolController = TextEditingController(text: widget.bank?.currencySymbol?? '');
+    titularController =        TextEditingController(text: widget.bank?.titular ?? '');
+    idtitularController =      TextEditingController(text: widget.bank?.idtitular ?? '');
+    comentariosController =    TextEditingController(text: widget.bank?.comentarios ?? '');
+     tipo = widget.bank?.tipo;
   }
 
   @override
   void dispose() {
-    bank = null;
-    Provider.of<BankFormProvider>(context, listen: false).bank = null; 
+    nombreController.dispose();
+    numeroController.dispose();
+    currencySymbolController.dispose();
+    titularController.dispose();
+    idtitularController.dispose();
+    comentariosController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final bankFormProvider = Provider.of<BankFormProvider>(context, listen: false);
+   
 
-    final profileProvider = Provider.of<ProfileProvider>(context);
-    final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
 
-    if (profile == null) {
-    return const Center(child: Text(''));
-    }
-
-    final image = (profile.img == null) 
-    ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
-    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: ListView(
-            physics: const ClampingScrollPhysics(),
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                      color: Colors.black,
-                      onPressed: () {
-                        NavigationService.navigateTo('/dashboard/settings/bankaccount');
-                      },
-                      icon: const Icon(Icons.arrow_back_rounded)),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 20),
-                        Text(
-                          'Bank Account Settings - ${bank?.id}',
-                          style: GoogleFonts.plusJakartaSans(fontSize: 30),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                SizedBox(
-                width: 60,
-                height: 60,
-                child: ClipOval(
-                  child: image,
-                ),
-              ),
-
-          const SizedBox(height: 10),
-        ],
-      ), 
-      const SizedBox(height: 10),
-      const Divider(),
-      const SizedBox(height: 10),
-         if (bank == null)
-              WhiteCard(
-                child: Container(
-                alignment: Alignment.center,
-                height: 300,
-                child: const CircularProgressIndicator(
-                color: Color.fromRGBO(255, 0, 200, 0.612),
-                strokeWidth: 4.0),
-              )
-              ),
-              if (bank != null) ...[
-              const SizedBox(height: 10),
-              const BankViewBody(),
-              const SizedBox(height: 10),
-            
-            ]
-
-            
-    ]
-    )
-    );
-  }
-}
-
-class BankViewBody extends StatefulWidget {
-  const BankViewBody({
-    super.key,
-  });
-
-  @override
-  State<BankViewBody> createState() => _BankViewBodyState();
-}
-
-class _BankViewBodyState extends State<BankViewBody> {
-  @override
-  Widget build(BuildContext context) {
-
-    final bankFormProvider = Provider.of<BankFormProvider>(context);
-    final bank = bankFormProvider.bank!;
-
-    return Container(
-      height: 670,
-      margin: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color:  const Color.fromARGB(255, 58, 60, 65),
+    return Dialog(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
-      child: Column(
+      child: Container(
+        height: 750,
+        width: 900, 
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color:  const Color.fromARGB(255, 58, 60, 65),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min, 
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Add Bank Account',
+                  style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.white)
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+            const Divider(color: Colors.white70),
+            Center(
+              child: Column(
         children: [
-          const SizedBox(height: 40),
           Table(
             columnWidths: const {
-              0: FixedColumnWidth(400),
+              0: FixedColumnWidth(200),
               1: FixedColumnWidth(20),
-
             },
             children: [
               TableRow(
@@ -220,7 +150,7 @@ class _BankViewBodyState extends State<BankViewBody> {
                             height: 60,
                             width: 320,
                             child: TextFormField(
-                          initialValue: bank.nombre,
+                           controller: nombreController,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontSize: 14,
@@ -249,8 +179,8 @@ class _BankViewBodyState extends State<BankViewBody> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
                           onChanged: (value) {
-                              bankFormProvider.copyBankwith(nombre: value.toUpperCase());
-                            },
+                           widget.bank?.nombre = value.toUpperCase();
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Bank name cannot be empty.';
@@ -266,7 +196,7 @@ class _BankViewBodyState extends State<BankViewBody> {
                             height: 60,
                             width: 320,
                             child: TextFormField(
-                          initialValue: bank.numero,
+                           controller: numeroController,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontSize: 14,
@@ -294,9 +224,9 @@ class _BankViewBodyState extends State<BankViewBody> {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                         onChanged: (value) {
-                              bankFormProvider.copyBankwith(numero: value.toUpperCase());
-                            },
+                              onChanged: (value) {
+                           widget.bank?.numero = value.toUpperCase();
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'The number Account cannot be empty.';
@@ -314,7 +244,7 @@ class _BankViewBodyState extends State<BankViewBody> {
                           child: Consumer<BankProvider>(
                             builder: (context, bankProvider, child) {
                               return DropdownButtonFormField<String>(
-                                value: bank.tipo,
+                                value: tipo, 
                                 icon: const Icon(
                                   Icons.arrow_drop_down,
                                   color: Colors.white, // Color de la flecha
@@ -356,12 +286,16 @@ class _BankViewBodyState extends State<BankViewBody> {
                                     ),
                                   );
                                 }).toList(),
-                                onChanged: (value) {
-                                   bankFormProvider.copyBankwith( tipo: value);
+                                    onChanged: (value) {
+                                  setState(() {
+                                    tipo = value;
+                                    widget.bank?.tipo = value.toString();
+                                    print('Tipo seleccionado: ${widget.bank?.tipo}');
+                                  });
                                 },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Account type is required';
+                                    return 'Account Type is required';
                                   }
                                   return null;
                                 },
@@ -374,7 +308,7 @@ class _BankViewBodyState extends State<BankViewBody> {
                             height: 60,
                             width: 320,
                             child: TextFormField(
-                          initialValue: bank.currencySymbol,
+                           controller: currencySymbolController,
                           style: GoogleFonts.plusJakartaSans(
                             color: const Color.fromRGBO(177, 255, 46, 100),
                             fontSize: 14,
@@ -403,8 +337,8 @@ class _BankViewBodyState extends State<BankViewBody> {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                          onChanged: (value) {
-                            bankFormProvider.copyBankwith(currencySymbol: value.toUpperCase());
+                              onChanged: (value) {
+                           widget.bank?.currencySymbol = value.toUpperCase();
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -421,7 +355,7 @@ class _BankViewBodyState extends State<BankViewBody> {
                             height: 60,
                             width: 320,
                             child: TextFormField(
-                          initialValue: bank.titular,
+                           controller: titularController,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontSize: 14),
@@ -449,9 +383,9 @@ class _BankViewBodyState extends State<BankViewBody> {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                          onChanged: (value) {
-                              bankFormProvider.copyBankwith(titular: value.toUpperCase());
-                            },
+                               onChanged: (value) {
+                           widget.bank?.titular = value.toUpperCase();
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Beneficiary cannot be empty.';
@@ -467,7 +401,7 @@ class _BankViewBodyState extends State<BankViewBody> {
                             height: 60,
                             width: 320,
                             child: TextFormField(
-                          initialValue: bank.idtitular,
+                           controller: idtitularController,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontSize: 14),
@@ -494,9 +428,9 @@ class _BankViewBodyState extends State<BankViewBody> {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                          onChanged: (value) {
-                              bankFormProvider.copyBankwith(idtitular: value.toUpperCase());
-                            },
+                              onChanged: (value) {
+                           widget.bank?.idtitular = value.toUpperCase();
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Beneficiary ID cannot be empty.';
@@ -512,7 +446,7 @@ class _BankViewBodyState extends State<BankViewBody> {
                             height: 60,
                             width: 320,
                             child: TextFormField(
-                          initialValue: bank.comentarios,    
+                           controller: comentariosController,  
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontSize: 14),
@@ -539,8 +473,8 @@ class _BankViewBodyState extends State<BankViewBody> {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                          onChanged: (value){
-                             bankFormProvider.copyBankwith( comentarios: value);
+                              onChanged: (value) {
+                           widget.bank?.comentarios = value.toUpperCase();
                           },
                           validator: (value) {
                             if (value == null) {
@@ -561,47 +495,62 @@ class _BankViewBodyState extends State<BankViewBody> {
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-                height: 50,
-                width: 150,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(0, 200, 83, 1),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: const Color.fromRGBO(177, 255, 46, 100),
-                      width: 2,
-                    )),
-                child: TextButton(
-                  child: Text(
-                    'SAVE',
-                    style: GoogleFonts.plusJakartaSans(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () async {
-                    if (bankFormProvider.validForm()) {
-                      final saved = await bankFormProvider.updateBank();
-                       if (saved) {
-                         NotificationService.showSnackBa('Bank Account Updated');
-                         if (!context.mounted) return;
-                         Provider.of<BankProvider>(context,listen: false).getPaginatedBank();
-                         NavigationService.replaceTo('/dashboard/settings/bankaccount');
-                       } else {
-                         NotificationService.showSnackBarError(
-                             'Error: The Bank Account were not updated');
-                       }
-                        } else {
-                          NotificationService.showSnackBarError(
-                              'Please fill all fields correctly');
-                        }
-                  },
-                ),
-              ),
-          ),
         ],
+      ),
+            ),
+                           Container(
+                    height: 50,
+                    width: 150,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(0, 200, 83, 1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromRGBO(177, 255, 46, 100),
+                          width: 2,
+                        )),
+                    child: TextButton(
+                        child: Text(
+                          'SAVE',
+                          style: GoogleFonts.plusJakartaSans(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                         onPressed: () async {
+                                if (bankFormProvider.validForm()) {
+                                    try {
+                                 if (id == null) {
+                                  print('Nombre: ${nombreController.text}');
+                                  print('Número: ${numeroController.text}');
+                                  print('Currency Symbol: ${currencySymbolController.text}');
+                                  print('Tipo: ${tipo}');
+                                  print('Titular: ${titularController.text}');
+                                  print('ID Titular: ${idtitularController.text}');
+                                  print('Comentarios: ${comentariosController.text}');
+                                   await bankFormProvider.newBank(
+
+                                   nombre         = nombreController.text.toUpperCase(),
+                                   numero         = numeroController.text.toUpperCase(),
+                                   tipo           = tipo.toString(),
+                                   currencySymbol = currencySymbolController.text.toUpperCase(),
+                                   titular        = titularController.text.toUpperCase(),
+                                   idtitular      = idtitularController.text.toUpperCase(),
+                                   comentarios    = comentariosController.text.toUpperCase()
+                                    );
+                                   NotificationService.showSnackBa('Bank Account Created');
+                                 }
+                                  if (!context.mounted) return;
+                                    Provider.of<BankProvider>(context,listen: false).getPaginatedBank();
+                                    NavigationService.replaceTo('/dashboard/settings/bankaccount');
+                               } catch (e) {
+                                if (mounted) NotificationService.showSnackBarError('Could not create the Bank Account');
+                                 if (mounted) Navigator.of(context).pop();
+                               }
+                                }
+                              },
+                        ),
+                  ),
+          ],
+        ),
       ),
     );
   }
