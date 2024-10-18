@@ -31,13 +31,12 @@ class _CustomerViewState extends State<CustomerView> {
     final customerProvider = Provider.of<CustomersProvider>(context, listen: false);
     final customerFormProvider = Provider.of<CustomerFormProvider>(context, listen: false);
 
-    customerProvider.getCustomerById(widget.id).then((customerDB) {
+    customerProvider.getCustomerById(widget.id)
+    .then((customerDB) {
       if (customerDB != null) {
         customerFormProvider.customer = customerDB;
         customerFormProvider.formKey = GlobalKey<FormState>();
-        setState(() {
-          customer = customerDB;
-        });
+        setState(() { customer = customerDB;});
       } else {
         NavigationService.navigateTo('/dashboard/customers');
       }

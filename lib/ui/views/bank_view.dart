@@ -31,7 +31,6 @@ class _BankViewState extends State<BankView> {
     
     bankProvider.getBankById(widget.id)
     .then((bankDB) {
-
       if(bankDB != null) {
         bankFormProvider.bank = bankDB;
         bankFormProvider.formKey = GlobalKey<FormState>();
@@ -82,7 +81,7 @@ class _BankViewState extends State<BankView> {
                       children: [
                         const SizedBox(height: 20),
                         Text(
-                          'Bank Account Settings - ${bank?.id}',
+                          'Bank Account Settings',
                           style: GoogleFonts.plusJakartaSans(fontSize: 30),
                           textAlign: TextAlign.center,
                         ),
@@ -142,6 +141,7 @@ class _BankViewBodyState extends State<BankViewBody> {
 
     final bankFormProvider = Provider.of<BankFormProvider>(context);
     final bank = bankFormProvider.bank!;
+    
 
     return Container(
       height: 670,

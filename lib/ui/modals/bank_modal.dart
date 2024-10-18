@@ -290,7 +290,6 @@ class _BankModalState extends State<BankModal> {
                                   setState(() {
                                     tipo = value;
                                     widget.bank?.tipo = value.toString();
-                                    print('Tipo seleccionado: ${widget.bank?.tipo}');
                                   });
                                 },
                                 validator: (value) {
@@ -519,13 +518,6 @@ class _BankModalState extends State<BankModal> {
                                 if (bankFormProvider.validForm()) {
                                     try {
                                  if (id == null) {
-                                  print('Nombre: ${nombreController.text}');
-                                  print('Número: ${numeroController.text}');
-                                  print('Currency Symbol: ${currencySymbolController.text}');
-                                  print('Tipo: ${tipo}');
-                                  print('Titular: ${titularController.text}');
-                                  print('ID Titular: ${idtitularController.text}');
-                                  print('Comentarios: ${comentariosController.text}');
                                    await bankFormProvider.newBank(
 
                                    nombre         = nombreController.text.toUpperCase(),

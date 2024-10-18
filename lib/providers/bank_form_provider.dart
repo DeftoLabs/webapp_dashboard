@@ -31,7 +31,6 @@ class BankFormProvider extends ChangeNotifier {
     idtitular: idtitular ?? bank!.idtitular,
     comentarios: comentarios ?? bank!.comentarios,
     );
-    formKey = GlobalKey<FormState>();
     notifyListeners();
   }
 
