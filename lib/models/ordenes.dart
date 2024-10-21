@@ -21,6 +21,8 @@ class Ordenes {
     DateTime fechaentrega;
     Usuario usuario;
     String tipo;
+    String? comentario;
+    String? comentarioRevision;
     DateTime fechacreado;
     DateTime createdAt;
     DateTime updatedAt;
@@ -42,6 +44,8 @@ class Ordenes {
         required this.fechaentrega,
         required this.usuario,
         required this.tipo,
+        this.comentario,
+        this.comentarioRevision,
         required this.fechacreado,
         required this.createdAt,
         required this.updatedAt,
@@ -84,6 +88,8 @@ factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás reci
     fechaentrega: json["fechaentrega"] != null ? DateTime.parse(json["fechaentrega"]) : DateTime.now(),
     usuario: json["usuario"] != null ? Usuario.fromMap(json["usuario"]) : Usuario(uid: '', nombre: '', rol: '', estado:true, google:true, correo:'', phone:'', zone:''),
     tipo: json["tipo"] ?? '', 
+    comentario: json["comentario"] ?? '', 
+    comentarioRevision: json["comentarioRevision"] ?? '', 
     fechacreado: json["fechacreado"] != null ? DateTime.parse(json["fechacreado"]) : DateTime.now(), 
     createdAt: json["createdAt"] != null ? DateTime.parse(json["createdAt"]) : DateTime.now(), 
     updatedAt: json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : DateTime.now(), 
@@ -108,6 +114,8 @@ factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás reci
         "fechaentrega": fechaentrega.toIso8601String(),
         "usuario": usuario.toMap(),
         "tipo": tipo,
+        "comentario": comentario,
+        "comentarioRevision": comentarioRevision,
         "fechacreado": fechacreado.toIso8601String(),
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),

@@ -42,6 +42,7 @@ class _OrdersViewState extends State<OrdersView> {
 
     String todayDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
     final ordenDateProvider = Provider.of<OrdenDateProvider>(context);
+    // final ordenProvider = Provider.of<OrdenesProvider>(context);
 
       if (ordenDateProvider.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -94,7 +95,7 @@ class _OrdersViewState extends State<OrdersView> {
                     DataColumn(label: Text('Edit')),
                   ], 
                   source: ordersDataSource,
-                  columnSpacing: 100,
+                  columnSpacing: 50,
                   rowsPerPage: 7,
                   
                   ),

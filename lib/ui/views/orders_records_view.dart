@@ -300,6 +300,7 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
                     const DataColumn(label: Text('Edit')),
                   ],
                   source: ordersDataSource,
+                  columnSpacing: 35,
                   rowsPerPage: 5,
                   onPageChanged: (page) {},
                 ),

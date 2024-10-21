@@ -79,16 +79,19 @@ class _OrdenViewState extends State<OrdenView> {
 class _OrdenViewBody extends StatefulWidget {
   final Ordenes orden;
 
-  const _OrdenViewBody({super.key, required this.orden});
+  const _OrdenViewBody({required this.orden});
 
   @override
   State<_OrdenViewBody> createState() => _OrdenViewBodyState();
 }
 
 class _OrdenViewBodyState extends State<_OrdenViewBody> {
+
+    double? selectedPrice;
+
   @override
   Widget build(BuildContext context) {
-    double? selectedPrice;
+
 
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty
@@ -431,6 +434,9 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                   color: Colors.grey, width: 1),
                             ),
                           ),
+                           onChanged: (value) {
+                 
+                            },
                           keyboardType: TextInputType.number,
                         ),
                       ),
@@ -438,39 +444,48 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     DataCell(Text(producto.unid)),
                     DataCell(Text(producto.precio!.toStringAsFixed(2))),
                     DataCell(
-                      DropdownButton<double>(
-                        value: selectedPrice,
-                        hint: const Text('Select'),
-                        onChanged: (double? newValue) {
-                          setState(() {
-                            selectedPrice = newValue!;
-                            print('New Price ${newValue}');
-                          });
-                        },
-                        style: const TextStyle(color: Colors.black),
-                        dropdownColor: Colors.white,
-                        items: [
-                          DropdownMenuItem(
-                            value: producto.precio1,
-                            child: Text(producto.precio1.toStringAsFixed(2)),
+                      Container(
+                        alignment: Alignment.center,
+                        child: DropdownButton<double>(
+                          value: selectedPrice,
+                          hint: Text('SELECT',
+                          style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black
+                          )
                           ),
-                          DropdownMenuItem(
-                            value: producto.precio2,
-                            child: Text(producto.precio2.toStringAsFixed(2)),
-                          ),
-                          DropdownMenuItem(
-                            value: producto.precio3,
-                            child: Text(producto.precio3.toStringAsFixed(2)),
-                          ),
-                          DropdownMenuItem(
-                            value: producto.precio4,
-                            child: Text(producto.precio4.toStringAsFixed(2)),
-                          ),
-                          DropdownMenuItem(
-                            value: producto.precio5,
-                            child: Text(producto.precio5.toStringAsFixed(2)),
-                          ),
-                        ],
+                          onChanged: (double? newValue) {
+                            setState(() {
+                              selectedPrice = newValue!;
+                              print(newValue);
+                            });
+                          },
+                          style: const TextStyle(color: Colors.black),
+                          dropdownColor: Colors.white,
+                          items: [
+                            DropdownMenuItem(
+                              value: producto.precio1,
+                              child: Text(producto.precio1.toStringAsFixed(2)),
+                            ),
+                            DropdownMenuItem(
+                              value: producto.precio2,
+                              child: Text(producto.precio2.toStringAsFixed(2)),
+                            ),
+                            DropdownMenuItem(
+                              value: producto.precio3,
+                              child: Text(producto.precio3.toStringAsFixed(2)),
+                            ),
+                            DropdownMenuItem(
+                              value: producto.precio4,
+                              child: Text(producto.precio4.toStringAsFixed(2)),
+                            ),
+                            DropdownMenuItem(
+                              value: producto.precio5,
+                              child: Text(producto.precio5.toStringAsFixed(2)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     DataCell(Text(producto.totalitem.toString())),
@@ -541,13 +556,133 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
           ),
           const SizedBox(height: 20),
           const Divider(),
-          const Text('Observaciones'),
-          const Text('Boton de Safe')
-        ],
-      ),
-    );
-  }
-}
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 240,
+            margin: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3))
+                ]),
+                child: Column(
+                  children: [
+                  const SizedBox(height: 10),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('OBSERVATIONS AND COMMENTS', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold))),
+                  const SizedBox(height: 15),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('OBSERVATIONS AND COMMENTS BY ${orden.ruta.first.usuarioZona.nombre} :',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 14, 
+                      fontWeight: FontWeight.bold)
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 40,
+                      child: Text(orden.comentario.toString())),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('OBSERVATIONS AND COMMENTS BY MANAGER:',
+                    style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14, 
+                    fontWeight: FontWeight.bold)),
+                  ),
+                  const SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 40,
+                      child: TextFormField(
+                         //  initialValue: bank.nombre,
+                          style: GoogleFonts.plusJakartaSans(
+                            color: Colors.black,
+                            fontSize: 14),
+                          decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.circular(8.0),),
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black, width: 2.0), // Color del borde enfocado
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold // Ajusta el tamaño del texto del error
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
+                          ),
+                          onChanged: (value) {
+                             
+                            },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Cannot be empty.';
+                            } else if (value.length > 25) {
+                              return 'Cannot exceed 25 characters.';
+                            }
+                            return null; // Validation successful
+                          },
+                            )
+                    ),
+                  )
+                  ],)
+                ),
+                const SizedBox(height: 20),
+                        Align(
+            alignment: Alignment.center,
+            child: Container(
+                height: 50,
+                width: 150,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: const Color.fromRGBO(0, 200, 83, 1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: const Color.fromRGBO(177, 255, 46, 100),
+                      width: 2,
+                    )),
+                child: TextButton(
+                  child: Text(
+                    'SAVE',
+                    style: GoogleFonts.plusJakartaSans(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () async {
+                
+                  },
+                ),
+              ),
+          ),
+          const SizedBox(height: 40),
+              ],
+            ),
+          );
+        }
+      }
 
 class CreditInfo extends StatelessWidget {
   const CreditInfo({

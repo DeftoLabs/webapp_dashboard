@@ -58,7 +58,7 @@ class Producto {
   descripcion: json.containsKey("producto") ? json["producto"]["descripcion"] ?? 'ERROR' : json["descripcion"] ?? 'ERROR',
   disponible: json["disponible"] ?? true,
   stock: json["stock"]?.toDouble() ?? 0.0,
-  unid: json["unid"] ?? '',
+  unid: json["producto"]?["unid"] ?? json["unid"] ?? '',
   img: json["img"],
   precio: json["precio"]?.toDouble() ?? 0.0,
   cantidad: json["cantidad"]?.toDouble() ?? 0.0,
