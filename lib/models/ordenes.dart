@@ -58,8 +58,16 @@ factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás reci
     clientes: json["clientes"] != null 
       ? List<Customer>.from(json["clientes"].map((x) => Customer.fromMap(x)))
       : [],
-     ruta: json["ruta"] != null 
-        ? List<Ruta>.from(json["ruta"].map((x) => Ruta.fromMap(x))) // Convierte en una lista
+    ruta: json["ruta"] != null
+        ? List<Ruta>.from(json["ruta"].map((x) {
+            if (x is Map<String, dynamic>) {
+              return Ruta.fromMap(x);
+            } else if (x is String) {
+              return Ruta(id: x, estado: false, codigoRuta: '', nombreRuta: '', zona: '', diasemana: '', clientes: [], usuarioZona: Usuario(rol: '', estado: false, google: false, nombre: '', correo: '', uid: '', phone: '', zone: ''));
+            } else {
+              throw Exception("Tipo inesperado para la ruta: ${x.runtimeType}");
+            }
+          }))
         : [],
     perfil: json["perfil"] != null 
       ? List<String>.from(json["perfil"].map((x) => x.toString()))

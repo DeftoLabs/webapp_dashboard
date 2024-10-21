@@ -1,28 +1,38 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 
-class OrdersDataSource extends DataTableSource {
+class OrdersDateDataSource extends DataTableSource {
 
   final List<Ordenes> ordenes;
 
-  OrdersDataSource(this.ordenes);
+  OrdersDateDataSource(this.ordenes);
 
   @override
   DataRow getRow(int index) {
 
-    final Ordenes orden = ordenes[index];
+      final ordenesOrdenadas = List.from(ordenes)..sort((a, b) => b.fechacreado.compareTo(a.fechacreado));
+
+    final Ordenes orden = ordenesOrdenadas[index];
+
+    final formattedDate = DateFormat('dd/MM/yy').format(orden.fechacreado);
     
+    String clienteNombre = '';
+      if(orden.clientes.isNotEmpty) {
+        clienteNombre = orden.clientes.first.nombre;
+      }
+
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(Text('cell #$index')),
-        DataCell(Text('cell #$index')),
-        DataCell(Text('cell #$index')),
-        DataCell(Text('cell #$index')),
-        DataCell(Text('cell #$index')),
-        DataCell(Text('cell #$index')),
+        DataCell(Text(orden.control)),
+        DataCell(Text(formattedDate)),
+        DataCell(Text(clienteNombre)),
+        DataCell(Text(orden.total.toString())),
+        DataCell(Text(orden.status)),
+        DataCell(Text(orden.ruta.first.usuarioZona.nombre)),
         DataCell(
           IconButton(icon: const Icon(Icons.edit_outlined), 
           onPressed: (){

@@ -10,16 +10,27 @@ import 'package:web_dashboard/ui/cards/rectangular_card.dart';
 
 
 
-class OrdersView extends StatelessWidget {
+class OrdersView extends StatefulWidget {
   const OrdersView({super.key});
+
+  @override
+  State<OrdersView> createState() => _OrdersViewState();
+}
+
+class _OrdersViewState extends State<OrdersView> {
+
+    @override
+  void initState() {
+    super.initState();
+    final ordenDateProvider = Provider.of<OrdenDateProvider>(context, listen: false);
+    ordenDateProvider.getOrdenByDay();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
-
-    final ordenesProvider = Provider.of<OrdenesProvider>(context);
 
     if (profile == null) {
     return const Center(child: Text(''));
@@ -29,10 +40,14 @@ class OrdersView extends StatelessWidget {
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
-     String todayDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
+    String todayDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
+    final ordenDateProvider = Provider.of<OrdenDateProvider>(context);
 
-    
-    final ordersDataSource = OrdersDataSource( ordenesProvider.ordenes );
+      if (ordenDateProvider.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final ordersDataSource = OrdersDateDataSource( ordenDateProvider.ordenes );
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
