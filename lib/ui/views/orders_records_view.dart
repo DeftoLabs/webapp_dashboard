@@ -50,6 +50,8 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
 
     final ordersDataSource = OrdersRecordsDataSource(ordenesProvider.ordenes);
 
+     final double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
@@ -283,12 +285,6 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
                                   : '');
                         }),
                     DataColumn(
-                        label: const Text('Total'),
-                        onSort: (colIndex, _) {
-                          ordenesProvider.sortColumnIndex = colIndex;
-                          ordenesProvider.sort((ordenes) => ordenes.total);
-                        }),
-                    DataColumn(
                         label: const Text('Status'),
                         onSort: (colIndex, _) {
                           ordenesProvider.sortColumnIndex = colIndex;
@@ -300,7 +296,7 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
                     const DataColumn(label: Text('Edit')),
                   ],
                   source: ordersDataSource,
-                  columnSpacing: 35,
+                  columnSpacing: screenWidth * 0.05,
                   rowsPerPage: 5,
                   onPageChanged: (page) {},
                 ),

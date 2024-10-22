@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -113,6 +114,41 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
             width: 35,
             height: 35);
 
+            // Métodos para obtener los colores dinámicamente
+        Color getBackgroundColor(String status) {
+          switch (status) {
+            case 'ORDER':
+              return const Color.fromRGBO(0, 200, 83, 1); // Verde
+            case 'APPROVED':
+              return const Color.fromARGB(255, 52, 149, 251); // Azul claro
+            case 'CANCEL':
+              return const Color.fromRGBO(255, 152, 0, 1); // Naranja
+            case 'INVOICE':
+              return Colors.grey[400]!; // Gris para "INVOICE"
+            case 'NOTE':
+              return Colors.grey[600]!; // Otro tono de gris para "NOTE"
+            default:
+              return Colors.grey; // Default para cualquier otro status
+          }
+        }
+        
+        Color getBorderColor(String status) {
+          switch (status) {
+            case 'ORDER':
+              return const Color.fromRGBO(177, 255, 46, 1); // Verde claro para ORDER
+            case 'APPROVED':
+              return const Color.fromARGB(255, 88, 164, 246); // Azul borde
+            case 'CANCEL':
+              return const Color.fromARGB(255, 255, 194, 102); // Naranja claro borde
+            case 'INVOICE':
+              return Colors.grey[500]!; // Gris más oscuro para "INVOICE"
+            case 'NOTE':
+              return Colors.grey[700]!; // Gris aún más oscuro para "NOTE"
+            default:
+              return Colors.black; // Default
+          }
+        }
+
     return Container(
       width: 250,
       margin: const EdgeInsets.all(5),
@@ -223,16 +259,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   style: GoogleFonts.plusJakartaSans(
                       fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(width: 10),
-              Container(
+            Container(
                   width: 120,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(0, 200, 83, 1),
+                    color: getBackgroundColor(orden.status), // Color de fondo dinámico
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: const Color.fromRGBO(
-                          177, 255, 46, 100), // Define el color del borde
-                      width: 2, // Define el grosor del borde
+                      color: getBorderColor(orden.status), // Color del borde dinámico
+                      width: 2,
                     ),
                     boxShadow: [
                       BoxShadow(
@@ -244,11 +279,16 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     ],
                   ),
                   child: Center(
-                      child: Text(orden.status,
-                          style: GoogleFonts.plusJakartaSans(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)))),
+                    child: Text(
+                      orden.status,
+                      style: GoogleFonts.plusJakartaSans(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),        
               const SizedBox(width: 120),
             ],
           ),
@@ -380,6 +420,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
           ),
           const Divider(indent: 30, endIndent: 30, color: Colors.black),
           Container(
+            width: MediaQuery.of(context).size.width *0.9,
             margin: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -403,20 +444,27 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   DataColumn(label: Text('EDIT')),
                   DataColumn(label: Text('UNID')),
                   DataColumn(label: Text('PRICE')),
-                  DataColumn(label: Text('EDIT')),
-                  DataColumn(label: Text('TOTAL')),
+                  DataColumn(label: Text('EDIT PRICE')),
+                  DataColumn(label: Text('DELETE')),
                 ],
                 rows: orden.productos.map((producto) {
                   return DataRow(cells: [
-                    DataCell(Text(producto.nombre)),
+                    DataCell(Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(producto.nombre),
+                    )),
                     DataCell(Text(producto.descripcion.toString())),
                     DataCell(Text(producto.cantidad.toString())),
                     DataCell(
                       SizedBox(
-                        width: 55,
+                        width: 90,
                         height: 40,
                         child: TextFormField(
-                          maxLength: 4,
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold
+                          ),
+                          maxLength: 8,
                           decoration: InputDecoration(
                             counterText: "",
                             contentPadding: const EdgeInsets.symmetric(
@@ -426,7 +474,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                               borderSide: const BorderSide(
-                                  color: Colors.blue, width: 2),
+                                  color: Color.fromRGBO(0, 200, 83, 1), width: 2),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -437,7 +485,11 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                            onChanged: (value) {
                  
                             },
-                          keyboardType: TextInputType.number,
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            // Permitir solo números y hasta dos decimales, sin números negativos
+                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
+                          ],
                         ),
                       ),
                     ),
@@ -488,7 +540,65 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                         ),
                       ),
                     ),
-                    DataCell(Text(producto.totalitem.toString())),
+                  DataCell(
+                    IconButton(
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        if (orden.productos.length == 1) {
+                          // Mostrar alerta si solo queda un producto
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                title: Center(
+                                  child: 
+                                  Text('Warning', 
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold
+                                  ))),
+                                  content: RichText(
+                                    text: TextSpan(
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 18,
+                                        color: Colors.black, // Color del texto general
+                                      ),
+                                      children: const <TextSpan>[
+                                        TextSpan(text: 'This order has only 1 item. To cancel the order, please use: '),
+                                        TextSpan(
+                                          text: '"CANCEL"',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold, // Negrita para "CANCEL"
+                                          ),
+                                        ),
+                                        TextSpan(text: ' button.'),
+                                      ],
+                                    ),      
+                                  ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(); // Cerrar el diálogo
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          // Lógica para eliminar el producto si hay más de 1
+                          setState(() {
+                          
+                          });
+                        }
+                      },
+                    ),
+                  ),
                   ]);
                 }).toList(),
               ),
@@ -499,11 +609,12 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
             padding: const EdgeInsets.only(right: 100),
             child: Align(
               alignment: Alignment.centerRight,
-              child: Row(
+              child: (orden.status == 'ORDER' || orden.status == 'APPROVED' || orden.status == 'CANCEL') 
+                    ? const SizedBox.shrink() // No muestra nada si el estatus es ORDER, APPROVED o CANCEL
+                    :Row(
                   mainAxisSize:
                       MainAxisSize.min, // Distribuir el espacio entre las columnas
                   children: [
-                    // Primera columna (alineada a la derecha)
                     Column(
                       crossAxisAlignment:
                           CrossAxisAlignment.end, // Alineación a la derecha
@@ -587,7 +698,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       fontWeight: FontWeight.bold)
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 10),
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -600,7 +711,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text('OBSERVATIONS AND COMMENTS BY MANAGER:',
+                    child: Text('OBSERVATIONS AND COMMENTS:',
                     style: GoogleFonts.plusJakartaSans(
                     fontSize: 14, 
                     fontWeight: FontWeight.bold)),
@@ -651,32 +762,58 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   ],)
                 ),
                 const SizedBox(height: 20),
-                        Align(
-            alignment: Alignment.center,
-            child: Container(
-                height: 50,
-                width: 150,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(0, 200, 83, 1),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: const Color.fromRGBO(177, 255, 46, 100),
-                      width: 2,
-                    )),
-                child: TextButton(
-                  child: Text(
-                    'SAVE',
-                    style: GoogleFonts.plusJakartaSans(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                 Container(
+                    height: 50,
+                    width: 150,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(255, 152, 0, 1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 255, 194, 102),
+                          width: 2,
+                        )),
+                    child: TextButton(
+                      child: Text(
+                        'CANCEL',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                    
+                      },
+                    ),
                   ),
-                  onPressed: () async {
-                
-                  },
-                ),
-              ),
-          ),
+                  const SizedBox(width: 20),
+                Container(
+                    height: 50,
+                    width: 150,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(0, 200, 83, 1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromRGBO(177, 255, 46, 100),
+                          width: 2,
+                        )),
+                    child: TextButton(
+                      child: Text(
+                        'SAVE',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                    
+                      },
+                    ),
+                  ),
+              ],
+            ),
           const SizedBox(height: 40),
               ],
             ),

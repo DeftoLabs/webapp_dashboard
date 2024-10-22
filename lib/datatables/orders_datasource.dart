@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:web_dashboard/models/ordenes.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 class OrdersDateDataSource extends DataTableSource {
 
@@ -30,13 +31,12 @@ class OrdersDateDataSource extends DataTableSource {
         DataCell(Text(orden.control)),
         DataCell(Text(formattedDate)),
         DataCell(Text(clienteNombre)),
-        DataCell(Text(orden.total.toString())),
         DataCell(Text(orden.status)),
         DataCell(Text(orden.ruta.first.usuarioZona.nombre)),
-        DataCell(
+   DataCell(
           IconButton(icon: const Icon(Icons.edit_outlined), 
           onPressed: (){
-
+            NavigationService.replaceTo('/dashboard/orders/${orden.id}');
           },)),
       ]);
   }

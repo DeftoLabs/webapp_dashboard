@@ -50,6 +50,8 @@ class _OrdersViewState extends State<OrdersView> {
 
     final ordersDataSource = OrdersDateDataSource( ordenDateProvider.ordenes );
 
+     final double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -89,13 +91,12 @@ class _OrdersViewState extends State<OrdersView> {
                     DataColumn(label: Text('# Order')),
                     DataColumn(label: Text('Date')),
                     DataColumn(label: Text('Customer')),
-                    DataColumn(label: Text('Total')),
                     DataColumn(label: Text('Status')),
                     DataColumn(label: Text('Sales')),
                     DataColumn(label: Text('Edit')),
                   ], 
                   source: ordersDataSource,
-                  columnSpacing: 50,
+                  columnSpacing: screenWidth * 0.07,
                   rowsPerPage: 7,
                   
                   ),

@@ -30,7 +30,6 @@ class OrdersRecordsDataSource extends DataTableSource {
         DataCell(Text(orden.control)),
         DataCell(Text(formattedDate)),
         DataCell(Text(clienteNombre)),
-        DataCell(Text(orden.total.toString())),
         DataCell(Text(orden.status)),
         DataCell(Text(orden.ruta.first.usuarioZona.nombre)),
         DataCell(
