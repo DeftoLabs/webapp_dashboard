@@ -167,9 +167,10 @@ class _UserViewForm extends StatelessWidget {
                 icon: Icons.person_pin_rounded
               ),
               onChanged: ( value )=> userFormProvider.copyUserWith( nombre: value ),
-              validator: ( value ) {
-                if ( value == null || value.isEmpty ) return 'Ingrese un nombre.';
-                if ( value.length < 2 ) return 'El nombre debe de ser de dos letras como mínimo.';
+              validator: (value) {
+                if (value == null || value.isEmpty) return 'Please enter a Name.';
+                if (value.length < 2) return 'The Name must be at least two letters long.';
+                if (value.length > 20) return 'The Name must be no more than 20 characters long.';
                 return null;
               },
             ),
@@ -185,7 +186,7 @@ class _UserViewForm extends StatelessWidget {
               ),
               onChanged: ( value )=> userFormProvider.copyUserWith( correo: value ),
               validator: ( value ) {
-                if( !EmailValidator.validate(value ?? '') ) return 'Email no válido';
+                if( !EmailValidator.validate(value ?? '') ) return 'Invalid Email.';
 
                 return null;
               },

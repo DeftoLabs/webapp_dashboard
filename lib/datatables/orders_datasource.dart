@@ -19,10 +19,15 @@ class OrdersDateDataSource extends DataTableSource {
     final Ordenes orden = ordenesOrdenadas[index];
 
     final formattedDate = DateFormat('dd/MM/yy').format(orden.fechacreado);
+    final formattedDateDelivery = DateFormat('dd/MM/yy').format(orden.fechaentrega);
     
     String clienteNombre = '';
       if(orden.clientes.isNotEmpty) {
         clienteNombre = orden.clientes.first.nombre;
+      }
+    String clienteSucursal = '';
+      if(orden.clientes.isNotEmpty) {
+        clienteSucursal = orden.clientes.first.sucursal;
       }
 
     return DataRow.byIndex(
@@ -30,7 +35,9 @@ class OrdersDateDataSource extends DataTableSource {
       cells: [
         DataCell(Text(orden.control)),
         DataCell(Text(formattedDate)),
+        DataCell(Text(formattedDateDelivery)),
         DataCell(Text(clienteNombre)),
+        DataCell(Text(clienteSucursal)),
         DataCell(Text(orden.status)),
         DataCell(Text(orden.ruta.first.usuarioZona.nombre)),
    DataCell(

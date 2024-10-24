@@ -259,44 +259,23 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
             Column(
               children: [
                 PaginatedDataTable(
-                  sortAscending: ordenesProvider.ascending,
-                  sortColumnIndex: ordenesProvider.sortColumnIndex,
                   header: Text(
                     'Order Records',
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  columns: [
-                    const DataColumn(label: Text('# Order')),
-                    DataColumn(
-                        label: const Text('Date'),
-                        onSort: (colIndex, _) {
-                          ordenesProvider.sortColumnIndex = colIndex;
-                          ordenesProvider
-                              .sort<DateTime>((ordenes) => ordenes.fechacreado);
-                        }),
-                    DataColumn(
-                        label: const Text('Customer'),
-                        onSort: (colIndex, _) {
-                          ordenesProvider.sortColumnIndex = colIndex;
-                          ordenesProvider.sort<String>((ordenes) =>
-                              ordenes.clientes.isNotEmpty
-                                  ? ordenes.clientes.first.nombre
-                                  : '');
-                        }),
-                    DataColumn(
-                        label: const Text('Status'),
-                        onSort: (colIndex, _) {
-                          ordenesProvider.sortColumnIndex = colIndex;
-                          ordenesProvider
-                              .sort<String>((ordenes) => ordenes.status);
-                        }),
-                    DataColumn(
-                        label: const Text('Sales'), onSort: (colIndex, _) {}),
-                    const DataColumn(label: Text('Edit')),
+                  columns: const [
+                    DataColumn(label: Text('# Order')),
+                    DataColumn(label: Text('Date')),
+                    DataColumn(label: Text('Delivery')),
+                    DataColumn(label: Text('Customer')),
+                    DataColumn(label: Text('Branch')),
+                    DataColumn(label: Text('Status')),
+                    DataColumn(label: Text('Sales'), ),
+                    DataColumn(label: Text('Edit')),
                   ],
                   source: ordersDataSource,
-                  columnSpacing: screenWidth * 0.05,
+                  columnSpacing: screenWidth * 0.005,
                   rowsPerPage: 5,
                   onPageChanged: (page) {},
                 ),

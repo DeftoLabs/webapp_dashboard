@@ -90,13 +90,15 @@ class _OrdersViewState extends State<OrdersView> {
                   columns:const [
                     DataColumn(label: Text('# Order')),
                     DataColumn(label: Text('Date')),
+                    DataColumn(label: Text('Delivery')),
                     DataColumn(label: Text('Customer')),
+                    DataColumn(label: Text('')),
                     DataColumn(label: Text('Status')),
                     DataColumn(label: Text('Sales')),
                     DataColumn(label: Text('Edit')),
                   ], 
                   source: ordersDataSource,
-                  columnSpacing: screenWidth * 0.07,
+                  columnSpacing: ordersDataSource.rowCount == 0 ? screenWidth * 0.07 : screenWidth * 0.028,
                   rowsPerPage: 7,
                   
                   ),

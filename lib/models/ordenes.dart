@@ -26,7 +26,7 @@ class Ordenes {
     DateTime fechacreado;
     DateTime createdAt;
     DateTime updatedAt;
-    int v;
+    int? v;
 
     Ordenes({
         required this.location,
@@ -49,7 +49,7 @@ class Ordenes {
         required this.fechacreado,
         required this.createdAt,
         required this.updatedAt,
-        required this.v,
+        this.v,
     });
 
     factory Ordenes.fromJson(String str) => Ordenes.fromMap(json.decode(str));
