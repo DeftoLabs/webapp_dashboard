@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 
 class OrdenView extends StatefulWidget {
@@ -441,227 +442,234 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   ),
                 ],
               ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  columns: [
-                    DataColumn(label: Text('CODE',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                    DataColumn(label: Text('DESCRIPTION', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                    DataColumn(label: Text('QTY / EDIT',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                    DataColumn(label: Text('UNID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                    DataColumn(label: Text('PRICE',       style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                    DataColumn(label: Text('EDIT PRICE',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                    DataColumn(label: Text('DELETE',      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                  ],
-                  rows: orden.productos.map((producto) {
-                    return DataRow(cells: [
-                      DataCell(Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(producto.nombre),
-                      )),
-                      DataCell(Text(producto.descripcion.toString())),
-                      DataCell(
-                        SizedBox(
-                          width: 90,
-                          height: 40,
-                          child: TextFormField(
-                            initialValue: producto.cantidad.toString(),
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                            maxLength: 8,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              counterText: "",
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 5),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15)),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: const BorderSide(
-                                     color: Color.fromARGB(255, 194, 190, 190), width: 2),
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      columns: [
+                        DataColumn(label: Text('CODE',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('DESCRIPTION', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('QTY / EDIT',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('UNID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('PRICE',       style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('EDIT PRICE',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('DELETE',      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                      ],
+                      rows: orden.productos.map((producto) {
+                        return DataRow(cells: [
+                          DataCell(Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(producto.nombre),
+                          )),
+                          DataCell(Text(producto.descripcion.toString())),
+                          DataCell(
+                            SizedBox(
+                              width: 90,
+                              height: 40,
+                              child: TextFormField(
+                                initialValue: producto.cantidad.toString(),
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold
+                                ),
+                                maxLength: 8,
+                                textAlign: TextAlign.center,
+                                decoration: InputDecoration(
+                                  counterText: "",
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 5),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                         color: Color.fromARGB(255, 194, 190, 190), width: 2),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                        color: Colors.grey, width: 1),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) return 'This field cannot be empty';
+                                  if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'Max 4 Digits(.)';
+                                  return null;
+                                },
+                                 onChanged: (value) {
+                                    double? cantidad = double.tryParse(value);
+                                    ordenFormProvider.copyOrdenesWith(cantidad: cantidad);
+                                    print(value);
+                                  },
+                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                inputFormatters: [
+                                  // Permitir solo números y hasta dos decimales, sin números negativos
+                                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
+                                ],
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey, width: 1),
-                              ),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) return 'This field cannot be empty';
-                              if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'Max 4 Digits(.)';
-                              return null;
-                            },
-                             onChanged: (value) {
-                                producto.cantidad = double.tryParse(value);
-                              },
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            inputFormatters: [
-                              // Permitir solo números y hasta dos decimales, sin números negativos
-                              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
-                            ],
                           ),
-                        ),
-                      ),
-                      DataCell(Text(producto.unid)),
-                         DataCell(
-                        SizedBox(
-                          width: 90,
-                          height: 40,
-                          child: TextFormField(
-                            initialValue: producto.precio!.toString(),
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                            maxLength: 8,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              counterText: "",
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 5),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15)),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 194, 190, 190), width: 2),
+                          DataCell(Text(producto.unid)),
+                             DataCell(
+                            SizedBox(
+                              width: 90,
+                              height: 40,
+                              child: TextFormField(
+                                initialValue: producto.precio!.toString(),
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold
+                                ),
+                                maxLength: 8,
+                                textAlign: TextAlign.center,
+                                decoration: InputDecoration(
+                                  counterText: "",
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 5),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 194, 190, 190), width: 2),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                        color: Colors.grey, width: 1),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) return 'This field cannot be empty';
+                                  if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'Max 4 Digits(.)';
+                                  return null;
+                                },
+                                 onChanged: (value) {
+                                    double? precio = double.tryParse(value);
+                                    ordenFormProvider.copyOrdenesWith(precio: precio);
+                                    print(value);
+                                  },
+                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                inputFormatters: [
+                                  // Permitir solo números y hasta dos decimales, sin números negativos
+                                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
+                                ],
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey, width: 1),
-                              ),
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) return 'This field cannot be empty';
-                              if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'Max 4 Digits(.)';
-                              return null;
-                            },
-                             onChanged: (value) {
-                                producto.precio = double.tryParse(value);
-                              },
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            inputFormatters: [
-                              // Permitir solo números y hasta dos decimales, sin números negativos
-                              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
-                            ],
                           ),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          alignment: Alignment.center,
-                          child: DropdownButton<double>(
-                            value: selectedPrice,
-                            hint: Text('SELECT',
-                            style: GoogleFonts.plusJakartaSans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black
-                            )
+                          DataCell(
+                            Container(
+                              alignment: Alignment.center,
+                              child: DropdownButton<double>(
+                                value: selectedPrice,
+                                hint: Text('SELECT',
+                                style: GoogleFonts.plusJakartaSans(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black
+                                )
+                                ),
+                                onChanged: (double? newValue) {
+                                  setState(() {
+                                    selectedPrice = newValue!;
+                                  });
+                                },
+                                style: const TextStyle(color: Colors.black),
+                                dropdownColor: Colors.white,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: producto.precio1,
+                                    child: Text(producto.precio1.toStringAsFixed(2)),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: producto.precio2,
+                                    child: Text(producto.precio2.toStringAsFixed(2)),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: producto.precio3,
+                                    child: Text(producto.precio3.toStringAsFixed(2)),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: producto.precio4,
+                                    child: Text(producto.precio4.toStringAsFixed(2)),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: producto.precio5,
+                                    child: Text(producto.precio5.toStringAsFixed(2)),
+                                  ),
+                                ],
+                              ),
                             ),
-                            onChanged: (double? newValue) {
-                              setState(() {
-                                selectedPrice = newValue!;
-                                print(newValue);
-                              });
-                            },
-                            style: const TextStyle(color: Colors.black),
-                            dropdownColor: Colors.white,
-                            items: [
-                              DropdownMenuItem(
-                                value: producto.precio1,
-                                child: Text(producto.precio1.toStringAsFixed(2)),
-                              ),
-                              DropdownMenuItem(
-                                value: producto.precio2,
-                                child: Text(producto.precio2.toStringAsFixed(2)),
-                              ),
-                              DropdownMenuItem(
-                                value: producto.precio3,
-                                child: Text(producto.precio3.toStringAsFixed(2)),
-                              ),
-                              DropdownMenuItem(
-                                value: producto.precio4,
-                                child: Text(producto.precio4.toStringAsFixed(2)),
-                              ),
-                              DropdownMenuItem(
-                                value: producto.precio5,
-                                child: Text(producto.precio5.toStringAsFixed(2)),
-                              ),
-                            ],
                           ),
-                        ),
-                      ),
-                    DataCell(
-                      IconButton(
-                        icon: const Icon(
-                          Icons.delete_outline,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {
-                          if (orden.productos.length == 1) {
-                            // Mostrar alerta si solo queda un producto
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
-                                  title: Center(
-                                    child: 
-                                    Text('Warning', 
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold
-                                    ))),
-                                    content: RichText(
-                                      text: TextSpan(
+                        DataCell(
+                          IconButton(
+                            icon: const Icon(
+                              Icons.delete_outline,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              if (orden.productos.length == 1) {
+                                // Mostrar alerta si solo queda un producto
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                      title: Center(
+                                        child: 
+                                        Text('Warning', 
                                         style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 18,
-                                          color: Colors.black, // Color del texto general
-                                        ),
-                                        children: const <TextSpan>[
-                                          TextSpan(text: 'This order has only 1 item. To cancel the order, please use: '),
-                                          TextSpan(
-                                            text: '"CANCEL"',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold, // Negrita para "CANCEL"
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold
+                                        ))),
+                                        content: RichText(
+                                          text: TextSpan(
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 18,
+                                              color: Colors.black, // Color del texto general
                                             ),
-                                          ),
-                                          TextSpan(text: ' button.'),
-                                        ],
-                                      ),      
-                                    ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop(); // Cerrar el diálogo
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
+                                            children: const <TextSpan>[
+                                              TextSpan(text: 'This order has only 1 item. To cancel the order, please use: '),
+                                              TextSpan(
+                                                text: '"CANCEL"',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold, // Negrita para "CANCEL"
+                                                ),
+                                              ),
+                                              TextSpan(text: ' button.'),
+                                            ],
+                                          ),      
+                                        ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop(); // Cerrar el diálogo
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          } else {
-                            // Lógica para eliminar el producto si hay más de 1
-                            setState(() {
-                            
-                            });
-                          }
-                        },
-                      ),
+                              } else {
+                                // Lógica para eliminar el producto si hay más de 1
+                                setState(() {
+                                
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        ]);
+                      }).toList(),
                     ),
-                    ]);
-                  }).toList(),
-                ),
+                  ),
+                 const SizedBox(height: 10),
+                ],
               ),
             ),
           ),
-          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(right: 100),
             child: Align(
@@ -803,7 +811,8 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
                              onChanged: (value) {
-                                orden.comentarioRevision = value;
+                                ordenFormProvider.copyOrdenesWith( comentarioRevision: value);
+                                print(value);
                               },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -864,10 +873,19 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () async {
-                        ordenFormProvider.updateOrder();
-                      },
-                    ),
+                  onPressed: () async {
+                      if (ordenFormProvider.formKey.currentState!.validate()) {
+                        final saved = await ordenFormProvider.updateOrder();
+                        if(saved) {
+                          NotificationService.showSnackBa('Order Updated');
+                        } else {
+                          NotificationService.showSnackBarError('Error to Update Order');
+                        }
+                      } else {
+                        NotificationService.showSnackBarError('Invalid Data');
+                      }
+                    }
+                  ),
                   ),
               ],
             ),
