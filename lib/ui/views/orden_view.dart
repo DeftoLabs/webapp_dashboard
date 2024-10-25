@@ -449,6 +449,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     child: DataTable(
                       columns: [
                         DataColumn(label: Text('CODE',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                         DataColumn(label: Text('ID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('DESCRIPTION', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('QTY / EDIT',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('UNID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
@@ -462,6 +463,11 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             padding: const EdgeInsets.all(5.0),
                             child: Text(producto.nombre),
                           )),
+                          DataCell(TextFormField(
+                            initialValue: producto.id,
+                            onChanged: (value){
+                            ordenFormProvider.copyOrdenesWith(id: value);
+                            },)),
                           DataCell(Text(producto.descripcion.toString())),
                           DataCell(
                             SizedBox(
@@ -497,9 +503,14 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                   if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'Max 4 Digits(.)';
                                   return null;
                                 },
-                                 onChanged: (value) {
+                                  onChanged: (value) {
                                     double? cantidad = double.tryParse(value);
-                                    ordenFormProvider.copyOrdenesWith(cantidad: cantidad);
+                                    if (cantidad != null) {
+                                      ordenFormProvider.copyOrdenesWith(
+                                        productId: producto.id, // Pasa el ID del producto que se está actualizando
+                                        cantidad: cantidad,
+                                      );
+                                    }
                                   },
                                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                 inputFormatters: [
@@ -544,9 +555,14 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                   if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'Max 4 Digits(.)';
                                   return null;
                                 },
-                                 onChanged: (value) {
+                                  onChanged: (value) {
                                     double? precio = double.tryParse(value);
-                                    ordenFormProvider.copyOrdenesWith(precio: precio);
+                                    if (precio != null) {
+                                      ordenFormProvider.copyOrdenesWith(
+                                        productId: producto.id, // Pasa el ID del producto que se está actualizando
+                                        precio: precio,
+                                      );
+                                    }
                                   },
                                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                 inputFormatters: [

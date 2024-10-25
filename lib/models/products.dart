@@ -45,7 +45,7 @@ class Producto {
 
 
  factory Producto.fromMap(Map<String, dynamic> json) => Producto(
-  id: json["_id"] ?? '',
+  id: json.containsKey("producto") ? json["producto"]["_id"] ?? 'CODE ERROR' : json["_id"] ?? 'CODE ERROR',
   nombre: json.containsKey("producto") ? json["producto"]["nombre"] ?? 'CODE ERROR' : json["nombre"] ?? 'CODE ERROR',
   estado: json["estado"] ?? false,
   usuario: json["usuario"] != null ? User.fromMap(json["usuario"]) : User(id: '', nombre: ''),
