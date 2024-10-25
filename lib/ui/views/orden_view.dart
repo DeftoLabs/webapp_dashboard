@@ -500,7 +500,6 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                  onChanged: (value) {
                                     double? cantidad = double.tryParse(value);
                                     ordenFormProvider.copyOrdenesWith(cantidad: cantidad);
-                                    print(value);
                                   },
                                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                 inputFormatters: [
@@ -548,7 +547,6 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                  onChanged: (value) {
                                     double? precio = double.tryParse(value);
                                     ordenFormProvider.copyOrdenesWith(precio: precio);
-                                    print(value);
                                   },
                                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                 inputFormatters: [
@@ -812,7 +810,6 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           ),
                              onChanged: (value) {
                                 ordenFormProvider.copyOrdenesWith( comentarioRevision: value);
-                                print(value);
                               },
                           validator: (value) {
                             if (value == null || value.isEmpty) {

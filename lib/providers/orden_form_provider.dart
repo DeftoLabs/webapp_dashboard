@@ -86,25 +86,18 @@ copyOrdenesWith({
   }
 
   Future updateOrder() async {
+
     if (!validForm()) return false;
 
     final data = {
-      'cantidad': orden!.productos.first.cantidad,
-      'precio': orden!.productos.first.precio,
-      //'comentarioRevision': orden!.comentarioRevision,
+      'comentarioRevision': orden!.comentarioRevision,
     };
 
     try {
-      print('Iniciando actualización de orden...');
-      print('Comentario de revisión: ${orden!.comentarioRevision}');
-      print('Precio: ${orden!.productos.first.precio}');
-      print('Cantidad: ${orden!.productos.first.cantidad}');
-      final resp = await CafeApi.put('/orders/${orden!.id}', data);
-      print (resp);
+      await CafeApi.put('/ordens/${orden!.id}', data);
       return true;
       
     } catch (e) {
-      print('Error update order: $e');
       return false;
       
     }
