@@ -46,8 +46,6 @@ class _OrdenViewState extends State<OrdenView> {
     orden = null;
     Provider.of<OrdenFormProvider>(context, listen: false).orden = null;
     super.dispose();
- 
-    
   }
 
   @override
