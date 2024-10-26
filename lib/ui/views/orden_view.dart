@@ -27,10 +27,27 @@ class _OrdenViewState extends State<OrdenView> {
     final ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
     final ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
 
-    ordenesProvider.getOrdenById(widget.id).then((ordenDB) {
-      ordenFormProvider.orden = ordenDB;
-      setState(() { orden = ordenDB; });
-    });
+    ordenesProvider.getOrdenById(widget.id)
+    .then((ordenDB) {
+      if(ordenDB != null) {
+        ordenFormProvider.orden = ordenDB;
+        ordenFormProvider.formKey = GlobalKey<FormState>();
+        setState(() { orden = ordenDB; });
+      } else {
+        NavigationService.replaceTo('/dashboard/orders/records');
+      }
+      
+    }
+    );
+  }
+
+  @override
+  void dispose() {
+    orden = null;
+    Provider.of<OrdenFormProvider>(context, listen: false).orden = null;
+    super.dispose();
+ 
+    
   }
 
   @override
@@ -449,7 +466,6 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     child: DataTable(
                       columns: [
                         DataColumn(label: Text('CODE',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                         DataColumn(label: Text('ID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('DESCRIPTION', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('QTY / EDIT',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('UNID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
@@ -463,11 +479,6 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             padding: const EdgeInsets.all(5.0),
                             child: Text(producto.nombre),
                           )),
-                          DataCell(TextFormField(
-                            initialValue: producto.id,
-                            onChanged: (value){
-                            ordenFormProvider.copyOrdenesWith(id: value);
-                            },)),
                           DataCell(Text(producto.descripcion.toString())),
                           DataCell(
                             SizedBox(
@@ -824,9 +835,11 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
-                             onChanged: (value) {
-                                ordenFormProvider.copyOrdenesWith( comentarioRevision: value);
-                              },
+                            onChanged: (value) {
+                              ordenFormProvider.copyOrdenesWith(
+                                comentarioRevision: value.toUpperCase(),
+                              );
+                            },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Cannot be empty.';
@@ -891,6 +904,9 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                         final saved = await ordenFormProvider.updateOrder();
                         if(saved) {
                           NotificationService.showSnackBa('Order Updated');
+                          if (!context.mounted) return;
+                          Provider.of<OrdenesProvider>(context, listen: false).getPaginatedOrdenes;
+                          NavigationService.replaceTo('/dashboard/orders/records');
                         } else {
                           NotificationService.showSnackBarError('Error to Update Order');
                         }

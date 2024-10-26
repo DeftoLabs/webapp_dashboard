@@ -9,7 +9,7 @@ import 'package:web_dashboard/models/usuario.dart';
 class OrdenFormProvider extends ChangeNotifier {
   Ordenes? orden;
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> formKey;
 
   copyOrdenesWith({
     String? id,
@@ -44,7 +44,7 @@ class OrdenFormProvider extends ChangeNotifier {
       clientes: clientes ?? orden!.clientes,
       ruta: ruta ?? orden!.ruta,
       perfil: perfil ?? orden!.perfil,
-      status: status ?? orden!.status,
+      status: status ?? status ?? orden!.status,
       control: control ?? orden!.control,
     productos: productos ?? orden!.productos.map((producto) {
       // Verifica si este es el producto que se debe actualizar
@@ -77,7 +77,7 @@ class OrdenFormProvider extends ChangeNotifier {
       total: total ?? orden!.total,
       fechaentrega: fechaentrega ?? orden!.fechaentrega,
       usuario: usuario ?? orden!.usuario,
-      tipo: tipo ?? orden!.tipo,
+      tipo: tipo ?? orden!.tipo, 
       comentario: comentario ?? orden!.comentario,
       comentarioRevision: comentarioRevision ?? orden!.comentarioRevision,
       fechacreado: fechacreado ?? orden!.fechacreado,
@@ -94,6 +94,16 @@ class OrdenFormProvider extends ChangeNotifier {
   Future updateOrder() async {
     if (!validForm()) return false;
 
+     // Lógica para actualizar el status y el tipo en base a las reglas de negocio
+    String? newStatus = orden!.status;
+    String? newTipo = orden!.tipo;
+
+    if (orden!.status == 'ORDER') {
+      newStatus = 'APPROVED';
+    } else if (orden!.status == 'APPROVED') {
+      newStatus = orden!.tipo; 
+    }
+
     final data = {
       "productos": orden!.productos.map((producto) {
         return {
@@ -102,6 +112,8 @@ class OrdenFormProvider extends ChangeNotifier {
           "precio": producto.precio,
         };
       }).toList(),
+      "status": newStatus,
+      "tipo": newTipo,
       "comentarioRevision": orden!.comentarioRevision,
     };
 

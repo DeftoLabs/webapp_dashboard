@@ -77,17 +77,43 @@ class _OrdersViewState extends State<OrdersView> {
           const SizedBox(height: 10),
 
           const SizedBox(height: 10),
-          Column(
-            children: [
-              Container(
-              decoration: BoxDecoration(
-              color:Colors.grey[300],
-              
-              borderRadius: BorderRadius.circular(15)
-              ),
-                child: PaginatedDataTable(
-                  header: Text('Order of the Day - $todayDate', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),),
-                  columns:const [
+Column(
+  children: [
+    Container(
+      width: MediaQuery.of(context).size.width * 0.90,
+      height: 580,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Order of the Day - $todayDate',
+            style: GoogleFonts.plusJakartaSans(
+                fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 20),
+          // Mostrar la tabla o el mensaje condicionalmente
+          ordersDataSource.rowCount == 0
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 200),
+                    child: Text(
+                      'NO ORDERS RECEIVED FOR TODAY',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              : PaginatedDataTable(
+                  columns: const [
                     DataColumn(label: Text('# Order')),
                     DataColumn(label: Text('Date')),
                     DataColumn(label: Text('Delivery')),
@@ -96,20 +122,21 @@ class _OrdersViewState extends State<OrdersView> {
                     DataColumn(label: Text('Status')),
                     DataColumn(label: Text('Sales')),
                     DataColumn(label: Text('Edit')),
-                  ], 
+                  ],
                   source: ordersDataSource,
-                  columnSpacing: ordersDataSource.rowCount == 0 ? screenWidth * 0.07 : screenWidth * 0.028,
+                  columnSpacing: screenWidth * 0.028,
                   rowsPerPage: 7,
-                  
-                  ),
-              ),
+                ),
+        ],
+      ),
+    ),
+    const SizedBox(height: 20),
+    const OrdersScrollRow(),
+    const SizedBox(height: 20),
+  ],
+)
 
-                const SizedBox( height: 20),
 
-        const OrdersScrollRow(),
-         const SizedBox( height: 20),
-            ],
-          )
         ],
       )
     );
