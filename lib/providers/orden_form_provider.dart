@@ -91,7 +91,7 @@ class OrdenFormProvider extends ChangeNotifier {
     return formKey.currentState!.validate();
   }
 
-  Future updateOrder() async {
+  Future updateOrder(DateTime? newDateDelivery) async {
     if (!validForm()) return false;
 
      // Lógica para actualizar el status y el tipo en base a las reglas de negocio
@@ -103,6 +103,7 @@ class OrdenFormProvider extends ChangeNotifier {
     } else if (orden!.status == 'APPROVED') {
       newStatus = orden!.tipo; 
     }
+  
 
     final data = {
       "productos": orden!.productos.map((producto) {
@@ -115,6 +116,7 @@ class OrdenFormProvider extends ChangeNotifier {
       "status": newStatus,
       "tipo": newTipo,
       "comentarioRevision": orden!.comentarioRevision,
+      "fechaentrega": newDateDelivery?.toIso8601String(),
     };
 
     try {

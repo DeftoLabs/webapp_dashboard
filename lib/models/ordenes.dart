@@ -121,4 +121,52 @@ factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás reci
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
     };
+
+    Ordenes copyWith({
+    Location? location,
+    bool? estado,
+    List<Customer>? clientes,
+    List<Ruta>? ruta,
+    List<String>? perfil,
+    String? status,
+    String? id,
+    String? control,
+    List<Producto>? productos,
+    double? subtotal,
+    double? tax,
+    double? total,
+    DateTime? fechaentrega,
+    Usuario? usuario,
+    String? tipo,
+    String? comentario,
+    String? comentarioRevision,
+    DateTime? fechacreado,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int? v,
+  }) {
+    return Ordenes(
+      location: location ?? this.location,
+      estado: estado ?? this.estado,
+      clientes: clientes ?? this.clientes,
+      ruta: ruta ?? this.ruta,
+      perfil: perfil ?? this.perfil,
+      status: status ?? this.status,
+      id: id ?? this.id,
+      control: control ?? this.control,
+      productos: productos ?? this.productos,
+      subtotal: subtotal ?? this.subtotal,
+      total: total ?? this.total,
+      tax: tax ?? this.tax, 
+      fechaentrega: fechaentrega ?? this.fechaentrega,
+      usuario: usuario ?? this.usuario,
+      tipo: tipo ?? this.tipo,
+      comentario: comentario ?? this.comentario,
+      comentarioRevision: comentarioRevision ?? this.comentarioRevision,
+      fechacreado: fechacreado ?? this.fechacreado,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }
+

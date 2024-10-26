@@ -103,12 +103,14 @@ class _OrdenViewBody extends StatefulWidget {
 
 class _OrdenViewBodyState extends State<_OrdenViewBody> {
 
-    double? selectedPrice ;
+    double? selectedPrice;
+    DateTime? fechaEntrega;
 
     @override
   void initState() {
     super.initState();
     selectedPrice = null;
+    fechaEntrega = widget.orden.fechaentrega; 
   }
 
   @override
@@ -133,9 +135,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
             placeholder: 'load.gif',
             image: profile.img!,
             width: 35,
-            height: 35);
-
-            
+            height: 35);            
 
             // Métodos para obtener los colores dinámicamente
         Color getBackgroundColor(String status) {
@@ -461,6 +461,53 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
               ),
               child: Column(
                 children: [
+                  const SizedBox(height: 20),
+              Row(
+              children: [
+                const SizedBox(width: 20),
+                Text('DELIVERY DATE:',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                const SizedBox(width: 5),
+                Text(
+                  fechaEntrega != null
+                      ? DateFormat('dd/MM/yy').format(fechaEntrega!) // Formato de la fecha
+                      : 'SELECT DATE', // Cambiar a 'SELECT DATE'
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.calendar_today),
+                  onPressed: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: fechaEntrega ?? DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101),
+                      builder: (BuildContext context, Widget? child) {
+                        return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: Colors.black,
+                            hintColor: Colors.black,
+                            colorScheme: const ColorScheme.light(primary: Colors.black),
+                            buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!,
+                        );
+                      },
+                    );
+
+                    if (pickedDate != null) {
+                      setState(() {
+                        fechaEntrega = pickedDate; // Actualiza el estado con la fecha seleccionada
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
+              const SizedBox(height: 20),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
@@ -901,7 +948,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       ),
                   onPressed: () async {
                       if (ordenFormProvider.formKey.currentState!.validate()) {
-                        final saved = await ordenFormProvider.updateOrder();
+                        final saved = await ordenFormProvider.updateOrder(fechaEntrega);
                         if(saved) {
                           NotificationService.showSnackBa('Order Updated');
                           if (!context.mounted) return;
@@ -1030,20 +1077,6 @@ class CreditInfo extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              Row(
-                children: [
-                  Text('DELIVERY DATE:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 13)),
-                  const SizedBox(width: 5),
-                  Text(
-                    DateFormat('dd/MM/yy').format(orden.fechaentrega),
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
             ],
           )
         ],

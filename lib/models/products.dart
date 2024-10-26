@@ -102,6 +102,7 @@ class Producto {
     bool? disponible,
     double? stock,
     String? unid,
+    double? totalitem,
     String? img,
   }) { return Producto(
       id: id ?? this.id,
@@ -118,6 +119,7 @@ class Producto {
       disponible: disponible ?? this.disponible,
       stock: stock ?? this.stock,
       unid: unid ?? this.unid,
+      totalitem: totalitem ?? this.totalitem,
       img: img ?? this.img,
     );
     }
