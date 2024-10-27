@@ -107,7 +107,7 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
           children: [
             Container(
               width: 250,
-              height: 350,
+              height: 325,
               margin: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -121,13 +121,13 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                   ]),
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Text(
                     'Select the Currency',
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   const Divider(
                     indent: 40,
                     endIndent: 40,
@@ -269,7 +269,7 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
               ),
             ),
             Container(
-                height: 350,
+                height: 325,
                 margin: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -282,13 +282,13 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                           offset: const Offset(0, 3)),
                     ]),
                 child: Column(children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Text(
                     'General Info',
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   const Divider(
                     indent: 40,
                     endIndent: 40,
