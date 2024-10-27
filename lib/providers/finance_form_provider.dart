@@ -9,9 +9,13 @@ class FinanceFormProvider extends ChangeNotifier {
   List<Finance> finances = [];
   bool isLoading = true;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> form2Key = GlobalKey<FormState>();
 
   bool validForm(){
   return formKey.currentState!.validate();
+}
+  bool valid2Form(){
+  return form2Key.currentState!.validate();
 }
 
    copyFinanceWith({
@@ -28,6 +32,14 @@ class FinanceFormProvider extends ChangeNotifier {
     double? tax3number,
     String? tax4name,
     double? tax4number,
+    String? taxa1name,
+    double? taxa1number,
+    String? taxa2name,
+    double? taxa2number,
+    String? taxa3name,
+    double? taxa3number,
+    String? taxa4name,
+    double? taxa4number,
   }) {
     finance =  Finance(
       id: id ?? finance!.id,
@@ -43,6 +55,15 @@ class FinanceFormProvider extends ChangeNotifier {
       tax3number: tax3number ?? finance!.tax3number,
       tax4name  : tax4name   ?? finance!.tax4name,
       tax4number: tax4number ?? finance!.tax4number,
+      taxa1name  : taxa1name   ?? finance!.taxa1name,
+      taxa1number: taxa1number ?? finance!.taxa1number,
+      taxa2name  : taxa2name   ?? finance!.taxa2name,
+      taxa2number: taxa2number ?? finance!.taxa2number,
+      taxa3name  : taxa3name   ?? finance!.taxa3name,
+      taxa3number: taxa3number ?? finance!.taxa3number,
+      taxa4name  : taxa4name   ?? finance!.taxa4name,
+      taxa4number: taxa4number ?? finance!.taxa4number,
+      
       
     );
     notifyListeners();
@@ -60,6 +81,28 @@ Future updateTax() async {
     'tax2number' : finance!.tax2number,
     'tax3name': finance!.tax3name,
     'tax3number' : finance!.tax3number,
+  }; 
+  try {
+    await CafeApi.put('/finance/${finance!.id}', data);
+    return true;
+    
+  } catch (e) {
+    NotificationService.showSnackBarError('Error: $e'); 
+    return false;
+  }
+}
+
+Future updateTaxAdditional() async {
+
+  if(!validForm()) return; 
+  
+  final data = {
+    'taxa1name': finance!.taxa1name,
+    'taxa1number' : finance!.taxa1number,
+    'taxa2name': finance!.taxa2name,
+    'taxa2number' : finance!.taxa2number,
+    'taxa3name': finance!.taxa3name,
+    'taxa3number' : finance!.taxa3number,
   }; 
   try {
     await CafeApi.put('/finance/${finance!.id}', data);
@@ -114,7 +157,12 @@ Future updateCurrency() async {
           String tax2name,
           double tax2number,
           String tax3name,
-          double tax3number) async {
+          double tax3number,
+          String taxa1name,
+          double taxa1number,
+          String taxa2name,
+          double taxa2number,
+          ) async {
 
     final data = {
       'mainCurrencyname':     mainCurrencyname,
@@ -127,6 +175,10 @@ Future updateCurrency() async {
       'tax2number': tax2number,
       'tax3name'  : tax3name,
       'tax3number': tax3number,
+      'taxa1name'  : taxa1name,
+      'taxa1number': taxa1number,
+      'taxa2name'  : taxa2name,
+      'taxa2number': taxa2number,
     };
     try{
       final json = await CafeApi.post('/finance', data);

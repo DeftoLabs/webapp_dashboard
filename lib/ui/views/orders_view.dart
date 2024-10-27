@@ -64,6 +64,29 @@ class _OrdersViewState extends State<OrdersView> {
               Expanded
               (
                 child: Text('Orders View', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
+                Container(
+                       height: 50,
+                       width: 170,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(177, 255, 46, 100),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          width: 0.6,
+                        )),
+                      child: TextButton(
+                        child: Text(
+                          'Create Order',
+                          style: GoogleFonts.plusJakartaSans(
+                              color: const Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        onPressed: () {
+                        
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 50),
               SizedBox(
                 width: 60,
                 height: 60,

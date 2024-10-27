@@ -31,12 +31,22 @@ class _FinanceModalState extends State<FinanceModal> {
   String tax4name = '';
   double tax4number = 0.0;
 
+  String taxa1name = '';
+  double taxa1number = 0.0;
+  String taxa2name = '';
+  double taxa2number = 0.0;
+
   late TextEditingController tax1Controller;
   late TextEditingController tax2Controller;
   late TextEditingController tax3Controller;
   late TextEditingController tax1NameController;
   late TextEditingController tax2NameController;
   late TextEditingController tax3NameController;
+
+  late TextEditingController taxa1Controller;
+  late TextEditingController taxa2Controller;
+  late TextEditingController taxa1NameController;
+  late TextEditingController taxa2NameController;
 
   @override
   void initState() {
@@ -45,9 +55,15 @@ class _FinanceModalState extends State<FinanceModal> {
     tax2Controller = TextEditingController(text: widget.finance?.tax2number.toString() ?? '0.0');
     tax3Controller = TextEditingController(text: widget.finance?.tax3number.toString() ?? '0.0');
 
+    taxa1Controller = TextEditingController(text: widget.finance?.taxa1number.toString() ?? '0.0');
+    taxa2Controller = TextEditingController(text: widget.finance?.taxa2number.toString() ?? '0.0');
+
     tax1NameController = TextEditingController(text: widget.finance?.tax1name ?? '');
     tax2NameController = TextEditingController(text: widget.finance?.tax2name ?? '');
     tax3NameController = TextEditingController(text: widget.finance?.tax3name ?? '');
+
+    taxa1NameController = TextEditingController(text: widget.finance?.taxa1name ?? '');
+    taxa2NameController = TextEditingController(text: widget.finance?.taxa2name ?? '');
   }
 
   @override
@@ -58,6 +74,11 @@ class _FinanceModalState extends State<FinanceModal> {
     tax1NameController.dispose();
     tax2NameController.dispose();
     tax3NameController.dispose();
+
+    taxa1Controller.dispose();
+    taxa2Controller.dispose();
+    taxa1NameController.dispose();
+    taxa2NameController.dispose();
     super.dispose();
   }
 
@@ -72,8 +93,8 @@ class _FinanceModalState extends State<FinanceModal> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        height: 600,
-        width: 900, 
+        height: 850,
+        width: 700, 
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color:  const Color.fromARGB(255, 58, 60, 65),
@@ -95,13 +116,13 @@ class _FinanceModalState extends State<FinanceModal> {
               ],
             ),
             const Divider(color: Colors.white70),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: 350,
+                    width: 300,
                     height: 350,
                     margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -109,7 +130,7 @@ class _FinanceModalState extends State<FinanceModal> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: const Offset(0, 3))
@@ -219,8 +240,8 @@ class _FinanceModalState extends State<FinanceModal> {
               ),
 
                   ),
-                   Container(
-                    width: 350,
+              Container(
+                    width: 320,
                     height: 350,
                     margin: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
@@ -228,7 +249,7 @@ class _FinanceModalState extends State<FinanceModal> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset: const Offset(0, 3))
@@ -241,7 +262,7 @@ class _FinanceModalState extends State<FinanceModal> {
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
-                          Text('TAXES',
+                          Text('SALES TAXES',
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 10),
@@ -250,7 +271,7 @@ class _FinanceModalState extends State<FinanceModal> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('TAX 01 %',
+                              Text('TAX %',
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -300,7 +321,7 @@ class _FinanceModalState extends State<FinanceModal> {
                                       onChanged: (value) {
                                            final doubleValue = double.tryParse(value);
                                         if (doubleValue != null) {
-                                          widget.finance?.tax3number = doubleValue;
+                                          widget.finance?.tax1number = doubleValue;
                                         }
                                       },
                                     ),
@@ -344,7 +365,7 @@ class _FinanceModalState extends State<FinanceModal> {
                                         return null;
                                       },
                                       onChanged: (value) {
-                                       widget.finance?.tax1name = value;
+                                       widget.finance?.tax1name = value.toUpperCase();
                                       },
                                     ),
                                   ],
@@ -355,7 +376,7 @@ class _FinanceModalState extends State<FinanceModal> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('TAX 02 %',
+                              Text('TAX %',
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -451,7 +472,7 @@ class _FinanceModalState extends State<FinanceModal> {
                                         return null;
                                       },
                                       onChanged: (value) {
-                                      widget.finance?.tax2name = value;
+                                      widget.finance?.tax2name = value.toUpperCase();
                                       },
                                     ),
                                   ],
@@ -462,7 +483,7 @@ class _FinanceModalState extends State<FinanceModal> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('TAX 03 %',
+                              Text('TAX %',
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -558,7 +579,7 @@ class _FinanceModalState extends State<FinanceModal> {
                                         return null;
                                       },
                                       onChanged: (value) {
-                                      widget.finance?.tax3name = value;
+                                      widget.finance?.tax3name = value.toUpperCase();
                                       },
                                     ),
                                   ],
@@ -571,11 +592,254 @@ class _FinanceModalState extends State<FinanceModal> {
                     )
                   ],
                 )
-                  ),
-                  
+                  )
                 ]
-              )
+              ),
             ),
+             Container(
+                    width: 650,
+                    height: 270,
+                    margin: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3))
+                  ]),
+                  child: 
+                  Column(
+                    children: [
+                      Form(
+                        key: financeFormProvider.form2Key,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            Text('ADDITIONAL TAXES', 
+                            style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 10),
+                            const Divider(
+                              indent: 40, endIndent: 40, color: Colors.black
+                            ),
+                               Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('TAX %',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 90,
+                                height: 90,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                     controller: taxa1Controller,
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter TAX %';
+                                        }
+                                        final parsedValue =
+                                            double.tryParse(value);
+                                        if (parsedValue == null) {
+                                          return 'Only numbers';
+                                        }
+                                        if (parsedValue > 99) {
+                                          return 'TAX cannot exceed 99%';
+                                        }
+                                        if (value.contains('.') &&
+                                            value.split('.').last.length > 2) {
+                                          return 'Max 2 decimal places';
+                                        }
+                                        if (value.length > 5) {
+                                          return 'Max 5 characters';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                           final doubleValue = double.tryParse(value);
+                                        if (doubleValue != null) {
+                                          widget.finance?.taxa1number = doubleValue;
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text('TYPE',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 90,
+                                height: 80,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                    controller: taxa1NameController,
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter TYPE';
+                                        }
+                                        if (value.length > 5) {
+                                          return 'Max 5 characters';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                       widget.finance?.taxa1name = value.toUpperCase();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                             Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('TAX %',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 90,
+                                height: 90,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                     controller: taxa2Controller,
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter TAX %';
+                                        }
+                                        final parsedValue =
+                                            double.tryParse(value);
+                                        if (parsedValue == null) {
+                                          return 'Only numbers';
+                                        }
+                                        if (parsedValue > 99) {
+                                          return 'TAX cannot exceed 99%';
+                                        }
+                                        if (value.contains('.') &&
+                                            value.split('.').last.length > 2) {
+                                          return 'Max 2 decimal places';
+                                        }
+                                        if (value.length > 5) {
+                                          return 'Max 5 characters';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                           final doubleValue = double.tryParse(value);
+                                        if (doubleValue != null) {
+                                          widget.finance?.tax2number = doubleValue;
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text('TYPE',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 90,
+                                height: 80,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                    controller: taxa2NameController,
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter TYPE';
+                                        }
+                                        if (value.length > 5) {
+                                          return 'Max 5 characters';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                       widget.finance?.taxa2name = value.toUpperCase();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          ],
+                        ))
+                      
+                    ],
+                  ),
+                  ),
        
            
             const SizedBox(height: 40),
@@ -611,6 +875,10 @@ class _FinanceModalState extends State<FinanceModal> {
                                     tax2number = double.tryParse(tax2Controller.text) ?? 0.0, 
                                     tax3name = tax3NameController.text, 
                                     tax3number = double.tryParse(tax3Controller.text) ?? 0.0,
+                                    taxa1name = taxa1NameController.text, 
+                                    taxa1number = double.tryParse(taxa1Controller.text) ?? 0.0,
+                                    taxa2name = taxa2NameController.text, 
+                                    taxa2number = double.tryParse(taxa2Controller.text) ?? 0.0, 
                                     );
                                    NotificationService.showSnackBa('Finance Profile Created');
                                  }

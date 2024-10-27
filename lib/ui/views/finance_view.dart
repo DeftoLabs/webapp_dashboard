@@ -96,6 +96,7 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
   Widget build(BuildContext context) {
     final financeFormProvider = Provider.of<FinanceFormProvider>(context);
     final finance = financeFormProvider.finance!;
+    
 
     return Table(
       columnWidths: const {
@@ -326,10 +327,31 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                   const SizedBox(height: 30),
                   Row(
                     children: [
+                      SizedBox(
+                        width: 200,
+                        height: 150,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                              const SizedBox(width: 20),
+                              Text('SALES TAXES',
+                              style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                    Row(
+                    children: [
                       const SizedBox(width: 20),
-                      Text('TAX:',
+                      Text('TAX',
                           style: GoogleFonts.plusJakartaSans(
                               fontSize: 14, fontWeight: FontWeight.bold)),
+                               const SizedBox(width: 10),
+                      Text(
+                        finance.tax1name,
+                        style: GoogleFonts.plusJakartaSans(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(width: 10),
                       Text(finance.tax1number.toString(),
                           style: GoogleFonts.plusJakartaSans(fontSize: 14)),
@@ -337,26 +359,13 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                       Text('%',
                           style: GoogleFonts.plusJakartaSans(
                               fontSize: 14, fontWeight: FontWeight.bold)),
-                      const SizedBox(width: 10),
-                      Text(
-                        finance.tax1name,
-                        style: GoogleFonts.plusJakartaSans(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
                       const SizedBox(width: 20),
-                      Text('TAX:',
-                          style: GoogleFonts.plusJakartaSans(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      const SizedBox(width: 10),
-                      Text(finance.tax2number.toString(),
-                          style: GoogleFonts.plusJakartaSans(fontSize: 14)),
-                      const SizedBox(width: 05),
-                      Text('%',
+                      Text('TAX',
                           style: GoogleFonts.plusJakartaSans(
                               fontSize: 14, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 10),
@@ -365,20 +374,20 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                         style: GoogleFonts.plusJakartaSans(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
+                      const SizedBox(width: 10),
+                      Text(finance.tax2number.toString(),
+                          style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                      const SizedBox(width: 05),
+                      Text('%',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
                     ],
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
                       const SizedBox(width: 20),
-                      Text('TAX:',
-                          style: GoogleFonts.plusJakartaSans(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      const SizedBox(width: 10),
-                      Text(finance.tax3number.toString(),
-                          style: GoogleFonts.plusJakartaSans(fontSize: 14)),
-                      const SizedBox(width: 05),
-                      Text('%',
+                      Text('TAX',
                           style: GoogleFonts.plusJakartaSans(
                               fontSize: 14, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 10),
@@ -386,6 +395,78 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                         finance.tax3name,
                         style: GoogleFonts.plusJakartaSans(
                             fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(finance.tax3number.toString(),
+                          style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                      const SizedBox(width: 05),
+                      Text('%',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                       SizedBox(
+                        width: 200,
+                        height: 150,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                              const SizedBox(width: 20),
+                              Text('ADDITIONAL TAXES',
+                              style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                    Row(
+                    children: [
+                      const SizedBox(width: 20),
+                      Text('TAX',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                               const SizedBox(width: 10),
+                      Text(
+                        finance.taxa1name,
+                        style: GoogleFonts.plusJakartaSans(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(finance.taxa1number.toString(),
+                          style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                      const SizedBox(width: 05),
+                      Text('%',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const SizedBox(width: 20),
+                      Text('TAX',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                      const SizedBox(width: 10),
+                      Text(
+                        finance.taxa2name,
+                        style: GoogleFonts.plusJakartaSans(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(finance.taxa2number.toString(),
+                          style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                      const SizedBox(width: 05),
+                      Text('%',
+                          style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -416,14 +497,12 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
 
     return Table(
       columnWidths: const {
-        0: FixedColumnWidth(400),
-        1: FixedColumnWidth(350),
+        0: FixedColumnWidth(500),
       },
       children: [
         TableRow(
           children: [
             Container(
-                width: 400,
                 height: 400,
                 margin: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
@@ -443,7 +522,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
-                          Text('TAXES',
+                          Text('SALES TAXES',
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 10),
@@ -452,7 +531,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('TAX 01 %',
+                              Text('TAX %',
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -556,7 +635,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('TAX 02 %',
+                              Text('TAX %',
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -662,7 +741,7 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('TAX 03 %',
+                              Text('TAX %',
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold)),
@@ -824,36 +903,264 @@ class _TaxesViewBodyState extends State<TaxesViewBody> {
                     ]),
                 child: Column(children: [
                   const SizedBox(height: 20),
-                  Text(
-                    '',
+                  Text('ADDITIONAL TAXES',
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 40),
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 10),
+                    const Divider(
+                     indent: 40, endIndent: 40, color: Colors.black),
+                      Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('TAX %',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 90,
+                                height: 90,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                      initialValue:
+                                          finance.taxa1number.toString(),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter TAX %';
+                                        }
+                                        final parsedValue =
+                                            double.tryParse(value);
+                                        if (parsedValue == null) {
+                                          return 'Only numbers';
+                                        }
+                                        if (parsedValue > 99) {
+                                          return 'TAX cannot exceed 99%';
+                                        }
+                                        if (value.contains('.') &&
+                                            value.split('.').last.length > 2) {
+                                          return 'Max 2 decimal places';
+                                        }
+                                        if (value.length > 5) {
+                                          return 'Max 5 characters';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        finance.taxa1number =
+                                            double.parse(value);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text('TYPE',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 90,
+                                height: 80,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                      initialValue: finance.taxa1name,
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter TYPE';
+                                        }
+                                        if (value.length > 5) {
+                                          return 'Max 5 characters';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        finance.taxa1name = value.toUpperCase();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                                                    Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('TAX %',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 90,
+                                height: 80,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                      initialValue:
+                                          finance.taxa2number.toString(),
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter TAX %';
+                                        }
+
+                                        final parsedValue =
+                                            double.tryParse(value);
+                                        if (parsedValue == null) {
+                                          return 'Only numbers';
+                                        }
+
+                                        if (parsedValue > 99) {
+                                          return 'TAX cannot exceed 99%';
+                                        }
+
+                                        if (value.contains('.') &&
+                                            value.split('.').last.length > 2) {
+                                          return 'Max 2 decimal places';
+                                        }
+
+                                        if (value.length > 5) {
+                                          return 'Max 5 characters';
+                                        }
+
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        finance.taxa2number =
+                                            double.parse(value);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text('TYPE',
+                                  style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 90,
+                                height: 80,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                      initialValue: finance.taxa2name,
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter TYPE';
+                                        }
+                                        if (value.length > 5) {
+                                          return 'Max 5 characters';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        finance.taxa2name = value.toUpperCase();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 90),               
+                          Container(
+                            height: 50,
+                            width: 150,
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: const Color.fromRGBO(0, 200, 83, 1),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color:
+                                      const Color.fromRGBO(177, 255, 46, 100),
+                                  width: 2,
+                                )),
+                            child: TextButton(
+                              child: Text(
+                                'SAVE',
+                                style: GoogleFonts.plusJakartaSans(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () async {
+                                if (financeFormProvider.validForm()) {
+                                  final saved = await financeFormProvider.updateTaxAdditional();
+                                  if (saved) {
+                                    NotificationService.showSnackBa('Additional Taxes Updated');
+                                    if (!context.mounted) return;
+                                    Provider.of<FinanceProvider>(context,listen: false).getFinance();
+                                    NavigationService.replaceTo('/dashboard/settings/finance');
+                                  } else {
+                                    NotificationService.showSnackBarError(
+                                        'Error: The TAXES were not updated');
+                                  }
+                                } else {
+                                  NotificationService.showSnackBarError(
+                                      'Please fill all fields correctly');
+                                }
+                              },
+                            ),
+                          ),
                 ])),
-            Container(
-                height: 400,
-                margin: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3)),
-                    ]),
-                child: Column(children: [
-                  const SizedBox(height: 20),
-                  Text(
-                    '',
-                    style: GoogleFonts.plusJakartaSans(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 40),
-                ]))
+
           ],
         ),
       ],

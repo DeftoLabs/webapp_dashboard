@@ -324,9 +324,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
   @override
   void initState() {
     super.initState();
-
-    final categoriesProvider =
-        Provider.of<CategoriesProvider>(context, listen: false);
+    final categoriesProvider = Provider.of<CategoriesProvider>(context, listen: false);
     categoriesProvider.getCategories();
   }
 
@@ -553,7 +551,65 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   );
                 },
               ),
-              const SizedBox(height: 100),
+                  const SizedBox(height: 20),
+                  Text('TAX', 
+                  style: GoogleFonts.plusJakartaSans(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16
+                  )),
+                  const Divider(),
+                  const SizedBox(height: 20),
+              Consumer<CategoriesProvider>(
+                builder: (context, categoriesProvider, child) {
+                  return DropdownButtonFormField<String>(
+                    value: producto.categoria.id,
+                    decoration: InputDecoration(
+                      hintText: 'Category',
+                      labelText: 'Category',
+                      labelStyle: GoogleFonts.plusJakartaSans(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                      hintStyle: GoogleFonts.plusJakartaSans(
+                          color: Colors.white.withOpacity(0.7)),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromRGBO(177, 255, 46, 100),
+                            width: 2.0),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      ),
+                    ),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
+                    ),
+                    style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                    dropdownColor: Colors.grey[800],
+                    items: categoriesProvider.categorias.map((category) {
+                      return DropdownMenuItem<String>(
+                        value: category.id,
+                        child: Text(category.nombre,
+                            style: const TextStyle(color: Colors.white)),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        producto.categoria.id = value!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a Category';
+                      }
+                      return null;
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 60),
               Container(
                 alignment: Alignment.center,
                 child: CustomOutlineButtom(
