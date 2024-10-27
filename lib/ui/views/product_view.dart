@@ -321,11 +321,16 @@ class _ProductFormView extends StatefulWidget {
 }
 
 class _ProductFormViewState extends State<_ProductFormView> {
+  String? selectedTax;
+
   @override
   void initState() {
     super.initState();
     final categoriesProvider = Provider.of<CategoriesProvider>(context, listen: false);
     categoriesProvider.getCategories();
+
+    final financeProvider = Provider.of<FinanceProvider>(context, listen: false);
+    financeProvider.getFinance();
   }
 
   @override
@@ -334,7 +339,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
     final producto = productFormProvider.producto!;
 
     return WhiteCardColor(
-        title: 'General Information',
+        title: 'GENERAL INFORMATION',
         child: Form(
           key: productFormProvider.formKey,
           child: Container(
@@ -367,8 +372,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   producto.descripcion = uppercaseValue;
                 },
                 decoration: InputDecoration(
-                  hintText: 'Description',
-                  labelText: 'Description',
+                  hintText: 'DESCRIPTION',
+                  labelText: 'DESCRIPTION',
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white,
                       fontSize: 16,
@@ -410,10 +415,10 @@ class _ProductFormViewState extends State<_ProductFormView> {
                 },
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  hintText: 'Stock',
+                  hintText: 'STOCK',
                   hintStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white.withOpacity(0.7)),
-                  labelText: 'Stock - (Accept up to 4 decimals) e.g. 10.1234',
+                  labelText: 'STOCK - (Accept up to 4 decimals) e.g. 10.1234',
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white,
                       fontSize: 16,
@@ -437,11 +442,11 @@ class _ProductFormViewState extends State<_ProductFormView> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Stock is required';
+                    return 'STOCK IS REQUIRED';
                   }
                   // Validar que sea un número con hasta 4 decimales
                   if (!RegExp(r'^\d+(\.\d{0,4})?$').hasMatch(value)) {
-                    return 'Invalid Stock Format (Only Numbers) Use "." / Max 4 Decimals';
+                    return 'INVALID STOCK FORMAT (Only Numbers) Use "." / Max 4 Decimals';
                   }
                   // Verificar si el valor puede ser convertido a un número
                   if (double.tryParse(value) == null) {
@@ -456,8 +461,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   return DropdownButtonFormField<String>(
                     value: producto.unid,
                     decoration: InputDecoration(
-                      hintText: 'Unit',
-                      labelText: 'Unit',
+                      hintText: 'UNIT',
+                      labelText: 'UNIT',
                       labelStyle: GoogleFonts.plusJakartaSans(
                           color: Colors.white,
                           fontSize: 16,
@@ -494,7 +499,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Unit is required';
+                        return 'UNIT IS REQUIRED';
                       }
                       return null;
                     },
@@ -507,8 +512,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   return DropdownButtonFormField<String>(
                     value: producto.categoria.id,
                     decoration: InputDecoration(
-                      hintText: 'Category',
-                      labelText: 'Category',
+                      hintText: 'CATEGORY',
+                      labelText: 'CATEGORY',
                       labelStyle: GoogleFonts.plusJakartaSans(
                           color: Colors.white,
                           fontSize: 16,
@@ -544,7 +549,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please select a Category';
+                        return 'PLEASE SELECT A CATEGORY';
                       }
                       return null;
                     },
@@ -560,23 +565,26 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   )),
                   const Divider(),
                   const SizedBox(height: 20),
-              Consumer<CategoriesProvider>(
-                builder: (context, categoriesProvider, child) {
-                  return DropdownButtonFormField<String>(
-                    value: producto.categoria.id,
-                    decoration: InputDecoration(
-                      hintText: 'Category',
-                      labelText: 'Category',
+                  Consumer<FinanceProvider>(
+                  builder: (context, financeProvider, child) {
+                    if (financeProvider.finances.isNotEmpty) {
+                      final finance = financeProvider.finances.first; 
+
+                      return DropdownButtonFormField<String>(
+                      value: selectedTax,
+                      decoration: InputDecoration(
+                      hintText: 'SELECT A TAX',
+                      labelText: 'PRODUCT TAX',
                       labelStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                       hintStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.white.withOpacity(0.7)),
+                        color: Colors.white.withOpacity(0.7),
+                      ),
                       focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(177, 255, 46, 100),
-                            width: 2.0),
+                        borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white, width: 2.0),
@@ -588,28 +596,42 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     ),
                     style: GoogleFonts.plusJakartaSans(color: Colors.white),
                     dropdownColor: Colors.grey[800],
-                    items: categoriesProvider.categorias.map((category) {
-                      return DropdownMenuItem<String>(
-                        value: category.id,
-                        child: Text(category.nombre,
-                            style: const TextStyle(color: Colors.white)),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
+                    items: [
+                      DropdownMenuItem<String>(
+                        value: finance.tax1number.toString(),
+                        child: Text('${finance.tax1number} %    ${finance.tax1name}', style: GoogleFonts.plusJakartaSans(color: Colors.white)),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: finance.tax2number.toString(),
+                        child: Text('${finance.tax2number} %    ${finance.tax2name}', style: GoogleFonts.plusJakartaSans(color: Colors.white)),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: finance.tax3number.toString(),
+                        child: Text('${finance.tax3number} %    ${finance.tax3name}', style: GoogleFonts.plusJakartaSans(color: Colors.white)),
+                      ),
+                    ],
+                      onChanged: (String? newValue) {
                       setState(() {
-                        producto.categoria.id = value!;
+                        selectedTax = newValue;
+                        
                       });
                     },
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select a Category';
+                      if(value == null || value.isEmpty) {
+                        return 'PLEASE SELECT A TAX';
                       }
                       return null;
                     },
-                  );
-                },
-              ),
-              const SizedBox(height: 60),
+                        );        
+                    }else{
+                      return Text(
+                        'NO TAX INFORMATION AVAILABLE',
+                        style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14),
+                      );
+                    }
+                    }
+                ),
+              const SizedBox(height: 40),
               Container(
                 alignment: Alignment.center,
                 child: CustomOutlineButtom(
@@ -617,11 +639,11 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     final saved = await productFormProvider.updateProduct();
 
                     if (saved) {
-                      NotificationService.showSnackBa('${producto.descripcion} Updated');
+                      NotificationService.showSnackBa('${producto.descripcion} UPDATED');
                       NavigationService.replaceTo('/dashboard/products');
                     } else {
                       NotificationService.showSnackBarError(
-                          'Could not save the Product');
+                          'COULD NOT SAVE THE PRODUCT');
                     }
                   },
                   text: 'Save',

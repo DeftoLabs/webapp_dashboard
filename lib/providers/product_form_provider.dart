@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
+import 'package:web_dashboard/models/finance.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 
@@ -22,6 +23,8 @@ Producto? producto;
   double? precio4,
   double? precio5,
   Categoria? categoria,
+  Finance? finance,
+  double? tax,
   String? descripcion,
   bool? disponible,
   double? stock,
@@ -39,6 +42,8 @@ Producto? producto;
       precio4: precio4 ?? producto!.precio4, 
       precio5: precio5 ?? producto!.precio5, 
       categoria: categoria ?? producto!.categoria, 
+      finance: finance ?? producto!.finance, 
+      tax: tax ?? producto!.tax,
       disponible: disponible ?? producto!.disponible, 
       stock: stock ?? producto!.stock, 
       unid: unid ?? producto!.unid,
@@ -64,6 +69,7 @@ Future updateProduct() async {
     'stock': producto!.stock,
     'unid': producto!.unid,
     'categoria': producto!.categoria.id,
+    'tax': producto!.tax,
   };
 
   try {

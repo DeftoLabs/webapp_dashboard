@@ -1,6 +1,4 @@
-import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +7,6 @@ import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
-import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 class ProductNewModal extends StatefulWidget {
   final Producto? producto;
@@ -32,7 +29,6 @@ class _ProductNewModalState extends State<ProductNewModal> {
   double stock = 0.0;
   String? unid;
   String? categoria;
-  Uint8List? fileImage;
 
   final _precioController1  = TextEditingController();
   final _precioController2 = TextEditingController();
@@ -81,10 +77,6 @@ class _ProductNewModalState extends State<ProductNewModal> {
     final productProvider = Provider.of<ProductsProvider>(context);
     productProvider.producto;
 
-    final image = (fileImage == null) 
-  ? const Image(image: AssetImage('noimage.jpeg')) 
-  : Image.memory(fileImage!);
-
     return Consumer<ProductsProvider>(
         builder: (context, productProvider, child) {
       return Dialog(
@@ -92,8 +84,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Container(
-          height: 650,
-          width: 1000,
+          height: 700,
+          width: 800,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 58, 60, 65),
@@ -109,8 +101,9 @@ class _ProductNewModalState extends State<ProductNewModal> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.producto?.descripcion ?? 'Add Product',
-                        style: CustomLabels.h1.copyWith(color: Colors.white),
+                        'ADD PRODUCT',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                       IconButton(
                         icon: const Icon(Icons.close, color: Colors.white),
@@ -122,101 +115,16 @@ class _ProductNewModalState extends State<ProductNewModal> {
                   const SizedBox(height: 20),
                   Table(
                     columnWidths: const {
-                      0: FixedColumnWidth(250),
-                      1: FixedColumnWidth(450),
+                      0: FixedColumnWidth(450),
+                      1: FixedColumnWidth(250),
                       2: FlexColumnWidth(),
                     },
                     children: [
                       TableRow(children: [
-                        WhiteCardNoMargin(
-                          title: 'Image',
-                          width: 250,
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 150,
-                                  height: 160,
-                                  child: Stack(
-                                    children: [
-                                      ClipOval(
-                                          child: image),
-                                      Positioned(
-                                        bottom: 5,
-                                        right: 5,
-                                        child: Container(
-                                          width: 45,
-                                          height: 45,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            border: Border.all(
-                                                color: Colors.white, width: 5),
-                                          ),
-                                          child: FloatingActionButton(
-                                              backgroundColor:
-                                                  const Color.fromRGBO(
-                                                      177, 255, 46, 100),
-                                              elevation: 0,
-                                              child: const Icon(
-                                                  Icons.camera_alt_outlined,
-                                                  size: 20),
-                                              onPressed: () async {
-                                                FilePickerResult? result = await FilePicker.platform.pickFiles(
-                                                  type: FileType.custom,
-                                                  allowedExtensions: [
-                                                    'jpg',
-                                                    'jpeg',
-                                                    'png'
-                                                  ],
-                                                  allowMultiple: false,
-                                                );
-                                                if (result != null) {
-                                                  PlatformFile file = result.files.first;
-                                                  fileImage = file.bytes;
-
-                                                  setState(() {
-                                                    fileImage;
-                                                  });                                  
-                                               //   if (!context.mounted) return;
-                                               //   NotificationService
-                                               //       .showBusyIndicator(
-                                               //           context);
-                                               //   await Provider.of<
-                                               //               ProductsProvider>(
-                                               //           context,
-                                               //           listen: false)
-                                               //       .uploadImage(
-                                               //     '/uploads/productos/${producto!.id}',
-                                               //     result.files.first.bytes!,
-                                               //   );
-                                               //   if (!context.mounted) return;
-                                               //   Navigator.of(context).pop();
-                                               // } else {
-                                               //   NotificationService
-                                               //       .showSnackBarError(
-                                               //           'Failed to Upload Image');
-                                                } else {
-                                                  
-                                                }
-                                              }),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                              ],
-                            ),
-                          ),
-                        ),
                         Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: WhiteCardNoMargin(
-                              title: 'Product Detail',
+                              title: 'PRODUCT DETAIL',
                               child: Column(
                                 children: [
                                   const SizedBox(height: 10),
@@ -237,11 +145,11 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         focusedBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color: Color.fromRGBO(0, 0, 0, 1),
-                                              width: 2.0),
+                                              width: 1.0),
                                         ),
                                         enabledBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
-                                              color: Colors.black, width: 2.0),
+                                              color: Colors.black, width: 1.0),
                                         ),
                                       ),
                                       style: GoogleFonts.plusJakartaSans(
@@ -274,11 +182,11 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       focusedBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color.fromRGBO(0, 0, 0, 1),
-                                            width: 2.0),
+                                            width: 1.0),
                                       ),
                                       enabledBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Colors.black, width: 2.0),
+                                            color: Colors.black, width: 1.0),
                                       ),
                                       border: const OutlineInputBorder(),
                                     ),
@@ -324,13 +232,13 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                             borderSide: BorderSide(
                                                 color:
                                                     Color.fromRGBO(0, 0, 0, 1),
-                                                width: 2.0),
+                                                width: 1.0),
                                           ),
                                           enabledBorder:
                                               const OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: Colors.black,
-                                                width: 2.0),
+                                                width: 1.0),
                                           ),
                                           border: const OutlineInputBorder(),
                                         ),
@@ -379,11 +287,11 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       focusedBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color.fromRGBO(0, 0, 0, 1),
-                                            width: 2.0),
+                                            width: 1.0),
                                       ),
                                       enabledBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Colors.black, width: 2.0),
+                                            color: Colors.black, width: 1.0),
                                       ),
                                     ),
                                     style: GoogleFonts.plusJakartaSans(
@@ -411,13 +319,13 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               borderSide: BorderSide(
                                                   color: Color.fromRGBO(
                                                       0, 0, 0, 1),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             enabledBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Colors.black,
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             border: const OutlineInputBorder()),
                                         icon: const Icon(
@@ -448,16 +356,73 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       );
                                     },
                                   ),
-                                  const SizedBox(
-                                    height: 20,
-                                  )
+                                                                    const SizedBox(height: 20),
+                                  Consumer<CategoriesProvider>(
+                                    builder:
+                                        (context, categoriesProvider, child) {
+                                      return DropdownButtonFormField<String>(
+                                        value: categoria,
+                                        decoration: InputDecoration(
+                                            hintText: 'Category',
+                                            labelText: 'Category',
+                                            labelStyle:
+                                                GoogleFonts.plusJakartaSans(
+                                                    color: Colors.black,
+                                                    fontSize: 12),
+                                            hintStyle:
+                                                GoogleFonts.plusJakartaSans(
+                                                    color: Colors.black
+                                                        .withOpacity(0.7)),
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 1),
+                                                  width: 1.0),
+                                            ),
+                                            enabledBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black,
+                                                  width: 1.0),
+                                            ),
+                                            border: const OutlineInputBorder()),
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.black,
+                                        ),
+                                        style: GoogleFonts.plusJakartaSans(
+                                            color: Colors.black),
+                                        dropdownColor: Colors.white,
+                                        items: categoriesProvider.categorias
+                                            .map((category) {
+                                          return DropdownMenuItem<String>(
+                                            value: category.id,
+                                            child: Text(category.nombre),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            categoria = value!;
+                                          });
+                                        },
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please select a Category';
+                                          }
+                                          return null;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(height: 20)
                                 ],
                               ),
                             )),
                         ChangeNotifierProvider.value(
                           value: productProvider,
                           child: WhiteCardNoMargin(
-                            title: 'Levels Price',
+                            title: 'LEVELS PRICE',
                             width: 250,
                             child: SizedBox(
                               width: double.infinity,
@@ -496,14 +461,14 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 58, 60, 65),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             enabledBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 0, 0, 0),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             border: const OutlineInputBorder(),
                                           ),
@@ -567,14 +532,14 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 58, 60, 65),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             enabledBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 0, 0, 0),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             border: const OutlineInputBorder(),
                                           ),
@@ -638,14 +603,14 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 58, 60, 65),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             enabledBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 0, 0, 0),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             border: const OutlineInputBorder(),
                                           ),
@@ -709,14 +674,14 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 58, 60, 65),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             enabledBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 0, 0, 0),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             border: const OutlineInputBorder(),
                                           ),
@@ -780,14 +745,14 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 58, 60, 65),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             enabledBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color.fromARGB(
                                                       255, 0, 0, 0),
-                                                  width: 2.0),
+                                                  width: 1.0),
                                             ),
                                             border: const OutlineInputBorder(),
                                           ),
@@ -854,7 +819,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                             }
                             Navigator.of(context).pop();
                           } catch (e) {
-                            NotificationService.showSnackBa(
+                            NotificationService.showSnackBarError(
                                 'Could not save the Product');
                             Navigator.of(context).pop();
                           }

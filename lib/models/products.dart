@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:web_dashboard/models/finance.dart';
+
 class Producto {
   String id;
   String nombre;
@@ -11,6 +13,8 @@ class Producto {
   double precio4;
   double precio5;
   Categoria categoria;
+  Finance finance;
+  double tax;
   String? descripcion;
   bool disponible;
   double stock;
@@ -31,6 +35,8 @@ class Producto {
     required this.precio4,
     required this.precio5,
     required this.categoria,
+    required this.finance,
+    required this.tax,
     this.descripcion,
     required this.disponible,
     required this.stock,
@@ -55,6 +61,19 @@ class Producto {
   precio4: json.containsKey("producto") ? json["producto"]["precio4"]?.toDouble() ?? 0.0 : json["precio4"]?.toDouble() ?? 0.0,
   precio5: json.containsKey("producto") ? json["producto"]["precio5"]?.toDouble() ?? 0.0 : json["precio5"]?.toDouble() ?? 0.0,
   categoria: json["categoria"] != null ? Categoria.fromMap(json["categoria"]) : Categoria(id: '', nombre: ''),
+  finance: json["finance"] != null ? Finance.fromMap(json["finance"]) : Finance(
+    mainCurrencyname: '', mainCurrencysymbol: '', 
+    secondCurrencyname: '', secondCurrencysymbol: '', 
+    tax1name: '', tax1number: 0.0, 
+    tax2name: '', tax2number: 0.0, 
+    tax3name: '', tax3number: 0.0, 
+    tax4name: '', tax4number: 0.0, 
+    taxa1name: '', taxa1number: 0.0, 
+    taxa2name: '', taxa2number: 0.0, 
+    taxa3name: '', taxa3number: 0.0, 
+    taxa4name: '', taxa4number: 0.0,
+    ),
+  tax: json.containsKey("producto") ? json["producto"]["tax"] ?? 'ERROR' : json["tax"] ?? 'ERROR',
   descripcion: json.containsKey("producto") ? json["producto"]["descripcion"] ?? 'ERROR' : json["descripcion"] ?? 'ERROR',
   disponible: json["disponible"] ?? true,
   stock: json["stock"]?.toDouble() ?? 0.0,
@@ -77,6 +96,8 @@ class Producto {
     "precio4": precio4,
     "precio5": precio5,
     "categoria": categoria.toMap(),
+    "finance": finance.toMap(),
+    "tax": tax,
     "descripcion": descripcion,
     "disponible": disponible,
     "stock": stock,
@@ -98,6 +119,8 @@ class Producto {
     double? precio4,
     double? precio5,
     Categoria? categoria,
+    Finance? finance,
+    double? tax,
     String? descripcion,
     bool? disponible,
     double? stock,
@@ -115,6 +138,8 @@ class Producto {
       precio4: precio4 ?? this.precio4,
       precio5: precio5 ?? this.precio5,
       categoria: categoria ?? this.categoria,
+      finance: finance ?? this.finance,
+      tax: tax ?? this.tax,
       descripcion: descripcion ?? this.descripcion,
       disponible: disponible ?? this.disponible,
       stock: stock ?? this.stock,
