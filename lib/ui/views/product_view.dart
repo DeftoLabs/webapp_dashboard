@@ -567,25 +567,22 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   const Divider(),
                   const SizedBox(height: 20),
                   Consumer<FinanceProvider>(
-                  builder: (context, financeProvider, child) {
-                    if (financeProvider.finances.isNotEmpty) {
-                      final finance = financeProvider.finances.first; 
-
-                      return DropdownButtonFormField<String>(
-                      value: selectedTax,
-                      decoration: InputDecoration(
-                      hintText: 'SELECT A TAX',
-                      labelText: 'PRODUCT TAX',
+                builder: (context, financeProvider, child) {
+                  return DropdownButtonFormField<String>(
+                    value: producto.finance.id,
+                    decoration: InputDecoration(
+                      hintText: 'TAX',
+                      labelText: 'TAX',
                       labelStyle: GoogleFonts.plusJakartaSans(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
                       hintStyle: GoogleFonts.plusJakartaSans(
-                        color: Colors.white.withOpacity(0.7),
-                      ),
+                          color: Colors.white.withOpacity(0.7)),
                       focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                        borderSide: BorderSide(
+                            color: Color.fromRGBO(177, 255, 46, 100),
+                            width: 2.0),
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white, width: 2.0),
@@ -597,41 +594,27 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     ),
                     style: GoogleFonts.plusJakartaSans(color: Colors.white),
                     dropdownColor: Colors.grey[800],
-                    items: [
-                      DropdownMenuItem<String>(
-                        value: finance.tax1number.toString(),
-                        child: Text('${finance.tax1number} %    ${finance.tax1name}', style: GoogleFonts.plusJakartaSans(color: Colors.white)),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: finance.tax2number.toString(),
-                        child: Text('${finance.tax2number} %    ${finance.tax2name}', style: GoogleFonts.plusJakartaSans(color: Colors.white)),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: finance.tax3number.toString(),
-                        child: Text('${finance.tax3number} %    ${finance.tax3name}', style: GoogleFonts.plusJakartaSans(color: Colors.white)),
-                      ),
-                    ],
-                      onChanged: (String? newValue) {
+                    items: financeProvider.finances.map((finance) {
+                      return DropdownMenuItem<String>(
+                        value: finance.id,
+                        child: Text(finance.tax1number.toString(),
+                            style: const TextStyle(color: Colors.white)),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
                       setState(() {
-                        selectedTax = newValue;
-                        
+                        producto.categoria.id = value!;
                       });
                     },
                     validator: (value) {
-                      if(value == null || value.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'PLEASE SELECT A TAX';
                       }
                       return null;
                     },
-                        );        
-                    }else{
-                      return Text(
-                        'NO TAX INFORMATION AVAILABLE',
-                        style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14),
-                      );
-                    }
-                    }
-                ),
+                  );
+                },
+              ),
               const SizedBox(height: 40),
               Container(
                 alignment: Alignment.center,

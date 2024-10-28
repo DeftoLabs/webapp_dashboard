@@ -18,7 +18,6 @@ class ProductNewModal extends StatefulWidget {
 }
 
 class _ProductNewModalState extends State<ProductNewModal> {
-  String? selectedTax;
   String nombre = '';
   double precio1 = 0.0;
   double precio2 = 0.0;
@@ -365,18 +364,11 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   const SizedBox(height: 20),
                                   Consumer<FinanceProvider>(
                                     builder: (context, financeProvider, child) {
-                                      if (financeProvider.finances.isEmpty) {
-                                      return Text(
-                                        'NO TAX INFORMATION AVAILABLE',
-                                        style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14),
-                                      );
-                                    } else {
-                                      final finance = financeProvider.finances.first;
                                       return DropdownButtonFormField<String>(
-                                        value: selectedTax,
+                                        value: finance, 
                                         decoration: InputDecoration(
                                         hintText: 'Select a TAX',
-                                        labelText: 'Product TAX',
+                                        labelText: 'TAX',
                                         labelStyle:  GoogleFonts.plusJakartaSans(
                                                     color: Colors.black,
                                                     fontSize: 12),
@@ -399,24 +391,16 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         style: GoogleFonts.plusJakartaSans(
                                             color: Colors.black),
                                         dropdownColor: Colors.white,
-                                      items: [
-                                        DropdownMenuItem<String>(
-                                          value: finance.tax1number.toString(),
-                                          child: Text('${finance.tax1number} %    ${finance.tax1name}', style: GoogleFonts.plusJakartaSans(color: Colors.black)),
-                                        ),
-                                        DropdownMenuItem<String>(
-                                          value: finance.tax2number.toString(),
-                                          child: Text('${finance.tax2number} %    ${finance.tax2name}', style: GoogleFonts.plusJakartaSans(color: Colors.black)),
-                                        ),
-                                        DropdownMenuItem<String>(
-                                          value: finance.tax3number.toString(),
-                                          child: Text('${finance.tax3number} %    ${finance.tax3name}', style: GoogleFonts.plusJakartaSans(color: Colors.black)),
-                                        ),
-                                      ],
+                                      items: financeProvider.finances
+                                            .map((finances) {
+                                          return DropdownMenuItem<String>(
+                                            value: finances.id,
+                                            child: Text(finances.tax1number.toString()),
+                                          );
+                                        }).toList(),
                                         onChanged: (String? value) {
                                         setState(() {
-                                          selectedTax = value;
-
+                                          finance = value;
                                         });
                                       },
                                       validator: (value) {
@@ -427,9 +411,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       },
                                           );        
                                       }
-                                      }
                                   ),
-                                  const SizedBox(height: 20)
+                                  const SizedBox(height: 20), 
                                 ],
                               ),
                             )),
@@ -826,7 +809,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                 stock: stock,
                                 unid: unid!,
                                 categoria: categoria!,
-                                tax: double.parse(selectedTax!),
+                                finance: finance!,
                               );
                               if(! context.mounted) return;
                               NotificationService.showSnackBa(

@@ -133,7 +133,7 @@ class ProductsProvider extends ChangeNotifier {
     required double stock,
     required String unid,
     required String categoria,
-    required double tax,
+    required String finance,
     Uint8List? imageBytes,
   }) async {
     final data = {
@@ -147,7 +147,7 @@ class ProductsProvider extends ChangeNotifier {
       'stock': stock,
       'unid': unid,
       'categoria': categoria,
-      'tax': tax,
+      'finance': finance
     };
     
     try {
@@ -207,9 +207,4 @@ Future uploadImage(String path, Uint8List bytes) async {
     NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
   }
 }
-
-
-
-
-
 }
