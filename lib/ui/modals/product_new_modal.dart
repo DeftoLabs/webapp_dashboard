@@ -18,6 +18,7 @@ class ProductNewModal extends StatefulWidget {
 }
 
 class _ProductNewModalState extends State<ProductNewModal> {
+  String? selectedTax;
   String nombre = '';
   double precio1 = 0.0;
   double precio2 = 0.0;
@@ -29,6 +30,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
   double stock = 0.0;
   String? unid;
   String? categoria;
+  String? finance;
 
   final _precioController1  = TextEditingController();
   final _precioController2 = TextEditingController();
@@ -57,6 +59,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
     stock = producto?.stock ?? 0.0;
     unid = producto?.unid;
     categoria = producto?.categoria.id;
+    finance = producto?.finance.id;
 
     _precioController1.text = precio1.toString();  
     _precioController2.text = precio2.toString();
@@ -66,9 +69,12 @@ class _ProductNewModalState extends State<ProductNewModal> {
 
     _stockController.text = stock.toString();
 
-    final categoriesProvider =
-        Provider.of<CategoriesProvider>(context, listen: false);
+    final categoriesProvider = Provider.of<CategoriesProvider>(context, listen: false);
     categoriesProvider.getCategories();
+
+    final financeProvider = Provider.of<FinanceProvider>(context, listen: false);
+    financeProvider.getFinance();
+  
   }
   
 
@@ -356,31 +362,30 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       );
                                     },
                                   ),
-                                                                    const SizedBox(height: 20),
-                                  Consumer<CategoriesProvider>(
-                                    builder:
-                                        (context, categoriesProvider, child) {
+                                  const SizedBox(height: 20),
+                                  Consumer<FinanceProvider>(
+                                    builder: (context, financeProvider, child) {
+                                      if (financeProvider.finances.isEmpty) {
+                                      return Text(
+                                        'NO TAX INFORMATION AVAILABLE',
+                                        style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14),
+                                      );
+                                    } else {
+                                      final finance = financeProvider.finances.first;
                                       return DropdownButtonFormField<String>(
-                                        value: categoria,
+                                        value: selectedTax,
                                         decoration: InputDecoration(
-                                            hintText: 'Category',
-                                            labelText: 'Category',
-                                            labelStyle:
-                                                GoogleFonts.plusJakartaSans(
+                                        hintText: 'Select a TAX',
+                                        labelText: 'Product TAX',
+                                        labelStyle:  GoogleFonts.plusJakartaSans(
                                                     color: Colors.black,
                                                     fontSize: 12),
-                                            hintStyle:
-                                                GoogleFonts.plusJakartaSans(
-                                                    color: Colors.black
-                                                        .withOpacity(0.7)),
-                                            focusedBorder:
-                                                const OutlineInputBorder(
+                                        hintStyle:  GoogleFonts.plusJakartaSans(
+                                                    color: Colors.black.withOpacity(0.7)),
+                                           focusedBorder: const OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: Color.fromRGBO(
-                                                      0, 0, 0, 1),
-                                                  width: 1.0),
-                                            ),
-                                            enabledBorder:
+                                                  color: Color.fromRGBO(0, 0, 0, 1), width: 1.0),),
+                                        enabledBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Colors.black,
@@ -394,26 +399,35 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         style: GoogleFonts.plusJakartaSans(
                                             color: Colors.black),
                                         dropdownColor: Colors.white,
-                                        items: categoriesProvider.categorias
-                                            .map((category) {
-                                          return DropdownMenuItem<String>(
-                                            value: category.id,
-                                            child: Text(category.nombre),
-                                          );
-                                        }).toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            categoria = value!;
-                                          });
-                                        },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please select a Category';
-                                          }
-                                          return null;
-                                        },
-                                      );
-                                    },
+                                      items: [
+                                        DropdownMenuItem<String>(
+                                          value: finance.tax1number.toString(),
+                                          child: Text('${finance.tax1number} %    ${finance.tax1name}', style: GoogleFonts.plusJakartaSans(color: Colors.black)),
+                                        ),
+                                        DropdownMenuItem<String>(
+                                          value: finance.tax2number.toString(),
+                                          child: Text('${finance.tax2number} %    ${finance.tax2name}', style: GoogleFonts.plusJakartaSans(color: Colors.black)),
+                                        ),
+                                        DropdownMenuItem<String>(
+                                          value: finance.tax3number.toString(),
+                                          child: Text('${finance.tax3number} %    ${finance.tax3name}', style: GoogleFonts.plusJakartaSans(color: Colors.black)),
+                                        ),
+                                      ],
+                                        onChanged: (String? value) {
+                                        setState(() {
+                                          selectedTax = value;
+
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if(value == null || value.isEmpty) {
+                                          return 'PLEASE SELECT A TAX';
+                                        }
+                                        return null;
+                                      },
+                                          );        
+                                      }
+                                      }
                                   ),
                                   const SizedBox(height: 20)
                                 ],
@@ -812,6 +826,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                 stock: stock,
                                 unid: unid!,
                                 categoria: categoria!,
+                                tax: double.parse(selectedTax!),
                               );
                               if(! context.mounted) return;
                               NotificationService.showSnackBa(

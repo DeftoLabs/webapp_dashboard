@@ -331,6 +331,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
 
     final financeProvider = Provider.of<FinanceProvider>(context, listen: false);
     financeProvider.getFinance();
+  
   }
 
   @override

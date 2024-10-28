@@ -133,6 +133,7 @@ class ProductsProvider extends ChangeNotifier {
     required double stock,
     required String unid,
     required String categoria,
+    required double tax,
     Uint8List? imageBytes,
   }) async {
     final data = {
@@ -146,6 +147,7 @@ class ProductsProvider extends ChangeNotifier {
       'stock': stock,
       'unid': unid,
       'categoria': categoria,
+      'tax': tax,
     };
     
     try {
