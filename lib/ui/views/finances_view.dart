@@ -180,56 +180,153 @@ class FinancesView extends StatelessWidget {
               const SizedBox(height: 40),
               Column(
                 children: [
-                  Text('TAX SALES', style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 10),
-                  Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: 150,
-                margin: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow( 
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3))
-                    ]),
-                    child: SingleChildScrollView(
-                      scrollDirection: isSmallScreen ? Axis.horizontal : Axis.vertical,
-                      child: DataTable(
-                        columns: [
-                          DataColumn(
-                          label: Text('TAX',
-                            style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
-                          )),
-                          DataColumn(label: Text('%',
-                            style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
-                          )),
-                          DataColumn(label: Text('EDIT',
-                            style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
-                          )),
-                        ],
-                       rows: taxSalesDataSource.taxsales.map(
-                        (taxsales) => DataRow(
-                          cells: [
-                            DataCell(Text(taxsales.taxname)),
-                            DataCell(Text(taxsales.taxnumber.toString())),
-                            DataCell(IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                              NavigationService.replaceTo(
-                                              '/dashboard/settings/finance');
-                              },
-                            )),
-                          ],
+                  Text('TAX', style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Text('SALES TAX',
+                           style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)
+                          ),
+                        )
                         ),
-                      )
-                      .toList(),
+                        Expanded(child: Center(
+                          child: Text('BUSINESS TAXES', 
+                          style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                        ))
+                    ],
+                  ),
+                Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0), // Ajusta el margen de 10 píxeles
+        child: Container(
+          height: 150,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: SingleChildScrollView(
+            scrollDirection: isSmallScreen ? Axis.horizontal : Axis.vertical,
+            child: DataTable(
+              columns: [
+                DataColumn(
+                  label: Text(
+                    'TAX',
+                    style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    '%',
+                    style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'EDIT',
+                    style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+              rows: taxSalesDataSource.taxsales.map(
+                (taxsales) => DataRow(
+                  cells: [
+                    DataCell(Text(taxsales.taxname)),
+                    DataCell(Text(taxsales.taxnumber.toString())),
+                    DataCell(
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {
+                          NavigationService.replaceTo('/dashboard/settings/finance');
+                        },
                       ),
                     ),
+                  ],
+                ),
+              ).toList(),
+            ),
+          ),
+        ),
+      ),
+    ),
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0), // Ajusta el margen de 10 píxeles
+        child: Container(
+          height: 150,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: SingleChildScrollView(
+            scrollDirection: isSmallScreen ? Axis.horizontal : Axis.vertical,
+            child: DataTable(
+              columns: [
+                DataColumn(
+                  label: Text(
+                    'TAX',
+                    style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
                   ),
+                ),
+                DataColumn(
+                  label: Text(
+                    '%',
+                    style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'EDIT',
+                    style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+              rows: taxSalesDataSource.taxsales.map(
+                (taxsales) => DataRow(
+                  cells: [
+                    DataCell(Text(taxsales.taxname)),
+                    DataCell(Text(taxsales.taxnumber.toString())),
+                    DataCell(
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () {
+                          NavigationService.replaceTo('/dashboard/settings/finance');
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ).toList(),
+            ),
+          ),
+        ),
+      ),
+    ),
+  ],
+)
+
+                 
                 ],
               ),
               
