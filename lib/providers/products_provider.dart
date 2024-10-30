@@ -11,7 +11,7 @@ class ProductsProvider extends ChangeNotifier {
   
   Producto? producto;
   List<Producto> productos = [];
-  final List<String> _units = ['Box', 'Kgs', 'Lbs', 'Units', 'Pkg'];
+  final List<String> _units = ['BOX', 'KGS', 'LBS', 'UNIT', 'PKG'];
   List<String> get units => _units;
 
   bool isloading = true;
@@ -133,8 +133,7 @@ class ProductsProvider extends ChangeNotifier {
     required double stock,
     required String unid,
     required String categoria,
-    required String finance,
-    Uint8List? imageBytes,
+    String? finance,
   }) async {
     final data = {
       'nombre': nombre,
@@ -152,15 +151,14 @@ class ProductsProvider extends ChangeNotifier {
     
     try {
       
-      final json = await CafeApi.post('/productos', data);      
+      final json = await CafeApi.post('/productos', data);     
       final newProduct = Producto.fromMap(json);
       productos.add(newProduct);
       notifyListeners();
-
-      return newProduct.id;
     } catch (e) {
-      throw 'Error to create New Product';
+        throw 'Error creating new product: $e'; 
     }
+    return null;
   }
 
   Future deleteProduct (String id) async {

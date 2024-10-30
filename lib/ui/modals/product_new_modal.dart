@@ -58,7 +58,6 @@ class _ProductNewModalState extends State<ProductNewModal> {
     stock = producto?.stock ?? 0.0;
     unid = producto?.unid;
     categoria = producto?.categoria.id;
-    finance = producto?.finance.id;
 
     _precioController1.text = precio1.toString();  
     _precioController2.text = precio2.toString();
@@ -395,7 +394,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                             .map((finances) {
                                           return DropdownMenuItem<String>(
                                             value: finances.id,
-                                            child: Text(finances.tax1number.toString()),
+                                            child: Text(finances.mainCurrencyname),
                                           );
                                         }).toList(),
                                         onChanged: (String? value) {
@@ -797,32 +796,28 @@ class _ProductNewModalState extends State<ProductNewModal> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           try {
-                            if (id == null) {
-                              await productProvider.newCreateProduct(
-                                nombre: nombre,
-                                precio1: precio1,
-                                precio2: precio2,
-                                precio3: precio3,
-                                precio4: precio4,
-                                precio5: precio5,
-                                descripcion: descripcion,
-                                stock: stock,
-                                unid: unid!,
-                                categoria: categoria!,
-                                finance: finance!,
-                              );
-                              if(! context.mounted) return;
-                              NotificationService.showSnackBa(
-                                  '$descripcion Created');
-                            }
+                            await productProvider.newCreateProduct(
+                              nombre: nombre,
+                              precio1: precio1,
+                              precio2: precio2,
+                              precio3: precio3,
+                              precio4: precio4,
+                              precio5: precio5,
+                              descripcion: descripcion,
+                              stock: stock,
+                              unid: unid!,
+                              categoria: categoria!,
+                              finance: finance!,
+                            );
+                            if (!context.mounted) return;
+                            NotificationService.showSnackBa('$descripcion Created');
                             Navigator.of(context).pop();
                           } catch (e) {
-                            NotificationService.showSnackBarError(
-                                'Could not save the Product');
-                            Navigator.of(context).pop();
+                            NotificationService.showSnackBarError('Could not save the Product');
                           }
                         }
                       },
+
                       text: 'Save',
                       color: Colors.white,
                     ),

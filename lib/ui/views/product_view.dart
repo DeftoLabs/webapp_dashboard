@@ -569,7 +569,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   Consumer<FinanceProvider>(
                 builder: (context, financeProvider, child) {
                   return DropdownButtonFormField<String>(
-                    value: producto.finance.id,
+                   // value: producto.finance.id,
                     decoration: InputDecoration(
                       hintText: 'TAX',
                       labelText: 'TAX',
@@ -597,13 +597,13 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     items: financeProvider.finances.map((finance) {
                       return DropdownMenuItem<String>(
                         value: finance.id,
-                        child: Text(finance.tax1number.toString(),
+                        child: Text(finance.mainCurrencyname,
                             style: const TextStyle(color: Colors.white)),
                       );
                     }).toList(),
                     onChanged: (value) {
                       setState(() {
-                        producto.categoria.id = value!;
+                        // producto.categoria.id = value!;
                       });
                     },
                     validator: (value) {

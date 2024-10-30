@@ -42,7 +42,6 @@ Producto? producto;
       precio4: precio4 ?? producto!.precio4, 
       precio5: precio5 ?? producto!.precio5, 
       categoria: categoria ?? producto!.categoria, 
-      finance: finance ?? producto!.finance, 
       tax: tax ?? producto!.tax,
       disponible: disponible ?? producto!.disponible, 
       stock: stock ?? producto!.stock, 

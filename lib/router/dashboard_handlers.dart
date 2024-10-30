@@ -384,7 +384,7 @@ class DashboardHandlers {
 
     }
   );
-
+  
   static Handler bank = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);

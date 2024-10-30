@@ -54,7 +54,6 @@ class OrdenFormProvider extends ChangeNotifier {
           estado: producto.estado,
           usuario: producto.usuario,
           categoria: producto.categoria,
-          finance: producto.finance,
           tax:producto.tax,
           disponible: producto.disponible,
           stock: producto.stock,
