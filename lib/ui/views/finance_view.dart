@@ -287,7 +287,7 @@ class _FinanceViewBodyState extends State<FinanceViewBody> {
                           Provider.of<FinanceProvider>(context, listen: false).getFinance();
                           NavigationService.replaceTo('/dashboard/settings/finance');
                         } else {
-                          NotificationService.showSnackBarError('Error: The currencies were not updated');
+                          NotificationService.showSnackBarError('Error: The Currencies were not Updated');
                         }
                       } else {
                         NotificationService.showSnackBarError('Please fill all fields correctly');

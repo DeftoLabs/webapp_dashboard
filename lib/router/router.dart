@@ -124,6 +124,8 @@ class Flurorouter {
     router.define (inactiveUserRoute, handler: DashboardHandlers.inactiveUser,       transitionType: TransitionType.fadeIn);
     router.define (financeRoute,      handler: DashboardHandlers.finance,            transitionType: TransitionType.fadeIn);
     router.define (financeID,         handler: DashboardHandlers.financebyID,        transitionType: TransitionType.fadeIn);
+
+    router.define (taxSalesID,         handler: DashboardHandlers.taxSalesbyID,      transitionType: TransitionType.fadeIn);
     
     router.define (bankRoute,         handler: DashboardHandlers.bank,               transitionType: TransitionType.fadeIn);
     router.define (bankId,            handler: DashboardHandlers.bankID,             transitionType: TransitionType.fadeIn);

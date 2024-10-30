@@ -1,0 +1,110 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/categories_provider.dart';
+import 'package:web_dashboard/services/notification_services.dart';
+import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
+import 'package:web_dashboard/ui/labels/custom_labels.dart';
+
+class TaxSaleNewView extends StatefulWidget {
+
+  final String id;
+
+  const TaxSaleNewView({super.key, required this.id});
+
+  @override
+  State<TaxSaleNewView> createState() => _TaxSaleNewViewState();
+}
+
+class _TaxSaleNewViewState extends State<TaxSaleNewView> {
+  String nombre = '';
+  String? id;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final categoryProvider = Provider.of<CategoriesProvider>(context, listen: false);
+
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Container(
+        height: 300,
+        width: 600, 
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color:  const Color.fromARGB(255, 58, 60, 65),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min, 
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'EDIT SALES TAX',
+                  style: CustomLabels.h1.copyWith(color: Colors.white),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+            const Divider(color: Colors.white70),
+
+            const SizedBox(height: 40),
+
+             TextFormField(
+             //initialValue: widget.categoria?.nombre ?? '',
+              onChanged: (value) => nombre = value,
+              decoration: InputDecoration(
+                hintText: 'Category Name',
+                labelText: 'Category',
+                labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
+                hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                focusedBorder:const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                ),
+              ),
+              style: GoogleFonts.plusJakartaSans(color: Colors.white),
+            ),
+            const SizedBox(height: 40),
+            Container(
+              alignment: Alignment.center,
+              child: CustomOutlineButtom(
+                onPressed: () async {
+                  try {
+                    if (id == null) {
+                      await categoryProvider.newCategory(nombre);
+                      NotificationService.showSnackBa('$nombre Created');
+                    } else {
+                      await categoryProvider.updateCategory(id!, nombre);
+                      NotificationService.showSnackBa('$nombre Updated');
+                    }
+                    if(!context.mounted) return;
+                    Navigator.of(context).pop();
+                  } catch (e) {
+                    if (mounted) NotificationService.showSnackBarError('Could not save the category');
+                    if (mounted) Navigator.of(context).pop();
+                  }
+                },
+                text: 'Save',
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

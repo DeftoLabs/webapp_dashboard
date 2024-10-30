@@ -23,5 +23,17 @@ class TaxSalesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  getTaxSaleById(String id) async {
+
+    try {
+      final resp = await CafeApi.httpGet('/taxsales/$id');
+      final taxsale = TaxSales.fromMap(resp);
+      return taxsale;
+    } catch (e) {
+       return null;
+    }
+  
+  }
+
 
 }

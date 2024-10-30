@@ -250,7 +250,7 @@ class FinancesView extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.edit),
                         onPressed: () {
-                          NavigationService.replaceTo('/dashboard/settings/finance');
+                          NavigationService.replaceTo('/dashboard/settings/finance/taxsales/${taxsales.id}');
                         },
                       ),
                     ),
