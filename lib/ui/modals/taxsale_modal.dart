@@ -6,7 +6,6 @@ import 'package:web_dashboard/models/taxsales.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
-import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 
 class TaxSaleView extends StatefulWidget {
 
@@ -28,12 +27,26 @@ class _TaxSaleViewState extends State<TaxSaleView> {
     final taxsalesProvider = Provider.of<TaxSalesProvider>(context, listen: false);
     final taxsalesFormProvider = Provider.of<TaxSalesFormProvider>(context, listen: false);
 
-    taxsalesProvider.getTaxSaleById(widget.id).then((taxsaleDB) {
+    taxsalesProvider.getTaxSaleById(widget.id)
+    
+    .then((taxsaleDB) {
+      if( taxsaleDB !=null ) {
       taxsalesFormProvider.taxsale = taxsaleDB; 
+      taxsalesFormProvider.formKey = GlobalKey<FormState>();
       setState(() {
-        taxsale = taxsaleDB;});
+      taxsale = taxsaleDB;});
+      } else {
+        NavigationService.replaceTo('/dashboard/settings/finance');
+      }
+    
     } 
     );
+  }
+
+  @override
+  void dispose() {
+    Provider.of<TaxSalesFormProvider>(context, listen: false).taxsale = null;
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -106,15 +119,13 @@ class _TaxSaleViewState extends State<TaxSaleView> {
                             },
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
-                              hintText: '',
-                              labelText: '',
-                              labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                              hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: const BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                               ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white, width: 1.0),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: const BorderSide(color: Colors.white, width: 1.0),
                               ),
                             ),
                             style: GoogleFonts.plusJakartaSans(color: Colors.white),
@@ -157,16 +168,14 @@ class _TaxSaleViewState extends State<TaxSaleView> {
                                          }
                                        },
                                     textAlign: TextAlign.center,
-                                    decoration: InputDecoration(
-                                      hintText: '',
-                                      labelText: '',
-                                      labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                                      hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
+                                    decoration:InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30.0),
+                                        borderSide: const BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                                       ),
-                                      enabledBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white, width: 1.0),
+                                      enabledBorder:  OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30.0),
+                                        borderSide: const BorderSide(color: Colors.white, width: 1.0),
                                       ),
                                     ),
                                     style: GoogleFonts.plusJakartaSans(color: Colors.white),
@@ -181,24 +190,44 @@ class _TaxSaleViewState extends State<TaxSaleView> {
                           ),
                         )
                         ),
-                             const SizedBox(height: 40),
+                             const SizedBox(height: 30),
                              Container(
                                alignment: Alignment.center,
-                               child: CustomOutlineButtom(
-                                 onPressed: () async {
+                               child: Container(
+                       height: 50,
+                       width: 170,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          width: 0.6,
+                        )),
+                      child: TextButton(
+                        child: Text(
+                          'SAVE',
+                          style: GoogleFonts.plusJakartaSans(
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () async {
                                    final saved = await taxsalesFormProvider.updateTaxSales();
                                    if(saved) {
                                     NotificationService.showSnackBa('Sales Tax Updated');
                                       if (!context.mounted) return;
-                                      Provider.of<FinanceProvider>(context, listen: false).getFinance();
+                                      Provider.of<TaxSalesProvider>(context, listen: false).refreshTaxSales(taxsales);
                                       NavigationService.replaceTo('/dashboard/settings/finance');
                                    } else {
                                     NotificationService.showSnackBarError('Error: The Sales Taxes were not updated');
                                    }
                                  },
-                                 text: 'Save',
-                                 color: Colors.white,
-                               ),
+                      ),
+                    ),
+
+                            
+
+                              
                              ),
           ],
         ),

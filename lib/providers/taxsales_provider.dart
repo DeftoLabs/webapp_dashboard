@@ -35,5 +35,30 @@ class TaxSalesProvider extends ChangeNotifier {
   
   }
 
+    Future deleteTaxSales (String id) async {
+    try{
+      await CafeApi.delete('/taxsales/$id',{});
+      taxsales.removeWhere((taxsales) => taxsales.id == id);
+      notifyListeners();
+    } catch (e){
+      throw ' Error to Delete the Product ';
+    }
+  }
+
+  void refreshTaxSales( TaxSales newTaxSales){
+    
+  
+  taxsales = taxsales.map(
+    (tax){
+      if (tax.id == newTaxSales.id) {
+        tax = newTaxSales;
+      }
+      return tax;
+    }
+  ).toList();
+
+    notifyListeners();
+  }
+
 
 }

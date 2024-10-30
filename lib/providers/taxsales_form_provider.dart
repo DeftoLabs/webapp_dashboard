@@ -7,7 +7,7 @@ class TaxSalesFormProvider extends ChangeNotifier {
 
   TaxSales? taxsale;
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> formKey;
 
   bool validForm () {
     return formKey.currentState!.validate();
