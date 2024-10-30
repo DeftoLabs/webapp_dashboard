@@ -213,7 +213,7 @@ class FinancesView extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return const TaxSaleNewView();
+                                return const TaxSaleNewModal();
                               },
                             );
                         },
@@ -268,7 +268,7 @@ class FinancesView extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(10.0), // Ajusta el margen de 10 píxeles
                         child: Container(
-                          height: 150,
+                          width: double.infinity,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),

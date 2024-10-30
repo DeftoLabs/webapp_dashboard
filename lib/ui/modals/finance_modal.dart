@@ -215,7 +215,6 @@ class _FinanceModalState extends State<FinanceModal> {
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         onPressed: () async {
-                          // Verificar que ambos nombres y símbolos estén seleccionados
                           if (mainCurrencyname.isEmpty || secondCurrencyname.isEmpty) {
                             NotificationService.showSnackBarError('Please select both currencies');
                             return;
@@ -223,7 +222,6 @@ class _FinanceModalState extends State<FinanceModal> {
                           if (financeFormProvider.validForm()) {
                             try {
                               if (id == null) {
-                                // Crear una nueva configuración de finanzas
                                 await financeFormProvider.newFinance(
                                   mainCurrencyname,
                                   mainCurrencysymbol,

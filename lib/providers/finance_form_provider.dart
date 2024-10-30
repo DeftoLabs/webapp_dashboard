@@ -87,7 +87,7 @@ Future updateCurrency() async {
       finances.add(newFinance);
       notifyListeners();
     } catch (e){
-      throw ' Error to create the Zone ';
+      throw ' Error to create the Finance Profile ';
     }
   }
 

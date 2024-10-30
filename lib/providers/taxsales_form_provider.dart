@@ -6,7 +6,8 @@ import 'package:web_dashboard/services/notification_services.dart';
 class TaxSalesFormProvider extends ChangeNotifier {
 
   TaxSales? taxsale;
-
+  List<TaxSales> taxsales = [];
+  bool isLoading = true;
   late GlobalKey<FormState> formKey;
 
   bool validForm () {
@@ -41,7 +42,23 @@ class TaxSalesFormProvider extends ChangeNotifier {
         NotificationService.showSnackBarError('Error: $e'); 
         return false;
       }
-
   }
+   Future newTaxSales (
+          String taxname, 
+          double taxnumber, 
+          ) async {
 
+    final data = {
+      'taxname':     taxname,
+      'taxnumber':   taxnumber,
+    };
+    try{
+      final json = await CafeApi.post('/taxsales', data);
+      final newTaxSales = TaxSales.fromMap(json);
+      taxsales.add(newTaxSales);
+      notifyListeners();
+    } catch (e){
+      throw ' Error to create the Tax Sales ';
+    }
+  }
 }

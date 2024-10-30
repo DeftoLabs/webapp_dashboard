@@ -7,21 +7,36 @@ import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 
-class TaxSaleNewView extends StatefulWidget {
+class TaxSaleNewModal extends StatefulWidget {
+final TaxSales? taxsales;
 
-
-  const TaxSaleNewView({super.key});
+  const TaxSaleNewModal({super.key, this.taxsales});
 
   @override
-  State<TaxSaleNewView> createState() => _TaxSaleNewViewState();
+  State<TaxSaleNewModal> createState() => _TaxSaleNewModalState();
 }
 
-class _TaxSaleNewViewState extends State<TaxSaleNewView> {
+class _TaxSaleNewModalState extends State<TaxSaleNewModal> {
+String? id;
+String taxname = '';
+double taxnumber = 0.0;
 
-  TaxSales? taxsale;
+@override
+  void initState() {
+    super.initState();
+    final taxsalesFormProvider = Provider.of<TaxSalesFormProvider>(context, listen: false);
+     taxsalesFormProvider.formKey = GlobalKey<FormState>();
+    if(widget.taxsales !=null) {
+      id = widget.taxsales!.id;
+      taxname = widget.taxsales!.taxname;
+      taxnumber = widget.taxsales!.taxnumber;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final taxsalesFormProvider = Provider.of<TaxSalesFormProvider>(context, listen: false);
+    taxsalesFormProvider.taxsale = widget.taxsales;
 
 
     return Dialog(
@@ -55,7 +70,7 @@ class _TaxSaleNewViewState extends State<TaxSaleNewView> {
 
             const SizedBox(height: 20),
             Form(
-             // key: taxsalesFormProvider.formKey,
+             key: taxsalesFormProvider.formKey,
               child: 
               Center(
                 child: Row(
@@ -73,9 +88,9 @@ class _TaxSaleNewViewState extends State<TaxSaleNewView> {
                           height: 60,
                           child:              
                          TextFormField(
-                            //initialValue: taxsales.taxname,
+                           initialValue: taxname,
                             onChanged: (value) {
-                             // taxsalesFormProvider.copyTaxSalesWith(taxname: value);
+                              taxname = value;
                             },
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
@@ -107,7 +122,13 @@ class _TaxSaleNewViewState extends State<TaxSaleNewView> {
                                     height: 60,
                                     child: 
                                   TextFormField(
-                                   // initialValue: taxsales.taxnumber.toString(),
+                                   initialValue: taxnumber.toString(),
+                                    onChanged: (value) {
+                                         double? parsedValue = double.tryParse(value);
+                                         if (parsedValue != null) {
+                                         // taxsalesFormProvider.copyTaxSalesWith(taxnumber: parsedValue);
+                                         }
+                                       },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) return 'This field is required';
                                       final regex = RegExp(r'^\d{1,2}(\.\d{1,2})?$');
@@ -121,12 +142,6 @@ class _TaxSaleNewViewState extends State<TaxSaleNewView> {
                                       }
                                       return null;
                                     },
-                                      onChanged: (value) {
-                                         double? parsedValue = double.tryParse(value);
-                                         if (parsedValue != null) {
-                                         // taxsalesFormProvider.copyTaxSalesWith(taxnumber: parsedValue);
-                                         }
-                                       },
                                     textAlign: TextAlign.center,
                                     decoration:InputDecoration(
                                       focusedBorder: OutlineInputBorder(
@@ -171,15 +186,29 @@ class _TaxSaleNewViewState extends State<TaxSaleNewView> {
                               color: const Color.fromARGB(255, 0, 0, 0),
                               fontWeight: FontWeight.bold),
                         ),
-                        onPressed: () async {
-                                 
-                                 },
+                           onPressed: () async {
+                          if (taxsalesFormProvider.validForm()) {
+                            try {
+                              if (id == null) {
+                                await taxsalesFormProvider.newTaxSales(
+                                 taxname,
+                                 taxnumber
+                                );
+                                NotificationService.showSnackBa('New Tax Sales Created');
+                              }
+                              if (!context.mounted) return;
+                              Provider.of<TaxSalesProvider>(context, listen: false).getPaginatedTax();
+                              NavigationService.replaceTo('/dashboard/settings/finance');
+
+                            } catch (e) {
+                              if (mounted) NotificationService.showSnackBarError('Could not save the Tax Sales Profile');
+                            } finally {
+                              if (mounted) Navigator.of(context).pop();
+                            }
+                          }
+                        },
                       ),
-                    ),
-
-                            
-
-                              
+                    ),                              
                              ),
           ],
         ),
