@@ -71,6 +71,7 @@ Future updateProduct() async {
     'stock': producto!.stock,
     'unid': producto!.unid,
     'categoria': producto!.categoria.id,
+    'taxsales': producto!.taxsales.id,
     'tax': producto!.tax,
   };
 
