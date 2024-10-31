@@ -6,6 +6,7 @@ import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
+import 'package:web_dashboard/ui/modals/taxoperation_modal.dart';
 import 'package:web_dashboard/ui/modals/taxsale_modal.dart';
 import 'package:web_dashboard/ui/views/bank_view.dart';
 import 'package:web_dashboard/ui/views/banks_view.dart';
@@ -393,6 +394,22 @@ class DashboardHandlers {
       if( authProvider.authStatus == AuthStatus.authenticated) {
         if( params['id']?.first !=null){
            return TaxSaleView(id: params['id']!.first);
+        }else{
+          return const FinancesView();
+        }
+      } return const LoginView();
+
+    }
+  );
+
+
+  static Handler taxOperationbyID = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.taxOperationID);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if( params['id']?.first !=null){
+           return TaxOperationModal(id: params['id']!.first);
         }else{
           return const FinancesView();
         }

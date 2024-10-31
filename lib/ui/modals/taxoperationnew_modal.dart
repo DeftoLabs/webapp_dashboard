@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/models/taxsales.dart';
+import 'package:web_dashboard/models/taxoperation.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 
-class TaxSaleNewModal extends StatefulWidget {
-final TaxSales? taxsales;
+class TaxOperationNewModal extends StatefulWidget {
+final TaxOperation? taxoperations;
 
-  const TaxSaleNewModal({super.key, this.taxsales});
+  const TaxOperationNewModal({super.key, this.taxoperations});
 
   @override
-  State<TaxSaleNewModal> createState() => _TaxSaleNewModalState();
+  State<TaxOperationNewModal> createState() => _TaxOperationNewModalState();
 }
 
-class _TaxSaleNewModalState extends State<TaxSaleNewModal> {
+class _TaxOperationNewModalState extends State<TaxOperationNewModal> {
 String? id;
 String taxname = '';
 double taxnumber = 0.0;
@@ -24,19 +24,19 @@ double taxnumber = 0.0;
 @override
   void initState() {
     super.initState();
-    final taxsalesFormProvider = Provider.of<TaxSalesFormProvider>(context, listen: false);
-     taxsalesFormProvider.formKey = GlobalKey<FormState>();
-    if(widget.taxsales !=null) {
-      id = widget.taxsales!.id;
-      taxname = widget.taxsales!.taxname;
-      taxnumber = widget.taxsales!.taxnumber;
+    final taxoperationsFormProvider = Provider.of<TaxOperationFormProvider>(context, listen: false);
+     taxoperationsFormProvider.formKey = GlobalKey<FormState>();
+    if(widget.taxoperations !=null) {
+      id = widget.taxoperations!.id;
+      taxname = widget.taxoperations!.taxname;
+      taxnumber = widget.taxoperations!.taxnumber;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final taxsalesFormProvider = Provider.of<TaxSalesFormProvider>(context, listen: false);
-    taxsalesFormProvider.taxsale = widget.taxsales;
+    final taxoperationsFormProvider = Provider.of<TaxOperationFormProvider>(context, listen: false);
+    taxoperationsFormProvider.taxoperation = widget.taxoperations;
 
 
     return Dialog(
@@ -57,7 +57,7 @@ double taxnumber = 0.0;
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text( 'ADD SALES TAX',
+                Text( 'ADD BUSINESS TAX',
                   style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -70,7 +70,7 @@ double taxnumber = 0.0;
 
             const SizedBox(height: 20),
             Form(
-             key: taxsalesFormProvider.formKey,
+             key: taxoperationsFormProvider.formKey,
               child: 
               Center(
                 child: Row(
@@ -123,12 +123,12 @@ double taxnumber = 0.0;
                                     child: 
                                   TextFormField(
                                    initialValue: taxnumber.toString(),
-                                   onChanged: (value) {
-                                      double? parsedValue = double.tryParse(value);
-                                      if (parsedValue != null) {
-                                        taxnumber = parsedValue; 
-                                      }
-                                    },
+                                    onChanged: (value) {
+                                         double? parsedValue = double.tryParse(value);
+                                         if (parsedValue != null) {
+                                          taxnumber = parsedValue;
+                                         }
+                                       },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) return 'This field is required';
                                       final regex = RegExp(r'^\d{1,2}(\.\d{1,2})?$');
@@ -187,21 +187,21 @@ double taxnumber = 0.0;
                               fontWeight: FontWeight.bold),
                         ),
                            onPressed: () async {
-                          if (taxsalesFormProvider.validForm()) {
+                          if (taxoperationsFormProvider.validForm()) {
                             try {
                               if (id == null) {
-                                await taxsalesFormProvider.newTaxSales(
+                                await taxoperationsFormProvider.newTaxOperation(
                                  taxname,
                                  taxnumber
                                 );
-                                NotificationService.showSnackBa('New Tax Sales Created');
+                                NotificationService.showSnackBa('New Business Tax Created');
                               }
                               if (!context.mounted) return;
-                              Provider.of<TaxSalesProvider>(context, listen: false).getPaginatedTax();
+                              Provider.of<TaxOperationProvider>(context, listen: false).getPaginatedTaxOperation();
                               NavigationService.replaceTo('/dashboard/settings/finance');
 
                             } catch (e) {
-                              if (mounted) NotificationService.showSnackBarError('Could not save the Tax Sales Profile');
+                              if (mounted) NotificationService.showSnackBarError('Could not save the Business Tax Profile');
                             } finally {
                               if (mounted) Navigator.of(context).pop();
                             }

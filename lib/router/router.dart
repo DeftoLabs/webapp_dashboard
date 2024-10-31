@@ -56,6 +56,7 @@ class Flurorouter {
   static String inactiveUserRoute     = '/dashboard/settings/inactiveuser';
   static String financeRoute          = '/dashboard/settings/finance';
   static String taxSalesID            = '/dashboard/settings/finance/taxsales/:id';
+  static String taxOperationID        = '/dashboard/settings/finance/taxoperation/:id';
   static String financeID             = '/dashboard/settings/finance/:id';
   static String bankRoute             = '/dashboard/settings/bankaccount';
   static String bankId                = '/dashboard/settings/bankaccount/:id';
@@ -126,6 +127,7 @@ class Flurorouter {
     router.define (financeID,         handler: DashboardHandlers.financebyID,        transitionType: TransitionType.fadeIn);
 
     router.define (taxSalesID,         handler: DashboardHandlers.taxSalesbyID,      transitionType: TransitionType.fadeIn);
+    router.define (taxOperationID,     handler: DashboardHandlers.taxOperationbyID,  transitionType: TransitionType.fadeIn);
     
     router.define (bankRoute,         handler: DashboardHandlers.bank,               transitionType: TransitionType.fadeIn);
     router.define (bankId,            handler: DashboardHandlers.bankID,             transitionType: TransitionType.fadeIn);

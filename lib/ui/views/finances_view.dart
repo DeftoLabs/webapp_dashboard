@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/finance_datasource.dart';
+import 'package:web_dashboard/datatables/taxoperation_datasource.dart';
 import 'package:web_dashboard/datatables/taxsales_datasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/modals/finance_modal.dart';
+import 'package:web_dashboard/ui/modals/taxoperationnew_modal.dart';
 import 'package:web_dashboard/ui/modals/taxsalenew_modal.dart';
 
 class FinancesView extends StatelessWidget {
@@ -19,6 +21,9 @@ class FinancesView extends StatelessWidget {
 
     final taxsalesProvider = Provider.of<TaxSalesProvider>(context);
     final taxSalesDataSource = TaxSalesDataSource(taxsalesProvider.taxsales);
+
+    final taxoperationProvider = Provider.of<TaxOperationProvider>(context);
+    final taxOperationDataSource = TaxOperationDataSource (taxoperationProvider.taxoperation);
 
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
@@ -245,11 +250,11 @@ class FinancesView extends StatelessWidget {
                           style: GoogleFonts.plusJakartaSans(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
-                        onPressed: () {
+                             onPressed: () {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return const FinanceModal();
+                                return const TaxOperationNewModal();
                               },
                             );
                         },
@@ -411,25 +416,50 @@ class FinancesView extends StatelessWidget {
                   ),
                 ),
               ],
-              rows: taxSalesDataSource.taxsales.map(
-                (taxsales) => DataRow(
+              rows: taxOperationDataSource.taxoperations.map(
+                (taxoperations) => DataRow(
                   cells: [
-                    DataCell(Text(taxsales.taxname)),
-                    DataCell(Text(taxsales.taxnumber.toString())),
+                    DataCell(Text(taxoperations.taxname)),
+                    DataCell(Text(taxoperations.taxnumber.toString())),
                     DataCell(
                       IconButton(
                         icon: const Icon(Icons.edit),
                         onPressed: () {
-                          NavigationService.replaceTo('/dashboard/settings/finance');
+                         NavigationService.replaceTo('/dashboard/settings/finance/taxoperation/${taxoperations.id}');
                         },
                       ),
                     ),
-                     DataCell(
+                                          DataCell(
                       IconButton(
                         icon: const Icon(Icons.delete_forever_outlined, color: Colors.red,),
-                        onPressed: () {
-                          NavigationService.replaceTo('/dashboard/settings/finance/taxsales/${taxsales.id}');
-                        },
+                          onPressed: (){
+                            final dialog = AlertDialog(
+                              title: const Text('Are you sure to delete this register?'),
+                              content: Text('Delete ${taxoperations.taxname}'),
+                              actions: [
+                                TextButton(
+                                  child: const Text('No'),
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  }, 
+                                ),
+                                TextButton(
+                                  child: const Text('Yes, Delete'),
+                                  onPressed: () async {
+                                    final taxoperatioProvider = Provider.of<TaxOperationProvider>(context, listen: false);
+                                    await taxoperatioProvider.deleteTaxOperation(taxoperations.id!);
+                                    if (context.mounted) {
+                                      Navigator.of(context).pop();
+                                    }
+                                    }, 
+                                )
+                                  ],
+                              );
+
+                  showDialog(
+                    context: context, 
+                    builder: ( _ ) => dialog);
+                         } 
                       ),
                     ),
                   ],

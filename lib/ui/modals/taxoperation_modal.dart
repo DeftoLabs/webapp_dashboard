@@ -2,42 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/models/taxsales.dart';
+import 'package:web_dashboard/models/taxoperation.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 
-class TaxSaleNewModal extends StatefulWidget {
-final TaxSales? taxsales;
+class TaxOperationModal extends StatefulWidget {
 
-  const TaxSaleNewModal({super.key, this.taxsales});
+  final String id;
+
+  const TaxOperationModal({super.key, required this.id});
 
   @override
-  State<TaxSaleNewModal> createState() => _TaxSaleNewModalState();
+  State<TaxOperationModal> createState() => _TaxOperationModalState();
 }
 
-class _TaxSaleNewModalState extends State<TaxSaleNewModal> {
-String? id;
-String taxname = '';
-double taxnumber = 0.0;
+class _TaxOperationModalState extends State<TaxOperationModal> {
 
-@override
+  TaxOperation? taxoperation;
+
+  @override
   void initState() {
     super.initState();
-    final taxsalesFormProvider = Provider.of<TaxSalesFormProvider>(context, listen: false);
-     taxsalesFormProvider.formKey = GlobalKey<FormState>();
-    if(widget.taxsales !=null) {
-      id = widget.taxsales!.id;
-      taxname = widget.taxsales!.taxname;
-      taxnumber = widget.taxsales!.taxnumber;
-    }
+    final taxoperationProvider = Provider.of<TaxOperationProvider>(context, listen: false);
+    final taxoperationFormProvider = Provider.of<TaxOperationFormProvider>(context, listen: false);
+
+    taxoperationProvider.getTaxOperationById(widget.id)
+    
+    .then((taxoperationDB) {
+      if( taxoperationDB !=null ) {
+      taxoperationFormProvider.taxoperation = taxoperationDB; 
+      taxoperationFormProvider.formKey = GlobalKey<FormState>();
+      setState(() {
+      taxoperation = taxoperationDB;});
+      } else {
+        NavigationService.replaceTo('/dashboard/settings/finance');
+      }
+    
+    } 
+    );
   }
 
   @override
+  void dispose() {
+    Provider.of<TaxOperationFormProvider>(context, listen: false).taxoperation = null;
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    final taxsalesFormProvider = Provider.of<TaxSalesFormProvider>(context, listen: false);
-    taxsalesFormProvider.taxsale = widget.taxsales;
 
+    if(taxoperation == null) {
+      return const SizedBox(
+        height: 400,
+        child: Center(
+          child: CircularProgressIndicator(  color: Color.fromRGBO(255, 0, 200, 0.612),
+          strokeWidth: 4.0),
+        ),
+      );
+    }
+
+    final taxoperationFormProvider = Provider.of<TaxOperationFormProvider>(context);
+    final taxoperations = taxoperationFormProvider.taxoperation!;
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -57,7 +82,7 @@ double taxnumber = 0.0;
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text( 'ADD SALES TAX',
+                Text( 'EDIT BUSINESS TAX',
                   style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -70,7 +95,7 @@ double taxnumber = 0.0;
 
             const SizedBox(height: 20),
             Form(
-             key: taxsalesFormProvider.formKey,
+              key: taxoperationFormProvider.formKey,
               child: 
               Center(
                 child: Row(
@@ -88,9 +113,9 @@ double taxnumber = 0.0;
                           height: 60,
                           child:              
                          TextFormField(
-                           initialValue: taxname,
+                            initialValue: taxoperations.taxname,
                             onChanged: (value) {
-                              taxname = value;
+                              taxoperationFormProvider.copyTaxOperationWith(taxname: value);
                             },
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
@@ -122,13 +147,7 @@ double taxnumber = 0.0;
                                     height: 60,
                                     child: 
                                   TextFormField(
-                                   initialValue: taxnumber.toString(),
-                                   onChanged: (value) {
-                                      double? parsedValue = double.tryParse(value);
-                                      if (parsedValue != null) {
-                                        taxnumber = parsedValue; 
-                                      }
-                                    },
+                                    initialValue: taxoperations.taxnumber.toString(),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) return 'This field is required';
                                       final regex = RegExp(r'^\d{1,2}(\.\d{1,2})?$');
@@ -142,6 +161,12 @@ double taxnumber = 0.0;
                                       }
                                       return null;
                                     },
+                                      onChanged: (value) {
+                                         double? parsedValue = double.tryParse(value);
+                                         if (parsedValue != null) {
+                                          taxoperationFormProvider.copyTaxOperationWith(taxnumber: parsedValue);
+                                         }
+                                       },
                                     textAlign: TextAlign.center,
                                     decoration:InputDecoration(
                                       focusedBorder: OutlineInputBorder(
@@ -186,29 +211,23 @@ double taxnumber = 0.0;
                               color: const Color.fromARGB(255, 0, 0, 0),
                               fontWeight: FontWeight.bold),
                         ),
-                           onPressed: () async {
-                          if (taxsalesFormProvider.validForm()) {
-                            try {
-                              if (id == null) {
-                                await taxsalesFormProvider.newTaxSales(
-                                 taxname,
-                                 taxnumber
-                                );
-                                NotificationService.showSnackBa('New Tax Sales Created');
-                              }
-                              if (!context.mounted) return;
-                              Provider.of<TaxSalesProvider>(context, listen: false).getPaginatedTax();
-                              NavigationService.replaceTo('/dashboard/settings/finance');
-
-                            } catch (e) {
-                              if (mounted) NotificationService.showSnackBarError('Could not save the Tax Sales Profile');
-                            } finally {
-                              if (mounted) Navigator.of(context).pop();
-                            }
-                          }
-                        },
+                        onPressed: () async {
+                                   final saved = await taxoperationFormProvider.updateTaxOperation();
+                                   if(saved) {
+                                    NotificationService.showSnackBa('Sales Tax Updated');
+                                      if (!context.mounted) return;
+                                     Provider.of<TaxOperationProvider>(context, listen: false).refreshTaxOperation(taxoperations);
+                                      NavigationService.replaceTo('/dashboard/settings/finance');
+                                   } else {
+                                    NotificationService.showSnackBarError('Error: The Sales Taxes were not updated');
+                                   }
+                                 },
                       ),
-                    ),                              
+                    ),
+
+                            
+
+                              
                              ),
           ],
         ),

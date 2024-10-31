@@ -1,4 +1,5 @@
 
+
 export 'package:web_dashboard/providers/auth_provider.dart';
 export 'package:web_dashboard/providers/categories_provider.dart';
 export 'package:web_dashboard/providers/customer_form_provider.dart';
@@ -26,6 +27,9 @@ export 'package:web_dashboard/providers/bank_provider.dart';
 export 'package:web_dashboard/providers/bank_form_provider.dart';
 export 'package:web_dashboard/providers/taxsales_provider.dart';
 export 'package:web_dashboard/providers/taxsales_form_provider.dart';
+export 'package:web_dashboard/providers/taxoperation_form_provider.dart';
+export 'package:web_dashboard/providers/taxoperation_provider.dart';
+
 
 
 
