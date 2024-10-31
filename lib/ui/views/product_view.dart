@@ -566,10 +566,14 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   )),
                   const Divider(),
                   const SizedBox(height: 20),
-                  Consumer<FinanceProvider>(
-                builder: (context, financeProvider, child) {
+                  Consumer<TaxSalesProvider>(
+                builder: (context, taxsalesProvider, child) {
+                  String? selectedValue = taxsalesProvider.taxsales.any((tax) => tax.id == producto.taxsales.id)
+                  ? producto.taxsales.id
+                  : null;
+
                   return DropdownButtonFormField<String>(
-                   // value: producto.finance.id,
+                   value: selectedValue,
                     decoration: InputDecoration(
                       hintText: 'TAX',
                       labelText: 'TAX',
@@ -594,16 +598,16 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     ),
                     style: GoogleFonts.plusJakartaSans(color: Colors.white),
                     dropdownColor: Colors.grey[800],
-                    items: financeProvider.finances.map((finance) {
+                    items: taxsalesProvider.taxsales.map((taxsales) {
                       return DropdownMenuItem<String>(
-                        value: finance.id,
-                        child: Text(finance.mainCurrencyname,
+                        value: taxsales.id,
+                        child: Text(taxsales.taxnumber.toString(),
                             style: const TextStyle(color: Colors.white)),
                       );
                     }).toList(),
                     onChanged: (value) {
                       setState(() {
-                        // producto.categoria.id = value!;
+                        producto.taxsales.id = value!;
                       });
                     },
                     validator: (value) {

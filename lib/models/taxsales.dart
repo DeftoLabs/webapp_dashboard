@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 class TaxSales {
-    final String? id;
+    String? id;
     double taxnumber;
     String taxname;
 

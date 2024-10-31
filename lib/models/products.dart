@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:web_dashboard/models/taxsales.dart';
+
 class Producto {
   String id;
   String nombre;
@@ -11,6 +13,7 @@ class Producto {
   double precio4;
   double precio5;
   Categoria categoria;
+  TaxSales taxsales;
   double tax;
   String? descripcion;
   bool disponible;
@@ -32,6 +35,7 @@ class Producto {
     required this.precio4,
     required this.precio5,
     required this.categoria,
+    required this.taxsales,
     required this.tax,
     this.descripcion,
     required this.disponible,
@@ -54,6 +58,7 @@ class Producto {
   precio4: json.containsKey("producto") ? json["producto"]["precio4"]?.toDouble() ?? 0.0 : json["precio4"]?.toDouble() ?? 0.0,
   precio5: json.containsKey("producto") ? json["producto"]["precio5"]?.toDouble() ?? 0.0 : json["precio5"]?.toDouble() ?? 0.0,
   categoria: json["categoria"] != null ? Categoria.fromMap(json["categoria"]) : Categoria(id: '', nombre: ''),
+  taxsales: json["taxsales"] != null ? TaxSales.fromMap(json["taxsales"]) : TaxSales(id: '', taxname: '', taxnumber: 0.0),
   tax: json.containsKey("producto") ? json["producto"]["tax"] ?? 'ERROR' : json["tax"] ?? 'ERROR',
   descripcion: json.containsKey("producto") ? json["producto"]["descripcion"] ?? 'ERROR' : json["descripcion"] ?? 'ERROR',
   disponible: json["disponible"] ?? true,
@@ -77,6 +82,7 @@ class Producto {
     "precio4": precio4,
     "precio5": precio5,
     "categoria": categoria.toMap(),
+    "taxsales": taxsales.toMap(),
     "tax": tax,
     "descripcion": descripcion,
     "disponible": disponible,
@@ -99,6 +105,7 @@ class Producto {
     double? precio4,
     double? precio5,
     Categoria? categoria,
+    TaxSales? taxsales,
     double? tax,
     String? descripcion,
     bool? disponible,
@@ -117,6 +124,7 @@ class Producto {
       precio4: precio4 ?? this.precio4,
       precio5: precio5 ?? this.precio5,
       categoria: categoria ?? this.categoria,
+      taxsales: taxsales?? this.taxsales,
       tax: tax ?? this.tax,
       descripcion: descripcion ?? this.descripcion,
       disponible: disponible ?? this.disponible,

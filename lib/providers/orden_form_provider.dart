@@ -4,6 +4,7 @@ import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/models/ruta.dart';
+import 'package:web_dashboard/models/taxsales.dart';
 import 'package:web_dashboard/models/usuario.dart';
 
 class OrdenFormProvider extends ChangeNotifier {
@@ -17,6 +18,7 @@ class OrdenFormProvider extends ChangeNotifier {
     bool? estado,
     List<Customer>? clientes,
     List<Ruta>? ruta,
+    List<TaxSales>? taxsales,
     List<String>? perfil,
     String? status,
     String? control,
@@ -54,6 +56,7 @@ class OrdenFormProvider extends ChangeNotifier {
           estado: producto.estado,
           usuario: producto.usuario,
           categoria: producto.categoria,
+          taxsales: producto.taxsales,
           tax:producto.tax,
           disponible: producto.disponible,
           stock: producto.stock,

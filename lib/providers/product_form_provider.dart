@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/finance.dart';
 import 'package:web_dashboard/models/products.dart';
+import 'package:web_dashboard/models/taxsales.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 
 class ProductFormProvider extends ChangeNotifier {
@@ -23,6 +24,7 @@ Producto? producto;
   double? precio4,
   double? precio5,
   Categoria? categoria,
+  TaxSales? taxsales,
   Finance? finance,
   double? tax,
   String? descripcion,
@@ -42,6 +44,7 @@ Producto? producto;
       precio4: precio4 ?? producto!.precio4, 
       precio5: precio5 ?? producto!.precio5, 
       categoria: categoria ?? producto!.categoria, 
+      taxsales: taxsales ?? producto!.taxsales,
       tax: tax ?? producto!.tax,
       disponible: disponible ?? producto!.disponible, 
       stock: stock ?? producto!.stock, 
