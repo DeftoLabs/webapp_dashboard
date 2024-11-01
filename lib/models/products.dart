@@ -47,28 +47,53 @@ class Producto {
     this.totalitem,
   });
 
- factory Producto.fromMap(Map<String, dynamic> json) => Producto(
-  id: json.containsKey("producto") ? json["producto"]["_id"] ?? 'CODE ERROR' : json["_id"] ?? 'CODE ERROR',
-  nombre: json.containsKey("producto") ? json["producto"]["nombre"] ?? 'CODE ERROR' : json["nombre"] ?? 'CODE ERROR',
-  estado: json["estado"] ?? false,
-  usuario: json["usuario"] != null ? User.fromMap(json["usuario"]) : User(id: '', nombre: ''),
-  precio1: json.containsKey("producto") ? json["producto"]["precio1"]?.toDouble() ?? 0.0 : json["precio1"]?.toDouble() ?? 0.0,
-  precio2: json.containsKey("producto") ? json["producto"]["precio2"]?.toDouble() ?? 0.0 : json["precio2"]?.toDouble() ?? 0.0,
-  precio3: json.containsKey("producto") ? json["producto"]["precio3"]?.toDouble() ?? 0.0 : json["precio3"]?.toDouble() ?? 0.0,
-  precio4: json.containsKey("producto") ? json["producto"]["precio4"]?.toDouble() ?? 0.0 : json["precio4"]?.toDouble() ?? 0.0,
-  precio5: json.containsKey("producto") ? json["producto"]["precio5"]?.toDouble() ?? 0.0 : json["precio5"]?.toDouble() ?? 0.0,
-  categoria: json["categoria"] != null ? Categoria.fromMap(json["categoria"]) : Categoria(id: '', nombre: ''),
-  taxsales: json["taxsales"] != null ? TaxSales.fromMap(json["taxsales"]) : TaxSales(id: '', taxname: '', taxnumber: 0.0),
-  tax: json ["tax"] ?? 0.0,
-  descripcion: json.containsKey("producto") ? json["producto"]["descripcion"] ?? 'ERROR' : json["descripcion"] ?? 'ERROR',
-  disponible: json["disponible"] ?? true,
-  stock: json["stock"]?.toDouble() ?? 0.0,
-  unid: json["producto"]?["unid"] ?? json["unid"] ?? '',
-  img: json["img"],
-  precio: json["precio"]?.toDouble() ?? 0.0,
-  cantidad: json["cantidad"]?.toDouble() ?? 0.0,
-  totalitem: json["totalitem"]?.toDouble() ?? 0.0,
-);
+    factory Producto.fromMap(Map<String, dynamic> json) => Producto(
+      id: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["_id"] ?? 'CODE ERROR'
+          : json["_id"] ?? 'CODE ERROR',
+      nombre: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["nombre"] ?? 'CODE ERROR'
+          : json["nombre"] ?? 'CODE ERROR',
+      estado: json["estado"] ?? false,
+      usuario: json["usuario"] != null
+          ? User.fromMap(json["usuario"])
+          : User(id: '', nombre: ''),
+      precio1: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["precio1"]?.toDouble() ?? 0.0
+          : json["precio1"]?.toDouble() ?? 0.0,
+      precio2: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["precio2"]?.toDouble() ?? 0.0
+          : json["precio2"]?.toDouble() ?? 0.0,
+      precio3: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["precio3"]?.toDouble() ?? 0.0
+          : json["precio3"]?.toDouble() ?? 0.0,
+      precio4: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["precio4"]?.toDouble() ?? 0.0
+          : json["precio4"]?.toDouble() ?? 0.0,
+      precio5: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["precio5"]?.toDouble() ?? 0.0
+          : json["precio5"]?.toDouble() ?? 0.0,
+      categoria: json["categoria"] != null
+          ? Categoria.fromMap(json["categoria"])
+          : Categoria(id: '', nombre: ''),
+      taxsales: json["taxsales"] != null
+          ? TaxSales.fromMap(json["taxsales"])
+          : TaxSales(id: '', taxname: '', taxnumber: 0.0),
+      tax: json["tax"] ?? 0.0,
+      descripcion: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["descripcion"] ?? 'ERROR'
+          : json["descripcion"] ?? 'ERROR',
+      disponible: json["disponible"] ?? true,
+      stock: json["stock"]?.toDouble() ?? 0.0,
+      unid: json.containsKey("producto") && json["producto"] != null
+          ? json["producto"]["unid"] ?? ''
+          : json["unid"] ?? '',
+      img: json["img"],
+      precio: json["precio"]?.toDouble(),
+      cantidad: json["cantidad"]?.toDouble(),
+      totalitem: json["totalitem"]?.toDouble(),
+    );
+
 
 
   Map<String, dynamic> toMap() => {

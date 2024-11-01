@@ -55,47 +55,47 @@ class Ordenes {
     factory Ordenes.fromJson(String str) => Ordenes.fromMap(json.decode(str));
     String toJson() => json.encode(toMap());
 
-factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás recibiendo
-  return Ordenes(
-    location: json["location"] != null ? Location.fromMap(json["location"]) : null,
-    estado: json["estado"] ?? false,
-    clientes: json["clientes"] != null 
-      ? List<Customer>.from(json["clientes"].map((x) => Customer.fromMap(x)))
-      : [],
-    ruta: json["ruta"] != null
-        ? List<Ruta>.from(json["ruta"].map((x) {
-            if (x is Map<String, dynamic>) {
-              return Ruta.fromMap(x);
-            } else if (x is String) {
-              return Ruta(id: x, estado: false, codigoRuta: '', nombreRuta: '', zona: '', diasemana: '', clientes: [], usuarioZona: Usuario(rol: '', estado: false, google: false, nombre: '', correo: '', uid: '', phone: '', zone: ''));
-            } else {
-              throw Exception("Tipo inesperado para la ruta: ${x.runtimeType}");
+            factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás recibiendo
+              return Ordenes(
+                location: json["location"] != null ? Location.fromMap(json["location"]) : null,
+                estado: json["estado"] ?? false,
+                clientes: json["clientes"] != null 
+                  ? List<Customer>.from(json["clientes"].map((x) => Customer.fromMap(x)))
+                  : [],
+                ruta: json["ruta"] != null
+                    ? List<Ruta>.from(json["ruta"].map((x) {
+                        if (x is Map<String, dynamic>) {
+                          return Ruta.fromMap(x);
+                        } else if (x is String) {
+                          return Ruta(id: x, estado: false, codigoRuta: '', nombreRuta: '', zona: '', diasemana: '', clientes: [], usuarioZona: Usuario(rol: '', estado: false, google: false, nombre: '', correo: '', uid: '', phone: '', zone: ''));
+                        } else {
+                          throw Exception("Tipo inesperado para la ruta: ${x.runtimeType}");
+                        }
+                      }))
+                    : [],
+                perfil: json["perfil"] != null 
+                  ? List<String>.from(json["perfil"].map((x) => x.toString()))
+                  : [],
+                status: json["status"] ?? '', 
+                id: json["_id"] ?? '', 
+                control: json["control"] ?? '', 
+                productos: json["productos"] != null 
+                  ? List<Producto>.from(json["productos"].map((x) => Producto.fromMap(x)))
+                  : [],
+                subtotal: json["subtotal"] is String ? double.tryParse(json["subtotal"]) ?? 0.0 : (json["subtotal"] ?? 0.0),
+                tax: json["tax"] is String ? double.tryParse(json["tax"]) ?? 0.0 : (json["tax"] ?? 0.0),
+                total: json["total"] is String ? double.tryParse(json["total"]) ?? 0.0 : (json["total"] ?? 0.0),    
+                fechaentrega: json["fechaentrega"] != null ? DateTime.parse(json["fechaentrega"]) : DateTime.now(),
+                usuario: json["usuario"] != null ? Usuario.fromMap(json["usuario"]) : Usuario(uid: '', nombre: '', rol: '', estado:true, google:true, correo:'', phone:'', zone:''),
+                tipo: json["tipo"] ?? '', 
+                comentario: json["comentario"] ?? '', 
+                comentarioRevision: json["comentarioRevision"] ?? '', 
+                fechacreado: json["fechacreado"] != null ? DateTime.parse(json["fechacreado"]) : DateTime.now(), 
+                createdAt: json["createdAt"] != null ? DateTime.parse(json["createdAt"]) : DateTime.now(), 
+                updatedAt: json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : DateTime.now(), 
+                v: json["__v"] ?? 0, 
+              );
             }
-          }))
-        : [],
-    perfil: json["perfil"] != null 
-      ? List<String>.from(json["perfil"].map((x) => x.toString()))
-      : [],
-    status: json["status"] ?? '', 
-    id: json["_id"] ?? '', 
-    control: json["control"] ?? '', 
-    productos: json["productos"] != null 
-      ? List<Producto>.from(json["productos"].map((x) => Producto.fromMap(x)))
-      : [],
-    subtotal: json["subtotal"] is String ? double.tryParse(json["subtotal"]) ?? 0.0 : (json["subtotal"] ?? 0.0),
-    tax: json["tax"] is String ? double.tryParse(json["tax"]) ?? 0.0 : (json["tax"] ?? 0.0),
-    total: json["total"] is String ? double.tryParse(json["total"]) ?? 0.0 : (json["total"] ?? 0.0),    
-    fechaentrega: json["fechaentrega"] != null ? DateTime.parse(json["fechaentrega"]) : DateTime.now(),
-    usuario: json["usuario"] != null ? Usuario.fromMap(json["usuario"]) : Usuario(uid: '', nombre: '', rol: '', estado:true, google:true, correo:'', phone:'', zone:''),
-    tipo: json["tipo"] ?? '', 
-    comentario: json["comentario"] ?? '', 
-    comentarioRevision: json["comentarioRevision"] ?? '', 
-    fechacreado: json["fechacreado"] != null ? DateTime.parse(json["fechacreado"]) : DateTime.now(), 
-    createdAt: json["createdAt"] != null ? DateTime.parse(json["createdAt"]) : DateTime.now(), 
-    updatedAt: json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : DateTime.now(), 
-    v: json["__v"] ?? 0, 
-  );
-}
 
 
     Map<String, dynamic> toMap() => {

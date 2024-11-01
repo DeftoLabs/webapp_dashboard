@@ -104,7 +104,7 @@ Column(
   children: [
     Container(
       width: MediaQuery.of(context).size.width * 0.90,
-      height: 580,
+      height: 520,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.grey[300],
