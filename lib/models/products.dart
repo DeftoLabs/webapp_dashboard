@@ -59,7 +59,7 @@ class Producto {
   precio5: json.containsKey("producto") ? json["producto"]["precio5"]?.toDouble() ?? 0.0 : json["precio5"]?.toDouble() ?? 0.0,
   categoria: json["categoria"] != null ? Categoria.fromMap(json["categoria"]) : Categoria(id: '', nombre: ''),
   taxsales: json["taxsales"] != null ? TaxSales.fromMap(json["taxsales"]) : TaxSales(id: '', taxname: '', taxnumber: 0.0),
-  tax: json.containsKey("producto") ? json["producto"]["tax"] ?? 'ERROR' : json["tax"] ?? 'ERROR',
+  tax: json ["tax"] ?? 0.0,
   descripcion: json.containsKey("producto") ? json["producto"]["descripcion"] ?? 'ERROR' : json["descripcion"] ?? 'ERROR',
   disponible: json["disponible"] ?? true,
   stock: json["stock"]?.toDouble() ?? 0.0,

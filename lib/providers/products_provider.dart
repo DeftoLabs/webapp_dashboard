@@ -50,78 +50,6 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future newProduct ({
-    required String nombre,
-    required double precio,
-    String? descripcion,
-    required double stock,
-    required String unid,
-    required String categoria,
-    }) async {
-    final data = {
-      'nombre': nombre,
-      'precio': precio,
-      'descripcion': descripcion,
-      'stock': stock,
-      'unid': unid,
-      'categoria': categoria,
-    };
-    try{
-      final json = await CafeApi.post('/productos', data);
-      final newProduct = Producto.fromMap(json);
-      productos.add(newProduct);
-      notifyListeners();
-    } catch (e){
-      throw ' Error to create New Product ';
-    }
-  }
-
-  Future updateProduct ({
-    required String id,
-    required String nombre,
-    required double precio1,
-    required double precio2,
-    required double precio3,
-    required double precio4,
-    required double precio5,
-    String? descripcion,
-    required double stock,
-    required String unid,
-    required String categoria,
-  })  async {
-    final data = {
-      'nombre': nombre,
-      'precio1': precio1,
-      'precio2': precio2,
-      'precio3': precio3,
-      'precio4': precio4,
-      'precio5': precio5,
-      'descripcion': descripcion,
-      'stock': stock,
-      'unid': unid,
-      'categoria': categoria,
-    };
-    try{
-      await CafeApi.put('/productos/$id', data);
-      productos = productos.map((product) {
-          if(product.id != id) return product;
-          product.nombre = nombre;
-          product.precio1 = precio1;
-          product.precio2 = precio2;
-          product.precio3 = precio3;
-          product.precio4 = precio4;
-          product.precio5 = precio5;
-          product.descripcion = descripcion;
-          product.stock = stock;
-          product.categoria.id = categoria;
-          return product;
-      }).toList();
-      notifyListeners();
-    } catch (e){
-      throw ' Error to Update the Product ';
-    }
-  }
-
     Future<String?> newCreateProduct({
     required String nombre,
     required double precio1,
@@ -133,7 +61,7 @@ class ProductsProvider extends ChangeNotifier {
     required double stock,
     required String unid,
     required String categoria,
-    String? finance,
+    String? taxsales,
   }) async {
     final data = {
       'nombre': nombre,
@@ -146,11 +74,10 @@ class ProductsProvider extends ChangeNotifier {
       'stock': stock,
       'unid': unid,
       'categoria': categoria,
-      'finance': finance
+      'taxsales': taxsales != null ? { "_id": taxsales } : null,
     };
     
     try {
-      
       final json = await CafeApi.post('/productos', data);     
       final newProduct = Producto.fromMap(json);
       productos.add(newProduct);

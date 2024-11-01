@@ -308,12 +308,7 @@ class FinancesView extends StatelessWidget {
                     style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
                   ),
                 ),
-                  DataColumn(
-                  label: Text(
-                    'DELETE',
-                    style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
-                  ),
-                ),
+                  DataColumn(label: Text('DELETE',style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),),),
               ],
               rows: taxSalesDataSource.taxsales.map(
                 (taxsales) => DataRow(

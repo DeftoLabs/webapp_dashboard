@@ -29,7 +29,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
   double stock = 0.0;
   String? unid;
   String? categoria;
-  String? finance;
+  String? taxsales;
 
   final _precioController1  = TextEditingController();
   final _precioController2 = TextEditingController();
@@ -58,6 +58,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
     stock = producto?.stock ?? 0.0;
     unid = producto?.unid;
     categoria = producto?.categoria.id;
+    taxsales = producto?.taxsales.id;
 
     _precioController1.text = precio1.toString();  
     _precioController2.text = precio2.toString();
@@ -70,8 +71,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
     final categoriesProvider = Provider.of<CategoriesProvider>(context, listen: false);
     categoriesProvider.getCategories();
 
-    final financeProvider = Provider.of<FinanceProvider>(context, listen: false);
-    financeProvider.getFinance();
+    final taxsalesProvider = Provider.of<TaxSalesProvider>(context, listen: false);
+    taxsalesProvider.getPaginatedTax();
   
   }
   
@@ -277,6 +278,15 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   const SizedBox(height: 20),
                                   TextFormField(
                                     initialValue: descripcion,
+                                    validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Description is Required';
+                                        }
+                                        if (value.length >= 31) {
+                                          return 'Description cannot be more than 30 characters';
+                                        }
+                                        return null;
+                                      },
                                       onChanged: (value) {
                                         final uppercaseValue = value.toUpperCase();
                                         descripcion = uppercaseValue;          
@@ -361,10 +371,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                     },
                                   ),
                                   const SizedBox(height: 20),
-                                  Consumer<FinanceProvider>(
-                                    builder: (context, financeProvider, child) {
+                                  Consumer<TaxSalesProvider>(
+                                    builder: (context, taxsalesProvider, child) {
                                       return DropdownButtonFormField<String>(
-                                        value: finance, 
+                                        value: taxsales, 
                                         decoration: InputDecoration(
                                         hintText: 'Select a TAX',
                                         labelText: 'TAX',
@@ -390,24 +400,24 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         style: GoogleFonts.plusJakartaSans(
                                             color: Colors.black),
                                         dropdownColor: Colors.white,
-                                      items: financeProvider.finances
-                                            .map((finances) {
-                                          return DropdownMenuItem<String>(
-                                            value: finances.id,
-                                            child: Text(finances.mainCurrencyname),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String? value) {
-                                        setState(() {
-                                          finance = value;
-                                        });
-                                      },
-                                      validator: (value) {
-                                        if(value == null || value.isEmpty) {
-                                          return 'PLEASE SELECT A TAX';
-                                        }
-                                        return null;
-                                      },
+                                      items: taxsalesProvider.taxsales.map((taxsales) {
+                                           return DropdownMenuItem<String>(
+                                             value: taxsales.id,
+                                             child: Text(taxsales.taxnumber.toString(),
+                                                 style: const TextStyle(color: Colors.black)),
+                                           );
+                                         }).toList(),
+                                         onChanged: (value) {
+                                           setState(() {
+                                             taxsales = value!;
+                                           });
+                                         },
+                                         validator: (value) {
+                                           if (value == null || value.isEmpty) {
+                                             return 'PLEASE SELECT A TAX';
+                                           }
+                                           return null;
+                                         },
                                           );        
                                       }
                                   ),
@@ -807,7 +817,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                               stock: stock,
                               unid: unid!,
                               categoria: categoria!,
-                              finance: finance!,
+                              taxsales: taxsales!,
                             );
                             if (!context.mounted) return;
                             NotificationService.showSnackBa('$descripcion Created');

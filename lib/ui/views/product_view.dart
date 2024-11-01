@@ -402,8 +402,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   if (value == null || value.isEmpty) {
                     return 'Description is Required';
                   }
-                  if (value.length >= 26) {
-                    return 'Description cannot be more than 25 characters';
+                  if (value.length >= 31) {
+                    return 'Description cannot be more than 30 characters';
                   }
                   return null;
                 },
