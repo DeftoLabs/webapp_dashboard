@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
+import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/http/ruta_response.dart';
 import 'package:web_dashboard/models/ruta.dart';
 
@@ -9,6 +10,8 @@ class RutaProvider extends ChangeNotifier {
   bool isLoading = true;
   bool ascending = true;
   int? sortColumnIndex;
+
+  List<Customer> clientesRutaSeleccionada = [];
 
   RutaProvider() {
     getPaginatedRoutes();
@@ -34,6 +37,15 @@ Future <Ruta> getRouteById(String id) async {
   } catch (e) {
     rethrow;
   }
+}
+
+void actualizarClientesRuta(String usuarioZonaId) {
+  Ruta? rutaSeleccionada = rutas.firstWhere(
+    (ruta) => ruta.usuarioZona.uid == usuarioZonaId, 
+    orElse: () => Ruta.empty(), 
+  );
+  clientesRutaSeleccionada = rutaSeleccionada.clientes;
+  notifyListeners();
 }
 
 

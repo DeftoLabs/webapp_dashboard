@@ -224,7 +224,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text('Create:',
+                        Text('CREATE:',
                             style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14, fontWeight: FontWeight.bold)),
                         const SizedBox(width: 5),
@@ -240,7 +240,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     ),
                     Row(
                       children: [
-                        Text('Modify:',
+                        Text('MODIFY:',
                             style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14, fontWeight: FontWeight.bold)),
                         const SizedBox(width: 5),

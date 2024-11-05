@@ -15,7 +15,6 @@ class Ruta {
     String? img;
 
 
-
     Ruta({
         this.id,
         required this.estado,
@@ -28,6 +27,28 @@ class Ruta {
         this.img,
 
     });
+
+     factory Ruta.empty() {
+      return Ruta(
+        estado: false,
+        codigoRuta: '',
+        nombreRuta: '',
+        zona: '',
+        diasemana: '',
+        clientes: [],
+        usuarioZona: Usuario(
+          rol: '',
+          estado: false,
+          google: false,
+          nombre: '',
+          correo: '',
+          uid: '',
+          phone: '',
+          zone: ''
+        ),
+        img: null,
+      );
+    }
 
     factory Ruta.fromJson(String str) => Ruta.fromMap(json.decode(str));
     String toJson() => json.encode(toMap());
