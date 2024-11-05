@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/providers.dart';
 
@@ -79,6 +80,7 @@ class _OrdenBodyState extends State<OrdenBody> {
 
     String? selectedUsuarioZona;
     String? selectedCliente;
+    String? seletedOrdenesType;
     DateTime? fechaEntrega;
 
     return Container(
@@ -112,62 +114,117 @@ class _OrdenBodyState extends State<OrdenBody> {
               Row(
               children: [
                 const SizedBox(width: 20),
-                Text('DELIVERY DATE:',
-                    style: GoogleFonts.plusJakartaSans(fontSize: 13)),
-                const SizedBox(width: 5),
-                IconButton(
-                  icon: const Icon(Icons.calendar_today),
-                  onPressed: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: fechaEntrega ?? DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101),
-                      builder: (BuildContext context, Widget? child) {
-                        return Theme(
-                          data: ThemeData.light().copyWith(
-                            primaryColor: Colors.black,
-                            hintColor: Colors.black,
-                            colorScheme: const ColorScheme.light(primary: Colors.black),
-                            buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
+    Text('DELIVERY DATE:',
+            style: GoogleFonts.plusJakartaSans(fontSize: 12)),
+        const SizedBox(width: 5),
+        IconButton(
+          icon: const Icon(Icons.calendar_today),
+          onPressed: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: fechaEntrega ?? DateTime.now(),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101),
+              builder: (BuildContext context, Widget? child) {
+                return Theme(
+                  data: ThemeData.light().copyWith(
+                    primaryColor: Colors.black,
+                    hintColor: Colors.black,
+                    colorScheme: const ColorScheme.light(primary: Colors.black),
+                    buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                  ),
+                  child: child!,
+                );
+              },
+            );
 
-                    if (pickedDate != null) {
-                      setState(() {
-                        fechaEntrega = pickedDate; // Actualiza el estado con la fecha seleccionada
-                        print(pickedDate);
-                      });
-                    }
-                  },
-                ),
+            if (pickedDate != null) {
+              setState(() {
+                fechaEntrega = pickedDate; // Actualiza el estado con la fecha seleccionada
+                print(pickedDate);
+              });
+            }
+          },
+        ),     
+       const SizedBox(width: 10),
+                  Consumer<RutaProvider>(
+                              builder: (context, rutaProvider, child) {
+                                return SizedBox(
+                                  width: 150,
+                                  child: DropdownButtonFormField<String>(
+                                    value: seletedOrdenesType,
+                                    decoration: InputDecoration(
+                                      hintText: 'ORDER TYPE',
+                                      hintStyle: GoogleFonts.plusJakartaSans(
+                                        fontSize: 12,
+                                        color: Colors.black.withOpacity(0.7),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.white,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.white,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                    ),
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.black,
+                                    ),
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.black, fontSize: 12),
+                                    dropdownColor: Colors.white,
+                                    items: ['INVOICE', 'NOTE', 'OTHER'].map((tipo) {
+                                      return DropdownMenuItem<String>(
+                                        value: tipo,
+                                        child: Text(
+                                          tipo,
+                                          style: const TextStyle(color: Colors.black),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        seletedOrdenesType = value;
+                                        print(seletedOrdenesType);
+                                      });
+                                    },
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'PLEASE SELECT A ORDER TYPE';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
               ],
             ),
               const SizedBox(height: 10),
                       Center(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const SizedBox(width: 20),
-                                // Dropdown para seleccionar usuarioZona
                                 Consumer<RutaProvider>(
                                   builder: (context, rutaProvider, child) {
-                                    if (rutaProvider.rutas.isEmpty) {
-                                      return const Text('No Routes Available');
-                                    }
+                                   if (rutaProvider.rutas.isEmpty || !rutaProvider.rutas.any((ruta) => 
+                                   ruta.usuarioZona.uid == selectedUsuarioZona)) {
+                                    selectedUsuarioZona = null;
+                                        }
                             
                                     return SizedBox(
                                       width: 200,
                                       child: DropdownButtonFormField<String>(
                                         value: selectedUsuarioZona,
                                         decoration: InputDecoration(
-                                          hintText: 'SELECT USER',
+                                          hintText: 'SELECT',
                                           hintStyle: GoogleFonts.plusJakartaSans(
                                             fontSize: 12,
                                             color: Colors.black.withOpacity(0.7),
@@ -287,6 +344,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                     );
                                   },
                                 ),
+                              
                               ],
                             ),
                           ],
@@ -299,7 +357,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 200,
-                      color: Colors.green,
+                     color: Colors.green,
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
