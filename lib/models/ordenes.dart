@@ -21,6 +21,7 @@ class Ordenes {
     DateTime fechaentrega;
     Usuario usuario;
     String tipo;
+    double totalitem;
     String? comentario;
     String? comentarioRevision;
     DateTime fechacreado;
@@ -44,6 +45,7 @@ class Ordenes {
         required this.fechaentrega,
         required this.usuario,
         required this.tipo,
+        required this.totalitem,
         this.comentario,
         this.comentarioRevision,
         required this.fechacreado,
@@ -81,13 +83,14 @@ class Ordenes {
                 control: json["control"] ?? '', 
                 productos: json["productos"] != null 
                   ? List<Producto>.from(json["productos"].map((x) => Producto.fromMap(x)))
-                  : [],
+                  : [] ,
                 subtotal: json["subtotal"] is String ? double.tryParse(json["subtotal"]) ?? 0.0 : (json["subtotal"] ?? 0.0),
                 tax: json["tax"] is String ? double.tryParse(json["tax"]) ?? 0.0 : (json["tax"] ?? 0.0),
                 total: json["total"] is String ? double.tryParse(json["total"]) ?? 0.0 : (json["total"] ?? 0.0),    
                 fechaentrega: json["fechaentrega"] != null ? DateTime.parse(json["fechaentrega"]) : DateTime.now(),
                 usuario: json["usuario"] != null ? Usuario.fromMap(json["usuario"]) : Usuario(uid: '', nombre: '', rol: '', estado:true, google:true, correo:'', phone:'', zone:''),
                 tipo: json["tipo"] ?? '', 
+                totalitem: json["totalitem"] is String ? double.tryParse(json["totalitem"]) ?? 0.0 : (json["totalitem"] ?? 0.0), 
                 comentario: json["comentario"] ?? '', 
                 comentarioRevision: json["comentarioRevision"] ?? '', 
                 fechacreado: json["fechacreado"] != null ? DateTime.parse(json["fechacreado"]) : DateTime.now(), 
@@ -95,7 +98,9 @@ class Ordenes {
                 updatedAt: json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : DateTime.now(), 
                 v: json["__v"] ?? 0, 
               );
+              
             }
+            
 
 
     Map<String, dynamic> toMap() => {
@@ -114,6 +119,7 @@ class Ordenes {
         "fechaentrega": fechaentrega.toIso8601String(),
         "usuario": usuario.toMap(),
         "tipo": tipo,
+        "totalitem": totalitem,
         "comentario": comentario,
         "comentarioRevision": comentarioRevision,
         "fechacreado": fechacreado.toIso8601String(),
@@ -138,6 +144,7 @@ class Ordenes {
     DateTime? fechaentrega,
     Usuario? usuario,
     String? tipo,
+    double? totalitem,
     String? comentario,
     String? comentarioRevision,
     DateTime? fechacreado,
@@ -161,6 +168,7 @@ class Ordenes {
       fechaentrega: fechaentrega ?? this.fechaentrega,
       usuario: usuario ?? this.usuario,
       tipo: tipo ?? this.tipo,
+      totalitem: totalitem ?? this.totalitem,
       comentario: comentario ?? this.comentario,
       comentarioRevision: comentarioRevision ?? this.comentarioRevision,
       fechacreado: fechacreado ?? this.fechacreado,

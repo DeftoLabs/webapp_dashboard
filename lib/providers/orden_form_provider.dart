@@ -29,6 +29,7 @@ class OrdenFormProvider extends ChangeNotifier {
     DateTime? fechaentrega,
     Usuario? usuario,
     String? tipo,
+    double? totalitem,
     String? comentario,
     String? comentarioRevision,
     DateTime? fechacreado,
@@ -48,7 +49,7 @@ class OrdenFormProvider extends ChangeNotifier {
       perfil: perfil ?? orden!.perfil,
       status: status ?? status ?? orden!.status,
       control: control ?? orden!.control,
-    productos: productos ?? orden!.productos.map((producto) {
+      productos: productos ?? orden!.productos.map((producto) {
       // Verifica si este es el producto que se debe actualizar
       if (producto.id == productId) {
         return Producto(
@@ -82,6 +83,7 @@ class OrdenFormProvider extends ChangeNotifier {
       fechaentrega: fechaentrega ?? orden!.fechaentrega,
       usuario: usuario ?? orden!.usuario,
       tipo: tipo ?? orden!.tipo, 
+      totalitem: totalitem ?? orden!.totalitem,
       comentario: comentario ?? orden!.comentario,
       comentarioRevision: comentarioRevision ?? orden!.comentarioRevision,
       fechacreado: fechacreado ?? orden!.fechacreado,
@@ -112,7 +114,7 @@ class OrdenFormProvider extends ChangeNotifier {
     final data = {
       "productos": orden!.productos.map((producto) {
         return {
-          "id": producto.id,
+          "producto": producto.id,
           "cantidad": producto.cantidad,
           "precio": producto.precio,
         };
@@ -122,7 +124,6 @@ class OrdenFormProvider extends ChangeNotifier {
       "comentarioRevision": orden!.comentarioRevision,
       "fechaentrega": newDateDelivery?.toIso8601String(),
     };
-
     try {
       await CafeApi.putJson('/ordens/${orden!.id}', data);
       return true;

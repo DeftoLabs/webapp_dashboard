@@ -45,6 +45,8 @@ class _OrdenViewState extends State<OrdenView> {
   void dispose() {
     orden = null;
     Provider.of<OrdenFormProvider>(context, listen: false).orden = null;
+    //final ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
+    //ordenFormProvider.formKey = GlobalKey<FormState>();
     super.dispose();
   }
 
@@ -360,19 +362,23 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             ],
                           ),
                           const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Text(orden.clientes.first.nombre,
+                          Text(orden.clientes.first.nombre,
+                              style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold)),
+                         const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Text('BRANCH:', 
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold)),
-                              const SizedBox(width: 5),
-                              Text(orden.clientes.first.sucursal,
-                                  style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold)),
-                            ],
-                          ),
+                                  fontSize: 14)),
+                                  const SizedBox(width: 5),
+                                  Text(orden.clientes.first.sucursal,
+                                      style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              ),
                           const SizedBox(height: 5),
                           Row(
                             children: [
@@ -571,7 +577,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                 inputFormatters: [
                                   // Permitir solo números y hasta dos decimales, sin números negativos
-                                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
+                                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
                                 ],
                               ),
                             ),
@@ -623,7 +629,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                 inputFormatters: [
                                   // Permitir solo números y hasta dos decimales, sin números negativos
-                                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
+                                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
                                 ],
                               ),
                             ),
@@ -744,9 +750,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
             padding: const EdgeInsets.only(right: 100),
             child: Align(
               alignment: Alignment.centerRight,
-              child: (orden.status == 'ORDER' || orden.status == 'APPROVED' || orden.status == 'CANCEL') 
-                    ? const SizedBox.shrink() // No muestra nada si el estatus es ORDER, APPROVED o CANCEL
-                    :Row(
+              child:Row(
                   mainAxisSize:
                       MainAxisSize.min, // Distribuir el espacio entre las columnas
                   children: [
