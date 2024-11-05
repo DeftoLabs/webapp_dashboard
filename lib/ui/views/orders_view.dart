@@ -82,7 +82,7 @@ class _OrdersViewState extends State<OrdersView> {
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
                         onPressed: () {
-                        
+                         NavigationService.replaceTo('/dashboard/orders/neworder');
                         },
                       ),
                     ),
@@ -104,7 +104,7 @@ Column(
   children: [
     Container(
       width: MediaQuery.of(context).size.width * 0.90,
-      height: 520,
+      height: 540,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.grey[300],
@@ -136,18 +136,18 @@ Column(
                   ),
                 )
               : PaginatedDataTable(
-                  columns: const [
-                    DataColumn(label: Text('# Order')),
-                    DataColumn(label: Text('Date')),
-                    DataColumn(label: Text('Delivery')),
-                    DataColumn(label: Text('Customer')),
-                    DataColumn(label: Text('')),
-                    DataColumn(label: Text('Status')),
-                    DataColumn(label: Text('Sales')),
-                    DataColumn(label: Text('Edit')),
+                  columns:[
+                    DataColumn(label: Text('# ORDER',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('DATE',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('DELIVERY',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('CUSTOMER',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('BRANCH',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('STATUS',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('SALES',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('EDIT',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                   ],
                   source: ordersDataSource,
-                  columnSpacing: screenWidth * 0.028,
+                  columnSpacing: screenWidth * 0.019,
                   rowsPerPage: 7,
                 ),
         ],
@@ -215,38 +215,38 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Status',
+                title: 'Search By Customer',
                 width: 200,
-                child: const Center(child: Icon(Icons.settings)),
+                child: const Center(child: Icon(Icons.add_business_sharp)),
                 onTap: () {
-                  NavigationService.replaceTo('');
+                  NavigationService.replaceTo('/dashboard/orders/customer');
                 },
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Notifications',
+                title: 'Search By Date',
                 width: 200,
-                child: const Center(child: Icon(Icons.notifications)),
+                child: const Center(child: Icon(Icons.date_range_rounded)),
                 onTap: () {
-                  NavigationService.replaceTo('');
+                  NavigationService.replaceTo('/dashboard/orders/date');
                 },
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Messages',
+                title: 'Search By Sales',
                 width: 200,
-                child: const Center(child: Icon(Icons.message)),
+                child: const Center(child: Icon(Icons.person_outline_rounded)),
                 onTap: () {
-                  NavigationService.replaceTo('');
+                  NavigationService.replaceTo('/dashboard/orders/sales');
                 },
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Contacts',
+                title: 'Search By Delivery',
                 width: 200,
                 child: const Center(child: Icon(Icons.contacts)),
                 onTap: () {
-                  NavigationService.replaceTo('');
+                  NavigationService.replaceTo('/dashboard/orders/delivery');
                 },
               ),
             ],

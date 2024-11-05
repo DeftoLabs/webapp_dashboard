@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_records_datasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
@@ -82,179 +81,6 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
                 const SizedBox(width: 20),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Search Options',
-                    style: GoogleFonts.plusJakartaSans(
-                        fontSize: 14, fontWeight: FontWeight.bold))
-              ],
-            ),
-            const SizedBox(height: 20),
-            Container(
-                height: 260,
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    const Text('Search by Sales Representative'),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () async {
-                              DateTime? picked = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2020),
-                                  lastDate: DateTime(2040));
-                              if (picked != null && picked != selectedDate) {
-                                setState(() {
-                                  selectedDate = picked;
-                                });
-                              }
-                            },
-                            child: Text(selectedDate != null
-                                ? DateFormat('yyy-MM-dd').format(selectedDate!)
-                                : 'Select Date')),
-                        DropdownButton<String>(
-                            value: selectedStatus,
-                            hint: const Text('Select Status'),
-                            items: statusOptions.map((String value) {
-                              return DropdownMenuItem<String>(
-                                  value: value, child: Text(value));
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                selectedStatus = newValue;
-                              });
-                            }),
-                        SizedBox(
-                          width: 400,
-                          child: Consumer<OrdenesProvider>(
-                            builder: (context, ordenesProvider, child) {
-                              if (ordenesProvider.ordenes.isEmpty) {
-                                return const Text('No Orders Available');
-                              }
-
-                              // Obtener usuarios sin duplicados
-                              List<String> usuariosZona = ordenesProvider
-                                  .ordenes
-                                  .map((orden) =>
-                                      orden.ruta.first.usuarioZona.nombre)
-                                  .toSet()
-                                  .toList();
-
-                              return DropdownButton<String>(
-                                value: selectedSales,
-                                hint: const Text(
-                                    'Sales Representative'), // Texto sugerido
-                                items: usuariosZona.map((nombre) {
-                                  return DropdownMenuItem<String>(
-                                    value: nombre,
-                                    child: Text(nombre),
-                                  );
-                                }).toList(),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    selectedSales = newValue;
-                                  });
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {}, icon: const Icon(Icons.search)),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Column(
-                      children: [
-                        const SizedBox(height: 20),
-                        const Text('Search by Customer'),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                                onPressed: () async {
-                                  DateTime? picked = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2020),
-                                      lastDate: DateTime(2040));
-                                  if (picked != null &&
-                                      picked != selectedDate) {
-                                    setState(() {
-                                      selectedDate = picked;
-                                    });
-                                  }
-                                },
-                                child: Text(selectedDate != null
-                                    ? DateFormat('yyy-MM-dd')
-                                        .format(selectedDate!)
-                                    : 'Select Date')),
-                            DropdownButton<String>(
-                                value: selectedStatus,
-                                hint: const Text('Select Status'),
-                                items: statusOptions.map((String value) {
-                                  return DropdownMenuItem<String>(
-                                      value: value, child: Text(value));
-                                }).toList(),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    selectedStatus = newValue;
-                                  });
-                                }),
-                            SizedBox(
-                              width: 400,
-                              child: Consumer<OrdenesProvider>(
-                                builder: (context, ordenesProvider, child) {
-                                  if (ordenesProvider.ordenes.isEmpty) {
-                                    return const Text('No Orders Available');
-                                  }
-
-                                  // Obtener usuarios sin duplicados
-                                  List<String> clientes = ordenesProvider
-                                      .ordenes
-                                      .where(
-                                          (orden) => orden.clientes.isNotEmpty)
-                                      .map((orden) =>
-                                          orden.clientes.first.nombre)
-                                      .toSet()
-                                      .toList();
-
-                                  return DropdownButton<String>(
-                                    value: selectedClient,
-                                    hint: const Text(
-                                        'Select Client'), // Texto sugerido
-                                    items: clientes.map((nombre) {
-                                      return DropdownMenuItem<String>(
-                                        value: nombre,
-                                        child: Text(nombre),
-                                      );
-                                    }).toList(),
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        selectedClient = newValue;
-                                      });
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.search)),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
-                  ],
-                )),
             const SizedBox(height: 20),
             Column(
               children: [
@@ -264,19 +90,20 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  columns: const [
-                    DataColumn(label: Text('# Order')),
-                    DataColumn(label: Text('Date')),
-                    DataColumn(label: Text('Delivery')),
-                    DataColumn(label: Text('Customer')),
-                    DataColumn(label: Text('Branch')),
-                    DataColumn(label: Text('Status')),
-                    DataColumn(label: Text('Sales'), ),
-                    DataColumn(label: Text('Edit')),
+                  columns: [
+                    DataColumn(label: 
+                    Text('# ORDER', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('DATE',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('DELIVERY', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('CUSTOMER', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('BRANCH', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('STATUS', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('SALES', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)), ),
+                    DataColumn(label: Text('EDIT', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                   ],
                   source: ordersDataSource,
-                  columnSpacing: screenWidth * 0.005,
-                  rowsPerPage: 5,
+                  columnSpacing: screenWidth * 0.015,
+                  //rowsPerPage: 5,
                   onPageChanged: (page) {},
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -33,13 +34,13 @@ class OrdersRecordsDataSource extends DataTableSource {
       
       index: index,
       cells: [
-        DataCell(Text(orden.control)),
-        DataCell(Text(formattedDate)),
-        DataCell(Text(formattedDateDelivery)),
-        DataCell(Text(clienteNombre)),
-        DataCell(Text(clienteSucursal)),
-        DataCell(Text(orden.status)),
-        DataCell(Text(orden.ruta.first.usuarioZona.nombre)),
+        DataCell(Text(orden.control, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
+        DataCell(Text(formattedDate, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
+        DataCell(Text(formattedDateDelivery,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),)),
+        DataCell(Text(clienteNombre, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
+        DataCell(Text(clienteSucursal, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
+        DataCell(Text(orden.status, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
+        DataCell(Text(orden.ruta.first.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
         DataCell(
           IconButton(icon: const Icon(Icons.edit_outlined), 
           onPressed: (){

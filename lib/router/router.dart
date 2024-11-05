@@ -17,9 +17,14 @@ class Flurorouter {
   //Dashboard
   static String dashboardRoute  = '/dashboard';
 
-  static String ordersRoute         = '/dashboard/orders';
-  static String ordersRecordsRoute  = '/dashboard/orders/records';
-  static String ordenRoute         = '/dashboard/orders/:id';
+  static String ordersRoute           = '/dashboard/orders';
+  static String ordersRecordsRoute    = '/dashboard/orders/records';
+  static String ordersSearchCustomer  = '/dashboard/orders/customer';
+  static String ordersSearchDate      = '/dashboard/orders/date';
+  static String ordersSearchSales     = '/dashboard/orders/sales';
+  static String ordersSearchDelivery  = '/dashboard/orders/delivery';
+  static String ordersNewOrder        = '/dashboard/orders/neworder';
+  static String ordenRoute            = '/dashboard/orders/:id';
 
   static String gpsRoute        = '/dashboard/gps';
 
@@ -75,7 +80,15 @@ class Flurorouter {
 
     //Order
     router.define (ordersRoute,         handler:   DashboardHandlers.orders, transitionType: TransitionType.fadeIn);
-    router.define (ordersRecordsRoute,  handler:   DashboardHandlers.ordersRecords, transitionType: TransitionType.fadeIn);
+
+    router.define (ordersRecordsRoute,    handler:   DashboardHandlers.ordersRecords, transitionType: TransitionType.fadeIn);
+    
+    router.define (ordersSearchCustomer,  handler:   DashboardHandlers.ordersCustomer, transitionType: TransitionType.fadeIn);
+    router.define (ordersSearchDate,      handler:   DashboardHandlers.ordersDate, transitionType: TransitionType.fadeIn);
+    router.define (ordersSearchSales,     handler:   DashboardHandlers.ordersSales, transitionType: TransitionType.fadeIn);
+    router.define (ordersSearchDelivery,  handler:   DashboardHandlers.ordersDelivery, transitionType: TransitionType.fadeIn);
+    router.define (ordersNewOrder,        handler:   DashboardHandlers.ordersNewOrder, transitionType: TransitionType.fadeIn);
+
     router.define (ordenRoute,          handler:   DashboardHandlers.orden, transitionType: TransitionType.fadeIn);
 
     // GPS

@@ -20,33 +20,38 @@ class OrdenView extends StatefulWidget {
 
 class _OrdenViewState extends State<OrdenView> {
   Ordenes? orden;
+  OrdenesProvider? ordenesProvider;
+  OrdenFormProvider? ordenFormProvider;
+  bool isInitialized = false;
 
   @override
-  void initState() {
-    super.initState();
-    final ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
-    final ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!isInitialized) {
+      // Inicializar los providers
+      ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
+      ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
 
-    ordenesProvider.getOrdenById(widget.id)
-    .then((ordenDB) {
-      if(ordenDB != null) {
-        ordenFormProvider.orden = ordenDB;
-        ordenFormProvider.formKey = GlobalKey<FormState>();
-        setState(() { orden = ordenDB; });
-      } else {
-        NavigationService.replaceTo('/dashboard/orders/records');
-      }
-      
+      ordenesProvider!.getOrdenById(widget.id).then((ordenDB) {
+        if (ordenDB != null) {
+          ordenFormProvider!.orden = ordenDB;
+          ordenFormProvider!.formKey = GlobalKey<FormState>();
+          setState(() {
+            orden = ordenDB;
+          });
+        } else {
+          NavigationService.replaceTo('/dashboard/orders/records');
+        }
+      });
+
+      isInitialized = true;
     }
-    );
   }
 
-  @override
+ @override
   void dispose() {
     orden = null;
-    Provider.of<OrdenFormProvider>(context, listen: false).orden = null;
-    //final ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
-    //ordenFormProvider.formKey = GlobalKey<FormState>();
+    ordenFormProvider!.orden = null;
     super.dispose();
   }
 

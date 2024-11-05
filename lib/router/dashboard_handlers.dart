@@ -13,7 +13,12 @@ import 'package:web_dashboard/ui/views/banks_view.dart';
 import 'package:web_dashboard/ui/views/finance_view.dart';
 import 'package:web_dashboard/ui/views/finances_view.dart';
 import 'package:web_dashboard/ui/views/orden_view.dart';
+import 'package:web_dashboard/ui/views/orders_customer_search.dart';
+import 'package:web_dashboard/ui/views/orders_date_search.dart';
+import 'package:web_dashboard/ui/views/orders_delivery_search.dart';
+import 'package:web_dashboard/ui/views/orders_neworden.dart';
 import 'package:web_dashboard/ui/views/orders_records_view.dart';
+import 'package:web_dashboard/ui/views/orders_sales_search.dart';
 import 'package:web_dashboard/ui/views/product_view.dart';
 import 'package:web_dashboard/ui/views/profile_view.dart';
 import 'package:web_dashboard/ui/views/profiles_view.dart';
@@ -70,6 +75,61 @@ class DashboardHandlers {
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersRecordsRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return const OrdersRecordsView();
+      } return const LoginView();
+
+    }
+  );
+
+  static Handler ordersCustomer = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchCustomer);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const OrdersCustomerSearch();
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler ordersDate = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchDate);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const OrdersDateSearch();
+      } return const LoginView();
+
+    }
+  );
+
+     static Handler ordersSales = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchSales);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const OrdersSalesSearch();
+      } return const LoginView();
+
+    }
+  );
+
+       static Handler ordersDelivery = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchDelivery);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const OrdersDeliverySearch();
+      } return const LoginView();
+
+    }
+  );
+
+  static Handler ordersNewOrder = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersNewOrder);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const OrdersNewOrdern();
       } return const LoginView();
 
     }
