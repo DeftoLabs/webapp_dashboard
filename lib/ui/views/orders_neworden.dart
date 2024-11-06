@@ -74,14 +74,15 @@ class OrdenBody extends StatefulWidget {
 
 class _OrdenBodyState extends State<OrdenBody> {
 
+    String? selectedUsuarioZona;
+    String? selectedCliente;
+    String? seletedOrdenesType;
+    DateTime? fechaEntrega = DateTime.now().add(const Duration(days: 1));
+
   
   @override
   Widget build(BuildContext context) {
 
-    String? selectedUsuarioZona;
-    String? selectedCliente;
-    String? seletedOrdenesType;
-    DateTime? fechaEntrega;
 
     return Container(
       height: 700,
@@ -106,47 +107,52 @@ class _OrdenBodyState extends State<OrdenBody> {
                   children: [
                     SizedBox( 
                       width: MediaQuery.of(context).size.width,
-                      height: 150,
+                      height: 170,
                       child: 
                       Column(
                         children: [
                           const SizedBox(height: 20),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(width: 20),
-    Text('DELIVERY DATE:',
-            style: GoogleFonts.plusJakartaSans(fontSize: 12)),
-        const SizedBox(width: 5),
-        IconButton(
-          icon: const Icon(Icons.calendar_today),
-          onPressed: () async {
-            DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: fechaEntrega ?? DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101),
-              builder: (BuildContext context, Widget? child) {
-                return Theme(
-                  data: ThemeData.light().copyWith(
-                    primaryColor: Colors.black,
-                    hintColor: Colors.black,
-                    colorScheme: const ColorScheme.light(primary: Colors.black),
-                    buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-                  ),
-                  child: child!,
-                );
-              },
-            );
+                    Text('DELIVERY DATE:',
+                            style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
+                        const SizedBox(width: 5),
+                        IconButton(
+                          icon: const Icon(Icons.calendar_today),
+                          onPressed: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: fechaEntrega ?? DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                              builder: (BuildContext context, Widget? child) {
+                                return Theme(
+                                  data: ThemeData.light().copyWith(
+                                    primaryColor: Colors.black,
+                                    hintColor: Colors.black,
+                                    colorScheme: const ColorScheme.light(primary: Colors.black),
+                                    buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                                  ),
+                                  child: child!,
+                                );
+                              },
+                            );
 
-            if (pickedDate != null) {
-              setState(() {
-                fechaEntrega = pickedDate; // Actualiza el estado con la fecha seleccionada
-                print(pickedDate);
-              });
-            }
-          },
-        ),     
-       const SizedBox(width: 10),
+                            if (pickedDate != null) {
+                              setState(() {
+                                fechaEntrega = pickedDate; // Actualiza el estado con la fecha seleccionada
+                                print(pickedDate);
+                              });
+                            }
+                          },
+                        ),     
+                const SizedBox(width: 10),
+                fechaEntrega != null 
+                ? Text(DateFormat('dd/MM/yy').format(fechaEntrega!)) 
+                : const SizedBox.shrink(),
+                const SizedBox(width: 10),
                   Consumer<RutaProvider>(
                               builder: (context, rutaProvider, child) {
                                 return SizedBox(
@@ -154,10 +160,13 @@ class _OrdenBodyState extends State<OrdenBody> {
                                   child: DropdownButtonFormField<String>(
                                     value: seletedOrdenesType,
                                     decoration: InputDecoration(
-                                      hintText: 'ORDER TYPE',
+                                      hintText: '',
                                       hintStyle: GoogleFonts.plusJakartaSans(
                                         fontSize: 12,
-                                        color: Colors.black.withOpacity(0.7),
+                                        color: Colors.black,
+                                      ),
+                                      label: Center(
+                                        child: Text('ORDER TYPE', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)),
                                       ),
                                       focusedBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -206,10 +215,17 @@ class _OrdenBodyState extends State<OrdenBody> {
               ],
             ),
               const SizedBox(height: 10),
+                     const Divider(
+                      indent: 30,
+                      endIndent: 30,
+                      color: Colors.black54,
+                    ),
+                    const SizedBox(height: 10),
                       Center(
                         child: Column(
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const SizedBox(width: 20),
                                 Consumer<RutaProvider>(
@@ -220,14 +236,17 @@ class _OrdenBodyState extends State<OrdenBody> {
                                         }
                             
                                     return SizedBox(
-                                      width: 200,
+                                      width: 250,
                                       child: DropdownButtonFormField<String>(
                                         value: selectedUsuarioZona,
                                         decoration: InputDecoration(
-                                          hintText: 'SELECT',
+                                          hintText: '',
                                           hintStyle: GoogleFonts.plusJakartaSans(
                                             fontSize: 12,
                                             color: Colors.black.withOpacity(0.7),
+                                          ),
+                                        label: Center(
+                                        child: Text('REPRESENTATIVE', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)),
                                           ),
                                           focusedBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
@@ -295,10 +314,13 @@ class _OrdenBodyState extends State<OrdenBody> {
                                       child: DropdownButtonFormField<String>(
                                         value: selectedCliente,
                                         decoration: InputDecoration(
-                                          hintText: 'SELECT A CUSTOMER',
+                                          hintText: '',
                                           hintStyle: GoogleFonts.plusJakartaSans(
                                             fontSize: 12,
                                             color: Colors.black.withOpacity(0.7),
+                                          ),
+                                        label: Center(
+                                        child: Text('CUSTOMER', style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)),
                                           ),
                                           focusedBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
