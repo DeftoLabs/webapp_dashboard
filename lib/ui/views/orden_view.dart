@@ -492,7 +492,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: fechaEntrega ?? DateTime.now(),
-                      firstDate: DateTime(2000),
+                      firstDate: DateTime.now(),
                       lastDate: DateTime(2101),
                       builder: (BuildContext context, Widget? child) {
                         return Theme(

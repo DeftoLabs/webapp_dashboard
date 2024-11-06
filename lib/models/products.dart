@@ -49,6 +49,25 @@ class Producto {
     this.taxitem,
   });
 
+  factory Producto.empty() {
+    return Producto(
+      id: '', 
+      nombre: '', 
+      estado: false, 
+      usuario: User(id: '', nombre: ''),
+      precio1: 0.0, 
+      precio2: 0.0, 
+      precio3: 0.0, 
+      precio4: 0.0, 
+      precio5: 0.0, 
+      categoria: Categoria(id: '', nombre: ''),
+      taxsales: TaxSales(id: '', taxname: '', taxnumber: 0.0),
+      tax: 0.0, 
+      disponible: false, 
+      stock: 0.0, 
+      unid: '');
+  }
+
 factory Producto.fromMap(Map<String, dynamic> json) => Producto(
   id: json.containsKey("producto") && json["producto"] != null ? json["producto"]["_id"] ?? 'CODE ERROR' : json["_id"] ?? 'CODE ERROR',
   nombre: json.containsKey("producto") && json["producto"] != null ? json["producto"]["nombre"] ?? 'CODE ERROR': json["nombre"] ?? 'CODE ERROR',
