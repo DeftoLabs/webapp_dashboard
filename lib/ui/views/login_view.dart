@@ -47,7 +47,9 @@ class LoginView extends StatelessWidget {
                     hint: 'Enter your email',
                     label: 'Email',
                     icon: Icons.email_outlined,
+                    
                   ),
+                  
                 ),
                   const SizedBox(height: 20),
                   // Password
