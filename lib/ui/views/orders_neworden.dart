@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/providers.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 class OrdersNewOrdern extends StatelessWidget {
   const OrdersNewOrdern({super.key});
@@ -75,32 +76,34 @@ class OrdenBody extends StatefulWidget {
 
 class _OrdenBodyState extends State<OrdenBody> {
   String? selectedUsuarioZona;
-  String? selectedCliente;
-  String? seletedOrdenesType;
-  String? selectProduct;
-  double? selectPrice;
-  double? selectedCantidad = 1;
+  String? cliente;
+  String? ruta;
+  String? tipo;
+  String? producto;
+  double? precio;
+  double? cantidad = 1;
   String? comentario = '';
-  DateTime? fechaEntrega = DateTime.now().add(const Duration(days: 1));
+  DateTime? fechaentrega = DateTime.now().add(const Duration(days: 1));
+    final formKey = GlobalKey<FormState>();
 
-  List<Map<String, dynamic>> productsList =
-      []; // Lista para almacenar los productos seleccionados
+  List<Map<String, dynamic>> productsList = []; // Lista para almacenar los productos seleccionados
+
 
   bool isFirstProductAdded = false;
 
   void addProductRow() {
     if (productsList.isEmpty) {
       productsList.add({
-        'selectProduct': null,
-        'selectPrice': null,
-        'selectedCantidad': 1,
+        'producto': null,
+        'precio': null,
+        'cantidad': 1,
         'isFirstRow': true
       });
     } else {
       productsList.add({
-        'selectProduct': null,
-        'selectPrice': null,
-        'selectedCantidad': 1,
+        'producto': null,
+        'precio': null,
+        'cantidad': 1,
         'isFirstRow': false
       });
     }
@@ -108,8 +111,10 @@ class _OrdenBodyState extends State<OrdenBody> {
     setState(() {});
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     double dynamicHeight = productsList.length * 70.0;
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -136,7 +141,7 @@ class _OrdenBodyState extends State<OrdenBody> {
             child: Column(
               children: [
                 Form(
-                  key: ordenNewFormProvider.formKey, 
+                  key: formKey, 
                     child: Column(
                   children: [
                     SizedBox(
@@ -170,8 +175,8 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             DateTime? pickedDate =
                                                 await showDatePicker(
                                               context: context,
-                                              initialDate: fechaEntrega ??
-                                                  DateTime.now(),
+                                              initialDate: fechaentrega ??
+                                              DateTime.now(),
                                               firstDate: DateTime.now(),
                                               lastDate: DateTime(2101),
                                               builder: (BuildContext context,
@@ -198,16 +203,15 @@ class _OrdenBodyState extends State<OrdenBody> {
 
                                             if (pickedDate != null) {
                                               setState(() {
-                                                fechaEntrega = pickedDate;
-                                                print(pickedDate);
+                                                fechaentrega = pickedDate;
                                               });
                                             }
                                           },
                                         ),
                                         const SizedBox(width: 10),
-                                        fechaEntrega != null
+                                        fechaentrega != null
                                             ? Text(DateFormat('dd/MM/yy')
-                                                .format(fechaEntrega!))
+                                                .format(fechaentrega!))
                                             : const SizedBox.shrink(),
                                         const SizedBox(width: 10),
                                         Consumer<RutaProvider>(
@@ -216,7 +220,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             return SizedBox(
                                               width: 150,
                                               child: DropdownButtonFormField<String>(
-                                                value: seletedOrdenesType,
+                                                value: tipo,
                                                 decoration: InputDecoration(
                                                   hintText: '',
                                                   hintStyle: GoogleFonts.plusJakartaSans(
@@ -252,8 +256,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 }).toList(),
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    seletedOrdenesType = value;
-                                                    print(seletedOrdenesType);
+                                                    tipo = value;
                                                   });
                                                 },
                                                 validator: (value) {
@@ -273,25 +276,16 @@ class _OrdenBodyState extends State<OrdenBody> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const SizedBox(
-                                            height:
-                                                20), // Ajusta el espaciado en caso de cambiar a Column
+                                        const SizedBox( height: 20), // Ajusta el espaciado en caso de cambiar a Column
                                         Text('DELIVERY DATE:',
-                                            style: GoogleFonts.plusJakartaSans(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold)),
-                                        const SizedBox(
-                                            height:
-                                                10), // Espaciado vertical entre elementos en Column
+                                            style: GoogleFonts.plusJakartaSans(fontSize: 12,fontWeight: FontWeight.bold)),
+                                        const SizedBox(height:10), // Espaciado vertical entre elementos en Column
                                         IconButton(
-                                          icon:
-                                              const Icon(Icons.calendar_today),
+                                          icon: const Icon(Icons.calendar_today),
                                           onPressed: () async {
-                                            DateTime? pickedDate =
-                                                await showDatePicker(
+                                            DateTime? pickedDate = await showDatePicker(
                                               context: context,
-                                              initialDate: fechaEntrega ??
-                                                  DateTime.now(),
+                                              initialDate: fechaentrega ?? DateTime.now(),
                                               firstDate: DateTime.now(),
                                               lastDate: DateTime(2101),
                                               builder: (BuildContext context,
@@ -308,88 +302,41 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             );
 
                                             if (pickedDate != null) {
-                                              setState(() {
-                                                fechaEntrega = pickedDate;
-                                                print(pickedDate);
-                                              });
+                                              setState(() {fechaentrega = pickedDate; });
                                             }
                                           },
                                         ),
                                         const SizedBox(height: 15),
-                                        fechaEntrega != null
-                                            ? Text(DateFormat('dd/MM/yy')
-                                                .format(fechaEntrega!))
-                                            : const SizedBox.shrink(),
+                                        fechaentrega != null ? Text(DateFormat('dd/MM/yy') .format(fechaentrega!)): const SizedBox.shrink(),
                                         const SizedBox(height: 10),
                                         Consumer<RutaProvider>(
                                           builder:
                                               (context, rutaProvider, child) {
                                             return SizedBox(
                                               width: 150,
-                                              child: DropdownButtonFormField<
-                                                  String>(
-                                                value: seletedOrdenesType,
+                                              child: DropdownButtonFormField<String>(
+                                                value: tipo,
                                                 decoration: InputDecoration(
                                                   hintText: '',
-                                                  hintStyle: GoogleFonts
-                                                      .plusJakartaSans(
-                                                    fontSize: 12,
-                                                    color: Colors.black,
-                                                  ),
+                                                  hintStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black),
                                                   label: Center(
                                                     child: Text('ORDER TYPE',
-                                                        style: GoogleFonts
-                                                            .plusJakartaSans(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
+                                                    style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold)),
                                                   ),
-                                                  focusedBorder:
-                                                      const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Colors.white,
-                                                      width: 2.0,
-                                                    ),
-                                                  ),
-                                                  enabledBorder:
-                                                      const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Colors.white,
-                                                      width: 2.0,
-                                                    ),
-                                                  ),
+                                                  focusedBorder:const OutlineInputBorder(borderSide: BorderSide(color: Colors.white,width: 2.0)),
+                                                  enabledBorder:const OutlineInputBorder(borderSide: BorderSide(color: Colors.white,width: 2.0)),
                                                 ),
-                                                icon: const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: Colors.black,
-                                                ),
-                                                style:
-                                                    GoogleFonts.plusJakartaSans(
-                                                        color: Colors.black,
-                                                        fontSize: 12),
-                                                dropdownColor: Colors.white,
-                                                items: [
-                                                  'INVOICE',
-                                                  'NOTE',
-                                                  'OTHER'
+                                                icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
+                                                style:GoogleFonts.plusJakartaSans(color: Colors.black,fontSize: 12), dropdownColor: Colors.white,
+                                                items: ['INVOICE','NOTE','OTHER'
                                                 ].map((tipo) {
-                                                  return DropdownMenuItem<
-                                                      String>(
+                                                  return DropdownMenuItem<String>(
                                                     value: tipo,
-                                                    child: Text(
-                                                      tipo,
-                                                      style: const TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                  );
+                                                    child: Text(tipo,style: const TextStyle(color: Colors.black)));
                                                 }).toList(),
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    seletedOrdenesType = value;
-                                                    print(seletedOrdenesType);
+                                                    tipo = value;
                                                   });
                                                 },
                                                 validator: (value) {
@@ -422,104 +369,54 @@ class _OrdenBodyState extends State<OrdenBody> {
                                   children: [
                                     isSmallScreen
                                         ? Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               const SizedBox(height: 20),
                                               SizedBox(
                                                 width: 250,
                                                 child: Consumer<RutaProvider>(
-                                                  builder: (context,
-                                                      rutaProvider, child) {
-                                                    if (rutaProvider
-                                                            .rutas.isEmpty ||
-                                                        !rutaProvider.rutas.any(
-                                                            (ruta) =>
-                                                                ruta.usuarioZona
-                                                                    .uid ==
-                                                                selectedUsuarioZona)) {
-                                                      selectedUsuarioZona =
-                                                          null;
+                                                  builder: (context,rutaProvider, child) {
+                                                    if (rutaProvider.rutas.isEmpty || !rutaProvider.rutas.any(
+                                                        (ruta) => ruta.usuarioZona.uid == selectedUsuarioZona)) {
+                                                      selectedUsuarioZona = null;
+                                                      ruta = null;
                                                     }
-                                                    return DropdownButtonFormField<
-                                                        String>(
-                                                      value:
-                                                          selectedUsuarioZona,
-                                                      decoration:
-                                                          InputDecoration(
+                                                    return DropdownButtonFormField<String>(
+                                                      value: selectedUsuarioZona,
+                                                      decoration: InputDecoration(
                                                         label: Center(
                                                           child: Text(
-                                                            'REPRESENTATIVE',
-                                                            style: GoogleFonts
-                                                                .plusJakartaSans(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                          ),
+                                                            'REPRESENTATIVE',style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold),
+                                                          ),         
                                                         ),
-                                                        focusedBorder:
-                                                            const OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors.white,
-                                                            width: 2.0,
-                                                          ),
-                                                        ),
-                                                        enabledBorder:
-                                                            const OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors.white,
-                                                            width: 2.0,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      icon: const Icon(
-                                                          Icons.arrow_drop_down,
-                                                          color: Colors.black),
-                                                      style: GoogleFonts
-                                                          .plusJakartaSans(
-                                                              color:
-                                                                  Colors.black),
-                                                      dropdownColor:
-                                                          Colors.white,
+                                                        focusedBorder: const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0)),
+                                                        enabledBorder: const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0))),
+                                                      icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
+                                                      style: GoogleFonts.plusJakartaSans(color:Colors.black),
+                                                      dropdownColor: Colors.white,
                                                       items: rutaProvider.rutas
-                                                          .map((ruta) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: ruta
-                                                              .usuarioZona.uid,
-                                                          child: Text(
-                                                            ruta.usuarioZona
-                                                                .nombre,
-                                                            style:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
+                                                          .map((rutas) {
+                                                        return DropdownMenuItem<String>(
+                                                          value: rutas .usuarioZona.uid,
+                                                          child: Text(rutas.usuarioZona.nombre,
+                                                            style:const TextStyle( color: Colors.black)),
+                                                            onTap: (){
+                                                              ruta = rutas.id; 
+                                                            },
                                                         );
                                                       }).toList(),
                                                       onChanged: (value) {
                                                         setState(() {
-                                                          selectedUsuarioZona =
-                                                              value;
+                                                          selectedUsuarioZona = value;
                                                         });
                                                         if (value != null) {
-                                                          rutaProvider
-                                                              .actualizarClientesRuta(
-                                                                  value);
-                                                          selectedCliente =
-                                                              null;
+                                                          rutaProvider.actualizarClientesRuta(value);
+                                                          cliente = null;
                                                         }
                                                       },
                                                       validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return 'PLEASE SELECT A REPRESENTATIVE';
+                                                        if (value == null || value.isEmpty) {
+                                                        return 'PLEASE SELECT A REPRESENTATIVE';
                                                         }
                                                         return null;
                                                       },
@@ -531,58 +428,30 @@ class _OrdenBodyState extends State<OrdenBody> {
                                               SizedBox(
                                                 width: 353,
                                                 child: Consumer<RutaProvider>(
-                                                  builder: (context,
-                                                      rutaProvider, child) {
+                                                  builder: (context, rutaProvider, child) {
                                                     if (rutaProvider
                                                         .clientesRutaSeleccionada
                                                         .isEmpty) {
                                                       return const Text('');
                                                     }
-                                                    return DropdownButtonFormField<
-                                                        String>(
-                                                      value: selectedCliente,
-                                                      decoration:
-                                                          InputDecoration(
+                                                    return DropdownButtonFormField<String>(
+                                                      value: cliente,
+                                                      decoration: InputDecoration(
                                                         label: Center(
                                                           child: Text(
                                                             'CUSTOMER',
-                                                            style: GoogleFonts
-                                                                .plusJakartaSans(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                            style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.black,fontWeight:FontWeight.bold),
                                                           ),
                                                         ),
-                                                        focusedBorder:
-                                                            const OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors.white,
-                                                            width: 2.0,
-                                                          ),
+                                                        focusedBorder:const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0,),
                                                         ),
                                                         enabledBorder:
-                                                            const OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors.white,
-                                                            width: 2.0,
-                                                          ),
+                                                          const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0,),
                                                         ),
                                                       ),
-                                                      icon: const Icon(
-                                                          Icons.arrow_drop_down,
-                                                          color: Colors.black),
-                                                      style: GoogleFonts
-                                                          .plusJakartaSans(
-                                                              color:
-                                                                  Colors.black),
-                                                      dropdownColor:
-                                                          Colors.white,
+                                                      icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
+                                                      style: GoogleFonts .plusJakartaSans( color:Colors.black),
+                                                      dropdownColor:  Colors.white,
                                                       items: rutaProvider
                                                           .clientesRutaSeleccionada
                                                           .map((cliente) {
@@ -591,19 +460,11 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                           value: cliente.id,
                                                           child: Text(
                                                             cliente.nombre,
-                                                            style:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
+                                                            style:const TextStyle(color: Colors.black) ),
                                                         );
                                                       }).toList(),
                                                       onChanged: (value) {
-                                                        setState(() {
-                                                          selectedCliente =
-                                                              value;
-                                                        });
-                                                      },
+                                                        setState(() {cliente = value;}); },
                                                       validator: (value) {
                                                         if (value == null ||
                                                             value.isEmpty) {
@@ -645,24 +506,11 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       decoration:
                                                           InputDecoration(
                                                         hintText: '',
-                                                        hintStyle: GoogleFonts
-                                                            .plusJakartaSans(
-                                                          fontSize: 12,
-                                                          color: Colors.black
-                                                              .withOpacity(0.7),
-                                                        ),
+                                                        hintStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black.withOpacity(0.7),),
                                                         label: Center(
                                                           child: Text(
                                                               'REPRESENTATIVE',
-                                                              style: GoogleFonts
-                                                                  .plusJakartaSans(
-                                                                      fontSize:
-                                                                          12,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold)),
+                                                              style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.black,fontWeight:FontWeight.bold)),
                                                         ),
                                                         focusedBorder:
                                                             const OutlineInputBorder(
@@ -715,12 +563,9 @@ class _OrdenBodyState extends State<OrdenBody> {
 
                                                         // Actualiza la lista de clientes en el RutaProvider
                                                         if (value != null) {
-                                                          rutaProvider
-                                                              .actualizarClientesRuta(
-                                                                  value);
+                                                          rutaProvider.actualizarClientesRuta(value);
                                                           // Reinicia el cliente seleccionado al cambiar de usuarioZona
-                                                          selectedCliente =
-                                                              null;
+                                                          cliente = null;
                                                         }
                                                       },
                                                       validator: (value) {
@@ -742,56 +587,25 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 builder: (context, rutaProvider,
                                                     child) {
                                                   // Si no hay clientes, mostramos un mensaje o un dropdown vacío
-                                                  if (rutaProvider
-                                                      .clientesRutaSeleccionada
-                                                      .isEmpty) {
-                                                    return const Text('');
+                                                  if (rutaProvider.clientesRutaSeleccionada.isEmpty) {return const Text('');
                                                   }
-
                                                   return SizedBox(
                                                     width: 353,
                                                     child:
-                                                        DropdownButtonFormField<
-                                                            String>(
-                                                      value: selectedCliente,
-                                                      decoration:
-                                                          InputDecoration(
+                                                        DropdownButtonFormField<String>(
+                                                      value: cliente,
+                                                      decoration:InputDecoration(
                                                         hintText: '',
-                                                        hintStyle: GoogleFonts
-                                                            .plusJakartaSans(
-                                                          fontSize: 12,
-                                                          color: Colors.black
-                                                              .withOpacity(0.7),
+                                                        hintStyle: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.black.withOpacity(0.7),
                                                         ),
                                                         label: Center(
                                                           child: Text(
                                                               'CUSTOMER',
-                                                              style: GoogleFonts
-                                                                  .plusJakartaSans(
-                                                                      fontSize:
-                                                                          12,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold)),
+                                                              style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.black,fontWeight:FontWeight.bold)),
                                                         ),
-                                                        focusedBorder:
-                                                            const OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors.white,
-                                                            width: 2.0,
-                                                          ),
-                                                        ),
+                                                        focusedBorder:const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,  width: 2.0)),
                                                         enabledBorder:
-                                                            const OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors.white,
-                                                            width: 2.0,
-                                                          ),
-                                                        ),
+                                                          const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0)),
                                                       ),
                                                       icon: const Icon(
                                                         Icons.arrow_drop_down,
@@ -820,13 +634,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                         );
                                                       }).toList(),
                                                       onChanged: (value) {
-                                                        setState(() {
-                                                          selectedCliente =
-                                                              value;
-                                                          print(
-                                                              selectedCliente);
-                                                        });
-                                                      },
+                                                        setState(() {cliente = value;}); },
                                                       validator: (value) {
                                                         if (value == null ||
                                                             value.isEmpty) {
@@ -853,7 +661,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                       endIndent: 30,
                       color: Colors.black26,
                     ),
-                    if (selectedCliente != null)
+                    if (cliente != null)
                     Center(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
@@ -887,8 +695,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                   itemBuilder: (context, index) {
                                     final productData = productsList[index];
                                     return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      mainAxisAlignment:MainAxisAlignment.start,
                                       children: [
                                         const SizedBox(width: 10),
                                         Consumer<ProductsProvider>(
@@ -898,7 +705,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                               width: 275,
                                               child: DropdownButtonFormField<String>(
                                                 value: productData[
-                                                    'selectProduct'],
+                                                    'producto'],
                                                 decoration: InputDecoration(
                                                   labelText: 'ITEM',
                                                   labelStyle: GoogleFonts
@@ -943,8 +750,9 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                   return null;
                                                 },
                                                 onChanged: (value) {
-                                                  setState(() {productData['selectProduct'] =value;
-                                                    print(productData[ 'selectProduct']);productData['selectPrice'] =    null;
+                                                  setState(() {
+                                                  productData['producto'] = value;
+                                                  productData['precio'] = null;
                                                   });
                                                 },
                                               ),
@@ -952,7 +760,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                           },
                                         ),
                                         const SizedBox(width: 20),
-                                        if (productData['selectProduct'] !=
+                                        if (productData['producto'] !=
                                             null)
                                           Consumer<ProductsProvider>(
                                             builder: (context, productProvider,
@@ -963,7 +771,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                           (producto) =>
                                                               producto.id ==
                                                               productData[
-                                                                  'selectProduct'],
+                                                                  'producto'],
                                                           orElse: () =>
                                                               Producto.empty());
 
@@ -972,7 +780,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 child: DropdownButtonFormField<
                                                     String>(
                                                   value:
-                                                      productData['selectPrice']
+                                                      productData['precio']
                                                           ?.toString(),
                                                   decoration: InputDecoration(
                                                     labelText: 'PRICE',
@@ -1026,12 +834,8 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 },
                                                   onChanged: (value) {
                                                     setState(() {
-                                                      productData[
-                                                              'selectPrice'] =
-                                                          double.tryParse(
-                                                              value!);
-                                                      print(productData[
-                                                          'selectPrice']);
+                                                    productData['precio'] = double.tryParse(value!);
+                                                   
                                                     });
                                                   },
                                                 ),
@@ -1039,11 +843,11 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             },
                                           ),
                                         const SizedBox(width: 20),
-                                        if (productData['selectPrice'] != null)
+                                        if (productData['precio'] != null)
                                           SizedBox(
                                             width: 95,
                                             child: TextFormField(
-                                              initialValue: productData['selectedCantidad'].toString(),
+                                              initialValue: productData['cantidad'].toString(),
                                               textAlign: TextAlign.center,
                                               decoration: InputDecoration(
                                                 labelText: 'QUANTITY',
@@ -1082,12 +886,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 },
                                               onChanged: (value) {
                                                 setState(() {
-                                                  productData[
-                                                          'selectedCantidad'] =
-                                                      double.tryParse(value) ??
-                                                          1;
-                                                  print(productData[
-                                                      'selectedCantidad']);
+                                                  productData['cantidad'] =double.tryParse(value) ??1;
                                                 });
                                               },
                                               inputFormatters: [
@@ -1097,7 +896,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             ),
                                           ),
                                         const SizedBox(width: 20),
-                                        if (productData['selectPrice'] != null)
+                                        if (productData['precio'] != null)
                                           IconButton(
                                             onPressed: () {
                                               setState(() {
@@ -1108,7 +907,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             icon: const Icon(
                                                 Icons.delete_outline),
                                           ),
-                                        if (productData['selectPrice'] != null)
+                                        if (productData['precio'] != null)
                                           IconButton(
                                               onPressed: addProductRow,
                                               icon: const Icon(Icons.add))
@@ -1164,7 +963,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
                             onChanged: (value) {
-                             print(comentario);
+                             comentario = value;
                             },
                           validator: (value) {
                             if (value == null) {
@@ -1219,9 +1018,36 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      onPressed: () {
-                                        print(ordenNewFormProvider.validForm());
-                                      }),
+                                      onPressed: ()async {
+                                        if (formKey.currentState!.validate()) {
+                                                try {
+
+                                                  List<Map<String, dynamic>> productos = productsList.map((productData) {
+                                                      return {
+                                                        'producto': productData['producto'],
+                                                        'cantidad': productData['cantidad'],
+                                                        'precio': productData['precio'],
+                                                      };
+                                                    }).toList();
+
+                                                  await ordenNewFormProvider.createOrden(
+                                                   cliente: cliente.toString(),
+                                                    ruta: ruta.toString(),
+                                                    productos: productos,
+                                                    fechaentrega: fechaentrega!,
+                                                    tipo: tipo.toString(),
+                                                    comentario: comentario,
+                                                  );
+                                                  if (!context.mounted) return;
+                                                  NotificationService.showSnackBa('Orden to $cliente Created');
+                                                  Navigator.of(context).pop();
+                                                } catch (e) {
+                                                  NotificationService.showSnackBarError('Could not save the Product');
+                                                }
+                                              }
+                                       
+                                      }
+                                      ),
                                 ),
                               ],
                             ),
