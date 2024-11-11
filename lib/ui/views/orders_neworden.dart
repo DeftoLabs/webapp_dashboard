@@ -984,7 +984,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                           }
                                       } catch (e) {
                                           // Mostrar el error específico si falla la creación
-                                          NotificationService.showSnackBarError('Error: $e');
+                                          NotificationService.showSnackBarError('No se pudo guardar el Producto: $e');
                                       }
                                               }
                                        

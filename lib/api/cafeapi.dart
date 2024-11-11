@@ -103,7 +103,7 @@ class CafeApi {
     
     return resp.data; // Retorna los datos de la respuesta
   } catch (e) {
-    throw('Error in the PUT');
+    throw('Error in the POST');
   }
 }
 
