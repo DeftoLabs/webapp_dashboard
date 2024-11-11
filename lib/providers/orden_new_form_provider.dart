@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/ordenes.dart';
-import 'package:web_dashboard/models/usuario.dart';
 
 class OrdenNewFormProvider extends ChangeNotifier {
 
@@ -19,7 +18,6 @@ class OrdenNewFormProvider extends ChangeNotifier {
   }
 
     Future<String?> createOrden({
-    Location? location,
     required String cliente,
     required String ruta,
     required List<Map<String, dynamic>> productos,
@@ -28,18 +26,20 @@ class OrdenNewFormProvider extends ChangeNotifier {
     String? comentario,
 
   }) async {
-    final data = {
-      'location': location,
-      'cliente': cliente,
-      'ruta': ruta,
+     final fechaFormateada = '${fechaentrega.toUtc().toIso8601String().split('.').first}Z';
+       final data = {
+      'clientes': [cliente],
+      'ruta': [ruta], 
       'productos': productos,
-      'fechaentrega': fechaentrega.toIso8601String(),
+      'fechaentrega': fechaFormateada,
       'tipo': tipo,
-      'comentario': comentario,
     };
-    
+    if (comentario != null) {
+      data['comentario'] = comentario;
+    }
+    print('Datos enviados: $data');
     try {
-      final json = await CafeApi.post('/ordens', data);     
+      final json = await CafeApi.postJson('/ordens', data);     
       final newOrden = Ordenes.fromMap(json);
       ordenes.add(newOrden);
       notifyListeners();

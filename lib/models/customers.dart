@@ -45,7 +45,7 @@ class Customer {
 
 
   return Customer(
-    id: json["_id"] ?? '',
+    id: json.containsKey("cliente") ? json["cliente"]["_id"] ?? 'Not ID' : json["_id"] ?? 'Sin Not ID',
     estado: json["estado"] ?? false,
     codigo: json["codigo"] ?? '',
     idfiscal: json["idfiscal"] ?? '',

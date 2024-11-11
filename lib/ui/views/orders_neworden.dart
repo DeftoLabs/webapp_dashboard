@@ -429,9 +429,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 width: 353,
                                                 child: Consumer<RutaProvider>(
                                                   builder: (context, rutaProvider, child) {
-                                                    if (rutaProvider
-                                                        .clientesRutaSeleccionada
-                                                        .isEmpty) {
+                                                    if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
                                                       return const Text('');
                                                     }
                                                     return DropdownButtonFormField<String>(
@@ -455,11 +453,9 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       items: rutaProvider
                                                           .clientesRutaSeleccionada
                                                           .map((cliente) {
-                                                        return DropdownMenuItem<
-                                                            String>(
+                                                        return DropdownMenuItem<String>(
                                                           value: cliente.id,
-                                                          child: Text(
-                                                            cliente.nombre,
+                                                          child: Text(cliente.nombre,
                                                             style:const TextStyle(color: Colors.black) ),
                                                         );
                                                       }).toList(),
@@ -479,115 +475,70 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             ],
                                           )
                                         : Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               const SizedBox(width: 20),
-                                              Consumer<RutaProvider>(
-                                                builder: (context, rutaProvider,
-                                                    child) {
-                                                  if (rutaProvider
-                                                          .rutas.isEmpty ||
-                                                      !rutaProvider.rutas.any(
-                                                          (ruta) =>
-                                                              ruta.usuarioZona
-                                                                  .uid ==
-                                                              selectedUsuarioZona)) {
-                                                    selectedUsuarioZona = null;
-                                                  }
-
-                                                  return SizedBox(
-                                                    width: 250,
-                                                    child:
-                                                        DropdownButtonFormField<
-                                                            String>(
-                                                      value:
-                                                          selectedUsuarioZona,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        hintText: '',
-                                                        hintStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black.withOpacity(0.7),),
+                                              SizedBox(
+                                                width: 250,
+                                                child: Consumer<RutaProvider>(
+                                                    builder: (context,rutaProvider, child) {
+                                                      if (rutaProvider.rutas.isEmpty || !rutaProvider.rutas.any(
+                                                          (ruta) => ruta.usuarioZona.uid == selectedUsuarioZona)) {
+                                                        selectedUsuarioZona = null;
+                                                        ruta = null;
+                                                      }
+                                                
+                                                    return DropdownButtonFormField<String>(
+                                                      value: selectedUsuarioZona,
+                                                      decoration: InputDecoration(
                                                         label: Center(
                                                           child: Text(
-                                                              'REPRESENTATIVE',
-                                                              style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.black,fontWeight:FontWeight.bold)),
+                                                            'REPRESENTATIVE',style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold),
+                                                          ),         
                                                         ),
-                                                        focusedBorder:
-                                                            const OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors.white,
-                                                            width: 2.0,
-                                                          ),
-                                                        ),
-                                                        enabledBorder:
-                                                            const OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Colors.white,
-                                                            width: 2.0,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      icon: const Icon(
-                                                        Icons.arrow_drop_down,
-                                                        color: Colors.black,
-                                                      ),
-                                                      style: GoogleFonts
-                                                          .plusJakartaSans(
-                                                              color:
-                                                                  Colors.black),
-                                                      dropdownColor:
-                                                          Colors.white,
+                                                        focusedBorder: const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0)),
+                                                        enabledBorder: const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0))),
+                                                      icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
+                                                      style: GoogleFonts.plusJakartaSans(color:Colors.black),
+                                                      dropdownColor: Colors.white,
                                                       items: rutaProvider.rutas
-                                                          .map((ruta) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: ruta
-                                                              .usuarioZona.uid,
-                                                          child: Text(
-                                                            ruta.usuarioZona
-                                                                .nombre,
-                                                            style:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black),
-                                                          ),
+                                                          .map((rutas) {
+                                                        return DropdownMenuItem<String>(
+                                                          value: rutas .usuarioZona.uid,
+                                                          child: Text(rutas.usuarioZona.nombre,
+                                                            style:const TextStyle( color: Colors.black)),
+                                                            onTap: (){
+                                                              ruta = rutas.id; 
+                                                            },
                                                         );
                                                       }).toList(),
                                                       onChanged: (value) {
                                                         setState(() {
-                                                          selectedUsuarioZona =
-                                                              value;
+                                                          selectedUsuarioZona = value;
                                                         });
-
-                                                        // Actualiza la lista de clientes en el RutaProvider
                                                         if (value != null) {
                                                           rutaProvider.actualizarClientesRuta(value);
-                                                          // Reinicia el cliente seleccionado al cambiar de usuarioZona
                                                           cliente = null;
                                                         }
                                                       },
                                                       validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return 'PLEASE SELECT A REPRESENTATIVE';
+                                                        if (value == null || value.isEmpty) {
+                                                        return 'PLEASE SELECT A REPRESENTATIVE';
                                                         }
                                                         return null;
                                                       },
-                                                    ),
-                                                  );
-                                                },
+                                                    );
+                                                  },
+                                                ),
                                               ),
 
                                               const SizedBox(width: 20),
 
                                               // Dropdown para seleccionar cliente
                                               Consumer<RutaProvider>(
-                                                builder: (context, rutaProvider,
-                                                    child) {
-                                                  // Si no hay clientes, mostramos un mensaje o un dropdown vacío
-                                                  if (rutaProvider.clientesRutaSeleccionada.isEmpty) {return const Text('');
+                                                builder: (context, rutaProvider,child) {
+                                                  if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
+                                                    return const Text('');
                                                   }
                                                   return SizedBox(
                                                     width: 353,
@@ -611,25 +562,13 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                         Icons.arrow_drop_down,
                                                         color: Colors.black,
                                                       ),
-                                                      style: GoogleFonts
-                                                          .plusJakartaSans(
-                                                              color:
-                                                                  Colors.black),
-                                                      dropdownColor:
-                                                          Colors.white,
-                                                      items: rutaProvider
-                                                          .clientesRutaSeleccionada
-                                                          .map((cliente) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: cliente
-                                                              .id, // usa el ID o algún identificador del cliente
-                                                          child: Text(
-                                                            cliente.nombre,
-                                                            style:
-                                                                const TextStyle(
-                                                                    color: Colors
-                                                                        .black),
+                                                      style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                                                      dropdownColor:Colors.white,
+                                                      items: rutaProvider.clientesRutaSeleccionada.map((cliente) {
+                                                        return DropdownMenuItem<String>(
+                                                          value: cliente.id,
+                                                          child: Text(cliente.nombre,
+                                                            style:const TextStyle( color: Colors.black),
                                                           ),
                                                         );
                                                       }).toList(),
@@ -1030,7 +969,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       };
                                                     }).toList();
 
-                                                  await ordenNewFormProvider.createOrden(
+                                                 final saved =  await ordenNewFormProvider.createOrden(
                                                    cliente: cliente.toString(),
                                                     ruta: ruta.toString(),
                                                     productos: productos,
@@ -1038,12 +977,15 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                     tipo: tipo.toString(),
                                                     comentario: comentario,
                                                   );
-                                                  if (!context.mounted) return;
-                                                  NotificationService.showSnackBa('Orden to $cliente Created');
-                                                  Navigator.of(context).pop();
-                                                } catch (e) {
-                                                  NotificationService.showSnackBarError('Could not save the Product');
-                                                }
+                                                 if (saved == null) {
+                                              if (!context.mounted) return;
+                                              NotificationService.showSnackBa('Orden to $cliente Created');
+                                              Navigator.of(context).pop();
+                                          }
+                                      } catch (e) {
+                                          // Mostrar el error específico si falla la creación
+                                          NotificationService.showSnackBarError('Error: $e');
+                                      }
                                               }
                                        
                                       }
