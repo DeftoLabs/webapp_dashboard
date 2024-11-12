@@ -83,6 +83,7 @@ class _OrdenBodyState extends State<OrdenBody> {
   String? producto;
   double? precio;
   double? cantidad = 1;
+  String? unid;
   String? comentario = '';
   DateTime? fechaentrega = DateTime.now().add(const Duration(days: 1));
     final formKey = GlobalKey<FormState>();
@@ -98,6 +99,7 @@ class _OrdenBodyState extends State<OrdenBody> {
         'producto': null,
         'precio': null,
         'cantidad': 1,
+        'unid':null,
         'isFirstRow': true
       });
     } else {
@@ -105,6 +107,7 @@ class _OrdenBodyState extends State<OrdenBody> {
         'producto': null,
         'precio': null,
         'cantidad': 1,
+        'unid':null,
         'isFirstRow': false
       });
     }
@@ -116,7 +119,7 @@ class _OrdenBodyState extends State<OrdenBody> {
   @override
   Widget build(BuildContext context) {
 
-    double dynamicHeight = productsList.length * 70.0;
+    double dynamicHeight = productsList.length * 50.0;
     double screenWidth = MediaQuery.of(context).size.width;
 
     final ordenNewFormProvider = Provider.of<OrdenNewFormProvider>(context);
@@ -648,26 +651,16 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             return SizedBox(
                                               width: 275,
                                               child: DropdownButtonFormField<String>(
-                                                value: productData[
-                                                    'producto'],
+                                                value: productData['producto'],
                                                 decoration: InputDecoration(
                                                   labelText: 'ITEM',
-                                                  labelStyle: GoogleFonts
-                                                      .plusJakartaSans(
-                                                    fontSize: 12,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                                  labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold,),
                                                   focusedBorder: OutlineInputBorder(
                                                     borderRadius:BorderRadius.circular(15),
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color: Colors.white,width: 1)),
+                                                    borderSide:const BorderSide(color: Colors.white,width: 1)),
                                                   enabledBorder:OutlineInputBorder(borderRadius:
                                                   BorderRadius.circular(15),
-                                                  borderSide:
-                                                        const BorderSide(
-                                                            color: Colors.white,width:1)),
+                                                  borderSide:const BorderSide(color: Colors.white,width:1)),
                                                   border: OutlineInputBorder(borderRadius:BorderRadius.circular(15)),
                                                   errorStyle: const TextStyle(
                                                   color: Colors.red, // Asegura que el mensaje sea visible
@@ -676,15 +669,11 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 ),
                                                 items: productProvider.productos
                                                     .map((producto) {
-                                                  return DropdownMenuItem<
-                                                      String>(
+                                                  return DropdownMenuItem<String>(
                                                     value: producto.id,
                                                     child: Text(
-                                                        producto.descripcion
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            color:
-                                                                Colors.black)),
+                                                        producto.descripcion.toString(),
+                                                        style: const TextStyle(color:Colors.black)),
                                                   );
                                                 }).toList(),
                                                 validator: (value) {
@@ -696,7 +685,12 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 onChanged: (value) {
                                                   setState(() {
                                                   productData['producto'] = value;
+                                                  final productoSeleccionado = productProvider.productos.firstWhere(
+                                                  (producto) => producto.id == value,
+                                                  orElse: () => Producto.empty(),
+                                                );
                                                   productData['precio'] = null;
+                                                  productData['unid'] = productoSeleccionado.unid;
                                                   });
                                                 },
                                               ),
@@ -704,8 +698,11 @@ class _OrdenBodyState extends State<OrdenBody> {
                                           },
                                         ),
                                         const SizedBox(width: 20),
-                                        if (productData['producto'] !=
-                                            null)
+                                         SizedBox(child: Text(productData['unid'] ?? '',
+                                         style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)
+                                         )),
+                                        const SizedBox(width: 20),
+                                        if (productData['producto'] != null)
                                           Consumer<ProductsProvider>(
                                             builder: (context, productProvider,
                                                 child) {
@@ -713,56 +710,26 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                   productProvider.productos
                                                       .firstWhere(
                                                           (producto) =>
-                                                              producto.id ==
-                                                              productData[
-                                                                  'producto'],
+                                                              producto.id == productData[ 'producto'],
                                                           orElse: () =>
                                                               Producto.empty());
-
                                               return SizedBox(
                                                 width: 95,
-                                                child: DropdownButtonFormField<
-                                                    String>(
-                                                  value:
-                                                      productData['precio']
-                                                          ?.toString(),
+                                                child: DropdownButtonFormField<String>(
+                                                  value:productData['precio']?.toString(),
                                                   decoration: InputDecoration(
                                                     labelText: 'PRICE',
-                                                    labelStyle: GoogleFonts
-                                                        .plusJakartaSans(
-                                                      fontSize: 12,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
+                                                    labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold,),
+                                                    focusedBorder:OutlineInputBorder(
+                                                      borderRadius:BorderRadius.circular(15),
+                                                      borderSide:const BorderSide(color:Colors.white,width: 1),),
+                                                    enabledBorder:OutlineInputBorder(
+                                                      borderRadius:BorderRadius.circular(15),
                                                       borderSide:
-                                                          const BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 1),
-                                                    ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      borderSide:
-                                                          const BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 1),
-                                                    ),
+                                                          const BorderSide(color:Colors.white,width: 1),),
                                                     border: OutlineInputBorder(
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                    ),
-                                                  ),
+                                                  BorderRadius.circular(15),),),
                                                   items: [
                                                     DropdownMenuItem(value:productoSeleccionado.precio1.toString(),child: Text('${productoSeleccionado.precio1}')),
                                                     DropdownMenuItem(value:productoSeleccionado.precio2.toString(),child: Text('${productoSeleccionado.precio2}')),
@@ -801,26 +768,13 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
                                                 ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  borderSide: const BorderSide(
-                                                      color: Colors.white,
-                                                      width: 1),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  borderSide: const BorderSide(
-                                                      color: Colors.white,
-                                                      width: 1),
-                                                ),
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
+                                                focusedBorder:OutlineInputBorder(
+                                                  borderRadius:BorderRadius.circular(15),
+                                                  borderSide: const BorderSide(color: Colors.white,width: 1),),
+                                                enabledBorder:OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(15),
+                                                  borderSide: const BorderSide(color: Colors.white,width: 1),),
+                                                border: OutlineInputBorder(borderRadius:BorderRadius.circular(15), ),
                                               ),
                                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                                    validator: (value) {
