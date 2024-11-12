@@ -58,6 +58,8 @@ class Ordenes {
     String toJson() => json.encode(toMap());
 
             factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás recibiendo
+            print(json["ruta"]);
+
               return Ordenes(
                 location: json["location"] != null ? Location.fromMap(json["location"]) : null,
                 estado: json["estado"] ?? false,
@@ -75,6 +77,7 @@ class Ordenes {
                         }
                       }))
                     : [],
+                    
                 perfil: json["perfil"] != null 
                   ? List<String>.from(json["perfil"].map((x) => x.toString()))
                   : [],

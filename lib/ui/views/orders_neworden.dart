@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/providers.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 
 class OrdersNewOrdern extends StatelessWidget {
@@ -426,7 +427,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                               ),
                                               const SizedBox(height: 20),
                                               SizedBox(
-                                                width: 353,
+                                                width: 385,
                                                 child: Consumer<RutaProvider>(
                                                   builder: (context, rutaProvider, child) {
                                                     if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
@@ -540,36 +541,38 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                   if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
                                                     return const Text('');
                                                   }
-                                                  return SizedBox(
-                                                    width: 353,
-                                                    child:
-                                                        DropdownButtonFormField<String>(
+                                                  return    SizedBox(
+                                                width: 385,
+                                                child: Consumer<RutaProvider>(
+                                                  builder: (context, rutaProvider, child) {
+                                                    if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
+                                                      return const Text('');
+                                                    }
+                                                    return DropdownButtonFormField<String>(
                                                       value: cliente,
-                                                      decoration:InputDecoration(
-                                                        hintText: '',
-                                                        hintStyle: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.black.withOpacity(0.7),
-                                                        ),
+                                                      decoration: InputDecoration(
                                                         label: Center(
                                                           child: Text(
-                                                              'CUSTOMER',
-                                                              style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.black,fontWeight:FontWeight.bold)),
+                                                            'CUSTOMER',
+                                                            style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.black,fontWeight:FontWeight.bold),
+                                                          ),
                                                         ),
-                                                        focusedBorder:const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,  width: 2.0)),
+                                                        focusedBorder:const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0,),
+                                                        ),
                                                         enabledBorder:
-                                                          const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0)),
+                                                          const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0,),
+                                                        ),
                                                       ),
-                                                      icon: const Icon(
-                                                        Icons.arrow_drop_down,
-                                                        color: Colors.black,
-                                                      ),
-                                                      style: GoogleFonts.plusJakartaSans(color: Colors.black),
-                                                      dropdownColor:Colors.white,
-                                                      items: rutaProvider.clientesRutaSeleccionada.map((cliente) {
+                                                      icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
+                                                      style: GoogleFonts .plusJakartaSans( color:Colors.black),
+                                                      dropdownColor:  Colors.white,
+                                                      items: rutaProvider
+                                                          .clientesRutaSeleccionada
+                                                          .map((cliente) {
                                                         return DropdownMenuItem<String>(
                                                           value: cliente.id,
                                                           child: Text(cliente.nombre,
-                                                            style:const TextStyle( color: Colors.black),
-                                                          ),
+                                                            style:const TextStyle(color: Colors.black) ),
                                                         );
                                                       }).toList(),
                                                       onChanged: (value) {
@@ -581,8 +584,10 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                         }
                                                         return null;
                                                       },
-                                                    ),
-                                                  );
+                                                    );
+                                                  },
+                                                ),
+                                              );
                                                 },
                                               ),
                                             ],
@@ -902,13 +907,13 @@ class _OrdenBodyState extends State<OrdenBody> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0)
                           ),
                             onChanged: (value) {
-                             comentario = value;
+                             comentario = value.toUpperCase();
                             },
                           validator: (value) {
                             if (value == null) {
                               return '';
-                            } else if (value.length > 25) {
-                              return 'CANNOT EXCEED 25 CHARACTERS';
+                            } else if (value.length > 100) {
+                              return 'CANNOT EXCEED 100 CHARACTERS';
                             }
                             return null; // Validation successful
                           },
@@ -970,8 +975,8 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                     }).toList();
 
                                                  final saved =  await ordenNewFormProvider.createOrden(
-                                                   cliente: cliente.toString(),
-                                                    ruta: ruta.toString(),
+                                                   cliente: cliente ?? '',
+                                                    ruta: ruta ?? '',
                                                     productos: productos,
                                                     fechaentrega: fechaentrega!,
                                                     tipo: tipo.toString(),
@@ -980,11 +985,10 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                  if (saved == null) {
                                               if (!context.mounted) return;
                                               NotificationService.showSnackBa('Orden to $cliente Created');
-                                              Navigator.of(context).pop();
+                                              NavigationService.replaceTo('/dashboard/orders');
                                           }
                                       } catch (e) {
-                                          // Mostrar el error específico si falla la creación
-                                          NotificationService.showSnackBarError('No se pudo guardar el Producto: $e');
+                                          NotificationService.showSnackBarError('No se pudo guardar la Orden: $e');
                                       }
                                               }
                                        

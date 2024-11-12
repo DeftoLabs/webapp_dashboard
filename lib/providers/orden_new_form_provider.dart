@@ -37,15 +37,14 @@ class OrdenNewFormProvider extends ChangeNotifier {
     if (comentario != null) {
       data['comentario'] = comentario;
     }
-    print('Datos enviados: $data');
     try {
       final json = await CafeApi.postJson('/ordens', data);   
       final newOrden = Ordenes.fromMap(json);
       ordenes.add(newOrden);
       notifyListeners();
     } catch (e) {
-      print(e);
-        throw 'Error creating new Orden: $e'; 
+     // print(e);
+       // throw 'Error creating new Orden: $e'; 
         
     }
     return null;
