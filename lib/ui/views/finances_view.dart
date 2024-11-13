@@ -308,7 +308,7 @@ class FinancesView extends StatelessWidget {
                     style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
                   ),
                 ),
-                  DataColumn(label: Text('DELETE',style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),),),
+                  // DataColumn(label: Text('DELETE',style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),),),
               ],
               rows: taxSalesDataSource.taxsales.map(
                 (taxsales) => DataRow(
@@ -323,39 +323,39 @@ class FinancesView extends StatelessWidget {
                         },
                       ),
                     ),
-                     DataCell(
-                      IconButton(
-                        icon: const Icon(Icons.delete_forever_outlined, color: Colors.red,),
-                          onPressed: (){
-                            final dialog = AlertDialog(
-                              title: const Text('Are you sure to delete this register?'),
-                              content: Text('Delete ${taxsales.taxname}'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('No'),
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  }, 
-                                ),
-                                TextButton(
-                                  child: const Text('Yes, Delete'),
-                                  onPressed: () async {
-                                    final taxsalesProvider = Provider.of<TaxSalesProvider>(context, listen: false);
-                                    await taxsalesProvider.deleteTaxSales(taxsales.id!);
-                                    if (context.mounted) {
-                                      Navigator.of(context).pop();
-                                    }
-                                    }, 
-                                )
-                                  ],
-                              );
-
-                  showDialog(
-                    context: context, 
-                    builder: ( _ ) => dialog);
-                         } 
-                      ),
-                    ),
+                //     DataCell(
+                //      IconButton(
+                //        icon: const Icon(Icons.delete_forever_outlined, color: Colors.red,),
+                //          onPressed: (){
+                //            final dialog = AlertDialog(
+                //              title: const Text('Are you sure to delete this register?'),
+                //              content: Text('Delete ${taxsales.taxname}'),
+                //              actions: [
+                //                TextButton(
+                //                  child: const Text('No'),
+                //                  onPressed: (){
+                //                    Navigator.of(context).pop();
+                //                  }, 
+                //                ),
+                //                TextButton(
+                //                  child: const Text('Yes, Delete'),
+                //                  onPressed: () async {
+                //                    final taxsalesProvider = Provider.of<TaxSalesProvider>(context, listen: false);
+                //                    await taxsalesProvider.deleteTaxSales(taxsales.id!);
+                //                    if (context.mounted) {
+                //                      Navigator.of(context).pop();
+                //                    }
+                //                    }, 
+                //                )
+                //                  ],
+                //              );
+//
+                //  showDialog(
+                //    context: context, 
+                //    builder: ( _ ) => dialog);
+                //         } 
+                //      ),
+                //    ),
                   ],
                 ),
               ).toList(),
@@ -404,12 +404,7 @@ class FinancesView extends StatelessWidget {
                     style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
                   ),
                 ),
-                 DataColumn(
-                  label: Text(
-                    'DELETE',
-                    style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),
-                  ),
-                ),
+                 // DataColumn(label: Text('DELETE',style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold),),),
               ],
               rows: taxOperationDataSource.taxoperations.map(
                 (taxoperations) => DataRow(
@@ -424,39 +419,39 @@ class FinancesView extends StatelessWidget {
                         },
                       ),
                     ),
-                                          DataCell(
-                      IconButton(
-                        icon: const Icon(Icons.delete_forever_outlined, color: Colors.red,),
-                          onPressed: (){
-                            final dialog = AlertDialog(
-                              title: const Text('Are you sure to delete this register?'),
-                              content: Text('Delete ${taxoperations.taxname}'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('No'),
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  }, 
-                                ),
-                                TextButton(
-                                  child: const Text('Yes, Delete'),
-                                  onPressed: () async {
-                                    final taxoperatioProvider = Provider.of<TaxOperationProvider>(context, listen: false);
-                                    await taxoperatioProvider.deleteTaxOperation(taxoperations.id!);
-                                    if (context.mounted) {
-                                      Navigator.of(context).pop();
-                                    }
-                                    }, 
-                                )
-                                  ],
-                              );
-
-                  showDialog(
-                    context: context, 
-                    builder: ( _ ) => dialog);
-                         } 
-                      ),
-                    ),
+                //    DataCell(
+                //      IconButton(
+                //        icon: const Icon(Icons.delete_forever_outlined, color: Colors.red,),
+                //          onPressed: (){
+                //            final dialog = AlertDialog(
+                //              title: const Text('Are you sure to delete this register?'),
+                //              content: Text('Delete ${taxoperations.taxname}'),
+                //              actions: [
+                //                TextButton(
+                //                  child: const Text('No'),
+                //                  onPressed: (){
+                //                    Navigator.of(context).pop();
+                //                  }, 
+                //                ),
+                //                TextButton(
+                //                  child: const Text('Yes, Delete'),
+                //                  onPressed: () async {
+                //                    final taxoperatioProvider = Provider.of<TaxOperationProvider>(context, listen: false);
+                //                    await taxoperatioProvider.deleteTaxOperation(taxoperations.id!);
+                //                    if (context.mounted) {
+                //                      Navigator.of(context).pop();
+                //                    }
+                //                    }, 
+                //                )
+                //                  ],
+                //              );
+//
+                //  showDialog(
+                //    context: context, 
+                //    builder: ( _ ) => dialog);
+                //         } 
+                //      ),
+                //    ),
                   ],
                 ),
               ).toList(),

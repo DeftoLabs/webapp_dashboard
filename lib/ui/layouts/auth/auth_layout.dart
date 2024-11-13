@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:web_dashboard/ui/layouts/auth/widgets/background_image.dart';
+import 'package:web_dashboard/ui/layouts/auth/widgets/custom_title.dart';
 import 'package:web_dashboard/ui/layouts/auth/widgets/links_bar.dart';
 
 class AuthLayout extends StatelessWidget {
@@ -56,7 +57,7 @@ class _MobileBody extends StatelessWidget {
           const SizedBox(height: 200,
           width: double.infinity,
           child: BackgroundImage()),
-          //const CustomTitle(),
+          const CustomTitle(),
           SizedBox(
             width: double.infinity,
             height: 420,
@@ -102,7 +103,7 @@ class _DesktopBody extends StatelessWidget {
               color: Colors.black,
               child: Column(
                 children: [
-                  //const CustomTitle(),
+                  const CustomTitle(),
                   const SizedBox(height: 50),
                   Expanded(child: child),
                 ],

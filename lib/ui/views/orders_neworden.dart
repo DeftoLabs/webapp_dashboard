@@ -119,7 +119,7 @@ class _OrdenBodyState extends State<OrdenBody> {
   @override
   Widget build(BuildContext context) {
 
-    double dynamicHeight = productsList.length * 50.0;
+    double dynamicHeight = productsList.length * 60.0;
     double screenWidth = MediaQuery.of(context).size.width;
 
     final ordenNewFormProvider = Provider.of<OrdenNewFormProvider>(context);
@@ -894,7 +894,48 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      onPressed: () async {}),
+                                      onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                      title: Center(
+                                        child: 
+                                        Text('Warning', 
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold
+                                        ))),
+                                        content: RichText(
+                                          text: TextSpan(
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 18,
+                                              color: Colors.black, // Color del texto general
+                                            ),
+                                            children: const <TextSpan>[
+                                              TextSpan(text: 'Are you sure you want to cancel this order?'),
+                                            ],
+                                          ),      
+                                        ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                           NavigationService.replaceTo('/dashboard/orders'); 
+                                          },
+                                          child: Text('YES', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                           Navigator.of(context).pop(); // Cerrar el diálogo
+                                          },
+                                          child: Text('NO', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                      }),
                                 ),
                                 const SizedBox(width: 20),
                                 Container(
@@ -917,6 +958,42 @@ class _OrdenBodyState extends State<OrdenBody> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       onPressed: ()async {
+                                         if (productsList.isEmpty) {
+                                            showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                      title: Center(
+                                        child: 
+                                        Text('Warning', 
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold
+                                        ))),
+                                        content: RichText(
+                                          text: TextSpan(
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 18,
+                                              color: Colors.black, // Color del texto general
+                                            ),
+                                            children: const <TextSpan>[
+                                              TextSpan(text: 'The product list is empty. Please add at least one product.'),
+                                            ],
+                                          ),      
+                                        ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                           Navigator.of(context).pop(); // Cerrar el diálogo
+                                          },
+                                          child: Text('OK', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                      } else
                                         if (formKey.currentState!.validate()) {
                                                 try {
 
@@ -938,7 +1015,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                   );
                                                  if (saved == null) {
                                               if (!context.mounted) return;
-                                              NotificationService.showSnackBa('Orden to $cliente Created');
+                                              NotificationService.showSnackBa('Orden Created');
                                               NavigationService.replaceTo('/dashboard/orders');
                                           }
                                       } catch (e) {

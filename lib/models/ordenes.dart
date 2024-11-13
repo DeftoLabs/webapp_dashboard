@@ -58,8 +58,6 @@ class Ordenes {
     String toJson() => json.encode(toMap());
 
             factory Ordenes.fromMap(Map<String, dynamic> json) {// Verifica qué estás recibiendo
-            print(json["ruta"]);
-
               return Ordenes(
                 location: json["location"] != null ? Location.fromMap(json["location"]) : null,
                 estado: json["estado"] ?? false,
@@ -73,7 +71,7 @@ class Ordenes {
                         } else if (x is String) {
                           return Ruta(id: x, estado: false, codigoRuta: '', nombreRuta: '', zona: '', diasemana: '', clientes: [], usuarioZona: Usuario(rol: '', estado: false, google: false, nombre: '', correo: '', uid: '', phone: '', zone: ''));
                         } else {
-                          throw Exception("Tipo inesperado para la ruta: ${x.runtimeType}");
+                          throw Exception("Route Error: ${x.runtimeType}");
                         }
                       }))
                     : [],

@@ -14,16 +14,31 @@ class CustomTitle extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
   
-          const SizedBox(height: 50),
+          const SizedBox(height: 200),
 
           FittedBox(
             fit: BoxFit.contain,
-            child: Text('A',
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-             )),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(' "Nothing is Faster than the Life Itself" ',
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                 )),
+                 const SizedBox(height: 5),
+                   Align(
+                    alignment: Alignment.centerRight,
+                     child: Text('Ayrton Senna',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                       )),
+                   ),
+              ],
+            ),
           )
         ],
       )

@@ -254,15 +254,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 30),
-                    Row(
+                    const SizedBox(height: 15),
+                    Column(
                       children: [
                         Text('# CONTROL',
-                            style: GoogleFonts.plusJakartaSans(fontSize: 16)),
-                        const SizedBox(width: 5),
+                            style: GoogleFonts.plusJakartaSans(fontSize: 12)),
+                        const SizedBox(height: 5),
                         Text(orden.control,
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 12, fontWeight: FontWeight.bold)),
                       ],
                     )
                   ],
