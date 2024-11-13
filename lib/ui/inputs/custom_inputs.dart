@@ -13,18 +13,18 @@ class CustomInput {
       border: OutlineInputBorder(
         borderSide: BorderSide(color:Colors.white.withOpacity(0.3))),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(color: Colors.white.withOpacity(0.3))),
         focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30), // Borde redondeado cuando está enfocado
+        borderRadius: BorderRadius.circular(20), // Borde redondeado cuando está enfocado
         borderSide: const BorderSide(color: Colors.white, width: 1),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30), // Borde redondeado cuando hay error
+        borderRadius: BorderRadius.circular(20), // Borde redondeado cuando hay error
         borderSide: const BorderSide(color: Colors.red),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30), // Borde redondeado cuando está enfocado y hay error
+        borderRadius: BorderRadius.circular(20), // Borde redondeado cuando está enfocado y hay error
         borderSide: const BorderSide(color: Colors.red, width: 2),
       ),
           hintText: hint,

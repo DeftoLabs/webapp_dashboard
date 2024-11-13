@@ -56,4 +56,14 @@ void refreshOrden(Ordenes newOrden) {
   ).toList();
   notifyListeners();
 }
+
+    Future deleteOrden (String id) async {
+   try{
+     await CafeApi.delete('/ordens/$id',{});
+     ordenes.removeWhere((ordenes) => ordenes.id == id);
+     notifyListeners();
+   } catch (e){
+     throw ' Error to Delete the Order ';
+   }
+ }
 }

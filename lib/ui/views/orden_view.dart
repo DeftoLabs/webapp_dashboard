@@ -911,6 +911,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                 if (orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER')
                  Container(
                     height: 50,
                     width: 150,
@@ -924,14 +925,61 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                         )),
                     child: TextButton(
                       child: Text(
-                        'CANCEL',
+                        'DELETE',
                         style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () async {
-                    
-                      },
+                     onPressed: () async {
+                          final dialog = AlertDialog(
+                            backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                            title: Center(
+                              child: Text('Are you sure to delete this Order?', 
+                               style: GoogleFonts.plusJakartaSans(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold
+                                ))),
+                            content: Text(orden.clientes.first.nombre,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 20,
+                            )),
+                            actions: [
+                              TextButton(
+                                child: Text('No',
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black
+                                )
+                                ),
+                                onPressed: (){
+                                  Navigator.of(context).pop();
+                                }, 
+                              ),
+                              TextButton(
+                                child: Text('Yes, Delete',  
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black
+                                )),
+                                onPressed: () async {
+                                  final ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
+                                  await ordenesProvider.deleteOrden(orden.id);
+                                  if (context.mounted) {
+                                    NotificationService.showSnackBa('Order has been Deleted');
+                                    NavigationService.replaceTo('/dashboard/orders');
+                                  }
+                                  }, 
+                              )
+                                ],
+                            );
+
+               showDialog(
+                  context: context, 
+                  builder: ( _ ) => dialog);
+                         } 
                     ),
                   ),
                   const SizedBox(width: 20),
