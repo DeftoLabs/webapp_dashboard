@@ -526,7 +526,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
 
                     if (pickedDate != null) {
                       setState(() {
-                        fechaEntrega = pickedDate; // Actualiza el estado con la fecha seleccionada
+                        fechaEntrega = pickedDate; 
                       });
                     }
                   },
@@ -553,167 +553,212 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           )),
                           DataCell(Text(producto.descripcion.toString())),
                           DataCell(
-                            SizedBox(
-                              width: 90,
-                              height: 40,
-                              child: TextFormField(
-                                initialValue: producto.cantidad.toString(),
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold
-                                ),
-                                maxLength: 8,
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  counterText: "",
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 5),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: const BorderSide(
-                                         color: Color.fromARGB(255, 194, 190, 190), width: 2),
+                            orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER'
+                                ? Text(
+                                    producto.cantidad.toString(),
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : SizedBox(
+                                    width: 90,
+                                    height: 40,
+                                    child: TextFormField(
+                                      initialValue: producto.cantidad.toString(),
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLength: 8,
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        counterText: "",
+                                        contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(255, 194, 190, 190),
+                                            width: 2,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'This field cannot be empty';
+                                        }
+                                        if (!RegExp(r'^\d{1,4}(\.\d{0,2})?$').hasMatch(value)) {
+                                          return 'Max 4 digits and 2 decimals';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        double? cantidad = double.tryParse(value);
+                                        if (cantidad != null) {
+                                          ordenFormProvider.copyOrdenesWith(
+                                            productId: producto.id, // Pasa el ID del producto que se está actualizando
+                                            cantidad: cantidad,
+                                          );
+                                        }
+                                      },
+                                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                          RegExp(r'^\d{1,4}(\.\d{0,2})?$'), // Permite solo números con hasta 4 enteros y 2 decimales
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: const BorderSide(
-                                        color: Colors.grey, width: 1),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) return 'This field cannot be empty';
-                                  if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'Max 4 Digits(.)';
-                                  return null;
-                                },
-                                  onChanged: (value) {
-                                    double? cantidad = double.tryParse(value);
-                                    if (cantidad != null) {
-                                      ordenFormProvider.copyOrdenesWith(
-                                        productId: producto.id, // Pasa el ID del producto que se está actualizando
-                                        cantidad: cantidad,
-                                      );
-                                    }
-                                  },
-                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                inputFormatters: [
-                                  // Permitir solo números y hasta dos decimales, sin números negativos
-                                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
-                                ],
-                              ),
-                            ),
                           ),
                           DataCell(Text(producto.unid)),
-DataCell(
-  Flexible(
-    child: StatefulBuilder(
-      builder: (context, setState) {
-        // Inicializamos las variables si no están definidas previamente
-        double? currentPrice = selectedPrices[producto.id] ?? producto.precio;
-
-        // Verificamos si el precio es manual
-        bool isManualInput = manualInputStates[producto.id] ?? false;
-        bool isPriceManual = ![
-          producto.precio1,
-          producto.precio2,
-          producto.precio3,
-          producto.precio4,
-          producto.precio5,
-        ].contains(currentPrice);
-
-        // Inicializamos el controlador de texto si no existe
-        if (!textControllers.containsKey(producto.id)) {
-          textControllers[producto.id] = TextEditingController(text: currentPrice.toString());
-        }
-
-        // Obtenemos el controlador de texto
-        TextEditingController textController = textControllers[producto.id]!;
-
-        return Row(
-          children: [
-            // Si el precio es manual, mostramos el TextField
-            if (isManualInput || isPriceManual)
-              Expanded(
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  controller: textController, // Controlador persistente
-                  onChanged: (value) {
-                    double? newPrice = double.tryParse(value);
-                    if (newPrice != null) {
-                      setState(() {
-                        selectedPrices[producto.id] = newPrice;
-                        ordenFormProvider.copyOrdenesWith(
-                          productId: producto.id,
-                          precio: newPrice,
-                        );
-                      });
-                    }
-                  },
-                  onSubmitted: (_) {
-                    setState(() {
-                      manualInputStates[producto.id] = false; // Finaliza la edición manual
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Enter custom price',
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                  ),
-                ),
-              ),
-            // Siempre mostramos el DropdownButton para elegir un precio de la base de datos
-            if (isManualInput || isPriceManual) const SizedBox(width: 8),
-            Expanded(
-              child: DropdownButton<double>(
-                value: isPriceManual ? null : currentPrice,
-                onChanged: (double? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      if (newValue == -1) {
-                        manualInputStates[producto.id] = true; // Cambia a modo manual
-                      } else {
-                        selectedPrices[producto.id] = newValue;
-                        ordenFormProvider.copyOrdenesWith(
-                          productId: producto.id,
-                          precio: newValue,
-                        );
-                      }
-                    });
-                  }
-                },
-                items: [
-                  ...[
-                    producto.precio1,
-                    producto.precio2,
-                    producto.precio3,
-                    producto.precio4,
-                    producto.precio5,
-                  ].where((precio) => precio != null).map<DropdownMenuItem<double>>((double value) {
-                    return DropdownMenuItem<double>(
-                      value: value,
-                      child: Text(
-                        value.toString(),
-                        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                    );
-                  }).toList(),
-                  DropdownMenuItem<double>(
-                    value: -1, // Valor para activar el precio manual
-                    child: Text(
-                      'Enter custom price',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    ),
-  ),
-),
-
+                          DataCell(
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: StatefulBuilder(
+                                    builder: (context, setState) {
+                                      // Inicializamos las variables si no están definidas previamente
+                                      double? currentPrice = selectedPrices[producto.id] ?? producto.precio;
+                                
+                                      // Verificamos si el precio es manual
+                                      bool isManualInput = manualInputStates[producto.id] ?? false;
+                                      bool isPriceManual = ![
+                                        producto.precio1,
+                                        producto.precio2,
+                                        producto.precio3,
+                                        producto.precio4,
+                                        producto.precio5,
+                                      ].contains(currentPrice);
+                                
+                                      // Inicializamos el controlador de texto si no existe
+                                      if (!textControllers.containsKey(producto.id)) {
+                                        textControllers[producto.id] = TextEditingController(text: currentPrice.toString());
+                                      }
+                                
+                                      // Obtenemos el controlador de texto
+                                      TextEditingController textController = textControllers[producto.id]!;
+                                
+                                      return Row(
+                                        children: [
+                                          // Si el precio es manual, mostramos el TextField
+                                          if (isManualInput || isPriceManual)
+                                            Expanded(
+                                              child: TextFormField(
+                                                keyboardType: TextInputType.number,
+                                                controller: textController,
+                                                 inputFormatters: [
+                                                  FilteringTextInputFormatter.allow(
+                                                    RegExp(r'^\d{0,5}(\.\d{0,2})?$')),
+                                                ],
+                                                onChanged: (value) {
+                                                  double? newPrice = double.tryParse(value);
+                                                  if (newPrice != null) {
+                                                    setState(() {
+                                                      selectedPrices[producto.id] = newPrice;
+                                                      ordenFormProvider.copyOrdenesWith(
+                                                        productId: producto.id,
+                                                        precio: newPrice,
+                                                      );
+                                                    });
+                                                  }
+                                                },
+                                                onFieldSubmitted: (_) {
+                                                  setState(() {
+                                                    manualInputStates[producto.id] = false; // Finaliza la edición manual
+                                                  });
+                                                },
+                                                validator: (value) {
+                                                  if (value == null || value.isEmpty) {
+                                                    return 'Enter a Price';
+                                                  }
+                                                  if (double.tryParse(value) == null) {
+                                                    return 'Enter a Number';
+                                                  }
+                                                  return null; // No error
+                                                },
+                                                style: GoogleFonts.plusJakartaSans(
+                                                  fontSize: 14, 
+                                                  fontWeight: FontWeight.bold, 
+                                                  color: Colors.black),
+                                                decoration: InputDecoration(
+                                                  hintText: 'ENTER PRICE',
+                                                  hintStyle: GoogleFonts.plusJakartaSans(
+                                                    fontSize: 14,
+                                                    color: Colors.black
+                                                  ),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                     borderSide: const BorderSide(
+                                                      color: Colors.grey, width: 1),
+                                                  ),
+                                                   contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                ),
+                                              ),
+                                            ),
+                                          // Siempre mostramos el DropdownButton para elegir un precio de la base de datos
+                                          if (isManualInput || isPriceManual) const SizedBox(width: 8),
+                                          Expanded(
+                                            child: DropdownButton<double>(
+                                              value: isPriceManual ? null : currentPrice,
+                                              onChanged: (double? newValue) {
+                                                if (newValue != null) {
+                                                  setState(() {
+                                                    if (newValue == -1) {
+                                                      manualInputStates[producto.id] = true; // Cambia a modo manual
+                                                    } else {
+                                                      selectedPrices[producto.id] = newValue;
+                                                      ordenFormProvider.copyOrdenesWith(
+                                                        productId: producto.id,
+                                                        precio: newValue,
+                                                      );
+                                                    }
+                                                  });
+                                                }
+                                              },
+                                              items: [
+                                                ...[
+                                                  producto.precio1,
+                                                  producto.precio2,
+                                                  producto.precio3,
+                                                  producto.precio4,
+                                                  producto.precio5,
+                                                ].map<DropdownMenuItem<double>>((double value) {
+                                                  return DropdownMenuItem<double>(
+                                                    value: value,
+                                                    child: Text(
+                                                      value.toString(),
+                                                      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                                DropdownMenuItem<double>(
+                                                  value: -1, // Valor para activar el precio manual
+                                                  child: Text(
+                                                    'ENTER PRICE',
+                                                    style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         DataCell(
                           IconButton(
                             icon: const Icon(
