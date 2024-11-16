@@ -101,6 +101,7 @@ class _OrdenViewBody extends StatefulWidget {
   final Ordenes orden;
 
   const _OrdenViewBody({required this.orden});
+  
 
   @override
   State<_OrdenViewBody> createState() => _OrdenViewBodyState();
@@ -110,7 +111,12 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
 
     double? selectedPrice;
     DateTime? fechaEntrega;
+    double? manualPrice;
 
+    Map<String, bool> manualInputStates = {};
+    Map<String, double> selectedPrices = {};
+    final Map<String, TextEditingController> textControllers = {};
+    
     @override
   void initState() {
     super.initState();
@@ -119,8 +125,13 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void dispose() {
+  textControllers.forEach((key, controller) => controller.dispose());
+  super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
 
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty
@@ -133,6 +144,12 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
 
     final ordenFormProvider = Provider.of<OrdenFormProvider>(context);
     final orden = ordenFormProvider.orden!;
+
+    //final taxFormProvider = Provider.of<TaxOperationFormProvider>(context);
+    //final tax = taxFormProvider.taxoperation;
+
+    final financeProvider = Provider.of<FinanceProvider>(context);
+    final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances [0] : null;
 
     final image = (profile.img == null)
         ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35)
@@ -525,8 +542,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                         DataColumn(label: Text('DESCRIPTION', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('QTY / EDIT',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('UNID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                        DataColumn(label: Text('PRICE',       style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                        DataColumn(label: Text('EDIT PRICE',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('PRICE / EDIT',       style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         DataColumn(label: Text('DELETE',      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                       ],
                       rows: orden.productos.map((producto) {
@@ -588,101 +604,116 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             ),
                           ),
                           DataCell(Text(producto.unid)),
-                             DataCell(
-                            SizedBox(
-                              width: 90,
-                              height: 40,
-                              child: TextFormField(
-                                initialValue: producto.precio!.toString(),
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold
-                                ),
-                                maxLength: 8,
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  counterText: "",
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 5),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 194, 190, 190), width: 2),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: const BorderSide(
-                                        color: Colors.grey, width: 1),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) return 'This field cannot be empty';
-                                  if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'Max 4 Digits(.)';
-                                  return null;
-                                },
-                                  onChanged: (value) {
-                                    double? precio = double.tryParse(value);
-                                    if (precio != null) {
-                                      ordenFormProvider.copyOrdenesWith(
-                                        productId: producto.id, // Pasa el ID del producto que se está actualizando
-                                        precio: precio,
-                                      );
-                                    }
-                                  },
-                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                inputFormatters: [
-                                  // Permitir solo números y hasta dos decimales, sin números negativos
-                                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
-                                ],
-                              ),
-                            ),
-                          ),
-                          DataCell(
-                            Container(
-                              alignment: Alignment.center,
-                              child: DropdownButton<double>(
-                                value: selectedPrice,
-                                hint: Text('SELECT',
-                                style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black
-                                )
-                                ),
-                                onChanged: (double? newValue) {
-                                  setState(() {
-                                    selectedPrice = newValue!;
-                                  });
-                                },
-                                style: const TextStyle(color: Colors.black),
-                                dropdownColor: Colors.white,
-                                items: [
-                                  DropdownMenuItem(
-                                    value: producto.precio1,
-                                    child: Text(producto.precio1.toStringAsFixed(2)),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: producto.precio2,
-                                    child: Text(producto.precio2.toStringAsFixed(2)),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: producto.precio3,
-                                    child: Text(producto.precio3.toStringAsFixed(2)),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: producto.precio4,
-                                    child: Text(producto.precio4.toStringAsFixed(2)),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: producto.precio5,
-                                    child: Text(producto.precio5.toStringAsFixed(2)),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+DataCell(
+  Flexible(
+    child: StatefulBuilder(
+      builder: (context, setState) {
+        // Inicializamos las variables si no están definidas previamente
+        double? currentPrice = selectedPrices[producto.id] ?? producto.precio;
+
+        // Verificamos si el precio es manual
+        bool isManualInput = manualInputStates[producto.id] ?? false;
+        bool isPriceManual = ![
+          producto.precio1,
+          producto.precio2,
+          producto.precio3,
+          producto.precio4,
+          producto.precio5,
+        ].contains(currentPrice);
+
+        // Inicializamos el controlador de texto si no existe
+        if (!textControllers.containsKey(producto.id)) {
+          textControllers[producto.id] = TextEditingController(text: currentPrice.toString());
+        }
+
+        // Obtenemos el controlador de texto
+        TextEditingController textController = textControllers[producto.id]!;
+
+        return Row(
+          children: [
+            // Si el precio es manual, mostramos el TextField
+            if (isManualInput || isPriceManual)
+              Expanded(
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  controller: textController, // Controlador persistente
+                  onChanged: (value) {
+                    double? newPrice = double.tryParse(value);
+                    if (newPrice != null) {
+                      setState(() {
+                        selectedPrices[producto.id] = newPrice;
+                        ordenFormProvider.copyOrdenesWith(
+                          productId: producto.id,
+                          precio: newPrice,
+                        );
+                      });
+                    }
+                  },
+                  onSubmitted: (_) {
+                    setState(() {
+                      manualInputStates[producto.id] = false; // Finaliza la edición manual
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Enter custom price',
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  ),
+                ),
+              ),
+            // Siempre mostramos el DropdownButton para elegir un precio de la base de datos
+            if (isManualInput || isPriceManual) const SizedBox(width: 8),
+            Expanded(
+              child: DropdownButton<double>(
+                value: isPriceManual ? null : currentPrice,
+                onChanged: (double? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      if (newValue == -1) {
+                        manualInputStates[producto.id] = true; // Cambia a modo manual
+                      } else {
+                        selectedPrices[producto.id] = newValue;
+                        ordenFormProvider.copyOrdenesWith(
+                          productId: producto.id,
+                          precio: newValue,
+                        );
+                      }
+                    });
+                  }
+                },
+                items: [
+                  ...[
+                    producto.precio1,
+                    producto.precio2,
+                    producto.precio3,
+                    producto.precio4,
+                    producto.precio5,
+                  ].where((precio) => precio != null).map<DropdownMenuItem<double>>((double value) {
+                    return DropdownMenuItem<double>(
+                      value: value,
+                      child: Text(
+                        value.toString(),
+                        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  }).toList(),
+                  DropdownMenuItem<double>(
+                    value: -1, // Valor para activar el precio manual
+                    child: Text(
+                      'Enter custom price',
+                      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    ),
+  ),
+),
+
                         DataCell(
                           IconButton(
                             icon: const Icon(
@@ -782,15 +813,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       crossAxisAlignment:
                           CrossAxisAlignment.end, // Alineación a la derecha
                       children: [
-                        Text('USD',
+                        Text(finance?.mainCurrencysymbol ?? 'NOT',
                             style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
-                        Text('16%',
+                        Text('16',
                             style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
-                        Text('USD',
+                      Text(finance?.mainCurrencysymbol ?? 'NOT',
                             style: GoogleFonts.plusJakartaSans(
                                 fontSize: 14, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
@@ -836,10 +867,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text('OBSERVATIONS AND COMMENTS BY ${orden.ruta.first.usuarioZona.nombre} :',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 14, 
-                      fontWeight: FontWeight.bold)
+                    child: Row(
+                      children: [
+                        Text('OBSERVATIONS AND COMMENTS BY ',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14)
+                        ),
+                        Text(orden.ruta.first.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14, fontWeight: FontWeight.bold))
+                      ],
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -983,6 +1019,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     ),
                   ),
                   const SizedBox(width: 20),
+                     if (orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER')
                 Container(
                     height: 50,
                     width: 150,
@@ -1018,8 +1055,29 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     }
                   ),
                   ),
+                   const SizedBox(width: 20),
+                Container(
+                    height: 50,
+                    width: 150,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20),),
+                    child: TextButton(
+                      child: Text(
+                        'PRINT',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                  onPressed: () async {
+                  
+                    }
+                  ),
+                  ),
               ],
             ),
+               
           const SizedBox(height: 40),
               ],
             ),
