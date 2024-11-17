@@ -131,4 +131,22 @@ class OrdenFormProvider extends ChangeNotifier {
       return false;
     }
   }
+
+Future<bool> deleteProductByOrder(String orderId, String productId) async {
+  try {
+    final response = await CafeApi.put('/ordens/$orderId/productos/$productId',
+      {},
+    );
+    if (response != null) {
+      return true;
+    } else {
+      return false; 
+    }
+  } catch (e) {
+    return false;
+  }
+}
+
+
+
 }
