@@ -119,7 +119,7 @@ class _OrdenBodyState extends State<OrdenBody> {
   @override
   Widget build(BuildContext context) {
 
-    double dynamicHeight = productsList.length * 60.0;
+    double dynamicHeight = productsList.length * 50.0;
     double screenWidth = MediaQuery.of(context).size.width;
 
     final ordenNewFormProvider = Provider.of<OrdenNewFormProvider>(context);

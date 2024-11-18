@@ -8,6 +8,7 @@ import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
+import 'package:web_dashboard/ui/modals/ordens_add_product.dart';
 
 class OrdenView extends StatefulWidget {
   final String id;
@@ -531,10 +532,23 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     }
                   },
                 ),
+                const SizedBox(width: 40),
+                Text('ADD PRODUCT',
+                  style: GoogleFonts.plusJakartaSans(
+                  fontSize: 12,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold)),
+                IconButton(
+                  onPressed: (){
+                      showDialog(
+                      context: context, 
+                      builder: ( _ ) => OrdensAddProduct(orderID: widget.orden.id));
+                  }, 
+                  icon: const Icon(  Icons.add_circle_outline_sharp))
               ],
             ),
               const SizedBox(height: 20),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
