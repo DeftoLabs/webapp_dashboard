@@ -147,6 +147,25 @@ Future<bool> deleteProductByOrder(String orderId, String productId) async {
   }
 }
 
+Future<bool> addProductByOrder(String orderId, Map<String, dynamic> productData) async {
+  try {
+    final response = await CafeApi.put(
+      '/ordens/$orderId/productos',
+      productData, // Enviamos el cuerpo como JSON.
+    );
+    if (response != null) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print('Error adding product to order: $e');
+    return false;
+  }
+}
+
+
+
 
 
 }

@@ -504,6 +504,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 IconButton(
                   icon: const Icon(Icons.calendar_today),
                   onPressed: () async {
@@ -531,20 +532,23 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       });
                     }
                   },
-                ),
+                ) : const Text(''),
                 const SizedBox(width: 40),
+                orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 Text('ADD PRODUCT',
                   style: GoogleFonts.plusJakartaSans(
                   fontSize: 12,
                   color: Colors.black,
-                  fontWeight: FontWeight.bold)),
+                  fontWeight: FontWeight.bold)) : const Text(''),
+                   orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 IconButton(
                   onPressed: (){
                       showDialog(
                       context: context, 
                       builder: ( _ ) => OrdensAddProduct(orderID: widget.orden.id));
                   }, 
-                  icon: const Icon(  Icons.add_circle_outline_sharp))
+                  icon: const Icon(  Icons.add_circle_outline_sharp)
+                  ) : const Text(''),
               ],
             ),
               const SizedBox(height: 20),

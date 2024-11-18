@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/providers.dart';
-import 'package:web_dashboard/ui/labels/custom_labels.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 class OrdensAddProduct extends StatefulWidget {
   final String orderID;
@@ -24,6 +25,8 @@ class _OrdensAddProductState extends State<OrdensAddProduct> {
 
   @override
   Widget build(BuildContext context) {
+    final ordenFormProvider = Provider.of<OrdenFormProvider>(context);
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -44,7 +47,10 @@ class _OrdensAddProductState extends State<OrdensAddProduct> {
               children: [
                 Text(
                   'Add Product',
-                  style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: GoogleFonts.plusJakartaSans(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
@@ -144,7 +150,7 @@ class _OrdensAddProductState extends State<OrdensAddProduct> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Consumer<ProductsProvider>(
+                     Consumer<ProductsProvider>(
                     builder: (context, productProvider, child) {
                       final productoSeleccionado = productProvider.productos
                           .firstWhere(
@@ -288,8 +294,27 @@ class _OrdensAddProductState extends State<OrdensAddProduct> {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () async {
-                print('Product added: $productData');
-                Navigator.of(context).pop();
+                    if (productData['producto'] == null ||
+                        productData['precio'] == null) {
+                      NotificationService.showSnackBarError(
+                          'Please complete all fields');
+                      return;
+                    }
+                    final orderId = widget.orderID;
+                    final saved = await ordenFormProvider.addProductByOrder(
+                      orderId,
+                      productData,
+                    );
+                    if (saved) {
+                      NotificationService.showSnackBa('Product added!');
+                      if (!context.mounted) return;
+                      Provider.of<OrdenesProvider>(context, listen: false)
+                          .getOrdenById(orderId);
+                      NavigationService.replaceTo('/dashboard/orders/$orderId');
+                    } else {
+                      NotificationService.showSnackBarError(
+                          'Failed to add product');
+                    }
                   }),
             ),
           ],
