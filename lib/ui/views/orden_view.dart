@@ -508,9 +508,12 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                 IconButton(
                   icon: const Icon(Icons.calendar_today),
                   onPressed: () async {
+                    DateTime now = DateTime.now();
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
-                      initialDate: fechaEntrega ?? DateTime.now(),
+                      initialDate: fechaEntrega != null && fechaEntrega!.isAfter(now)
+                    ? fechaEntrega!
+                    : now,
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2101),
                       builder: (BuildContext context, Widget? child) {

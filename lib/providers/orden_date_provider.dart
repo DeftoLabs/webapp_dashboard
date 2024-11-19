@@ -27,6 +27,32 @@ class OrdenDateProvider extends ChangeNotifier {
       rethrow;
     }
    
+  }
 
+   Future<void> getOrdenByDaySearch(DateTime date) async {
+ try {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      final resp = await CafeApi.httpGet('/ordens/fechaentrega/$formattedDate');
+      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+   Future<void> getOrdenByDayCreate(DateTime date) async {
+ try {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      final resp = await CafeApi.httpGet('/ordens/fecha/$formattedDate');
+      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+   
   }
 }

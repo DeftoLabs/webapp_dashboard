@@ -159,7 +159,6 @@ Future<bool> addProductByOrder(String orderId, Map<String, dynamic> productData)
       return false;
     }
   } catch (e) {
-    print('Error adding product to order: $e');
     return false;
   }
 }
