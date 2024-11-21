@@ -242,11 +242,20 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Search By Delivery',
+                title: 'Search By Product',
                 width: 200,
-                child: const Center(child: Icon(Icons.contacts)),
+                child: const Center(child: Icon(Icons.add_box_outlined)),
                 onTap: () {
                   NavigationService.replaceTo('/dashboard/orders/delivery');
+                },
+              ),
+              const SizedBox(width: 16),
+              RectangularCard(
+                title: 'Search By Route',
+                width: 200,
+                child: const Center(child: Icon(Icons.add_box_outlined)),
+                onTap: () {
+                  NavigationService.replaceTo('/dashboard/orders/route');
                 },
               ),
             ],

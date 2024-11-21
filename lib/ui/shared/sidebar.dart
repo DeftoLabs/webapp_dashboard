@@ -57,7 +57,8 @@ class Sidebar extends StatelessWidget {
 
         MenuItem(text: 'Sales', icon: Icons.attach_money_outlined,      onPressed: (){}),
 
-        MenuItem(text: 'Payments', icon: Icons.account_balance_wallet_outlined,      onPressed: (){}),
+        MenuItem(text: 'Payments', icon: Icons.account_balance_wallet_outlined,      
+        onPressed: ()=> navigateTo(Flurorouter.paymentsRoute)),
         
         const SizedBox(height: 10),
 

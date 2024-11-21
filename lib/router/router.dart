@@ -23,8 +23,11 @@ class Flurorouter {
   static String ordersSearchDate      = '/dashboard/orders/date';
   static String ordersSearchSales     = '/dashboard/orders/sales';
   static String ordersSearchDelivery  = '/dashboard/orders/delivery';
+  static String ordersSearchRoute     = '/dashboard/orders/route';
   static String ordersNewOrder        = '/dashboard/orders/neworder';
   static String ordenRoute            = '/dashboard/orders/:id';
+
+  static String paymentsRoute          = '/dashboard/payments';
 
   static String gpsRoute        = '/dashboard/gps';
 
@@ -87,9 +90,13 @@ class Flurorouter {
     router.define (ordersSearchDate,      handler:   DashboardHandlers.ordersDate, transitionType: TransitionType.fadeIn);
     router.define (ordersSearchSales,     handler:   DashboardHandlers.ordersSales, transitionType: TransitionType.fadeIn);
     router.define (ordersSearchDelivery,  handler:   DashboardHandlers.ordersDelivery, transitionType: TransitionType.fadeIn);
+    router.define (ordersSearchRoute,     handler:   DashboardHandlers.ordersRoute, transitionType: TransitionType.fadeIn);
     router.define (ordersNewOrder,        handler:   DashboardHandlers.ordersNewOrder, transitionType: TransitionType.fadeIn);
 
     router.define (ordenRoute,          handler:   DashboardHandlers.orden, transitionType: TransitionType.fadeIn);
+
+    // Payments
+    router.define (paymentsRoute,       handler:   DashboardHandlers.payments, transitionType: TransitionType.fadeIn);
 
     // GPS
     router.define (gpsRoute,        handler:  DashboardHandlers.gps,        transitionType: TransitionType.fadeIn);

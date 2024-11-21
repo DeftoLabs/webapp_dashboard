@@ -8,14 +8,14 @@ import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
 
-class OrdersDateSearch extends StatefulWidget {
-  const OrdersDateSearch({super.key});
+class OrdersSearchDate extends StatefulWidget {
+  const OrdersSearchDate({super.key});
 
   @override
-  State<OrdersDateSearch> createState() => _OrdersDateSearchState();
+  State<OrdersSearchDate> createState() => _OrdersSearchDateState();
 }
 
-class _OrdersDateSearchState extends State<OrdersDateSearch> {
+class _OrdersSearchDateState extends State<OrdersSearchDate> {
 
   DateTime? fechaentrega;
   DateTime? fechacreado;

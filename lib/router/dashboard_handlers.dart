@@ -13,12 +13,14 @@ import 'package:web_dashboard/ui/views/banks_view.dart';
 import 'package:web_dashboard/ui/views/finance_view.dart';
 import 'package:web_dashboard/ui/views/finances_view.dart';
 import 'package:web_dashboard/ui/views/orden_view.dart';
-import 'package:web_dashboard/ui/views/orders_customer_search.dart';
-import 'package:web_dashboard/ui/views/orders_date_search.dart';
-import 'package:web_dashboard/ui/views/orders_delivery_search.dart';
+import 'package:web_dashboard/ui/views/orders_search_customer.dart';
+import 'package:web_dashboard/ui/views/orders_search_date.dart';
+import 'package:web_dashboard/ui/views/orders_search_product.dart';
 import 'package:web_dashboard/ui/views/orders_neworden.dart';
 import 'package:web_dashboard/ui/views/orders_records_view.dart';
-import 'package:web_dashboard/ui/views/orders_sales_search.dart';
+import 'package:web_dashboard/ui/views/orders_search_route.dart';
+import 'package:web_dashboard/ui/views/orders_search_sales.dart';
+import 'package:web_dashboard/ui/views/payments_view.dart';
 import 'package:web_dashboard/ui/views/product_view.dart';
 import 'package:web_dashboard/ui/views/profile_view.dart';
 import 'package:web_dashboard/ui/views/profiles_view.dart';
@@ -85,7 +87,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchCustomer);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const OrdersCustomerSearch();
+        return const OrdersSearchCustomer();
       } return const LoginView();
 
     }
@@ -96,7 +98,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchDate);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const OrdersDateSearch();
+        return const OrdersSearchDate();
       } return const LoginView();
 
     }
@@ -107,18 +109,29 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchSales);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const OrdersSalesSearch();
+        return const OrdersSearchSales();
       } return const LoginView();
 
     }
   );
 
-       static Handler ordersDelivery = Handler (
+  static Handler ordersDelivery = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchDelivery);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        return const OrdersDeliverySearch();
+        return const OrdersSearchProduct();
+      } return const LoginView();
+
+    }
+  );
+
+  static Handler ordersRoute = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const OrdersSearchRoute();
       } return const LoginView();
 
     }
@@ -135,7 +148,7 @@ class DashboardHandlers {
     }
   );
 
-    static Handler orden = Handler (
+  static Handler orden = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordenRoute);
@@ -145,6 +158,17 @@ class DashboardHandlers {
         }else{
           return const OrdersView();
         }
+      } return const LoginView();
+
+    }
+  );
+
+  static Handler payments = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.paymentsRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const PaymentsView();
       } return const LoginView();
 
     }

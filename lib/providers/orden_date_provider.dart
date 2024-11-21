@@ -55,4 +55,52 @@ class OrdenDateProvider extends ChangeNotifier {
     }
    
   }
+
+     Future<void> getOrdenByCustomer(String customerID) async {
+    try {  
+      final resp = await CafeApi.httpGet('/ordens/cliente/$customerID');
+      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+    Future<void> getOrdenByRepresentative(String usuarioZona) async {
+    try {  
+      final resp = await CafeApi.httpGet('/ordens/usuarioZona/$usuarioZona');
+      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+    Future<void> getOrdenByProducto(String productoID) async {
+    try {  
+      final resp = await CafeApi.httpGet('/ordens/producto/$productoID');
+      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
+      Future<void> getOrdenByRoute(String ruta) async {
+    try {  
+      final resp = await CafeApi.httpGet('/ordens/ruta/$ruta');
+      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+  }
 }
