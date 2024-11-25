@@ -52,14 +52,6 @@ class ProductsDTS extends DataTableSource {
                 icon: const Icon(Icons.edit_outlined),
                 onPressed: (){
                  NavigationService.replaceTo('/dashboard/products/${product.id}');
-
-
-                //  showDialog(
-                //    context: context, 
-                //    builder: ( _ ) => ChangeNotifierProvider.value(
-                //      value: Provider.of<ProductsProvider>(context),
-                //      child: ProductModal(producto: product,)
-                //      ));
                 } 
               ),
               IconButton(

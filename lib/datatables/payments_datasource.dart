@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:web_dashboard/models/payment.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 class PaymentsDataSource extends DataTableSource {
 
@@ -29,7 +30,9 @@ final List<Payment> payments;
         DataCell(Text (payment.currencySymbol, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
         DataCell(Text (payment.monto.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold))),
         DataCell(IconButton(
-          onPressed: (){}, 
+          onPressed: (){
+              NavigationService.replaceTo('/dashboard/payments/${payment.id}');
+          }, 
           icon: const Icon(Icons.edit_outlined) )),
       ]
       );

@@ -18,13 +18,23 @@ class PaymentsProvider extends ChangeNotifier {
 
     final resp = await CafeApi.httpGet('/payment');
     final paymentResp = PaymentResponse.fromMap(resp);
-
     payments = [...paymentResp.payments];
     
     isLoading = false;
     notifyListeners();
+  }
 
+    Future<Payment> getPaymentsByID( String id ) async {
+
+      try {
+        final resp = await CafeApi.httpGet('/payment/$id');
+        final payment = Payment.fromMap(resp);
+        return payment;
+      } catch (e) {
+        rethrow;
+      }
     
   }
+
 
 }
