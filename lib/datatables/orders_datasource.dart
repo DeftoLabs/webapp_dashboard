@@ -15,7 +15,7 @@ class OrdersDateDataSource extends DataTableSource {
   @override
   DataRow getRow(int index) {
 
-      final ordenesOrdenadas = List.from(ordenes)..sort((a, b) => b.fechacreado.compareTo(a.fechacreado));
+    final ordenesOrdenadas = List.from(ordenes)..sort((a, b) => b.fechacreado.compareTo(a.fechacreado));
 
     final Ordenes orden = ordenesOrdenadas[index];
 

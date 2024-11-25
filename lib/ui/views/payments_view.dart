@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/datatables/payments_datasource.dart';
+import 'package:web_dashboard/providers/payments_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
-import 'package:web_dashboard/services/navigation_service.dart';
 
 
 class PaymentsView extends StatefulWidget {
@@ -28,6 +29,11 @@ class _PaymentsViewState extends State<PaymentsView> {
     final image = (profile.img == null) 
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
+
+    final paymentProvider = Provider.of<PaymentsProvider>(context);
+
+    final paymentsDataSource = PaymentsDataSource( paymentProvider.payments );
+
 
 
     return Container(
@@ -76,7 +82,18 @@ class _PaymentsViewState extends State<PaymentsView> {
             ],
           ),
           const SizedBox(height: 10),
+          PaginatedDataTable(
 
+            columns: const [
+              DataColumn(label: Text('DATE')),
+              DataColumn(label: Text('CONTROL')),
+              DataColumn(label: Text('TYPE')),
+              DataColumn(label: Text('CUSTOMER')),
+              DataColumn(label: Text('')),
+              DataColumn(label: Text('AMOUNT')),
+              DataColumn(label: Text('EDIT')),
+            ],
+            source: paymentsDataSource)
         ],
       )
     );

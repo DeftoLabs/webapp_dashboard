@@ -33,7 +33,7 @@ class Bank {
     String toJson() => json.encode(toJson());
 
     factory Bank.fromMap(Map<String, dynamic> json) => Bank(
-        estado: json["estado"] ?? '',
+        estado: json["estado"] is bool ? json["estado"] : (json["estado"] == 'true'),
         id: json["_id"] ?? '',
         nombre: json["nombre"] ?? '',
         numero: json["numero"] ?? '',
