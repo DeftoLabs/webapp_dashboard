@@ -10,35 +10,21 @@ import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 
 
-class PaymentView extends StatefulWidget {
+class PaymentNewView extends StatefulWidget {
 
-  final String id;
-
-  const PaymentView({super.key, required this.id});
+  const PaymentNewView({super.key});
 
   @override
-  State<PaymentView> createState() => _PaymentViewState();
+  State<PaymentNewView> createState() => _PaymentNewViewState();
 }
 
-class _PaymentViewState extends State<PaymentView> {
+class _PaymentNewViewState extends State<PaymentNewView> {
 
   Payment? payment;
 
   @override
   void initState() {
     super.initState();
-    final paymentsProvider = Provider.of<PaymentsProvider>(context, listen: false);
-    final paymentFormProvider = Provider.of<PaymentFormProvider>(context, listen: false);
-
-    paymentsProvider.getPaymentsByID(widget.id)
-    .then((paymentDB) {
-        paymentFormProvider.payment = paymentDB;
-        setState(() { payment = paymentDB;  });
-        
-      
-    }
-    
-    );
   }
 
 
@@ -74,7 +60,7 @@ class _PaymentViewState extends State<PaymentView> {
                       children: [
                         const SizedBox(height: 20),
                         Text(
-                          'Payment Detail',
+                          'CREATE A PAYMENT',
                           style: GoogleFonts.plusJakartaSans(fontSize: 30),
                           textAlign: TextAlign.center,
                         ),
@@ -95,16 +81,6 @@ class _PaymentViewState extends State<PaymentView> {
       const SizedBox(height: 10),
       const Divider(),
       const SizedBox(height: 10),
-         if (payment == null)
-              WhiteCard(
-                child: Container(
-                alignment: Alignment.center,
-                height: 300,
-                child: const CircularProgressIndicator(
-                color: Color.fromRGBO(255, 0, 200, 0.612),
-                strokeWidth: 4.0),
-              )
-              ),
               if (payment != null) ...[
               const SizedBox(height: 10),
               const PaymentViewBody(),
@@ -175,26 +151,21 @@ class PaymentViewForm extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         Text('CUSTOMER', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
-                        Text(payment.cliente.razons, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                        Text('CONSUMER WIDGET CUSTOMER', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 20),
-                        Text('DETAIL', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
-                        Text(payment.comentarios, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                        Text('DETAIL / COMMENTS', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
+                        TextFormField(
+
+                        ),
                         const SizedBox(height: 20),
                         Row(
                           children: [
                             Text('METHOD: ', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                             const SizedBox(width: 20),
-                            Text(payment.type, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                            Text('3 Metodos')
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Text('COLLECTED BY: ', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
-                            const SizedBox(width: 20),
-                            Text(payment.usuario.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
-                          ],
-                        )
                       ],
                      ),
                   ),
@@ -210,9 +181,9 @@ class PaymentViewForm extends StatelessWidget {
                           children: [
                             Text('AMOUNT ', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                             const SizedBox(width: 20),
-                            Text(payment.currencySymbol, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                            Text('SELECT CURRENCY'),
                             const SizedBox(width: 5),
-                            Text(payment.monto.toString(), style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold))
+                            TextFormField(),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -220,7 +191,7 @@ class PaymentViewForm extends StatelessWidget {
                           children: [
                             Text('BANK ', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                             const SizedBox(width: 20),
-                            Text(payment.bancoemisor, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                            TextFormField()
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -228,7 +199,7 @@ class PaymentViewForm extends StatelessWidget {
                           children: [
                             Text('PAYMENT DATE', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                             const SizedBox(width: 20),
-                           Text(DateFormat('dd/MM/yy').format(payment.fechapago), style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                          Text('SELECT DATE')
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -236,7 +207,7 @@ class PaymentViewForm extends StatelessWidget {
                           children: [
                              Text('REF', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                             const SizedBox(width: 20),
-                            Text(payment.numeroref, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                            TextFormField()
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -244,7 +215,7 @@ class PaymentViewForm extends StatelessWidget {
                           children: [
                             Text('RECEIVING BANK', style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                             const SizedBox(width: 20),
-                            Text(payment.bancoreceptor.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)),
+                            Text('CONSUMER BANK')
                           ],
                         )
                       ],
@@ -266,7 +237,7 @@ class PaymentViewForm extends StatelessWidget {
                     )),
                     child: TextButton(
                       child: Text(
-                        'PRINT',
+                        'SAVE',
                         style: GoogleFonts.plusJakartaSans(
                             color: const Color.fromARGB(255, 0, 0, 0)),
                       ),

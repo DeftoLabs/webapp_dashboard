@@ -20,6 +20,7 @@ import 'package:web_dashboard/ui/views/orders_neworden.dart';
 import 'package:web_dashboard/ui/views/orders_records_view.dart';
 import 'package:web_dashboard/ui/views/orders_search_route.dart';
 import 'package:web_dashboard/ui/views/orders_search_sales.dart';
+import 'package:web_dashboard/ui/views/payment_new_view.dart';
 import 'package:web_dashboard/ui/views/payment_view.dart';
 import 'package:web_dashboard/ui/views/payments_view.dart';
 import 'package:web_dashboard/ui/views/product_view.dart';
@@ -189,8 +190,18 @@ class DashboardHandlers {
 
     }
   );
-  
-  
+
+    static Handler newPayment = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.newPaymentRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const PaymentNewView();
+      } return const LoginView();
+
+    }
+  );
+
 
     static Handler gps = Handler (
     handlerFunc: (context, params) {

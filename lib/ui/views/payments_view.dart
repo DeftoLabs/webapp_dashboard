@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/payments_datasource.dart';
 import 'package:web_dashboard/providers/payments_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
+import 'package:web_dashboard/services/navigation_service.dart';
 
 
 class PaymentsView extends StatefulWidget {
@@ -66,7 +67,7 @@ class _PaymentsViewState extends State<PaymentsView> {
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
                         onPressed: () {
-                        
+                          NavigationService.replaceTo('/dashboard/payment/create');
                         },
                       ),
                     ),
