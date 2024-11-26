@@ -74,8 +74,8 @@ class _PaymentViewState extends State<PaymentView> {
                       children: [
                         const SizedBox(height: 20),
                         Text(
-                          'Payment Detail',
-                          style: GoogleFonts.plusJakartaSans(fontSize: 30),
+                          'PAYMENT DETAILS',
+                          style: GoogleFonts.plusJakartaSans(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                       ],
