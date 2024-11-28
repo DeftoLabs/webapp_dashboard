@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/providers/payment_form_provider.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
 
 class PaymentNewView extends StatefulWidget {
@@ -18,6 +21,11 @@ class _PaymentNewViewState extends State<PaymentNewView> {
   String? type;
   String? currencySymbol;
   double? monto = 0.0;
+  String? bancoreceptor;
+  String? numeroref;
+  String? bancoemisor;
+  String? comentarios;
+  bool isSaveButtonVisible = false;
 
   final List<String> types = ['CASH', 'TRANSFER', 'CHECK'];
 
@@ -34,16 +42,19 @@ class _PaymentNewViewState extends State<PaymentNewView> {
         ),
       ),
       focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.white, width: 2.0),
+        borderSide: BorderSide(color: Colors.black, width: 1.0),
       ),
       enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.white, width: 2.0),
+        borderSide: BorderSide(color: Colors.black, width: 1.0),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final paymentFormProvider = Provider.of<PaymentFormProvider>(context);
+
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty
         ? profileProvider.profiles[0]
@@ -84,6 +95,51 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                   ],
                 ),
               ),
+              if (isSaveButtonVisible)
+                  Container(
+                       height: 50,
+                       width: 170,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(177, 255, 46, 100),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          width: 0.6,
+                        )),
+                      child: TextButton(
+                        child: Text(
+                          'SAVE',
+                          style: GoogleFonts.plusJakartaSans(
+                              color: const Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        onPressed: () async {
+                          if (paymentFormProvider.formKey.currentState!.validate()) {
+                        try {
+                         if (bancoemisor != null && bancoreceptor != null) {
+                              await paymentFormProvider.newCreatePayment(
+                                bancoemisor: bancoemisor!,
+                                bancoreceptor: bancoreceptor!,
+                                numeroref: numeroref!,
+                                monto: monto!,
+                                currencySymbol: currencySymbol!,
+                                cliente: cliente!,
+                                type: type!,
+                                comentarios: comentarios!,
+                              );
+                            }
+
+                          if (!context.mounted) return;
+                          NotificationService.showSnackBa('Payment Register on System');
+                          Navigator.of(context).pop();
+                        } catch (e) {
+                          NotificationService.showSnackBarError('Could not save the Product');
+                        }
+                        }
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 30),
               SizedBox(
                 width: 60,
                 height: 60,
@@ -96,22 +152,36 @@ class _PaymentNewViewState extends State<PaymentNewView> {
           const SizedBox(height: 10),
           const Divider(),
           const SizedBox(height: 10),
-          WhiteCard(
-            child: Column(
-              children: [
-                _buildUsuarioZonaDropdown(context),
-                const SizedBox(height: 20),
-                _buildClientesDropdown(context),
-                if (cliente != null) ...[
+          Form(
+            key: paymentFormProvider.formKey, 
+            child: WhiteCard(
+              child: Column(
+                children: [
+                  _buildUsuarioZonaDropdown(context),
+                  if (selectedUsuarioZona != null) 
                   const SizedBox(height: 20),
-                  _buildTypeDropdown(),
-                  if (type != null) const SizedBox(height: 20),
+                  if (selectedUsuarioZona != null) _buildClientesDropdown(context),
+                  if (cliente != null) 
+                  const SizedBox(height: 20),
+                  if (cliente != null) _buildTypeDropdown(),
+                  if (type != null) 
+                  const SizedBox(height: 20),
                   if (type != null) _buildCurrencyDropdown(context),
-                  if (currencySymbol != null) const SizedBox(height: 20),
+                  if (currencySymbol != null) 
+                  const SizedBox(height: 20),
                   if (currencySymbol != null) _buildAmountInput(),
-                
-                ],
-              ],
+                  if (monto != null && type != null && currencySymbol != null && cliente != null) const SizedBox(height: 20),
+                  if (monto != null && type != null && currencySymbol != null && cliente != null) _buildBancoReceptorDropdown(context),
+                  if (bancoreceptor != null) const SizedBox(height: 20),
+                  const SizedBox(height: 20),
+                  if (bancoreceptor != null) _buildReferenciaInput(),
+                  const SizedBox(height: 20),
+                  if (bancoreceptor != null) _buildBancoEmisorInput(),
+                  const SizedBox(height: 20),
+                  if (bancoreceptor != null) _buildComentariosInput(),
+                  const SizedBox(height: 20),
+                ]
+              ),
             ),
           ),
         ],
@@ -241,7 +311,6 @@ Widget _buildCurrencyDropdown(BuildContext context) {
       if (financeProvider.finances.isEmpty) {
         return const Text('No currencies available');
       }
-
       // Crear una lista con las dos monedas de cada objeto Finance
       final currencies = <Map<String, String>>[];
       for (var finance in financeProvider.finances) {
@@ -288,31 +357,142 @@ Widget _buildCurrencyDropdown(BuildContext context) {
 }
 
 Widget _buildAmountInput() {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: 'AMOUNT',
-        hintText: 'Enter the amount',
-        prefixText: currencySymbol != null ? '$currencySymbol ' : null,
-        border: const OutlineInputBorder(),
-      ),
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-      style: GoogleFonts.plusJakartaSans(color: Colors.black),
-      onChanged: (value) {
-        setState(() {
-          monto = double.tryParse(value);
-          print('monto: ${value}');
-        });
-      },
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'PLEASE ENTER AN AMOUNT';
-        }
-        if (double.tryParse(value) == null) {
-          return 'PLEASE ENTER A VALID NUMBER';
-        }
-        return null;
-      },
-    );
-  }
+  return TextFormField(
+    decoration: _buildInputDecoration('AMOUNT').copyWith(
+      prefixText: currencySymbol != null ? '$currencySymbol ' : null,
+    ),
+    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+    inputFormatters: [
+      FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$')),
+    ],
+    style: GoogleFonts.plusJakartaSans(color: Colors.black),
+    onChanged: (value) {
+      setState(() {
+        monto = double.tryParse(value);
+        print('monto: $value');
+      });
+    },
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'PLEASE ENTER AN AMOUNT';
+      }
+      if (double.tryParse(value) == null) {
+        return 'PLEASE ENTER A VALID NUMBER';
+      }
+      if (value.length >12) {
+        return 'COMMENTS MUST NOT EXCEED 12 CHARACTERS';
+      }
+      return null;
+    },
+  );
 }
+
+Widget _buildBancoReceptorDropdown(BuildContext context) {
+  return Consumer<BankProvider>(
+    builder: (context, bankProvider, child) {
+      if (bankProvider.banks.isEmpty) {
+        return const Text('No banks available');
+      }
+
+      return DropdownButtonFormField<String>(
+        value: bancoreceptor,
+        decoration: _buildInputDecoration('BANK ACCOUNT'),
+        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+        style: GoogleFonts.plusJakartaSans(color: Colors.black),
+        dropdownColor: Colors.white,
+        items: bankProvider.banks.map((bank) {
+          return DropdownMenuItem<String>(
+            value: bank.id,
+            child: Text(
+              bank.nombre,
+              style: const TextStyle(color: Colors.black),
+            ),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            bancoreceptor = value;
+            print('Bank Receiver ID: $value');
+          });
+        },
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'PLEASE SELECT A BANK RECEIVER';
+          }
+          return null;
+        },
+      );
+    },
+  );
+}
+
+Widget _buildReferenciaInput() {
+  return TextFormField(
+    decoration: _buildInputDecoration('# REFERENCE'),
+    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+    style: GoogleFonts.plusJakartaSans(color: Colors.black),
+    onChanged: (value) {
+      setState(() {
+        numeroref = value;
+        print('Referencia: $value');
+      });
+    },
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'PLEASE ENTER A REFERENCE';
+      }
+      if (value.length > 30) {
+        return 'COMMENTS MUST NOT EXCEED 30 CHARACTERS';
+      }
+      return null;
+    },
+  );
+}
+
+Widget _buildBancoEmisorInput() {
+  return TextFormField(
+    decoration: _buildInputDecoration('BANK'),
+    style: GoogleFonts.plusJakartaSans(color: Colors.black),
+    onChanged: (value) {
+      setState(() {
+        bancoemisor = value;
+        print('Emisor: $value');
+      });
+    },
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'PLEASE ENTER A BANK NAME';
+      }
+      if (value.length > 30) {
+        return 'COMMENTS MUST NOT EXCEED 30 CHARACTERS';
+      }
+      return null;
+    },
+  );
+}
+Widget _buildComentariosInput() {
+  return TextFormField(
+    decoration: _buildInputDecoration('DETAILS AND COMMENTS'),
+    style: GoogleFonts.plusJakartaSans(color: Colors.black),
+    onChanged: (value) {
+      setState(() {
+        comentarios = value;
+        isSaveButtonVisible = value.isNotEmpty;
+        print('Comentarios: $value');
+      });
+    },
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'PLEASE ENTER A COMMENTS OR DETAILS';
+      }
+      if (value.length > 50) {
+        return 'COMMENTS MUST NOT EXCEED 50 CHARACTERS';
+      }
+      return null;
+    },
+  );
+}
+
+}
+
 
