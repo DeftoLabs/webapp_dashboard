@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/payment_form_provider.dart';
 import 'package:web_dashboard/providers/providers.dart';
@@ -25,6 +26,7 @@ class _PaymentNewViewState extends State<PaymentNewView> {
   String? numeroref;
   String? bancoemisor;
   String? comentarios;
+  DateTime? fechapago;
   bool isSaveButtonVisible = false;
 
   final List<String> types = ['CASH', 'TRANSFER', 'CHECK'];
@@ -48,6 +50,20 @@ class _PaymentNewViewState extends State<PaymentNewView> {
         borderSide: BorderSide(color: Colors.black, width: 1.0),
       ),
     );
+  }
+
+  Future<void> _selectDate (BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2101),
+      );
+      if(picked != null && picked != fechapago) {
+        setState(() {
+          fechapago = picked;
+        });
+      }
   }
 
   @override
@@ -115,26 +131,26 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                         ),
                         onPressed: () async {
                           if (paymentFormProvider.formKey.currentState!.validate()) {
-                        try {
-                         if (bancoemisor != null && bancoreceptor != null) {
-                              await paymentFormProvider.newCreatePayment(
-                                bancoemisor: bancoemisor!,
-                                bancoreceptor: bancoreceptor!,
-                                numeroref: numeroref!,
-                                monto: monto!,
-                                currencySymbol: currencySymbol!,
-                                cliente: cliente!,
-                                type: type!,
-                                comentarios: comentarios!,
-                              );
+                            try {
+                              if (bancoemisor != null && bancoreceptor != null) {
+                                await paymentFormProvider.newCreatePayment(
+                                  bancoemisor: bancoemisor!,
+                                  bancoreceptor: bancoreceptor!,
+                                  numeroref: numeroref!,
+                                  monto: monto!,
+                                  currencySymbol: currencySymbol!,
+                                  cliente: cliente!,
+                                  type: type!,
+                                  fechapago: fechapago!,
+                                  comentarios: comentarios!,
+                                );
+                              }
+                              if (!context.mounted) return;
+                              NotificationService.showSnackBa('Payment Register on System');
+                              NavigationService.navigateTo('dashboard/payment/create');
+                            } catch (e) {
+                              NotificationService.showSnackBarError('Could not save the Product');
                             }
-
-                          if (!context.mounted) return;
-                          NotificationService.showSnackBa('Payment Register on System');
-                          Navigator.of(context).pop();
-                        } catch (e) {
-                          NotificationService.showSnackBarError('Could not save the Product');
-                        }
                         }
                         },
                       ),
@@ -156,35 +172,35 @@ class _PaymentNewViewState extends State<PaymentNewView> {
             key: paymentFormProvider.formKey, 
             child: WhiteCard(
               child: Column(
-                children: [
-                  _buildUsuarioZonaDropdown(context),
-                  if (selectedUsuarioZona != null) 
-                  const SizedBox(height: 20),
-                  if (selectedUsuarioZona != null) _buildClientesDropdown(context),
-                  if (cliente != null) 
-                  const SizedBox(height: 20),
-                  if (cliente != null) _buildTypeDropdown(),
-                  if (type != null) 
-                  const SizedBox(height: 20),
-                  if (type != null) _buildCurrencyDropdown(context),
-                  if (currencySymbol != null) 
-                  const SizedBox(height: 20),
-                  if (currencySymbol != null) _buildAmountInput(),
-                  if (monto != null && type != null && currencySymbol != null && cliente != null) const SizedBox(height: 20),
-                  if (monto != null && type != null && currencySymbol != null && cliente != null) _buildBancoReceptorDropdown(context),
-                  if (bancoreceptor != null) const SizedBox(height: 20),
-                  const SizedBox(height: 20),
-                  if (bancoreceptor != null) _buildReferenciaInput(),
-                  const SizedBox(height: 20),
-                  if (bancoreceptor != null) _buildBancoEmisorInput(),
-                  const SizedBox(height: 20),
-                  if (bancoreceptor != null) _buildComentariosInput(),
-                  const SizedBox(height: 20),
-                ]
-              ),
-            ),
+              children: [
+                _buildUsuarioZonaDropdown(context),
+                if (selectedUsuarioZona != null) const SizedBox(height: 20),
+                if (selectedUsuarioZona != null) _buildClientesDropdown(context),
+                if (cliente != null) const SizedBox(height: 20),
+                if (cliente != null) _buildTypeDropdown(),
+                if (type != null) const SizedBox(height: 20),
+                if (type != null) _buildCurrencyDropdown(context),
+                if (currencySymbol != null) const SizedBox(height: 20),
+                if (currencySymbol != null) _buildAmountInput(),
+                if (monto != null) const SizedBox(height: 20),
+                if (monto != null && currencySymbol != null)
+                  Column(
+                    children: [
+                      _buildDateSelector(context),
+                      const SizedBox(height: 20),
+                      _buildBancoReceptorDropdown(context),
+                      const SizedBox(height: 20),
+                      _buildReferenciaInput(),
+                      const SizedBox(height: 20),
+                      _buildBancoEmisorInput(),
+                      const SizedBox(height: 20),
+                      _buildComentariosInput(),
+                    ],
+                  ),
+              ],
+        ),
           ),
-        ],
+      )],
       ),
     );
   }
@@ -260,7 +276,6 @@ class _PaymentNewViewState extends State<PaymentNewView> {
             setState(() {
               cliente = value;
               type = null;
-              print('Cliente ID: ${value}');
             });
           },
           validator: (value) {
@@ -293,7 +308,6 @@ class _PaymentNewViewState extends State<PaymentNewView> {
       onChanged: (value) {
         setState(() {
           type = value;
-          print('TYPE: ${value}');
         });
       },
       validator: (value) {
@@ -342,7 +356,6 @@ Widget _buildCurrencyDropdown(BuildContext context) {
         onChanged: (value) {
           setState(() {
             currencySymbol = value;
-            print('Currency Symbol: $value');
           });
         },
         validator: (value) {
@@ -369,7 +382,6 @@ Widget _buildAmountInput() {
     onChanged: (value) {
       setState(() {
         monto = double.tryParse(value);
-        print('monto: $value');
       });
     },
     validator: (value) {
@@ -412,7 +424,6 @@ Widget _buildBancoReceptorDropdown(BuildContext context) {
         onChanged: (value) {
           setState(() {
             bancoreceptor = value;
-            print('Bank Receiver ID: $value');
           });
         },
         validator: (value) {
@@ -426,6 +437,44 @@ Widget _buildBancoReceptorDropdown(BuildContext context) {
   );
 }
 
+Widget _buildDateSelector(BuildContext context) {
+  return FormField<DateTime>(
+    initialValue: fechapago,
+    validator: (value) {
+      if (value == null) {
+        return 'PLEASE SELECT A DATE';
+      }
+      return null;
+    },
+    builder: (field) {
+      return Row(
+        children: [
+          Text(
+            'DATE PAYMENT:',
+            style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 10),
+          const Icon(Icons.calendar_month_rounded),
+          const SizedBox(width: 10),
+          TextButton(
+            onPressed: () => _selectDate(context),
+             child: Text(
+              fechapago != null
+                  ? DateFormat('dd/MM/yyyy').format(fechapago!)
+                  : 'SELECT A DATE',
+              style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+          ),
+          const SizedBox(width: 30),
+            if(fechapago == null)
+            Text('PLEASE SELECT A DATE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red)),
+        ],
+      );
+    },
+  );
+}
+
+
 Widget _buildReferenciaInput() {
   return TextFormField(
     decoration: _buildInputDecoration('# REFERENCE'),
@@ -434,7 +483,6 @@ Widget _buildReferenciaInput() {
     onChanged: (value) {
       setState(() {
         numeroref = value;
-        print('Referencia: $value');
       });
     },
     validator: (value) {
@@ -456,7 +504,6 @@ Widget _buildBancoEmisorInput() {
     onChanged: (value) {
       setState(() {
         bancoemisor = value;
-        print('Emisor: $value');
       });
     },
     validator: (value) {
@@ -478,7 +525,6 @@ Widget _buildComentariosInput() {
       setState(() {
         comentarios = value;
         isSaveButtonVisible = value.isNotEmpty;
-        print('Comentarios: $value');
       });
     },
     validator: (value) {

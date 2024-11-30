@@ -22,6 +22,7 @@ class PaymentFormProvider extends ChangeNotifier {
     required String   currencySymbol,
     required String   cliente,
     required String   type,
+    required DateTime fechapago,
     required String   comentarios,
   }) async {
     final data = {
@@ -32,6 +33,7 @@ class PaymentFormProvider extends ChangeNotifier {
       'currencySymbol': currencySymbol,
       'cliente': cliente,
       'type': type,
+      'fechapago': fechapago.toIso8601String(),
       'comentarios': comentarios,
     };
     
@@ -40,9 +42,9 @@ class PaymentFormProvider extends ChangeNotifier {
       final newPayment = Payment.fromMap(json);
       payments.add(newPayment);
       notifyListeners();
+      return null;
     } catch (e) {
-        throw 'Error creating new product: $e'; 
+        throw 'Error creating Payment on Provider: $e'; 
     }
-    return null;
   }
 }

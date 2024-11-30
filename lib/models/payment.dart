@@ -4,6 +4,7 @@ import 'package:web_dashboard/models/bank.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/models/usuario.dart';
+import 'package:web_dashboard/models/zona.dart';
 
 class Payment {
   String id;
@@ -54,19 +55,67 @@ class Payment {
 
   factory Payment.fromMap(Map<String, dynamic> json) {
     return Payment(
-      id: json["_id"] ?? '',
-      estado: json["estado"] ?? false,
-      ordenes: json["ordenes"] != null
+    id: json["_id"] ?? '',
+    estado: json["estado"] ?? false,
+    ordenes: json["ordenes"] != null
           ? List<Ordenes>.from(json["ordenes"].map((x) => Ordenes.fromMap(x)))
           : [],
-      fechapago: DateTime.tryParse(json["fechapago"] ?? '') ?? DateTime.now(),
-      bancoemisor: json["bancoemisor"] ?? '',
-      bancoreceptor: Bank.fromMap(json["bancoreceptor"]),
+    fechapago: DateTime.tryParse(json["fechapago"] ?? '') ?? DateTime.now(),
+    bancoemisor: json["bancoemisor"] ?? '',
+    bancoreceptor: json["bancoreceptor"] is Map<String, dynamic>
+    ? Bank.fromMap(json["bancoreceptor"])
+    : Bank(
+        id: json["bancoreceptor"] ?? '',
+        nombre: '',
+        numero: '',
+        tipo: '',
+        currencyName: '',
+        currencySymbol: '',
+        titular: '',
+        idtitular: '',
+        comentarios: '',
+      ),
       numeroref: json["numeroref"] ?? '',
       monto: (json["monto"] ?? 0.0).toDouble(),
       currencySymbol: json["currencySymbol"] ?? '',
-      usuario: Usuario.fromMap(json["usuario"]),
-      cliente: Customer.fromMap(json["cliente"]),
+      usuario: json["usuario"] is Map<String, dynamic>
+    ? Usuario.fromMap(json["usuario"])
+    : Usuario(
+        uid: json["usuario"] ?? '', 
+        rol: '', 
+        estado: true, 
+        google: true, 
+        nombre: '', 
+        correo: '', 
+        phone: '', 
+        zone: '',
+      ),
+      cliente: json["cliente"] is Map<String, dynamic>
+    ? Customer.fromMap(json["cliente"])
+    : Customer(
+      id: '', 
+      estado: true, 
+      codigo: '', 
+      idfiscal: '', 
+      nombre: '', 
+      razons: '', 
+      sucursal: '',
+      direccion: '', 
+      correo: '', 
+      telefono: '', 
+      web: '', 
+      contacto: '', 
+      credito: 0, 
+      note: '',
+      usuario: User(
+        id: '', 
+        nombre: ''), 
+      zona: Zona(
+        id: '', 
+        codigo: '', 
+        nombrezona: '', 
+        descripcion: '')
+      ),
       numerocontrol: json["numerocontrol"] ?? '',
       type: json.containsKey("payment") && json["payment"] != null
       ? json["payment"]["type"] ?? ''
