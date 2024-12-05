@@ -56,21 +56,29 @@ class OrdenDateProvider extends ChangeNotifier {
    
   }
 
-     Future<void> getOrdenByCustomer(String customerID) async {
-    try {  
-      final resp = await CafeApi.httpGet('/ordens/cliente/$customerID');
-      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
-      isLoading = false;
-      notifyListeners();
-    } catch (e) {
-      isLoading = false;
-      rethrow;
+ Future<void> getOrdenByCustomer(String customerID) async {
+  try {
+    final resp = await CafeApi.httpGet('/ordens/cliente/$customerID');
+    // Verifica que la respuesta es un mapa y accede al campo 'ordenes'
+    if (resp is Map<String, dynamic> && resp.containsKey('ordenes')) {
+      ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
+    } else {
+      ordenes = []; // Si no hay órdenes, asigna una lista vacía
     }
+
+    isLoading = false;
+    notifyListeners();
+  } catch (e) {
+    isLoading = false;
+    rethrow;
   }
+}
+
 
     Future<void> getOrdenByRepresentative(String usuarioZona) async {
     try {  
       final resp = await CafeApi.httpGet('/ordens/usuarioZona/$usuarioZona');
+      
       ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
       isLoading = false;
       notifyListeners();

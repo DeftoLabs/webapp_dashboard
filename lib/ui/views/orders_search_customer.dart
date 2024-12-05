@@ -6,6 +6,8 @@ import 'package:web_dashboard/datatables/orders_searchdatedatasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
+import '../../models/ordenes.dart';
+
 
 class OrdersSearchCustomer extends StatefulWidget {
   const OrdersSearchCustomer({super.key});
@@ -17,6 +19,8 @@ class OrdersSearchCustomer extends StatefulWidget {
 class _OrdersSearchCustomerState extends State<OrdersSearchCustomer> {
 
   String? customerID;
+  List<Ordenes> ordenes = [];
+
 
     @override
   void initState() {
@@ -118,7 +122,7 @@ class _OrdersSearchCustomerState extends State<OrdersSearchCustomer> {
                       },
                     ),
                     const SizedBox(width: 10),
-   TextButton(
+                      TextButton(
                               onPressed: () {
                                 customerID == null ? showDialog(
                                 context: context,
