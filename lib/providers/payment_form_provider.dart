@@ -11,7 +11,7 @@ class PaymentFormProvider extends ChangeNotifier {
 
   Payment? payment;
   List<Payment> payments = [];
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> formKey;
 
   bool validForm() {
     return formKey.currentState!.validate();

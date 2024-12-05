@@ -68,6 +68,19 @@ class _PaymentNewViewState extends State<PaymentNewView> {
   }
 
   @override
+  void initState() {
+    final paymentFormProvider = Provider.of<PaymentFormProvider>(context, listen: false);
+    paymentFormProvider.formKey = GlobalKey<FormState>();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Provider.of<PaymentFormProvider>(context, listen: false);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final paymentFormProvider = Provider.of<PaymentFormProvider>(context);
@@ -179,10 +192,10 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                               if (result != null) {
                                         if (!context.mounted) return;
                                         NotificationService.showBusyIndicator(context);
-                                        bool uploadSuccess = await paymentFormProvider.uploadImage('/uploads/payment/$newPaymentId',result.files.first.bytes!);
+                                        final  uploadSuccess = await paymentFormProvider.uploadImage('/uploads/payment/$newPaymentId',result.files.first.bytes!) ?? false;
                                         if (!context.mounted) return;
-                                        if(uploadSuccess) {
-                                        Navigator.of(context).pop();
+                                         Navigator.of(context).pop();
+                                        if(uploadSuccess != null ) {
                                         NavigationService.replaceTo('/dashboard/payments');
                                         }
                                       } else { 
@@ -512,38 +525,25 @@ Widget _buildBancoReceptorDropdown(BuildContext context) {
 }
 
 Widget _buildDateSelector(BuildContext context) {
-  return FormField<DateTime>(
-    initialValue: fechapago,
+  return TextFormField(
+    decoration: InputDecoration(
+      labelText: 'DATE PAYMENT',
+      labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
+      prefixIcon: const Icon(Icons.calendar_month_rounded),
+    ),
+    readOnly: true, // Hace que el campo no sea editable manualmente
+    controller: TextEditingController(
+      text: fechapago != null ? DateFormat('dd/MM/yyyy').format(fechapago!) : '',
+    ),
+    style: GoogleFonts.plusJakartaSans(color: Colors.black),
+    onTap: () async {
+      await _selectDate(context); // Abre el selector de fecha
+    },
     validator: (value) {
-      if (value == null) {
+      if (fechapago == null) {
         return 'PLEASE SELECT A DATE';
       }
       return null;
-    },
-    builder: (field) {
-      return Row(
-        children: [
-          Text(
-            'DATE PAYMENT:',
-            style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(width: 10),
-          const Icon(Icons.calendar_month_rounded),
-          const SizedBox(width: 10),
-          TextButton(
-            onPressed: () => _selectDate(context),
-             child: Text(
-              fechapago != null
-                  ? DateFormat('dd/MM/yyyy').format(fechapago!)
-                  : 'SELECT A DATE',
-              style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
-            ),
-          ),
-          const SizedBox(width: 30),
-            if(fechapago == null)
-            Text('PLEASE SELECT A DATE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red)),
-        ],
-      );
     },
   );
 }
