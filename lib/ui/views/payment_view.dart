@@ -285,12 +285,21 @@ class PaymentViewForm extends StatelessWidget {
 }
 
 class AttachViewBody extends StatelessWidget {
+  
   const AttachViewBody({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+
+    final paymentFormProvider = Provider.of<PaymentFormProvider>(context);
+    final payment = paymentFormProvider.payment!;
+
+    final image = (payment.img == null || payment.img!.isEmpty) ? 
+    const Image(image: AssetImage('nofile.png')) 
+    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: payment.img!, fit: BoxFit.cover);
+
     return WhiteCard(
       width: MediaQuery.of(context).size.width,
       child: SizedBox(
@@ -305,35 +314,13 @@ class AttachViewBody extends StatelessWidget {
               children: [
                 Text('ATTACHED FILE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold), ),
                 const SizedBox(width: 30),
-                  // Container(
-                  //     height: 50,
-                  //     width: 130,
-                  //    padding: const EdgeInsets.all(10),
-                  //    decoration: BoxDecoration(
-                  //      color: const Color.fromRGBO(177, 255, 46, 100),
-                  //      borderRadius: BorderRadius.circular(20),
-                  //      border: Border.all(
-                  //        color: const Color.fromARGB(255, 0, 0, 0),
-                  //        width: 0.6,
-                  //      )),
-                  //    child: TextButton(
-                  //      child: Text(
-                  //        'ATTACHE FILE',
-                  //        style: GoogleFonts.plusJakartaSans(
-                  //            color: const Color.fromARGB(255, 0, 0, 0)),
-                  //      ),
-                  //      onPressed: () {
-                  //      
-                  //      },
-                  //    ),
-                  //  ),
               ],
             ),
             const SizedBox(height: 20),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 400,
-              child: const Image(image: AssetImage('noimage.jpeg'))
+              child: image,
             ),
              const SizedBox(height: 20),
 

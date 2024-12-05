@@ -150,5 +150,48 @@ class Payment {
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
       };
+
+    Payment copyWith({   
+        String? id,
+        bool? estado,
+        DateTime? fechapago,
+        String? bancoemisor,
+        Bank? bancoreceptor,
+        String? numeroref,
+        double? monto,
+        String? currencySymbol,
+        Usuario? usuario,
+        Customer? cliente, 
+        String? numerocontrol,
+        String? type,
+        String? comentarios,
+        String? img,
+        DateTime? fechacreacion,
+        DateTime? createdAt,
+        DateTime? updatedAt,
+        int? v,
+        }) { return Payment(
+            id: id ?? this.id,
+            img: img ?? img, 
+            fechapago: fechapago ?? this.fechapago, 
+            bancoemisor: bancoemisor ?? this.bancoemisor, 
+            bancoreceptor: bancoreceptor ?? this.bancoreceptor, 
+            numeroref: numeroref ?? this.numeroref, 
+            monto: monto ?? this.monto, 
+            currencySymbol: currencySymbol ?? this.currencySymbol, 
+            usuario: usuario ?? this.usuario, 
+            cliente: cliente ?? this.cliente, 
+            numerocontrol: numerocontrol ?? this.numerocontrol, 
+            type: type ?? this.type,
+            comentarios: comentarios ?? this.comentarios, 
+            fechacreacion: fechacreacion ?? this.fechacreacion, 
+            createdAt: createdAt ?? this.createdAt, 
+            updatedAt: updatedAt ?? this.updatedAt, 
+            v: v ?? this.v, 
+            ordenes: [],
+          );
+          }
+
 }
+
 

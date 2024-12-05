@@ -1,8 +1,11 @@
 
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/payment.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 class PaymentFormProvider extends ChangeNotifier {
 
@@ -42,9 +45,24 @@ class PaymentFormProvider extends ChangeNotifier {
       final newPayment = Payment.fromMap(json);
       payments.add(newPayment);
       notifyListeners();
-      return null;
+      return newPayment.id;
     } catch (e) {
         throw 'Error creating Payment on Provider: $e'; 
     }
   }
+
+  Future uploadImage(String path, Uint8List bytes) async {
+  try {
+    final response = await CafeApi.uploadImage(path, bytes);
+    final imageUrl = response['img']; 
+    if (payment != null) {
+      payment = payment!.copyWith(img: imageUrl); 
+      notifyListeners();
+    }
+    NotificationService.showSnackBa('Image Uploaded Successfully');
+    notifyListeners();
+  } catch (e) {
+    NotificationService.showSnackBarError('Failed to Upload Image, Try Again !!');
+  }
+}
 }

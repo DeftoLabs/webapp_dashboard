@@ -194,13 +194,15 @@ class _UserFormView extends StatelessWidget {
                   if(!validForm) return;
 
                       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-                      authProvider.newUserRegister(
+                       authProvider.newUserRegister(
                         registerFormProvider.email, 
                         registerFormProvider.password, 
                         registerFormProvider.name,
                         registerFormProvider.phone,
                         registerFormProvider.zone,
                       );
+
+
                 }, 
                 text: 'Create User'),
           

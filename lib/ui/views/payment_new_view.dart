@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -57,7 +58,7 @@ class _PaymentNewViewState extends State<PaymentNewView> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2020),
-      lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
       );
       if(picked != null && picked != fechapago) {
         setState(() {
@@ -112,9 +113,9 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                 ),
               ),
               if (isSaveButtonVisible)
-                  Container(
-                       height: 50,
-                       width: 170,
+                 Container(
+                      height: 50,
+                      width: 170,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(177, 255, 46, 100),
@@ -122,18 +123,21 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                         border: Border.all(
                           color: const Color.fromARGB(255, 0, 0, 0),
                           width: 0.6,
-                        )),
+                        ),
+                      ),
                       child: TextButton(
                         child: Text(
                           'SAVE',
                           style: GoogleFonts.plusJakartaSans(
-                              color: const Color.fromARGB(255, 0, 0, 0)),
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                          ),
                         ),
                         onPressed: () async {
                           if (paymentFormProvider.formKey.currentState!.validate()) {
                             try {
                               if (bancoemisor != null && bancoreceptor != null) {
-                                await paymentFormProvider.newCreatePayment(
+                                // Captura el ID del nuevo Payment
+                                final newPaymentId = await paymentFormProvider.newCreatePayment(
                                   bancoemisor: bancoemisor!,
                                   bancoreceptor: bancoreceptor!,
                                   numeroref: numeroref!,
@@ -144,14 +148,84 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                                   fechapago: fechapago!,
                                   comentarios: comentarios!,
                                 );
-                              }
-                              if (!context.mounted) return;
-                              NotificationService.showSnackBa('Payment Register on System');
-                              NavigationService.navigateTo('dashboard/payment/create');
-                            } catch (e) {
-                              NotificationService.showSnackBarError('Could not save the Product');
-                            }
-                        }
+                    
+                                if (!context.mounted) return;
+                                NotificationService.showSnackBa('Payment Registered in System');
+                                Provider.of<PaymentsProvider>(context, listen: false).getPaginetedPayments();
+                                showDialog(
+                          context: context,
+                          builder: (_) => Dialog(
+                            backgroundColor: Colors.white, // Fondo blanco
+                            child: Container(
+                              width: 300, // Ancho del Dialog
+                              height: 230, // Alto del Dialog
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const SizedBox(height: 20),
+                                  const Text(
+                                    'Do you want to attach a file?',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  TextButton.icon(
+                                    onPressed: () async {
+                                FilePickerResult? result = await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+                                allowMultiple: false,
+                              );
+                              if (result != null) {
+                                        if (!context.mounted) return;
+                                        NotificationService.showBusyIndicator(context);
+                                        bool uploadSuccess = await paymentFormProvider.uploadImage('/uploads/payment/$newPaymentId',result.files.first.bytes!);
+                                        if (!context.mounted) return;
+                                        if(uploadSuccess) {
+                                        Navigator.of(context).pop();
+                                        NavigationService.replaceTo('/dashboard/payments');
+                                        }
+                                      } else { 
+                                        NotificationService.showSnackBarError('Failed to Upload Image');
+                                      }
+                                        },
+                                        icon: const Icon(Icons.attach_file, color: Colors.white), // Ícono
+                                        label: Text(
+                                          'Attach File',
+                                          style: GoogleFonts.plusJakartaSans(fontSize: 14, color: Colors.white)
+                                        ),
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: Colors.black,// Color de fondo del botón
+                                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), // Espaciado interno
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20), // Borde redondeado
+                                          ),
+                                        ),
+                                      ),
+                                              const SizedBox(height: 30),
+                                              TextButton(
+                                                onPressed: () => NavigationService.replaceTo('/dashboard/payments'),
+                                                style: TextButton.styleFrom(
+                                                  foregroundColor: Colors.white, backgroundColor: Colors.black, // Color del texto
+                                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), // Espaciado interno
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(20), // Borde redondeado
+                                                  ),
+                                                ),
+                                                child: const Text('NO'),
+                                              ),
+                                            ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                         }
+                                       } catch (e) {
+                                         NotificationService.showSnackBarError(
+                                           'Could not save the Payment: $e',
+                                         );
+                                       }
+                          }
                         },
                       ),
                     ),
@@ -482,7 +556,7 @@ Widget _buildReferenciaInput() {
     style: GoogleFonts.plusJakartaSans(color: Colors.black),
     onChanged: (value) {
       setState(() {
-        numeroref = value;
+        numeroref = value.toUpperCase();
       });
     },
     validator: (value) {
@@ -503,7 +577,7 @@ Widget _buildBancoEmisorInput() {
     style: GoogleFonts.plusJakartaSans(color: Colors.black),
     onChanged: (value) {
       setState(() {
-        bancoemisor = value;
+        bancoemisor = value.toUpperCase();
       });
     },
     validator: (value) {
@@ -523,7 +597,7 @@ Widget _buildComentariosInput() {
     style: GoogleFonts.plusJakartaSans(color: Colors.black),
     onChanged: (value) {
       setState(() {
-        comentarios = value;
+        comentarios = value.toUpperCase();
         isSaveButtonVisible = value.isNotEmpty;
       });
     },
