@@ -122,48 +122,80 @@ class _OrdersSearchCustomerState extends State<OrdersSearchCustomer> {
                       },
                     ),
                     const SizedBox(width: 10),
-                      TextButton(
-                              onPressed: () {
-                                customerID == null ? showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
-                                        IconButton(onPressed:(){
-                                          Navigator.of(context).pop();
-                                        }, 
-                                        icon: const Icon(Icons.close))
-                                      ],
-                                    ),
-                                    content: Text('Please select a Customer', 
-                                    style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black))
-                                  );
-                                },
-                              )  : 
-                               context.read<OrdenDateProvider>().getOrdenByCustomer(customerID!);
-                              },
-                              style: TextButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15), 
-                                ),
-                                side: const BorderSide(
-                                  color: Colors.black, // Color del borde
-                                  width: 1, // Grosor del borde
-                                ),
-                                backgroundColor: Colors.grey[300], // Color de fondo del botón
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Espaciado interno
-                              ),
-                              child: Text('SEARCH', 
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14,
-                                  color: Colors.black, // Color para que parezca un botón interactivo
-                                ),
-                              ),
-                            )
+                   TextButton(
+  onPressed: () async {
+    try {
+      if (customerID == null) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+              content: Text('Please select a Customer', style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black)),
+            );
+          },
+        );
+      } else {
+        // Llama al método del Provider y maneja la excepción si ocurre
+        await context.read<OrdenDateProvider>().getOrdenByCustomer(customerID!);
+      }
+    } catch (e) {
+      // Mostrar un Dialog si la excepción ocurre
+      if (e.toString() == "Exception: No se encontraron órdenes para el cliente proporcionado") {
+       if (context.mounted) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Error'),
+        content: Text('No se pudo obtener la información de las órdenes.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Aceptar'),
+          ),
+        ],
+      );
+    },
+  );
+}
+      }
+    }
+  },
+  style: TextButton.styleFrom(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    ),
+    side: const BorderSide(
+      color: Colors.black,
+      width: 1,
+    ),
+    backgroundColor: Colors.grey[300],
+    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+  ),
+  child: Text(
+    'SEARCH',
+    style: GoogleFonts.plusJakartaSans(
+      fontSize: 14,
+      color: Colors.black,
+    ),
+  ),
+)
+
                   ],
                 ),
           const SizedBox(height: 20),
