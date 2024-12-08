@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_searchdatedatasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 import '../../models/ordenes.dart';
 
@@ -123,59 +124,64 @@ class _OrdersSearchCustomerState extends State<OrdersSearchCustomer> {
                     ),
                     const SizedBox(width: 10),
                    TextButton(
-  onPressed: () async {
-    try {
-      if (customerID == null) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(Icons.close),
-                  ),
-                ],
-              ),
-              content: Text('Please select a Customer', style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black)),
-            );
-          },
-        );
-      } else {
-        // Llama al método del Provider y maneja la excepción si ocurre
-        await context.read<OrdenDateProvider>().getOrdenByCustomer(customerID!);
-      }
-    } catch (e) {
-      // Mostrar un Dialog si la excepción ocurre
-      if (e.toString() == "Exception: No se encontraron órdenes para el cliente proporcionado") {
-       if (context.mounted) {
+onPressed: () async {
+  try {
+    if (customerID == null) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
+            content: Text('Please select a Customer', style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black)),
+          );
+        },
+      );
+    } else {
+      // Llama al método del Provider
+      await context.read<OrdenDateProvider>().getOrdenByCustomer(customerID!);
+    }
+  } catch (e) {
+    if (e.toString().contains('Customer With No Orders')) {
+if (context.mounted) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Error'),
-        content: Text('No se pudo obtener la información de las órdenes.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('Aceptar'),
-          ),
-        ],
+        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('No Orders', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.close),
+                ),
+          ],
+        ),
+        content: Text('The customer currently has no Orders.', style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black)),
       );
     },
   );
 }
-      }
+    } else {
+      NotificationService.showSnackBarError('Error with the Customer Order');
     }
-  },
+  }
+},
   style: TextButton.styleFrom(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),

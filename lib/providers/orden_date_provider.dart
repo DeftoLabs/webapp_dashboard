@@ -60,17 +60,11 @@ Future<void> getOrdenByCustomer(String customerID) async {
   try {
     final resp = await CafeApi.httpGet('/ordens/cliente/$customerID');
 
-    // Verifica si la respuesta es un mapa y accede al campo 'ordenes'
-    if (resp is Map<String, dynamic> && resp.containsKey('ordenes')) {
-      ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
-    } else if (resp is Map<String, dynamic> && resp.containsKey('msg')) {
-      // Maneja la respuesta con un mensaje personalizado
-      if (resp['msg'] == "No se encontraron órdenes para el cliente proporcionado") {
-        throw Exception("No se encontraron órdenes para el cliente proporcionado");
-      }
-      ordenes = []; // Si no hay órdenes, asigna una lista vacía
+    if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
+      throw Exception('Customer With No Orders');
     }
 
+    ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
     isLoading = false;
     notifyListeners();
   } catch (e) {
@@ -78,8 +72,6 @@ Future<void> getOrdenByCustomer(String customerID) async {
     rethrow;
   }
 }
-
-
 
     Future<void> getOrdenByRepresentative(String usuarioZona) async {
     try {  
