@@ -145,49 +145,94 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                
                               ),
                               const SizedBox(width: 10),
-                              TextButton(
-                              onPressed: () {
-                                fechaentrega == null ? showDialog(
+                        TextButton(
+                          onPressed: () async {
+                            if (fechaentrega == null) {
+                              showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
-                                        IconButton(onPressed:(){
-                                          Navigator.of(context).pop();
-                                        }, 
-                                        icon: const Icon(Icons.close))
-                                      ],
+                                     backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                    title: Text(
+                                      'Warning',
+                                      style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
                                     ),
-                                    content: Text('Please select a Delivery Date', 
-                                    style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black))
+                                    content: Text(
+                                      'Please select a Delivery Date',
+                                      style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('OK', style: GoogleFonts.plusJakartaSans()),
+                                      ),
+                                    ],
                                   );
                                 },
-                              )  : 
-                               context.read<OrdenDateProvider>().getOrdenByDaySearch(fechaentrega!);
-                              },
-                              style: TextButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15), 
-                                ),
-                                side: const BorderSide(
-                                  color: Colors.black, // Color del borde
-                                  width: 1, // Grosor del borde
-                                ),
-                                backgroundColor: Colors.grey[300], // Color de fondo del botón
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Espaciado interno
-                              ),
-                              child: Text('SEARCH', 
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14,
-                                  color: Colors.black, // Color para que parezca un botón interactivo
-                                ),
-                              ),
-                            )
-                              ],
+                              );
+                            } else {
+                              // Llama al método del Provider
+                              await context.read<OrdenDateProvider>().getOrdenByDaySearch(fechaentrega!);
+
+                              // Verifica si el widget sigue montado antes de usar el contexto
+                              if (!mounted) return;
+
+                              // Si no hay órdenes, muestra el diálogo
+                              if (context.mounted) {
+                              if (context.read<OrdenDateProvider>().ordenes.isEmpty) {
+                                if (context.mounted) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                      title: Text(
+                                        'No Orders Found',
+                                        style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
+                                      ),
+                                      content: Text(
+                                        'No orders were found for the selected date.',
+                                        style: GoogleFonts.plusJakartaSans(fontSize: 18),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            'OK',
+                                            style: GoogleFonts.plusJakartaSans(fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            }}}
+                          },
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            side: const BorderSide(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            backgroundColor: Colors.grey[300],
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          ),
+                          child: Text(
+                            'SEARCH',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        )
+                          ],
                             ),
 
                               Row(
@@ -238,48 +283,93 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                
                               ),
                               const SizedBox(width: 10),
-                              TextButton(
-                              onPressed: () {
-                                fechacreado == null ? showDialog(
+                        TextButton(
+                          onPressed: () async {
+                            if (fechacreado == null) {
+                              showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
-                                        IconButton(onPressed:(){
-                                          Navigator.of(context).pop();
-                                        }, 
-                                        icon: const Icon(Icons.close))
-                                      ],
+                                     backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                    title: Text(
+                                      'Warning',
+                                      style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
                                     ),
-                                    content: Text('Please select a Date', 
-                                    style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black))
+                                    content: Text(
+                                      'Please select a Created Date',
+                                      style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('OK', style: GoogleFonts.plusJakartaSans()),
+                                      ),
+                                    ],
                                   );
                                 },
-                              )  : 
-                               context.read<OrdenDateProvider>().getOrdenByDayCreate(fechacreado!);
-                              },
-                              style: TextButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15), 
-                                ),
-                                side: const BorderSide(
-                                  color: Colors.black, // Color del borde
-                                  width: 1, // Grosor del borde
-                                ),
-                                backgroundColor: Colors.grey[300], // Color de fondo del botón
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Espaciado interno
-                              ),
-                              child: Text('SEARCH', 
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14,
-                                  color: Colors.black, // Color para que parezca un botón interactivo
-                                ),
-                              ),
-                            )
+                              );
+                            } else {
+                              // Llama al método del Provider
+                              await context.read<OrdenDateProvider>().getOrdenByDayCreate(fechacreado!);
+
+                              // Verifica si el widget sigue montado antes de usar el contexto
+                              if (!mounted) return;
+
+                              // Si no hay órdenes, muestra el diálogo
+                              if (context.mounted) {
+                              if (context.read<OrdenDateProvider>().ordenes.isEmpty) {
+                                if (context.mounted) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                      title: Text(
+                                        'No Orders Found',
+                                        style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
+                                      ),
+                                      content: Text(
+                                        'No orders were found for the selected date.',
+                                        style: GoogleFonts.plusJakartaSans(fontSize: 18),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            'OK',
+                                            style: GoogleFonts.plusJakartaSans(fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            }}}
+                          },
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            side: const BorderSide(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            backgroundColor: Colors.grey[300],
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          ),
+                          child: Text(
+                            'SEARCH',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        )
                               ],
                             ),
                        ],

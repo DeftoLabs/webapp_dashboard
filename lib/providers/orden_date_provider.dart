@@ -34,6 +34,10 @@ class OrdenDateProvider extends ChangeNotifier {
       String formattedDate = DateFormat('yyyy-MM-dd').format(date);
       final resp = await CafeApi.httpGet('/ordens/fechaentrega/$formattedDate');
       ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      if (ordenes.isEmpty) 
+      {
+      return;
+      }
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -47,6 +51,10 @@ class OrdenDateProvider extends ChangeNotifier {
       String formattedDate = DateFormat('yyyy-MM-dd').format(date);
       final resp = await CafeApi.httpGet('/ordens/fecha/$formattedDate');
       ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      if (ordenes.isEmpty) 
+      {
+      return;
+      }
       isLoading = false;
       notifyListeners();
     } catch (e) {
