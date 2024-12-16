@@ -122,7 +122,7 @@ class _OrdersSearchSalesState extends State<OrdersSearchSales> {
                       },
                     ),
                     const SizedBox(width: 10),
-   TextButton(
+                        TextButton(
                               onPressed: () {
                                 usuarioZona == null ? showDialog(
                                 context: context,
@@ -173,7 +173,7 @@ class _OrdersSearchSalesState extends State<OrdersSearchSales> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 200),
                     child: Text(
-                      'NO ORDERS FOUND FOR THIS CUSTOMER',
+                      'NO ORDERS FOUND FOR THIS SALES REPRESENTATIVE',
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

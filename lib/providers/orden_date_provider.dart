@@ -84,8 +84,10 @@ Future<void> getOrdenByCustomer(String customerID) async {
     Future<void> getOrdenByRepresentative(String usuarioZona) async {
     try {  
       final resp = await CafeApi.httpGet('/ordens/usuarioZona/$usuarioZona');
-      
-      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
+      throw Exception('Sales Representative With No Orders');
+    }
+     ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -97,7 +99,10 @@ Future<void> getOrdenByCustomer(String customerID) async {
     Future<void> getOrdenByProducto(String productoID) async {
     try {  
       final resp = await CafeApi.httpGet('/ordens/producto/$productoID');
-      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
+      throw Exception('Products With No Orders');
+    }
+     ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -109,7 +114,10 @@ Future<void> getOrdenByCustomer(String customerID) async {
       Future<void> getOrdenByRoute(String ruta) async {
     try {  
       final resp = await CafeApi.httpGet('/ordens/ruta/$ruta');
-      ordenes = (resp as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
+      throw Exception('Ruta With No Orders');
+    }
+     ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
       isLoading = false;
       notifyListeners();
     } catch (e) {

@@ -15,7 +15,7 @@ class OrdersSearchDateDataSource extends DataTableSource {
   @override
   DataRow getRow(int index) {
 
-      final ordenesOrdenadas = List.from(ordenes)..sort((a, b) => b.fechacreado.compareTo(a.fechacreado));
+    final ordenesOrdenadas = List.from(ordenes)..sort((a, b) => b.fechacreado.compareTo(a.fechacreado));
 
     final Ordenes orden = ordenesOrdenadas[index];
 
@@ -30,7 +30,10 @@ class OrdersSearchDateDataSource extends DataTableSource {
       if(orden.clientes.isNotEmpty) {
         clienteSucursal = orden.clientes.first.sucursal;
       }
-
+       String salesRepresentative = '';
+      if(orden.ruta.isNotEmpty) {
+        salesRepresentative = orden.ruta.first.usuarioZona.nombre;
+      }
     return DataRow.byIndex(
       index: index,
       cells: [
@@ -40,7 +43,7 @@ class OrdersSearchDateDataSource extends DataTableSource {
         DataCell(Text(clienteNombre, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
         DataCell(Text(clienteSucursal, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
         DataCell(Text(orden.status, style: GoogleFonts.plusJakartaSans(fontSize: 12))),
-        DataCell(Text(orden.ruta.first.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 12) )),
+        DataCell(Text(salesRepresentative, style: GoogleFonts.plusJakartaSans(fontSize: 12) )),
    DataCell(
           IconButton(icon: const Icon(Icons.edit_outlined), 
           onPressed: (){
