@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_searchdatedatasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 
 class OrdersSearchSales extends StatefulWidget {
@@ -122,48 +123,93 @@ class _OrdersSearchSalesState extends State<OrdersSearchSales> {
                       },
                     ),
                     const SizedBox(width: 10),
-                        TextButton(
-                              onPressed: () {
-                                usuarioZona == null ? showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
-                                        IconButton(onPressed:(){
-                                          Navigator.of(context).pop();
-                                        }, 
-                                        icon: const Icon(Icons.close))
-                                      ],
-                                    ),
-                                    content: Text('Please select a Sale Representative', 
-                                    style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black))
-                                  );
-                                },
-                              )  : 
-                            context.read<OrdenDateProvider>().getOrdenByRepresentative(usuarioZona!);
-                              },
-                              style: TextButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15), 
-                                ),
-                                side: const BorderSide(
-                                  color: Colors.black, // Color del borde
-                                  width: 1, // Grosor del borde
-                                ),
-                                backgroundColor: Colors.grey[300], // Color de fondo del botón
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Espaciado interno
-                              ),
-                              child: Text('SEARCH', 
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14,
-                                  color: Colors.black, // Color para que parezca un botón interactivo
-                                ),
-                              ),
-                            )
+                       TextButton(
+                onPressed: () async {
+  try {
+    if (usuarioZona == null) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
+            content: Text(
+              'Please select a Sales Representative',
+              style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
+            ),
+          );
+        },
+      );
+    } else {
+      await context.read<OrdenDateProvider>().getOrdenByRepresentative(usuarioZona!);
+    }
+  } catch (e) {
+    if (e.toString().contains('Sales Representative With No Orders')) {
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'No Orders',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+              content: Text(
+                'The Sales Representative currently has no Orders.',
+                style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
+              ),
+            );
+          },
+        );
+      }
+    } else {
+      NotificationService.showSnackBarError('Error with the Sales Representative Order');
+    }
+  }
+},
+
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    side: const BorderSide(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                    backgroundColor: Colors.grey[300],
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  ),
+                  child: Text(
+                    'SEARCH',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
                   ],
                 ),
           const SizedBox(height: 20),

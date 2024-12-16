@@ -84,6 +84,7 @@ Future<void> getOrdenByCustomer(String customerID) async {
     Future<void> getOrdenByRepresentative(String usuarioZona) async {
     try {  
       final resp = await CafeApi.httpGet('/ordens/usuarioZona/$usuarioZona');
+      
       if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
       throw Exception('Sales Representative With No Orders');
     }
