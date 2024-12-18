@@ -233,7 +233,7 @@ if (context.mounted) {
                     DataColumn(label: Text('EDIT',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                   ],
                   source: ordersDataSource,
-                  columnSpacing: screenWidth * 0.019,
+                  columnSpacing: screenWidth * 0.04,
                 ),
         ],
       ),
