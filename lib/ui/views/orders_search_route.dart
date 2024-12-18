@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_searchdatedatasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 
 class OrdersSearchRoute extends StatefulWidget {
@@ -123,29 +124,77 @@ class _OrdersSearchRouteState extends State<OrdersSearchRoute> {
                     ),
                     const SizedBox(width: 10),
                       TextButton(
-                              onPressed: () {
-                                ruta == null ? showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
-                                        IconButton(onPressed:(){
-                                          Navigator.of(context).pop();
-                                        }, 
-                                        icon: const Icon(Icons.close))
-                                      ],
-                                    ),
-                                    content: Text('Please select a Route', 
-                                    style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black))
+                              onPressed: () async {
+                              try {
+                                if (ruta == null) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                        title: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Warning',
+                                              style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              icon: const Icon(Icons.close),
+                                            ),
+                                          ],
+                                        ),
+                                        content: Text(
+                                          'Please select a Route',
+                                          style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
+                                        ),
+                                      );
+                                    },
                                   );
-                                },
-                              )  : 
-                            context.read<OrdenDateProvider>().getOrdenByRoute(ruta!);
-                              },
+                                } else {
+                                  // Llama al método del Provider
+                                  await context.read<OrdenDateProvider>().getOrdenByRoute(ruta!);
+                                }
+                              } catch (e) {
+                                if (e.toString().contains('Routes With No Orders')) {
+                                  if (context.mounted) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                          title: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'No Orders',
+                                                style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                icon: const Icon(Icons.close),
+                                              ),
+                                            ],
+                                          ),
+                                          content: Text(
+                                            'No orders were found for the selected route.',
+                                            style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                } else {
+                                  NotificationService.showSnackBarError('Error retrieving route orders');
+                                }
+                              }
+                            },
+
                               style: TextButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15), 

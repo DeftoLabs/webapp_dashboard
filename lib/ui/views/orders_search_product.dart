@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_searchdatedatasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 
 class OrdersSearchProduct extends StatefulWidget {
   const OrdersSearchProduct({super.key});
@@ -117,30 +118,72 @@ class _OrdersSearchProductState extends State<OrdersSearchProduct> {
                       },
                     ),
                     const SizedBox(width: 10),
-   TextButton(
-                              onPressed: () {
-                                productoID == null ? showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
-                                        IconButton(onPressed:(){
-                                          Navigator.of(context).pop();
-                                        }, 
-                                        icon: const Icon(Icons.close))
-                                      ],
-                                    ),
-                                    content: Text('Please select a Sale Representative', 
-                                    style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black))
+                        TextButton(
+                              onPressed: () async {
+                              try {
+                                if (productoID == null) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                        title: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
+                                            IconButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              icon: const Icon(Icons.close),
+                                            ),
+                                          ],
+                                        ),
+                                        content: Text(
+                                          'Please select a Product',
+                                          style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
+                                        ),
+                                      );
+                                    },
                                   );
-                                },
-                              )  : 
-                            context.read<OrdenDateProvider>().getOrdenByProducto(productoID!);
-                              },
+                                } else {
+                                  // Llama al método del Provider
+                                  await context.read<OrdenDateProvider>().getOrdenByProducto(productoID!);
+                                }
+                              } catch (e) {
+                                if (e.toString().contains('Products With No Orders')) {
+                                  if (context.mounted) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                          title: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('No Orders', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                icon: const Icon(Icons.close),
+                                              ),
+                                            ],
+                                          ),
+                                          content: Text(
+                                            'No orders were found for the selected product.',
+                                            style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                } else {
+                                  NotificationService.showSnackBarError('Error retrieving product orders');
+                                }
+                              }
+                            },
+
                               style: TextButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15), 
@@ -190,7 +233,7 @@ class _OrdersSearchProductState extends State<OrdersSearchProduct> {
                     DataColumn(label: Text('EDIT',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                   ],
                   source: ordersDataSource,
-                  columnSpacing: screenWidth * 0.019,
+                  columnSpacing: screenWidth * 0.04,
                 ),
         ],
       ),

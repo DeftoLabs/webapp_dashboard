@@ -100,6 +100,7 @@ Future<void> getOrdenByCustomer(String customerID) async {
     Future<void> getOrdenByProducto(String productoID) async {
     try {  
       final resp = await CafeApi.httpGet('/ordens/producto/$productoID');
+      
       if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
       throw Exception('Products With No Orders');
     }
@@ -115,6 +116,7 @@ Future<void> getOrdenByCustomer(String customerID) async {
       Future<void> getOrdenByRoute(String ruta) async {
     try {  
       final resp = await CafeApi.httpGet('/ordens/ruta/$ruta');
+      
       if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
       throw Exception('Ruta With No Orders');
     }
