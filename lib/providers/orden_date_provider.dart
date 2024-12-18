@@ -118,7 +118,7 @@ Future<void> getOrdenByCustomer(String customerID) async {
       final resp = await CafeApi.httpGet('/ordens/ruta/$ruta');
       
       if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
-      throw Exception('Ruta With No Orders');
+      throw Exception('Routes With No Orders');
     }
      ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
       isLoading = false;

@@ -194,7 +194,6 @@ class _OrdersSearchRouteState extends State<OrdersSearchRoute> {
                                 }
                               }
                             },
-
                               style: TextButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15), 
@@ -244,7 +243,7 @@ class _OrdersSearchRouteState extends State<OrdersSearchRoute> {
                     DataColumn(label: Text('EDIT',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                   ],
                   source: ordersDataSource,
-                  columnSpacing: screenWidth * 0.019,
+                  columnSpacing: screenWidth * 0.04,
                 ),
         ],
       ),
