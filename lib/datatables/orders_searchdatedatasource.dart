@@ -30,7 +30,7 @@ class OrdersSearchDateDataSource extends DataTableSource {
       if(orden.clientes.isNotEmpty) {
         clienteSucursal = orden.clientes.first.sucursal;
       }
-       String salesRepresentative = '';
+    String salesRepresentative = '';
       if(orden.ruta.isNotEmpty) {
         salesRepresentative = orden.ruta.first.usuarioZona.nombre;
       }

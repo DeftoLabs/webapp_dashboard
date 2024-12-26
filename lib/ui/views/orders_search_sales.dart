@@ -47,8 +47,6 @@ class _OrdersSearchSalesState extends State<OrdersSearchSales> {
 
     final ordersDataSource = OrdersSearchDateDataSource(ordenDateProvider.ordenes);
 
-     final double screenWidth = MediaQuery.of(context).size.width;
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(

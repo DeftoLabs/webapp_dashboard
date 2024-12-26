@@ -430,7 +430,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                               ),
                                               const SizedBox(height: 20),
                                               SizedBox(
-                                                width: 385,
+                                                width: 450,
                                                 child: Consumer<RutaProvider>(
                                                   builder: (context, rutaProvider, child) {
                                                     if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
@@ -459,8 +459,16 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                           .map((cliente) {
                                                         return DropdownMenuItem<String>(
                                                           value: cliente.id,
-                                                          child: Text(cliente.nombre,
-                                                            style:const TextStyle(color: Colors.black) ),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            children: [
+                                                            Text(cliente.nombre,
+                                                            style:const TextStyle(color: Colors.black)),
+                                                            const SizedBox(width: 5),
+                                                            Text(cliente.sucursal,
+                                                            style:const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 10)),
+                                                            ],
+                                                          ),
                                                         );
                                                       }).toList(),
                                                       onChanged: (value) {
@@ -537,7 +545,6 @@ class _OrdenBodyState extends State<OrdenBody> {
                                               ),
 
                                               const SizedBox(width: 20),
-
                                               // Dropdown para seleccionar cliente
                                               Consumer<RutaProvider>(
                                                 builder: (context, rutaProvider,child) {
@@ -545,7 +552,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                     return const Text('');
                                                   }
                                                   return    SizedBox(
-                                                width: 385,
+                                                width: 450,
                                                 child: Consumer<RutaProvider>(
                                                   builder: (context, rutaProvider, child) {
                                                     if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
@@ -574,8 +581,16 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                           .map((cliente) {
                                                         return DropdownMenuItem<String>(
                                                           value: cliente.id,
-                                                          child: Text(cliente.nombre,
-                                                            style:const TextStyle(color: Colors.black) ),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            children: [
+                                                            Text(cliente.nombre,
+                                                            style:const TextStyle(color: Colors.black)),
+                                                            const SizedBox(width: 5),
+                                                            Text(cliente.sucursal,
+                                                            style:const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 10)),
+                                                            ],
+                                                          ),
                                                         );
                                                       }).toList(),
                                                       onChanged: (value) {
