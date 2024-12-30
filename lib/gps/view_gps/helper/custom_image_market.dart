@@ -6,21 +6,39 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 
 Future<BitmapDescriptor> getNetworkImageMarker(String imageUrl) async {
-  final Uint8List bytes = await getImageFromUrl(imageUrl);
-  final ui.Codec codec = await ui.instantiateImageCodec(bytes, targetHeight: 50, targetWidth: 50);
-  final ui.FrameInfo frameInfo = await codec.getNextFrame();
-  final ByteData? data = await frameInfo.image.toByteData(format: ui.ImageByteFormat.png);
+  try {
+    // Descarga la imagen desde la URL
+    final Uint8List bytes = await getImageFromUrl(imageUrl);
 
-  final Uint8List resizedBytes = data!.buffer.asUint8List();
-  final Uint8List circularBytes = await _getCircularImageWithBorder(
-    resizedBytes, 
-    Colors.black54, // Define the color of the border
-    5.0 // Define the width of the border
-  );
+    // Valida si los bytes de la imagen no están vacíos
+    if (bytes.isEmpty) {
+      throw Exception('La imagen descargada está vacía.');
+    }
 
-  final BitmapDescriptor bitmapDescriptor = BitmapDescriptor.fromBytes(circularBytes);
+    // Redimensiona la imagen
+    final ui.Codec codec = await ui.instantiateImageCodec(bytes, targetHeight: 50, targetWidth: 50);
+    final ui.FrameInfo frameInfo = await codec.getNextFrame();
 
-  return bitmapDescriptor;
+    // Convierte la imagen redimensionada a bytes
+    final ByteData? data = await frameInfo.image.toByteData(format: ui.ImageByteFormat.png);
+    if (data == null) {
+      throw Exception('No se pudo convertir la imagen a bytes.');
+    }
+
+    // Convierte los bytes a una imagen circular con borde
+    final Uint8List circularBytes = await _getCircularImageWithBorder(
+      data.buffer.asUint8List(),
+      Colors.black54, // Color del borde
+      5.0, // Ancho del borde
+    );
+
+    // Actualización: Usa el método `BitmapDescriptor.bytes` en lugar de `fromBytes`
+    return BitmapDescriptor.bytes(circularBytes);
+  } catch (e) {
+    debugPrint('Error en getNetworkImageMarker: $e');
+    // Devuelve un marcador predeterminado en caso de error
+    return BitmapDescriptor.defaultMarker;
+  }
 }
 
 Future<Uint8List> getImageFromUrl(String imageUrl) async {

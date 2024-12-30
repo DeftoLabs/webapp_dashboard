@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
@@ -49,8 +48,7 @@ class _LocationSquareState extends State<LocationSquare> {
   }
 
   Future<String> _getAddress(double lat, double lng) async {
-    final apiKey = dotenv.env['MAPBOXKEY'];
-    final url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/$lng,$lat.json?access_token=$apiKey';
+    final url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/$lng,$lat.json?access_token=pk.eyJ1IjoiZGVmdG9sYWJzIiwiYSI6ImNseHhiZjJybTE5b2wya29vMDdrdXViem0ifQ._dnK1oSv5G-MfKwzHpdKcQ';
 
     final response = await http.get(Uri.parse(url));
 

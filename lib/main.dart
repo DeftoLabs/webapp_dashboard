@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // import 'dart:html' as html;
 
 import 'package:universal_html/html.dart' as html;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/payment_form_provider.dart';
@@ -20,16 +19,13 @@ import 'ui/layouts/splash/splash_layout.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: '.env');
-
-  final googleMapKey = dotenv.env['GOOGLEMAPKEY'];
   
 
   final googleMapsScript = html.document.querySelector(
       'script[src*="https://maps.googleapis.com/maps/api/js"]');
   if (googleMapsScript == null) {
     final script = html.ScriptElement()
-      ..src = 'https://maps.googleapis.com/maps/api/js?key=$googleMapKey'
+      ..src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDH6RXeyIM_2m37JA6x_lV7p0XzGZlOH9E'
       ..async = true // Cargar de forma asincrónica
       ..defer = true;
     html.document.head!.append(script);
