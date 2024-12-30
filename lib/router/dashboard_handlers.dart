@@ -12,6 +12,7 @@ import 'package:web_dashboard/ui/views/bank_view.dart';
 import 'package:web_dashboard/ui/views/banks_view.dart';
 import 'package:web_dashboard/ui/views/finance_view.dart';
 import 'package:web_dashboard/ui/views/finances_view.dart';
+import 'package:web_dashboard/ui/views/no_page_access_view.dart';
 import 'package:web_dashboard/ui/views/orden_view.dart';
 import 'package:web_dashboard/ui/views/orders_search_customer.dart';
 import 'package:web_dashboard/ui/views/orders_search_date.dart';
@@ -246,7 +247,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.categoriesRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if(authProvider.user?.rol == 'ADMIN_ROL') {
         return const CategoriesView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }

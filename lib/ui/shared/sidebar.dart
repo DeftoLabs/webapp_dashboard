@@ -1,8 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/providers/auth_provider.dart';
-import 'package:web_dashboard/providers/sidemenu_provider.dart';
+import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/router/router.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
@@ -22,6 +21,8 @@ class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final currentUser = Provider.of<AuthProvider>(context).user!;
+
     final sideMenuProvider = Provider.of<SideMenuProvider>(context);
 
     return Container(
@@ -34,15 +35,19 @@ class Sidebar extends StatelessWidget {
 
         const Logo(),
 
-         const SizedBox(height: 10),
-
-         MenuItem(
+        MenuItem(
           isActive: sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
           text: 'Dashboard', 
           icon: Icons.compass_calibration_outlined, 
           onPressed: ()=> navigateTo(Flurorouter.dashboardRoute)),
 
-        MenuItem(text: 'Analityc', icon: Icons.account_tree_outlined,             onPressed: (){}),
+        currentUser.rol != 'USER_ROLE'
+          ? MenuItem(
+              text: 'Analityc',
+              icon: Icons.account_tree_outlined,
+              onPressed: () {},
+            )
+          : const SizedBox.shrink(),
 
         const Divider(
           indent: 30,
@@ -55,7 +60,7 @@ class Sidebar extends StatelessWidget {
         icon: Icons.list_alt_outlined,            
         onPressed: ()=> navigateTo(Flurorouter.ordersRoute)),
 
-        MenuItem(text: 'Sales', icon: Icons.attach_money_outlined,      onPressed: (){}),
+        MenuItem(text: 'Shipment', icon: Icons.local_shipping_outlined,      onPressed: (){}),
 
         MenuItem(text: 'Payments', icon: Icons.account_balance_wallet_outlined,      
         onPressed: ()=> navigateTo(Flurorouter.paymentsRoute)),
@@ -75,10 +80,13 @@ class Sidebar extends StatelessWidget {
 
         MenuItem(text: 'Catalog', icon: Icons.share_rounded,      onPressed: (){}),
 
+        currentUser.rol != 'USER_ROLE'
+        ? 
         MenuItem(text: 'Categories', 
         icon: Icons.category_outlined,        
         onPressed: ()=> navigateTo(Flurorouter.categoriesRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.categoriesRoute,),
+        isActive: sideMenuProvider.currentPage == Flurorouter.categoriesRoute,)
+        : const SizedBox.shrink(),
 
         const SizedBox(height: 10),
 
@@ -95,27 +103,36 @@ class Sidebar extends StatelessWidget {
 
         const SizedBox(height: 10),
 
+        currentUser.rol != 'USER_ROLE'
+        ? 
         const Divider(
           indent: 30,
           endIndent: 30,
-          color: Color.fromRGBO(177, 255, 46, 1),
-        ),
+          color: Color.fromRGBO(177, 255, 46, 1))
+        : const SizedBox.shrink(),
 
+        currentUser.rol != 'USER_ROLE'
+        ? 
         MenuItem(text: 'GPS', icon: Icons.gps_fixed,                  
         onPressed: ()=> navigateTo(Flurorouter.gpsRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.gpsRoute,),
+        isActive: sideMenuProvider.currentPage == Flurorouter.gpsRoute,)
+        : const SizedBox.shrink(),
 
+        currentUser.rol != 'USER_ROLE'
+        ? 
         MenuItem(text: 'Route', icon: Icons.route_rounded,
         onPressed: ()=> navigateTo(Flurorouter.routeRoutes),
-        isActive: sideMenuProvider.currentPage == Flurorouter.routeRoutes,),   
+        isActive: sideMenuProvider.currentPage == Flurorouter.routeRoutes,)
+        : const SizedBox.shrink(),   
 
+        currentUser.rol != 'USER_ROLE'
+        ? 
         MenuItem(text: 'Zone', icon: Icons.landscape_outlined,      
         onPressed: ()=> navigateTo(Flurorouter.zoneZones),
-        isActive: sideMenuProvider.currentPage == Flurorouter.zoneZones,),
+        isActive: sideMenuProvider.currentPage == Flurorouter.zoneZones,)
+        : const SizedBox.shrink(),   
       
-
         const SizedBox(height: 10),
-        
 
         const Divider(
           indent: 30,
@@ -123,16 +140,21 @@ class Sidebar extends StatelessWidget {
           color: Color.fromRGBO(177, 255, 46, 1),
         ),
 
+        currentUser.rol != 'USER_ROLE'
+        ? 
         MenuItem(text: 'Users', 
         icon: Icons.accessibility_outlined,
         onPressed: ()=> navigateTo(Flurorouter.usersRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.usersRoute,),
+        isActive: sideMenuProvider.currentPage == Flurorouter.usersRoute,)
+        : const SizedBox.shrink(),   
 
+        currentUser.rol != 'USER_ROLE'
+        ? 
         MenuItem(text: 'Marketing', 
         icon: Icons.trending_up_outlined,
         onPressed: ()=> navigateTo(Flurorouter.marketingRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.marketingRoute,
-        ),
+        isActive: sideMenuProvider.currentPage == Flurorouter.marketingRoute,)
+        : const SizedBox.shrink(),   
 
         MenuItem(text: 'Message', 
         icon: Icons.sms,

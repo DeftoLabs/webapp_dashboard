@@ -152,7 +152,7 @@ class _UserViewForm extends StatelessWidget {
     
 
     return WhiteCard(
-      title: 'General Information',
+      title: 'GENERAL INFORMATION',
       child: Form(
         key: userFormProvider.formKey,
         autovalidateMode: AutovalidateMode.always,
@@ -162,11 +162,11 @@ class _UserViewForm extends StatelessWidget {
             TextFormField(
               initialValue: user.nombre,
               decoration: CustomInput.formInputDecoration(
-                hint: 'User Name', 
-                label: 'Name', 
+                hint: 'USER NAME', 
+                label: 'NAME', 
                 icon: Icons.person_pin_rounded
               ),
-              onChanged: ( value )=> userFormProvider.copyUserWith( nombre: value ),
+              onChanged: ( value )=> userFormProvider.copyUserWith( nombre: value.toUpperCase() ),
               validator: (value) {
                 if (value == null || value.isEmpty) return 'Please enter a Name.';
                 if (value.length < 2) return 'The Name must be at least two letters long.';
@@ -180,8 +180,8 @@ class _UserViewForm extends StatelessWidget {
             TextFormField(
               initialValue: user.correo,
               decoration: CustomInput.formInputDecoration(
-                hint: 'User Email', 
-                label: 'Email', 
+                hint: 'USER EMAIL', 
+                label: 'EMAIL', 
                 icon: Icons.mark_email_read_outlined
               ),
               onChanged: ( value )=> userFormProvider.copyUserWith( correo: value ),
@@ -196,8 +196,8 @@ class _UserViewForm extends StatelessWidget {
             TextFormField(
               initialValue: user.phone,
               decoration: CustomInput.formInputDecoration(
-                hint: 'Phone', 
-                label: 'Phone Number', 
+                hint: 'PHONE', 
+                label: 'PHONE NUMBER', 
                 icon: Icons.phone_android_rounded
               ),
               onChanged: ( value )=> userFormProvider.copyUserWith( phone: value ),
@@ -212,17 +212,72 @@ class _UserViewForm extends StatelessWidget {
             TextFormField(
               initialValue: user.zone,
               decoration: CustomInput.formInputDecoration(
-                hint: 'Code', 
-                label: 'Code', 
+                hint: 'CODE', 
+                label: 'CODE', 
                 icon: Icons.map
               ),
-              onChanged: ( value )=> userFormProvider.copyUserWith( zone: value ),
+              onChanged: ( value )=> userFormProvider.copyUserWith( zone: value.toUpperCase() ),
               validator: ( value ) {
                 if ( value == null || value.isEmpty ) return 'Invalid Register';
                 if ( value.length < 2 ) return 'Mimimun 2 Charactes';
                 return null;
               },
              ),
+
+                const SizedBox( height: 20 ),
+
+                SizedBox(
+                  height: 60,
+                  child: Consumer<UserFormProvider>(
+                    builder: (context, userFormProvider, child) {
+                      return DropdownButtonFormField(
+                        value: user.rol,
+                        icon: const Icon(Icons.arrow_drop_down,
+                        color: Colors.black),
+                        decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black, width: 1)
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0)
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 12
+                          ),
+                        ),
+                        dropdownColor: Colors.white,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                        items: const [
+                            DropdownMenuItem(
+                              value: 'ADMIN_ROLE',
+                              child: Text('ADMIN'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'USER_ROLE',
+                              child: Text('SALES REP'),
+                            ),
+                        ], 
+                        onChanged: (value) {
+                          if (value !=null) {
+                            userFormProvider.copyUserWith( rol: value );
+                          }
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Rol is Required';
+                          }
+                          return null;
+                        },
+                        );
+                    },
+                  )
+                ),
+
+
             const SizedBox( height: 48 ),
 
             CustomOutlineButtomRegister(
@@ -232,6 +287,7 @@ class _UserViewForm extends StatelessWidget {
                   NotificationService.showSnackBa('User Updated');
                   if(!context.mounted) return;
                   Provider.of<UsersProvider>(context, listen: false).refreshUser(user);
+                   NavigationService.replaceTo('/dashboard/users');
                 } else {
                   NotificationService.showSnackBarError('Error try to Update the User');
                 }
@@ -311,7 +367,7 @@ class _AvatarContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Profile', style: CustomLabels.h2),
+            Text('PROFILE', style: CustomLabels.h2),
             const SizedBox( height: 20 ),
 
             SizedBox(
@@ -335,9 +391,9 @@ class _AvatarContainer extends StatelessWidget {
                         border: Border.all( color: Colors.white, width: 5 )
                       ),
                       child: FloatingActionButton(
-                        backgroundColor: Colors.indigo,
+                        backgroundColor:   const Color.fromRGBO(177, 255, 46, 100),
                         elevation: 0,
-                        child: const  Icon( Icons.camera_alt_outlined, size: 20,color: Colors.white,),
+                        child: const  Icon( Icons.camera_alt_outlined, size: 20,color: Colors.black,),
                         onPressed: () async  {
                          FilePickerResult? result = await FilePicker.platform.pickFiles(
                           type: FileType.custom,
@@ -364,8 +420,15 @@ class _AvatarContainer extends StatelessWidget {
                 ],
               )
             ),
-
-            const SizedBox( height: 20 ),
+            const SizedBox(height: 20),
+            Text('Recommended Image Size:',
+                style: GoogleFonts.plusJakartaSans(fontSize: 12)),
+            Text(
+              '450x450 Pixels',
+              style: GoogleFonts.plusJakartaSans(
+                  fontSize: 12, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
 
             Text(
               user.nombre,
