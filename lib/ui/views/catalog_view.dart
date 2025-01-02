@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
 
 
-class MessageView extends StatelessWidget {
-  const MessageView({super.key});
+class CatalogView extends StatelessWidget {
+  const CatalogView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class MessageView extends StatelessWidget {
               const SizedBox(width: 20),
               Expanded
               (
-                child: Text('Message', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
+                child: Text('Catalog', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
                     const SizedBox(width: 50),
               SizedBox(
                 width: 60,
@@ -52,7 +52,7 @@ class MessageView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 350),
-          Text('Message',
+          Text('Product Catalog',
           style: GoogleFonts.plusJakartaSans (
             fontSize: 50,
             fontWeight: FontWeight.bold,

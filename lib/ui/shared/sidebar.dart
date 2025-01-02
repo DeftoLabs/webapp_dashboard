@@ -45,7 +45,7 @@ class Sidebar extends StatelessWidget {
           ? MenuItem(
               text: 'Analityc',
               icon: Icons.account_tree_outlined,
-              onPressed: () {},
+             onPressed: ()=> navigateTo(Flurorouter.analitycRoute)
             )
           : const SizedBox.shrink(),
 
@@ -60,7 +60,9 @@ class Sidebar extends StatelessWidget {
         icon: Icons.list_alt_outlined,            
         onPressed: ()=> navigateTo(Flurorouter.ordersRoute)),
 
-        MenuItem(text: 'Shipment', icon: Icons.local_shipping_outlined,      onPressed: (){}),
+        MenuItem(text: 'Shipment', icon: Icons.local_shipping_outlined,      
+            onPressed: ()=> navigateTo(Flurorouter.shipmentRoute)
+        ),
 
         MenuItem(text: 'Payments', icon: Icons.account_balance_wallet_outlined,      
         onPressed: ()=> navigateTo(Flurorouter.paymentsRoute)),
@@ -78,7 +80,9 @@ class Sidebar extends StatelessWidget {
         onPressed: ()=> navigateTo(Flurorouter.productsRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.productsRoute,),
 
-        MenuItem(text: 'Catalog', icon: Icons.share_rounded,      onPressed: (){}),
+        MenuItem(text: 'Catalog', icon: Icons.share_rounded,      
+         onPressed: ()=> navigateTo(Flurorouter.catalogRoute)
+        ),
 
         currentUser.rol != 'USER_ROLE'
         ? 
@@ -148,13 +152,10 @@ class Sidebar extends StatelessWidget {
         isActive: sideMenuProvider.currentPage == Flurorouter.usersRoute,)
         : const SizedBox.shrink(),   
 
-        currentUser.rol != 'USER_ROLE'
-        ? 
         MenuItem(text: 'Marketing', 
         icon: Icons.trending_up_outlined,
         onPressed: ()=> navigateTo(Flurorouter.marketingRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.marketingRoute,)
-        : const SizedBox.shrink(),   
+        isActive: sideMenuProvider.currentPage == Flurorouter.marketingRoute,),
 
         MenuItem(text: 'Message', 
         icon: Icons.sms,
@@ -166,10 +167,14 @@ class Sidebar extends StatelessWidget {
         const SizedBox(height: 50),
 
         const TextSeparator(text: 'Configuration'),
+
+        currentUser.rol != 'USER_ROLE'
+        ? 
         MenuItem(text: 'Settings', 
         icon: Icons.tune_outlined, 
         onPressed: ()=> navigateTo(Flurorouter.settingsRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.settingsRoute,),
+        isActive: sideMenuProvider.currentPage == Flurorouter.settingsRoute,)
+        : const SizedBox.shrink(),   
 
 
         MenuItem(text: 'Logout',

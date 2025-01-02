@@ -8,8 +8,10 @@ import 'package:web_dashboard/providers/sidemenu_provider.dart';
 import 'package:web_dashboard/gps/view_gps/gps_screen.dart';
 import 'package:web_dashboard/ui/modals/taxoperation_modal.dart';
 import 'package:web_dashboard/ui/modals/taxsale_modal.dart';
+import 'package:web_dashboard/ui/views/analityc_view.dart';
 import 'package:web_dashboard/ui/views/bank_view.dart';
 import 'package:web_dashboard/ui/views/banks_view.dart';
+import 'package:web_dashboard/ui/views/catalog_view.dart';
 import 'package:web_dashboard/ui/views/finance_view.dart';
 import 'package:web_dashboard/ui/views/finances_view.dart';
 import 'package:web_dashboard/ui/views/no_page_access_view.dart';
@@ -42,6 +44,7 @@ import 'package:web_dashboard/ui/views/orders_view.dart';
 import 'package:web_dashboard/ui/views/products_view.dart';
 import 'package:web_dashboard/ui/views/ruta_view.dart';
 import 'package:web_dashboard/ui/views/rutas_view.dart';
+import 'package:web_dashboard/ui/views/shipment_view.dart';
 import 'package:web_dashboard/ui/views/zone_view.dart';
 import 'package:web_dashboard/ui/views/zones_view.dart';
 import 'package:web_dashboard/ui/views/settings_view.dart';
@@ -58,6 +61,22 @@ class DashboardHandlers {
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.dashboardRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return const DashboardView();
+      } return const LoginView();
+
+    }
+  );
+
+  // Analityc 
+    static Handler analityc = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.analitycRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if(authProvider.user?.rol == 'ADMIN_ROLE') {
+        return const AnalitycView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -166,6 +185,18 @@ class DashboardHandlers {
     }
   );
 
+    // Shipment 
+    static Handler shipment = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.shipmentRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const ShipmentView();
+      } return const LoginView();
+
+    }
+  );
+
   static Handler payments = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
@@ -209,7 +240,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.gpsRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const GpsScreen();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -242,12 +277,24 @@ class DashboardHandlers {
     }
   );
 
+  // Catalog
+    static Handler catalog = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.shipmentRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const CatalogView();
+      } return const LoginView();
+
+    }
+  );
+
   static Handler categories = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.categoriesRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        if(authProvider.user?.rol == 'ADMIN_ROL') {
+        if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const CategoriesView();
         } else {
           return const NoPageAccessView();
@@ -300,26 +347,34 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoutes);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const RutasView();
-      } return const LoginView();
-
-    }
-  );
-
-    static Handler route = Handler (
-    handlerFunc: (context, params) {
-      final authProvider = Provider.of<AuthProvider>(context!);
-      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoute);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
-        if( params['id']?.first !=null){
-           return RutaView(id: params['id']!.first);
-        }else{
-          return const RutasView();
+        } else {
+          return const NoPageAccessView();
         }
       } return const LoginView();
 
     }
   );
+
+static Handler route = Handler(
+  handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (params['id']?.first != null) {
+          return RutaView(id: params['id']!.first);
+        } else {
+          return const RutasView();
+        }
+      } else {
+        return const NoPageAccessView();
+      }
+    }
+    return const LoginView();
+  },
+);
 
 
 
@@ -328,7 +383,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.zoneZones);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const ZonesView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -338,29 +397,20 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.zoneZone);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
-        if(params['id']?.first != null) {
+  if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (params['id']?.first != null) {
           return ZoneView(id: params['id']!.first);
-        }else {
+        } else {
           return const ZonesView();
         }
       } else {
-        return const LoginView();
+        return const NoPageAccessView();
       }
     }
+    return const LoginView();
+    }
   );
-
-  //  static Handler newRoute = Handler (
-  //  handlerFunc: (context, params) {
-  //    final authProvider = Provider.of<AuthProvider>(context!);
-  //    Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.newRouteRoute);
-  //    if( authProvider.authStatus == AuthStatus.authenticated) {
-  //      return const NewRouteView();
-  //    } return const LoginView();
-//
-  //  }
-  //);
-
 
     static Handler marketing = Handler (
     handlerFunc: (context, params) {
@@ -390,7 +440,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.usersRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const UsersView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -402,12 +456,17 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.userRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE') {
         if ( params ['uid']?.first != null ) {
           return UserView(uid: params ['uid']!.first);
-        }
-      } else {
+        }else {
           return const UsersView();
-      } return const LoginView();
+      } 
+      } else {
+        return const NoPageAccessView();
+    }
+    }
+     return const LoginView();
     }
   ); 
 
@@ -417,7 +476,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.newUserRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+       if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const NewUserRegister();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -433,7 +496,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.settingsRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+           if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const SettingsView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -444,9 +511,12 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.profile);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+         if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const ProfilesView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
-
     }
   );
 
@@ -454,14 +524,18 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.profileId);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
-        if( params['id']?.first !=null){
-           return ProfileView(id: params['id']!.first);
-        }else{
+  if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (params['id']?.first != null) {
+          return ProfileView(id: params['id']!.first);
+        } else {
           return const ProfilesView();
         }
-      } return const LoginView();
-
+      } else {
+        return const NoPageAccessView();
+      }
+    }
+    return const LoginView();
     }
   );
 
@@ -471,7 +545,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.inactiveUserRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+         if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const InactiveUserView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -482,7 +560,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.financeRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+         if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const FinancesView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -492,14 +574,18 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.financeID);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
-        if( params['id']?.first !=null){
-           return FinanceView(id: params['id']!.first);
-        }else{
+  if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (params['id']?.first != null) {
+          return FinanceView(id: params['id']!.first);
+        } else {
           return const FinancesView();
         }
-      } return const LoginView();
-
+      } else {
+        return const NoPageAccessView();
+      }
+    }
+    return const LoginView();
     }
   );
 
@@ -507,14 +593,18 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.taxSalesID);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
-        if( params['id']?.first !=null){
-           return TaxSaleView(id: params['id']!.first);
-        }else{
+  if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (params['id']?.first != null) {
+          return TaxSaleView(id: params['id']!.first);
+        } else {
           return const FinancesView();
         }
-      } return const LoginView();
-
+      } else {
+        return const NoPageAccessView();
+      }
+    }
+    return const LoginView();
     }
   );
 
@@ -523,14 +613,18 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.taxOperationID);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
-        if( params['id']?.first !=null){
-           return TaxOperationModal(id: params['id']!.first);
-        }else{
+  if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (params['id']?.first != null) {
+          return TaxOperationModal(id: params['id']!.first);
+        } else {
           return const FinancesView();
         }
-      } return const LoginView();
-
+      } else {
+        return const NoPageAccessView();
+      }
+    }
+    return const LoginView();
     }
   );
   
@@ -539,7 +633,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.bankRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+         if(authProvider.user?.rol == 'ADMIN_ROLE') {
         return const BanksView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -548,14 +646,18 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.bankId);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
-        if( params['id']?.first !=null){
-           return BankView(id: params['id']!.first);
-        }else{
+  if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (params['id']?.first != null) {
+          return BankView(id: params['id']!.first);
+        } else {
           return const BanksView();
         }
-      } return const LoginView();
-
+      } else {
+        return const NoPageAccessView();
+      }
+    }
+    return const LoginView();
     }
   );
 

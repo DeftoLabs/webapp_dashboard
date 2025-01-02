@@ -17,6 +17,8 @@ class Flurorouter {
   //Dashboard
   static String dashboardRoute  = '/dashboard';
 
+  static String analitycRoute = '/dashboard/analityc';
+
   static String ordersRoute           = '/dashboard/orders';
   static String ordersRecordsRoute    = '/dashboard/orders/records';
   static String ordersSearchCustomer  = '/dashboard/orders/customer';
@@ -27,6 +29,8 @@ class Flurorouter {
   static String ordersNewOrder        = '/dashboard/orders/neworder';
   static String ordenRoute            = '/dashboard/orders/:id';
 
+  static String shipmentRoute =       '/dashboard/shipment';
+
   static String paymentsRoute         = '/dashboard/payments';
   static String paymentRoute          = '/dashboard/payments/:id';
 
@@ -36,6 +40,8 @@ class Flurorouter {
 
   static String productsRoute   = '/dashboard/products';
   static String productRoute    = '/dashboard/products/:id';
+
+  static String catalogRoute     = '/dashboard/catalog';
 
   static String categoriesRoute = '/dashboard/categories';
 
@@ -84,6 +90,9 @@ class Flurorouter {
     // Dashboard
     router.define (dashboardRoute, handler:   DashboardHandlers.dashboard, transitionType: TransitionType.fadeIn);
 
+    // Analityc
+    router.define (analitycRoute, handler:   DashboardHandlers.analityc, transitionType: TransitionType.fadeIn);
+
     //Order
     router.define (ordersRoute,         handler:   DashboardHandlers.orders, transitionType: TransitionType.fadeIn);
 
@@ -98,6 +107,9 @@ class Flurorouter {
 
     router.define (ordenRoute,          handler:   DashboardHandlers.orden, transitionType: TransitionType.fadeIn);
 
+    // Shipment
+    router.define (shipmentRoute, handler:   DashboardHandlers.shipment, transitionType: TransitionType.fadeIn);
+
     // Payments
     router.define (paymentsRoute,       handler:   DashboardHandlers.payments, transitionType: TransitionType.fadeIn);
     router.define (paymentRoute,        handler:   DashboardHandlers.payment, transitionType: TransitionType.fadeIn);
@@ -110,6 +122,8 @@ class Flurorouter {
     router.define (productsRoute,   handler:  DashboardHandlers.products,   transitionType: TransitionType.fadeIn);    
     router.define (productRoute,    handler:  DashboardHandlers.product,    transitionType: TransitionType.fadeIn);   
 
+    // Catalog
+    router.define (catalogRoute, handler:   DashboardHandlers.catalog, transitionType: TransitionType.fadeIn);
 
     // Categories
     router.define (categoriesRoute, handler:  DashboardHandlers.categories, transitionType: TransitionType.fadeIn);
