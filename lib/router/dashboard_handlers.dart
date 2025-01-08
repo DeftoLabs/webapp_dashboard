@@ -16,6 +16,7 @@ import 'package:web_dashboard/ui/views/finance_view.dart';
 import 'package:web_dashboard/ui/views/finances_view.dart';
 import 'package:web_dashboard/ui/views/no_page_access_view.dart';
 import 'package:web_dashboard/ui/views/orden_view.dart';
+import 'package:web_dashboard/ui/views/orders_salerepresentative_view.dart';
 import 'package:web_dashboard/ui/views/orders_search_customer.dart';
 import 'package:web_dashboard/ui/views/orders_search_date.dart';
 import 'package:web_dashboard/ui/views/orders_search_product.dart';
@@ -72,7 +73,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.analitycRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        if(authProvider.user?.rol == 'ADMIN_ROLE') {
+       if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const AnalitycView();
         } else {
           return const NoPageAccessView();
@@ -82,12 +83,33 @@ class DashboardHandlers {
     }
   );
 
+   // ACCESS TO ADMIN_ROLE AND MASTER_ROLE
     static Handler orders = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const OrdersView();
+        } else {
+          return const NoPageAccessView();
+        }
+      } return const LoginView();
+
+    }
+  );
+  // ACCESS TO USER_ROLE
+
+      static Handler ordersbyrepresentative = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if(authProvider.user?.rol == 'USER_ROLE') {
+        return const OrdersSaleRepresentativeView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -98,7 +120,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersRecordsRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const OrdersRecordsView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -109,7 +135,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchCustomer);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const OrdersSearchCustomer();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -120,7 +150,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchDate);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const OrdersSearchDate();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -131,7 +165,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchSales);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const OrdersSearchSales();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -142,7 +180,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchDelivery);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const OrdersSearchProduct();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -153,7 +195,11 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersSearchRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const OrdersSearchRoute();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -240,7 +286,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.gpsRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        if(authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const GpsScreen();
         } else {
           return const NoPageAccessView();
@@ -294,7 +340,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.categoriesRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        if(authProvider.user?.rol == 'ADMIN_ROLE') {
+         if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const CategoriesView();
         } else {
           return const NoPageAccessView();
@@ -347,7 +393,7 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoutes);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        if(authProvider.user?.rol == 'ADMIN_ROLE') {
+         if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const RutasView();
         } else {
           return const NoPageAccessView();
@@ -362,7 +408,7 @@ static Handler route = Handler(
     final authProvider = Provider.of<AuthProvider>(context!);
     Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.routeRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+      if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if (params['id']?.first != null) {
           return RutaView(id: params['id']!.first);
         } else {
@@ -383,7 +429,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.zoneZones);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        if(authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const ZonesView();
         } else {
           return const NoPageAccessView();
@@ -398,7 +444,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.zoneZone);
   if (authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+      if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if (params['id']?.first != null) {
           return ZoneView(id: params['id']!.first);
         } else {
@@ -440,7 +486,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.usersRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-        if(authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const UsersView();
         } else {
           return const NoPageAccessView();
@@ -456,7 +502,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.userRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+      if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if ( params ['uid']?.first != null ) {
           return UserView(uid: params ['uid']!.first);
         }else {
@@ -476,7 +522,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.newUserRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-       if(authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const NewUserRegister();
         } else {
           return const NoPageAccessView();
@@ -496,7 +542,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.settingsRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-           if(authProvider.user?.rol == 'ADMIN_ROLE') {
+       if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const SettingsView();
         } else {
           return const NoPageAccessView();
@@ -511,7 +557,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.profile);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-         if(authProvider.user?.rol == 'ADMIN_ROLE') {
+         if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const ProfilesView();
         } else {
           return const NoPageAccessView();
@@ -525,7 +571,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.profileId);
   if (authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+       if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if (params['id']?.first != null) {
           return ProfileView(id: params['id']!.first);
         } else {
@@ -545,7 +591,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.inactiveUserRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-         if(authProvider.user?.rol == 'ADMIN_ROLE') {
+         if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const InactiveUserView();
         } else {
           return const NoPageAccessView();
@@ -560,7 +606,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.financeRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-         if(authProvider.user?.rol == 'ADMIN_ROLE') {
+         if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const FinancesView();
         } else {
           return const NoPageAccessView();
@@ -575,7 +621,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.financeID);
   if (authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+      if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if (params['id']?.first != null) {
           return FinanceView(id: params['id']!.first);
         } else {
@@ -594,7 +640,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.taxSalesID);
   if (authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+       if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if (params['id']?.first != null) {
           return TaxSaleView(id: params['id']!.first);
         } else {
@@ -614,7 +660,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.taxOperationID);
   if (authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+       if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if (params['id']?.first != null) {
           return TaxOperationModal(id: params['id']!.first);
         } else {
@@ -633,7 +679,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.bankRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
-         if(authProvider.user?.rol == 'ADMIN_ROLE') {
+        if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const BanksView();
         } else {
           return const NoPageAccessView();
@@ -647,7 +693,7 @@ static Handler route = Handler(
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.bankId);
   if (authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE') {
+      if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if (params['id']?.first != null) {
           return BankView(id: params['id']!.first);
         } else {

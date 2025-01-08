@@ -29,6 +29,12 @@ class Flurorouter {
   static String ordersNewOrder        = '/dashboard/orders/neworder';
   static String ordenRoute            = '/dashboard/orders/:id';
 
+  // ORDER SALE REPRESENTATIVE ROUTE
+
+  static String ordersSalesRoute           = '/dashboard/orderbyrepresentative';
+
+
+
   static String shipmentRoute =       '/dashboard/shipment';
 
   static String paymentsRoute         = '/dashboard/payments';
@@ -106,6 +112,12 @@ class Flurorouter {
     router.define (ordersNewOrder,        handler:   DashboardHandlers.ordersNewOrder, transitionType: TransitionType.fadeIn);
 
     router.define (ordenRoute,          handler:   DashboardHandlers.orden, transitionType: TransitionType.fadeIn);
+
+    // Order by Sale Representative
+
+    router.define (ordersSalesRoute,  handler:   DashboardHandlers.ordersbyrepresentative, transitionType: TransitionType.fadeIn);
+
+
 
     // Shipment
     router.define (shipmentRoute, handler:   DashboardHandlers.shipment, transitionType: TransitionType.fadeIn);

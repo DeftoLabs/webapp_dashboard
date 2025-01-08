@@ -55,10 +55,26 @@ class Sidebar extends StatelessWidget {
           color: Color.fromRGBO(177, 255, 46, 1),
         ),
 
+      // Double Menu ( ADMIN_ROLE & USER_ROLE)
 
+      // ADMIN_ROLE
+        currentUser.rol != 'USER_ROLE'
+        ? 
         MenuItem(text: 'Orders', 
-        icon: Icons.list_alt_outlined,            
-        onPressed: ()=> navigateTo(Flurorouter.ordersRoute)),
+        icon: Icons.list_alt_outlined,      
+        onPressed: ()=> navigateTo(Flurorouter.ordersRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.ordersRoute,)
+        : const SizedBox.shrink(),
+
+        (currentUser.rol != 'MASTER_ROL' && currentUser.rol != 'ADMIN_ROLE') 
+        ? MenuItem(
+        text: 'Order',
+        icon: Icons.list_alt_outlined,
+        onPressed: () => navigateTo(Flurorouter.ordersSalesRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.ordersSalesRoute,
+          )
+        : const SizedBox.shrink(),
+
 
         MenuItem(text: 'Shipment', icon: Icons.local_shipping_outlined,      
             onPressed: ()=> navigateTo(Flurorouter.shipmentRoute)

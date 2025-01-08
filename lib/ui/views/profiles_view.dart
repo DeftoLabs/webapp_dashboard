@@ -27,7 +27,25 @@ class ProfilesView extends StatelessWidget {
         physics: const ClampingScrollPhysics(),
         children: [
           const SizedBox(height: 20),
-          Center(child: Text('Profile View', style: GoogleFonts.plusJakartaSans(fontSize: 30),)),
+         Row(
+            children: [
+              IconButton(
+                color: Colors.black,
+                onPressed: () {
+                  NavigationService.navigateTo('/dashboard/settings');
+                },
+                icon: const Icon(Icons.arrow_back_rounded),
+              ),
+              Expanded(
+                child: Text(
+                  'Profile View',
+                  textAlign: TextAlign.center, // Centrar el texto dentro del espacio disponible
+                  style: GoogleFonts.plusJakartaSans(fontSize: 30),
+                ),
+              ),
+              const SizedBox(width: 48), // Espacio reservado para compensar el IconButton
+            ],
+          ),
           const SizedBox(height: 20),
           Card(
             elevation: 4,
