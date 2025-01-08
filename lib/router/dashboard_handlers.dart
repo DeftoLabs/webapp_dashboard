@@ -16,6 +16,7 @@ import 'package:web_dashboard/ui/views/finance_view.dart';
 import 'package:web_dashboard/ui/views/finances_view.dart';
 import 'package:web_dashboard/ui/views/no_page_access_view.dart';
 import 'package:web_dashboard/ui/views/orden_view.dart';
+import 'package:web_dashboard/ui/views/orders_newsalesrepresentative.dart';
 import 'package:web_dashboard/ui/views/orders_salerepresentative_view.dart';
 import 'package:web_dashboard/ui/views/orders_search_customer.dart';
 import 'package:web_dashboard/ui/views/orders_search_date.dart';
@@ -210,7 +211,26 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersNewOrder);
       if( authProvider.authStatus == AuthStatus.authenticated) {
+         if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const OrdersNewOrdern();
+        } else {
+          return const NoPageAccessView();
+        }
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler ordersNewSales = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersNewSalesRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+      if(authProvider.user?.rol == 'USER_ROLE') {
+        return const OrdersNewSalesRepresentative();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -220,13 +240,17 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordenRoute);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
-        if( params['id']?.first !=null){
-           return OrdenView(id: params['id']!.first);
-        }else{
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
+        if (params['id']?.first != null) {
+          return OrdenView(id: params['id']!.first);
+        } else {
           return const OrdersView();
         }
-      } return const LoginView();
+      } else {
+        return const NoPageAccessView();
+      }
+    } return const LoginView();
 
     }
   );

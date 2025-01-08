@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_salesrepresentative_datasource.dart';
 import 'package:web_dashboard/providers/providers.dart';
@@ -50,7 +49,6 @@ void initState() {
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
-    String todayDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
     final ordenDateProvider = Provider.of<OrdenDateProvider>(context);
     // final ordenProvider = Provider.of<OrdenesProvider>(context);
 
@@ -60,7 +58,6 @@ void initState() {
 
     final ordersDataSource = OrdersSalesRepresentativeDataSource( ordenDateProvider.ordenes );
 
-     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -92,7 +89,7 @@ void initState() {
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
                         onPressed: () {
-                         NavigationService.replaceTo('/dashboard/orders/neworder');
+                         NavigationService.replaceTo('/dashboard/orderbyrepresentative/createorder');
                         },
                       ),
                     ),
