@@ -32,7 +32,6 @@ class Flurorouter {
   // ORDER SALE REPRESENTATIVE ROUTE
 
   static String ordersSalesRoute      = '/dashboard/orderbyrepresentative';
-  static String ordenSalesID          = '/dashboard/orders/:id';
   static String ordersNewSalesRoute   = '/dashboard/orderbyrepresentative/createorder';
 
 

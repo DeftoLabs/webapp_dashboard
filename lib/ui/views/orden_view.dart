@@ -29,7 +29,6 @@ class _OrdenViewState extends State<OrdenView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!isInitialized) {
-      // Inicializar los providers
       ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
       ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
 
@@ -59,6 +58,8 @@ class _OrdenViewState extends State<OrdenView> {
   @override
   Widget build(BuildContext context) {
 
+    final currentUser = Provider.of<AuthProvider>(context).user;
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
@@ -67,10 +68,18 @@ class _OrdenViewState extends State<OrdenView> {
             const SizedBox(height: 20),
             Row(
               children: [
+                if(currentUser?.rol == 'MASTER_ROLE'|| currentUser?.rol == 'ADMIN_ROLE')
                 IconButton(
                     color: Colors.black,
                     onPressed: () {
                       NavigationService.navigateTo('/dashboard/orders/records');
+                    },
+                    icon: const Icon(Icons.arrow_back_rounded))
+                else if(currentUser?.rol == 'USER_ROLE')
+                IconButton(
+                    color: Colors.black,
+                    onPressed: () {
+                      NavigationService.navigateTo('/dashboard/orderbyrepresentative');
                     },
                     icon: const Icon(Icons.arrow_back_rounded)),
                 Expanded(

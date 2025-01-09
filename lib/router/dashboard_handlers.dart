@@ -241,14 +241,10 @@ class DashboardHandlers {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordenRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
-      if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         if (params['id']?.first != null) {
           return OrdenView(id: params['id']!.first);
         } else {
           return const OrdersView();
-        }
-      } else {
-        return const NoPageAccessView();
       }
     } return const LoginView();
 

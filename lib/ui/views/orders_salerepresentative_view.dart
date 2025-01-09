@@ -25,7 +25,7 @@ void initState() {
 
   if (currentUser != null) {
     ordenDateProvider.getOrdenByRepresentative(currentUser.uid).catchError((error) {
-      debugPrint('Error fetching orders for representative: $error');
+      debugPrint('');
     });
   }
 }
