@@ -555,7 +555,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                if( currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROL')
+                if( currentUser?.rol != 'USER_ROLE')
                 orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 IconButton(
                   icon: const Icon(Icons.calendar_today),
@@ -589,14 +589,14 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   },
                 ) : const Text(''),
                 const SizedBox(width: 40),
-                if( currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROL')
+                if( currentUser?.rol != 'USER_ROLE')
                 orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 Text('ADD PRODUCT',
                   style: GoogleFonts.plusJakartaSans(
                   fontSize: 12,
                   color: Colors.black,
                   fontWeight: FontWeight.bold)) : const Text(''),
-                  if( currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROL')
+                   if( currentUser?.rol != 'USER_ROLE')
                    orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 IconButton(
                   onPressed: (){
@@ -639,7 +639,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     )
-                                  : (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') ?
+                                  : ( currentUser?.rol != 'USER_ROLE')?
                                   SizedBox(
                                       width: 90,
                                       height: 40,
@@ -714,7 +714,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                 fontWeight: FontWeight.bold
                               )
                               ) :
-                              (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') ?
+                             ( currentUser?.rol != 'USER_ROLE') ?
                               Row(
                                 children: [
                                   Flexible(
@@ -737,10 +737,8 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                         if (!textControllers.containsKey(producto.id)) {
                                           textControllers[producto.id] = TextEditingController(text: currentPrice.toString());
                                         }
-                                  
                                         // Obtenemos el controlador de texto
                                         TextEditingController textController = textControllers[producto.id]!;
-                                  
                                         return Row(
                                           children: [
                                             // Si el precio es manual, mostramos el TextField
@@ -862,7 +860,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           DataCell(
                             orden.status != 'ORDER' && orden.status != 'APPROVED' ? 
                             const Text('')
-                            : (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') ?
+                            :( currentUser?.rol != 'USER_ROLE') ?
                             IconButton(
                               icon: const Icon(
                                 Icons.delete_outline,
@@ -1064,7 +1062,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     child: 
                     orden.status != 'ORDER' && orden.status != 'APPROVED' ? 
                     Text(orden.comentarioRevision.toString()) 
-                    : (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') ?
+                    : ( currentUser?.rol != 'USER_ROLE') ?
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 40,
@@ -1213,7 +1211,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           NotificationService.showSnackBa('Order Updated');
                           if (!context.mounted) return;
                           Provider.of<OrdenesProvider>(context, listen: false).getPaginatedOrdenes;
-                          NavigationService.replaceTo('/dashboard/orders/records');
+                          NavigationService.navigateTo('/dashboard/orders/records');
                         } else {
                           NotificationService.showSnackBarError('Error to Update Order');
                         }
