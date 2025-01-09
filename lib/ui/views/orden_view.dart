@@ -88,7 +88,47 @@ class _OrdenViewState extends State<OrdenView> {
                     style: GoogleFonts.plusJakartaSans(fontSize: 30),
                     textAlign: TextAlign.center,
                   ),
-                )
+                ), 
+                  Container(
+                    height: 50,
+                    width: 100,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20),),
+                    child: TextButton(
+                      child: Text(
+                        'PRINT',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                  onPressed: () async {
+                  
+                    }
+                  ),
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    height: 50,
+                    width: 100,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20),),
+                    child: TextButton(
+                      child: Text(
+                        'EMAIL',
+                        style: GoogleFonts.plusJakartaSans(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                  onPressed: () async {
+                  
+                    }
+                  ),
+                  ),
+                  const SizedBox(width: 10)
               ],
             ),
             const SizedBox(height: 20),
@@ -160,6 +200,8 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
 
     final financeProvider = Provider.of<FinanceProvider>(context);
     final finance = financeProvider.finances.isNotEmpty ? financeProvider.finances [0] : null;
+
+    final currentUser = Provider.of<AuthProvider>(context).user;
 
     final image = (profile.img == null)
         ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35)
@@ -513,6 +555,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                if( currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROL')
                 orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 IconButton(
                   icon: const Icon(Icons.calendar_today),
@@ -546,12 +589,14 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   },
                 ) : const Text(''),
                 const SizedBox(width: 40),
+                if( currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROL')
                 orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 Text('ADD PRODUCT',
                   style: GoogleFonts.plusJakartaSans(
                   fontSize: 12,
                   color: Colors.black,
                   fontWeight: FontWeight.bold)) : const Text(''),
+                  if( currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROL')
                    orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
                 IconButton(
                   onPressed: (){
@@ -559,6 +604,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       context: context, 
                       builder: ( _ ) => OrdensAddProduct(orderID: widget.orden.id));
                   }, 
+                  
                   icon: const Icon(  Icons.add_circle_outline_sharp)
                   ) : const Text(''),
               ],
@@ -593,7 +639,8 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     )
-                                  : SizedBox(
+                                  : (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') ?
+                                  SizedBox(
                                       width: 90,
                                       height: 40,
                                       child: TextFormField(
@@ -650,7 +697,13 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    ) : Text(
+                                        producto.cantidad.toString(),
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                             ),
                             DataCell(Text(producto.unid)),
                             DataCell(
@@ -661,6 +714,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                 fontWeight: FontWeight.bold
                               )
                               ) :
+                              (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') ?
                               Row(
                                 children: [
                                   Flexible(
@@ -796,11 +850,19 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                     ),
                                   ),
                                 ],
-                              ),
+                              ) 
+                              : Text(producto.precio.toString(),
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold
+                              )
+                              )
+                              ,
                             ),
                           DataCell(
                             orden.status != 'ORDER' && orden.status != 'APPROVED' ? 
-                            const Text(''):
+                            const Text('')
+                            : (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') ?
                             IconButton(
                               icon: const Icon(
                                 Icons.delete_outline,
@@ -869,7 +931,8 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                 }
                                 }
                               },
-                            ),
+                            ) : const Text('')
+                            ,
                           ),
                           ]);
                         }).toList(),
@@ -1000,7 +1063,8 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     padding: const EdgeInsets.all(20.0),
                     child: 
                     orden.status != 'ORDER' && orden.status != 'APPROVED' ? 
-                    Text(orden.comentarioRevision.toString()) :
+                    Text(orden.comentarioRevision.toString()) 
+                    : (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') ?
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 40,
@@ -1041,7 +1105,9 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             return null; // Validation successful
                           },
                             )
-                    ),
+                    )
+                    : Text(orden.comentarioRevision.toString()) 
+                    ,
                   )
                   ],)
                 ),
@@ -1049,7 +1115,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 if (orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER')
+                 if (orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' && currentUser?.rol != 'USER_ROLE')
                  Container(
                     height: 50,
                     width: 150,
@@ -1121,7 +1187,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     ),
                   ),
                   const SizedBox(width: 20),
-                     if (orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER')
+                     if (orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' && currentUser?.rol != 'USER_ROLE')
                 Container(
                     height: 50,
                     width: 150,
