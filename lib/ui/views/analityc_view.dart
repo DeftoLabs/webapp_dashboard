@@ -57,7 +57,7 @@ class AnalitycView extends StatelessWidget {
             fontSize: 50,
             fontWeight: FontWeight.bold,
           )),
-          Text('Powered by Bozz IA',
+          Text('Powered by Bozz AI',
           style: GoogleFonts.plusJakartaSans (
             fontSize: 20,
             fontWeight: FontWeight.bold,

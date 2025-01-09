@@ -367,238 +367,262 @@ class _OrdenBodyState extends State<OrdenBody> {
                             color: Colors.black54,
                           ),
                           const SizedBox(height: 10),
-                          Center(
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                bool isSmallScreen = constraints.maxWidth < 910;
-                                return Column(
-                                  children: [
-                                    Text(currentUser!.uid, style: const TextStyle(color: Colors.white)),
-                                    isSmallScreen
-                                        ? Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(height: 20),
-                                              // Mostrar el nombre del Sales Representative como texto
-                                              SizedBox(
-                                                width: 250,
-                                                child: Consumer<RutaProvider>(
-                                                  builder: (context, rutaProvider, child) {
-                                                    // Asignar automáticamente el usuario actual como representante
-                                                    if (selectedUsuarioZona == null &&
-                                                        rutaProvider.rutas.any((ruta) => ruta.usuarioZona.uid == currentUser.uid)) {
-                                                      selectedUsuarioZona = currentUser.uid;
-                                                      ruta = rutaProvider.rutas
-                                                          .firstWhere((ruta) => ruta.usuarioZona.uid == currentUser.uid)
-                                                          .id;
-                                                      rutaProvider.actualizarClientesRuta(selectedUsuarioZona!);
-                                                    }
-                                    
-                                                    // Mostrar el nombre del representante
-                                                    final representante = rutaProvider.rutas
-                                                        .firstWhere((ruta) => ruta.usuarioZona.uid == currentUser.uid)
-                                                        .usuarioZona;
-                                    
-                                                    return Text(representante.nombre,
-                                                      textAlign: TextAlign.center,
-                                                      style: GoogleFonts.plusJakartaSans(
-                                                        fontSize: 14,
-                                                        color: Colors.black,
-                                                        fontWeight: FontWeight.bold,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              const SizedBox(height: 20),
-                                              // Customers Dropdown
-                                              SizedBox(
-                                                width: 450,
-                                                    child: Consumer<RutaProvider>(
-                                                      builder: (context, rutaProvider, child) {
-                                                        if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
-                                                          return const Text('');
-                                                        }
-                                                    // Dropdown para seleccionar cliente
-                                                    return DropdownButtonFormField<String>(
-                                                      value: cliente,
-                                                      decoration: InputDecoration(
-                                                        label: Center(
-                                                          child: Text(
-                                                            'CUSTOMER',
-                                                            style: GoogleFonts.plusJakartaSans(
-                                                              fontSize: 12,
-                                                              color: Colors.black,
-                                                              fontWeight: FontWeight.bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        focusedBorder: const OutlineInputBorder(
-                                                          borderSide: BorderSide(color: Colors.white, width: 2.0),
-                                                        ),
-                                                        enabledBorder: const OutlineInputBorder(
-                                                          borderSide: BorderSide(color: Colors.white, width: 2.0),
-                                                        ),
-                                                      ),
-                                                      icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                                                      style: GoogleFonts.plusJakartaSans(color: Colors.black),
-                                                      dropdownColor: Colors.white,
-                                                      items: rutaProvider.clientesRutaSeleccionada.map((cliente) {
-                                                        return DropdownMenuItem<String>(
-                                                          value: cliente.id,
-                                                          child: Row(
-                                                            mainAxisAlignment: MainAxisAlignment.start,
-                                                            children: [
-                                                              Text(
-                                                                cliente.nombre,
-                                                                style: const TextStyle(color: Colors.black),
-                                                              ),
-                                                              const SizedBox(width: 5),
-                                                              Text(
-                                                                cliente.sucursal,
-                                                                style: const TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize: 10,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      }).toList(),
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          cliente = value;
-                                                        });
-                                                      },
-                                                      validator: (value) {
-                                                        if (value == null || value.isEmpty) {
-                                                          return 'PLEASE SELECT A CUSTOMER';
-                                                        }
-                                                        return null;
-                                                      },
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              const SizedBox(width: 20),
-                                              // Representante (Sales Representative)
-                                              SizedBox(
-                                                width: 250,
-                                                child: Consumer<RutaProvider>(
-                                                  builder: (context, rutaProvider, child) {
-                                                    // Inicializar el representante y la ruta si no están configurados
-                                                    if (selectedUsuarioZona == null &&
-                                                        rutaProvider.rutas.any((ruta) => ruta.usuarioZona.uid == currentUser.uid)) {
-                                                      selectedUsuarioZona = currentUser.uid;
-                                                      ruta = rutaProvider.rutas
-                                                          .firstWhere((ruta) => ruta.usuarioZona.uid == currentUser.uid)
-                                                          .id;
-                                                      rutaProvider.actualizarClientesRuta(selectedUsuarioZona!);
-                                                    }
+Center(
+  child: LayoutBuilder(
+    builder: (context, constraints) {
+      bool isSmallScreen = constraints.maxWidth < 910;
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              currentUser!.uid,
+              style: const TextStyle(color: Colors.white),
+            ),
+            isSmallScreen
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      // Mostrar el nombre del Sales Representative como texto
+                      SizedBox(
+                        width: 250,
+                        child: Consumer<RutaProvider>(
+                          builder: (context, rutaProvider, child) {
+                            // Validación para evitar errores
+                            if (rutaProvider.rutas.any((ruta) => ruta.usuarioZona.uid == currentUser.uid)) {
+                              if (selectedUsuarioZona == null) {
+                                selectedUsuarioZona = currentUser.uid;
+                                ruta = rutaProvider.rutas
+                                    .firstWhere((ruta) => ruta.usuarioZona.uid == currentUser.uid)
+                                    .id;
+                                rutaProvider.actualizarClientesRuta(selectedUsuarioZona!);
+                              }
 
-                                                    // Mostrar el nombre del representante
-                                                    final representante = rutaProvider.rutas
-                                                        .firstWhere((ruta) => ruta.usuarioZona.uid == currentUser.uid)
-                                                        .usuarioZona;
+                              final representante = rutaProvider.rutas
+                                  .firstWhere((ruta) => ruta.usuarioZona.uid == currentUser.uid)
+                                  .usuarioZona;
 
-                                                    return Text(
-                                                      representante.nombre,
-                                                      textAlign: TextAlign.center,
-                                                      style: GoogleFonts.plusJakartaSans(
-                                                        fontSize: 14,
-                                                        color: Colors.black,
-                                                        fontWeight: FontWeight.bold,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              const SizedBox(width: 20),
-                                              // Dropdown de clientes (Customers)
-                                              SizedBox(
-                                                width: 450,
-                                                child: Consumer<RutaProvider>(
-                                                  builder: (context, rutaProvider, child) {
-                                                    // Si no hay clientes, muestra un mensaje vacío
-                                                    if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
-                                                      return const Text('');
-                                                    }
+                              return Text(
+                                representante.nombre,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            }
+                            return Column(
+                              children: [
+                                Text(
+                                  'NO ROUTE or ',
+                                  style: GoogleFonts.plusJakartaSans( fontSize: 14, color: Colors.black)),
+                                    Text(
+                                  'CUSTOMERS ASSIGNED',
+                                  style: GoogleFonts.plusJakartaSans( fontSize: 14, color: Colors.black))
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      // Customers Dropdown
+                      SizedBox(
+                        width: 450,
+                        child: Consumer<RutaProvider>(
+                          builder: (context, rutaProvider, child) {
+                            if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
+                              return const Text('');
+                            }
 
-                                                    return DropdownButtonFormField<String>(
-                                                      value: cliente,
-                                                      decoration: InputDecoration(
-                                                        label: Center(
-                                                          child: Text(
-                                                            'CUSTOMER',
-                                                            style: GoogleFonts.plusJakartaSans(
-                                                              fontSize: 12,
-                                                              color: Colors.black,
-                                                              fontWeight: FontWeight.bold,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        focusedBorder: const OutlineInputBorder(
-                                                          borderSide: BorderSide(color: Colors.white, width: 2.0),
-                                                        ),
-                                                        enabledBorder: const OutlineInputBorder(
-                                                          borderSide: BorderSide(color: Colors.white, width: 2.0),
-                                                        ),
-                                                      ),
-                                                      icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                                                      style: GoogleFonts.plusJakartaSans(color: Colors.black),
-                                                      dropdownColor: Colors.white,
-                                                      items: rutaProvider.clientesRutaSeleccionada.map((cliente) {
-                                                        return DropdownMenuItem<String>(
-                                                          value: cliente.id,
-                                                          child: Row(
-                                                            mainAxisAlignment: MainAxisAlignment.start,
-                                                            children: [
-                                                              Text(
-                                                                cliente.nombre,
-                                                                style: const TextStyle(color: Colors.black),
-                                                              ),
-                                                              const SizedBox(width: 5),
-                                                              Text(
-                                                                cliente.sucursal,
-                                                                style: const TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize: 10,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      }).toList(),
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          cliente = value;
-                                                        });
-                                                      },
-                                                      validator: (value) {
-                                                        if (value == null || value.isEmpty) {
-                                                          return 'PLEASE SELECT A CUSTOMER';
-                                                        }
-                                                        return null;
-                                                      },
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-
-                                  ],
+                            return DropdownButtonFormField<String>(
+                              value: cliente,
+                              decoration: InputDecoration(
+                                label: Center(
+                                  child: Text(
+                                    'CUSTOMER',
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white, width: 2.0),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white, width: 2.0),
+                                ),
+                              ),
+                              icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                              style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                              dropdownColor: Colors.white,
+                              items: rutaProvider.clientesRutaSeleccionada.map((cliente) {
+                                return DropdownMenuItem<String>(
+                                  value: cliente.id,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        cliente.nombre,
+                                        style: const TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        cliente.sucursal,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  cliente = value;
+                                });
                               },
-                            ),
-                          )
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'PLEASE SELECT A CUSTOMER';
+                                }
+                                return null;
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 20),
+                      // Representante (Sales Representative)
+                      SizedBox(
+                        width: 250,
+                        child: Consumer<RutaProvider>(
+                          builder: (context, rutaProvider, child) {
+                            if (rutaProvider.rutas.any((ruta) => ruta.usuarioZona.uid == currentUser.uid)) {
+                              if (selectedUsuarioZona == null) {
+                                selectedUsuarioZona = currentUser.uid;
+                                ruta = rutaProvider.rutas
+                                    .firstWhere((ruta) => ruta.usuarioZona.uid == currentUser.uid)
+                                    .id;
+                                rutaProvider.actualizarClientesRuta(selectedUsuarioZona!);
+                              }
+                
+                              final representante = rutaProvider.rutas
+                                  .firstWhere((ruta) => ruta.usuarioZona.uid == currentUser.uid)
+                                  .usuarioZona;
+                
+                              return Text(
+                                representante.nombre,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            }
+                            return Column(
+                              children: [
+                                Text(
+                                  'NO ROUTE or ',
+                                  style: GoogleFonts.plusJakartaSans( fontSize: 14, color: Colors.black)),
+                                    Text(
+                                  'CUSTOMERS ASSIGNED',
+                                  style: GoogleFonts.plusJakartaSans( fontSize: 14, color: Colors.black))
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      // Dropdown de clientes (Customers)
+                      SizedBox(
+                        width: 450,
+                        child: Consumer<RutaProvider>(
+                          builder: (context, rutaProvider, child) {
+                            if (rutaProvider.clientesRutaSeleccionada.isEmpty) {
+                              return const Text('');
+                            }
+                
+                            return DropdownButtonFormField<String>(
+                              value: cliente,
+                              decoration: InputDecoration(
+                                label: Center(
+                                  child: Text(
+                                    'CUSTOMER',
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white, width: 2.0),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white, width: 2.0),
+                                ),
+                              ),
+                              icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                              style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                              dropdownColor: Colors.white,
+                              items: rutaProvider.clientesRutaSeleccionada.map((cliente) {
+                                return DropdownMenuItem<String>(
+                                  value: cliente.id,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        cliente.nombre,
+                                        style: const TextStyle(color: Colors.black),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        cliente.sucursal,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  cliente = value;
+                                });
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'PLEASE SELECT A CUSTOMER';
+                                }
+                                return null;
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+          ],
+        ),
+      );
+    },
+  ),
+)
+
                         ],
                       ),
                     ),
