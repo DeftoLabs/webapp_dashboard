@@ -1,8 +1,17 @@
+import 'dart:convert';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -91,41 +100,57 @@ class _OrdenViewState extends State<OrdenView> {
                 ), 
                   Container(
                     height: 50,
-                    width: 100,
+                    width: 150,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(20),),
                     child: TextButton(
                       child: Text(
-                        'PRINT',
+                        'DOWNLOAD',
                         style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                  onPressed: () async {
-                  
-                    }
-                  ),
-                  ),
-                  const SizedBox(width: 10),
-                  Container(
-                    height: 50,
-                    width: 100,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(20),),
-                    child: TextButton(
-                      child: Text(
-                        'EMAIL',
-                        style: GoogleFonts.plusJakartaSans(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                  onPressed: () async {
-                  
-                    }
+                      
+                      onPressed: () async {
+                        try {
+                          // Llama a la API y obtiene la respuesta
+                          final response = await CafeApi.getJson('/ordercustomer/${orden!.id}');
+
+                          // Extrae los datos codificados en Base64
+                          final String base64Pdf = response['data'];
+                          final Uint8List pdfBytes = base64Decode(base64Pdf); // Decodifica el Base64 a bytes
+
+                          // Lógica para guardar el PDF dependiendo de la plataforma
+                          if (kIsWeb) {
+                            // WEB: Descarga el PDF
+                            final blob = html.Blob([pdfBytes], 'application/pdf');
+                            final url = html.Url.createObjectUrlFromBlob(blob);
+
+                            final anchor = html.AnchorElement(href: url)
+                              ..target = 'blank'
+                              ..download = 'order_${orden!.id}.pdf';
+                            anchor.click();
+
+                            html.Url.revokeObjectUrl(url);
+                             NotificationService.showSnackBa('Download Order');
+                          } else if (Platform.isAndroid || Platform.isIOS) {
+                            // MÓVILES: Guarda y abre el archivo PDF
+                            final directory = await getApplicationDocumentsDirectory();
+                            final filePath = '${directory.path}/order_${orden!.id}.pdf';
+                            final file = File(filePath);
+
+                            await file.writeAsBytes(pdfBytes);
+                            await OpenFile.open(filePath); // Abre el archivo
+                            NotificationService.showSnackBa('Download Order');
+                          } else {
+                            throw UnsupportedError('Platform Not Supported');
+                          }
+                        } catch (e) {
+                          NotificationService.showSnackBarError('Invalid data. Please Contact Customer Service.');
+                        }
+                      }
                   ),
                   ),
                   const SizedBox(width: 10)

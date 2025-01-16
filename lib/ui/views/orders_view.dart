@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +17,8 @@ class OrdersView extends StatefulWidget {
 }
 
 class _OrdersViewState extends State<OrdersView> {
+  get html => null;
+
 
     @override
   void initState() {
@@ -41,6 +42,7 @@ class _OrdersViewState extends State<OrdersView> {
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
     String todayDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
+    String todayDateII = DateFormat('dd/MM/yy').format(DateTime.now());
     final ordenDateProvider = Provider.of<OrdenDateProvider>(context);
     // final ordenProvider = Provider.of<OrdenesProvider>(context);
 
@@ -63,7 +65,33 @@ class _OrdersViewState extends State<OrdersView> {
               const SizedBox(width: 20),
               Expanded
               (
-                child: Text('Orders View', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
+                child: Text('ORDERS VIEW', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
+                              Container(
+                    height: 50,
+                    width: 150,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(20),),
+                    child: TextButton.icon(
+                      onPressed: (){}, 
+                      label: Text( todayDateII,
+                      style: GoogleFonts.plusJakartaSans(color: Colors.white)
+                      ),
+                      icon: const Icon(Icons.download_rounded,
+                      color: Colors.white,
+                      size: 24,
+                      ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)
+                        )
+                      )
+                      )
+                  ),
+                  const SizedBox(width: 20),
                 Container(
                        height: 50,
                        width: 170,

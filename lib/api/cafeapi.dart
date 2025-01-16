@@ -88,6 +88,30 @@ class CafeApi {
   }
 }
 
+static Future<Map<String, dynamic>> getJson(String path) async {
+  try {
+    // Realizar la solicitud GET
+    final resp = await _dio.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json', // Especifica que esperas recibir JSON
+        },
+      ),
+    );
+
+    // Asegurarse de que la respuesta sea un Map
+    if (resp.data is Map<String, dynamic>) {
+      return resp.data; // Retorna el JSON como Map
+    } else {
+      throw Exception('La respuesta no es un JSON válido');
+    }
+  } catch (e) {
+    throw ('Error in the GET JSON: $e');
+  }
+}
+
+
   static Future postJson(String path, Map<String, dynamic> data) async {
   try {
     // Enviar los datos como JSON, sin usar FormData
