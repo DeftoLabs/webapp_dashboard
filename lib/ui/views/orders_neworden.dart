@@ -1031,7 +1031,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                  if (saved == null) {
                                               if (!context.mounted) return;
                                               NotificationService.showSnackBa('Orden Created');
-                                              NavigationService.replaceTo('/dashboard/orders');
+                                              NavigationService.navigateTo('/dashboard/orders');
                                           }
                                       } catch (e) {
                                           NotificationService.showSnackBarError('No se pudo guardar la Orden: $e');

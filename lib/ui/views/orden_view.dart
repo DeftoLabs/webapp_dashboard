@@ -614,15 +614,20 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   },
                 ) : const Text(''),
                 const SizedBox(width: 40),
-                if( currentUser?.rol != 'USER_ROLE')
-                orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
+                if( orden.productos.length <= 16 && currentUser?.rol != 'USER_ROLE')
+                orden.status != 'INVOICE' && 
+                orden.status != 'NOTE' && 
+                orden.status != 'OTHER' ? 
                 Text('ADD PRODUCT',
                   style: GoogleFonts.plusJakartaSans(
                   fontSize: 12,
                   color: Colors.black,
-                  fontWeight: FontWeight.bold)) : const Text(''),
-                   if( currentUser?.rol != 'USER_ROLE')
-                   orden.status != 'INVOICE' && orden.status != 'NOTE' && orden.status != 'OTHER' ? 
+                  fontWeight: FontWeight.bold)) 
+                  : const Text(''),
+                   if( orden.productos.length <= 16 && currentUser?.rol != 'USER_ROLE')
+                   orden.status != 'INVOICE' && 
+                   orden.status != 'NOTE' && 
+                   orden.status != 'OTHER' ? 
                 IconButton(
                   onPressed: (){
                       showDialog(
@@ -1247,25 +1252,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   ),
                   ),
                    const SizedBox(width: 20),
-                Container(
-                    height: 50,
-                    width: 150,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(20),),
-                    child: TextButton(
-                      child: Text(
-                        'PRINT',
-                        style: GoogleFonts.plusJakartaSans(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                  onPressed: () async {
-                  
-                    }
-                  ),
-                  ),
+
               ],
             ),
                
