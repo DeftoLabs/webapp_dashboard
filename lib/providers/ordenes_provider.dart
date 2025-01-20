@@ -24,6 +24,34 @@ class OrdenesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+    // Método para obtener las órdenes del día y contar los estados
+  Map<String, int> getOrderStatusCountForToday() {
+    final today = DateTime.now();
+    final todayStart = DateTime(today.year, today.month, today.day);
+    final todayEnd = todayStart.add(const Duration(days: 1));
+
+    // Filtrar las órdenes del día
+    final todaysOrders = ordenes.where((orden) {
+      return orden.fechacreado.isAfter(todayStart) && orden.fechacreado.isBefore(todayEnd);
+    }).toList();
+
+    // Contar los diferentes estados de las órdenes
+    Map<String, int> statusCount = {
+      'ORDER': 0,
+      'APPROVED': 0,
+      'CANCEL': 0,
+      'INVOICE': 0,
+      'NOTE': 0,
+      'OTHER': 0,
+    };
+
+    for (var orden in todaysOrders) {
+      statusCount[orden.status] = (statusCount[orden.status] ?? 0) + 1;
+    }
+
+    return statusCount;
+  }
+
    Future<Ordenes?> getOrdenById (String id) async {
 
       try {
