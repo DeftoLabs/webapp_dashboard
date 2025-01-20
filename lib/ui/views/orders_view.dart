@@ -77,73 +77,79 @@ class _OrdersViewState extends State<OrdersView> {
               Expanded
               (
                 child: Text('ORDERS VIEW', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
-                Container(
-                    height: 50,
-                    width: 150,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(20),),
-                    child: TextButton.icon(
-                      onPressed: () async {
-                        try {
-                          // Llama a la API y obtiene la respuesta
-                          final response = await CafeApi.getJson('/ordercustomer/byDate/$searchDate');
-                          // Extrae los datos codificados en Base64
-                          final String base64Pdf = response['data'];
-                          final Uint8List pdfBytes = base64Decode(base64Pdf); // Decodifica el Base64 a bytes
+                ordersDataSource.rowCount > 0 ?
+               Container(
+        height: 50,
+        width: 150,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: TextButton.icon(
+                 onPressed: () async {
+                    try {
+                      // Llama a la API
+                      final response = await CafeApi.getJson('/ordercustomer/byDate/$searchDate');
+                  
+                      // Procesar datos si la respuesta es exitosa
+                      final String base64Pdf = response['data'];
+                      final Uint8List pdfBytes = base64Decode(base64Pdf); // Decodifica el Base64 a bytes
+                  
+                      if (kIsWeb) {
+                        // Lógica para descargar en la web
+                        final blob = html.Blob([pdfBytes], 'application/pdf');
+                        final url = html.Url.createObjectUrlFromBlob(blob);
+                        final anchor = html.AnchorElement(href: url)
+                          ..target = 'blank'
+                          ..download = 'order_$searchDate.pdf';
+                        anchor.click();
+                        html.Url.revokeObjectUrl(url);
+                  
+                        NotificationService.showSnackBa('Order downloaded successfully.');
+                      } else if (Platform.isAndroid || Platform.isIOS) {
+                        // Lógica para móviles
+                        final directory = await getApplicationDocumentsDirectory();
+                        final filePath = '${directory.path}/order_$searchDate.pdf';
+                        final file = File(filePath);
+                  
+                        await file.writeAsBytes(pdfBytes);
+                        await OpenFile.open(filePath);
+                  
+                        NotificationService.showSnackBa('Order downloaded successfully.');
+                      }
+                    } on HttpException catch (e) {
+                      if (e.message.contains('That date has no orders')) {
+                        // Manejo específico del caso "That date has no orders"
+                        NotificationService.showSnackBarError('No orders found for the requested date.');
+                      } else {
+                        // Manejo genérico de otros errores HTTP
+                        NotificationService.showSnackBarError('An error occurred while fetching the data. Please try again.');
+                      }
+                    } catch (e) {
+                      // Manejo genérico para cualquier otro error
+                      NotificationService.showSnackBarError('An unexpected error occurred. Please try again.');
+                    }
+                  },
 
-                          if (kIsWeb) {
-                            try {
-                              // Crear Blob para el archivo PDF
-                              final blob = html.Blob([pdfBytes], 'application/pdf');
-                              final url = html.Url.createObjectUrlFromBlob(blob);
-
-                              // Crear un enlace y simular un clic para descargar el archivo
-                              final anchor = html.AnchorElement(href: url)
-                                ..target = 'blank'
-                                ..download = 'order_$searchDate.pdf';
-                              anchor.click();
-
-                              // Revocar el URL del blob después de la descarga
-                              html.Url.revokeObjectUrl(url);
-
-                              NotificationService.showSnackBa('Download Order');
-                            } catch (e) {
-                              NotificationService.showSnackBarError('Failed to download PDF. Please try again.');
-                            }
-                          } else if (Platform.isAndroid || Platform.isIOS) {
-                            // Móviles: Guardar y abrir el archivo PDF
-                            final directory = await getApplicationDocumentsDirectory();
-                            final filePath = '${directory.path}/order_$searchDate.pdf';
-                            final file = File(filePath);
-
-                            await file.writeAsBytes(pdfBytes);
-                            await OpenFile.open(filePath); // Abre el archivo
-                            NotificationService.showSnackBa('Download Order');
-                          } else {
-                            throw UnsupportedError('Platform Not Supported');
-                          }
-                        } catch (e) {
-                          NotificationService.showSnackBarError('Invalid data. Please Contact Customer Service.');
-                        }
-                      },
-                      label: Text( todayDateII,
-                      style: GoogleFonts.plusJakartaSans(color: Colors.white)
-                      ),
-                      icon: const Icon(Icons.download_rounded,
-                      color: Colors.white,
-                      size: 24,
-                      ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)
-                        )
-                      )
-                      )
-                  ),
+          label: Text(
+            todayDateII,
+            style: GoogleFonts.plusJakartaSans(color: Colors.white),
+          ),
+          icon: const Icon(
+            Icons.download_rounded,
+            color: Colors.white,
+            size: 24,
+          ),
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.black,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+      ) : const SizedBox.shrink(),
                   const SizedBox(width: 20),
                 Container(
                        height: 50,
