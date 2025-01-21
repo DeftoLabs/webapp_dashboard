@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/ordenes_response.dart';
@@ -14,6 +16,9 @@ class OrdenesProvider extends ChangeNotifier {
 
   OrdenesProvider() {
     getPaginatedOrdenes();
+  //  Timer.periodic(const Duration(seconds: 30), (timer) {
+  //  getPaginatedOrdenes();
+  //});
   }
 
   getPaginatedOrdenes () async {
@@ -48,9 +53,33 @@ class OrdenesProvider extends ChangeNotifier {
     for (var orden in todaysOrders) {
       statusCount[orden.status] = (statusCount[orden.status] ?? 0) + 1;
     }
-    notifyListeners();
     return statusCount;
   }
+
+  // Método para obtener las órdenes agrupadas por los últimos 7 días
+Map<int, int> getWeeklyOrderCount() {
+  final today = DateTime.now();
+  final startOfWeek = today.subtract(const Duration(days: 6)); // Hace 7 días
+  final ordersInLast7Days = ordenes.where((orden) {
+    // Ajustamos la comparación para asegurarnos de que la fecha del 15/01 se incluya correctamente
+    return orden.fechacreado.isAfter(startOfWeek.subtract(const Duration(hours: 24))) && 
+           orden.fechacreado.isBefore(today.add(const Duration(days: 1)));
+  }).toList();
+
+  // Inicializar el mapa con 0 órdenes para cada día de la semana
+  Map<int, int> weeklyOrders = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
+
+  for (var orden in ordersInLast7Days) {
+    // Calcular la diferencia en días desde el inicio de la semana
+    final daysAgo = today.difference(orden.fechacreado).inDays;
+    final dayIndex = 6 - daysAgo; // Ajustar índice (0 para hace 6 días, 6 para hoy)
+    if (weeklyOrders.containsKey(dayIndex)) {
+      weeklyOrders[dayIndex] = (weeklyOrders[dayIndex] ?? 0) + 1;
+    }
+  }
+
+  return weeklyOrders;
+}
 
    Future<Ordenes?> getOrdenById (String id) async {
 

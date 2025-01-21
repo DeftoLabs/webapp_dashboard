@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:web_dashboard/ui/cards/white_card.dart';
 import 'package:web_dashboard/ui/views/dashboard/dashboard.dart';
-import 'package:web_dashboard/ui/views/dashboard/order_status_donut_chart.dart';
+
 
 
 
@@ -58,7 +58,8 @@ class _DashboardViewState extends State<DashboardView> {
                                       colors: [
                                         Color(0xFF0F2027), 
                                         Color(0xFF2C5364), 
-                                        Color.fromRGBO(0, 200, 83, 1)
+                                        Color.fromRGBO(0, 200, 83, 1),
+                                        Color.fromRGBO(177, 255, 46, 1),
                                       ],
                                       begin: Alignment.topLeft, 
                                       end: Alignment.bottomRight, 
@@ -79,16 +80,21 @@ class _DashboardViewState extends State<DashboardView> {
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [
-                                    Color(0xFF0F2027), // Oscuro Azul-verdoso
-                                    Color(0xFF2C5364), // Azul grisáceo
-                                    Color.fromRGBO(0, 200, 83, 1)
+                                      Color.fromRGBO(177, 255, 46, 1),
+                                      Color.fromRGBO(0, 200, 83, 1),
+                                      Color(0xFF2C5364),                                  
+                                      Color(0xFF0F2027), 
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight
                                     ),
                                     borderRadius: BorderRadius.circular(30)
                                 ),
-                                child: const DashboardTwoRow()
+                               child: const Align(
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 30),
+                                      child: DashboardTwoRow()))
                               ),
                             ),
                               Expanded(
@@ -98,9 +104,10 @@ class _DashboardViewState extends State<DashboardView> {
                                   decoration: BoxDecoration(
                                       gradient:const LinearGradient(
                                       colors: [
-                                        Color(0xFF0F2027), // Oscuro Azul-verdoso
-                                        Color(0xFF2C5364), // Azul grisáceo
-                                        Color.fromRGBO(0, 200, 83, 1)
+                                        Color(0xFF0F2027), 
+                                        Color(0xFF2C5364), 
+                                        Color.fromRGBO(0, 200, 83, 1),
+                                        Color.fromRGBO(177, 255, 46, 1),
                                       ],
                                       begin: Alignment.topLeft, // Inicio del degradado
                                       end: Alignment.bottomRight, // Fin del degradado
@@ -120,11 +127,12 @@ class _DashboardViewState extends State<DashboardView> {
                                   height: 90,
                                   decoration: BoxDecoration(
                                       gradient:const LinearGradient(
-                                        colors: [
-                                        Color(0xFF0F2027), // Oscuro Azul-verdoso
-                                        Color(0xFF2C5364), // Azul grisáceo
-                                        Color.fromRGBO(0, 200, 83, 1)
-                                      ],
+                                    colors: [
+                                      Color.fromRGBO(177, 255, 46, 1),
+                                      Color.fromRGBO(0, 200, 83, 1),
+                                      Color(0xFF2C5364),                                  
+                                      Color(0xFF0F2027), 
+                                    ],
                                       begin: Alignment.topLeft, // Inicio del degradado
                                       end: Alignment.bottomRight, // Fin del degradado
                                     ),
@@ -137,55 +145,15 @@ class _DashboardViewState extends State<DashboardView> {
                                       child: DashboardFourRow()))
                                 ),
                               ),
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 10),
-                                  height: 90,
-                                  decoration: BoxDecoration(
-                                      gradient:const LinearGradient(
-                                      colors: [
-                                        Color(0xFF0F2027), // Oscuro Azul-verdoso
-                                        Color(0xFF2C5364), // Azul grisáceo
-                                        Color.fromRGBO(0, 200, 83, 1)
-                                      ],
-                                      begin: Alignment.topLeft, // Inicio del degradado
-                                      end: Alignment.bottomRight, // Fin del degradado
-                                    ),
-                                    borderRadius: BorderRadius.circular(30)
-                                  ),
-                                 child: const Align(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 30),
-                                      child: DashboardFiveRow()))
-                                ),
-                              ),
-                            Expanded(
-                              child: Container(
-                                height: 90,
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                    Color(0xFF0F2027), // Oscuro Azul-verdoso
-                                    Color(0xFF2C5364), // Azul grisáceo
-                                    Color.fromRGBO(0, 200, 83, 1)
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight
-                                    ),
-                                    borderRadius: BorderRadius.circular(30)
-                                ),
-                                child: const DashboardSixRow()
-                              ),
-                            )
+                              
                             ],
                           ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 40),
                           Expanded(
                             child: Row(
                               children: [
-                                const Expanded(
-                                  child: OrderStatusDonutChart()
+                                const Flexible(
+                                  child: WeeklyOrdersBarChart()
                                 ),
                                 Expanded(
                                   child: Container(
@@ -193,12 +161,6 @@ class _DashboardViewState extends State<DashboardView> {
                                     child: const Center(child: Text("SALES x DAY By SR", style: TextStyle(color: Colors.white))),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Container(
-                                    color: Colors.blue, // Color para identificar la tercera sección
-                                    child: const Center(child: Text("TOTAL ORDER", style: TextStyle(color: Colors.white))),
-                                  ),
-                                ),  
                               ],
                             ),
                           ),

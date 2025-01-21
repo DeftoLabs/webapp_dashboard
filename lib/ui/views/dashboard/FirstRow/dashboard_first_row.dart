@@ -11,6 +11,7 @@ class DashboardFirstRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width; 
     final isSmallScreen = screenWidth < 950; 
+    final isPhoneScreen = screenWidth < 600;
 
 
     final orderStatusCount = Provider.of<OrdenesProvider>(context).getOrderStatusCountForToday();
@@ -45,7 +46,20 @@ class DashboardFirstRow extends StatelessWidget {
               ],
             ),
           ),
-    
+           if (!isPhoneScreen) 
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: const Icon(
+               Icons.list_alt_outlined, 
+              color: Colors.black, // Puedes cambiar el color si prefieres
+              size: 20,
+            ),
+          )
       ],
     );
   }

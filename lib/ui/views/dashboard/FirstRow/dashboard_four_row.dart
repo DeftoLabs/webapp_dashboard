@@ -15,6 +15,7 @@ class DashboardFourRow extends StatelessWidget {
 
     final orderStatusCount = Provider.of<OrdenesProvider>(context).getOrderStatusCountForToday();
     final noteOrders = orderStatusCount['NOTE'] ?? 0;
+    final invoiceOrders = orderStatusCount['INVOICE'] ?? 0;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,7 +28,7 @@ class DashboardFourRow extends StatelessWidget {
               if (!isSmallScreen) 
                 Center(
                   child: Text(
-                    "NOTE",
+                    "NOTE / INVOICE",
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 11, // Tamaño de texto normal
                       color: Colors.white,
@@ -35,14 +36,27 @@ class DashboardFourRow extends StatelessWidget {
                   ),
                 ),
                 Center(
-                  child: Text(
-                  '$noteOrders',
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: isSmallScreen ? 16 : 20, // Tamaño de texto adaptativo
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                      '$noteOrders',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: isSmallScreen ? 16 : 20, // Tamaño de texto adaptativo
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      ),
+                         Text(
+                      '$invoiceOrders',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: isSmallScreen ? 16 : 20, // Tamaño de texto adaptativo
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      ),
+                    ],
                   ),
-                                ),
                 ),
               ],
             ),
