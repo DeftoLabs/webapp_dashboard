@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 
 import 'package:web_dashboard/ui/cards/white_card.dart';
+import 'package:web_dashboard/ui/views/dashboard/dashboard.dart';
 import 'package:web_dashboard/ui/views/dashboard/order_status_donut_chart.dart';
+
+
 
 import '../../providers/providers.dart';
 
@@ -18,16 +20,6 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    // Actualizar los datos y forzar la reconstrucción del widget
-    Provider.of<OrdenesProvider>(context, listen: false).getOrderStatusCountForToday();
-    setState(() {}); // Esto forzará la reconstrucción del widget para reflejar los cambios.
-  }
-
   
   @override
   Widget build(BuildContext context) {
@@ -41,124 +33,242 @@ class _DashboardViewState extends State<DashboardView> {
     return const Center(child: Text(''));
     }
 
-    final image = (profile.img == null) 
-    ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
-    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
           if(activeUser.rol == 'ADMIN_ROLE' || activeUser.rol == 'MASTER_ROLE')
-          WhiteCard(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: [
-                  Column(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  const Expanded(
-                                    child: OrderStatusDonutChart()
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      color: Colors.green, // Color para identificar la segunda sección
-                                      child: const Center(child: Text("SALES x DAY By SR", style: TextStyle(color: Colors.white))),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      color: Colors.blue, // Color para identificar la tercera sección
-                                      child: const Center(child: Text("TOTAL ORDER", style: TextStyle(color: Colors.white))),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                      const Divider(),
-                      Expanded(
-                        child: Container(
-                          color: Colors.green,
-                          child: Row(
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: [
+                Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          Row(
                             children: [
                               Expanded(
-                                flex: 2, 
                                 child: Container(
-                                  color: Colors.blue, // Color para identificar la segunda sección
-                                  child: const Center(child: Text("WEEK TOP 10 PRODUCT", style: TextStyle(color: Colors.white))),
+                                  margin: const EdgeInsets.only(right: 10),
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                     gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFF0F2027), 
+                                        Color(0xFF2C5364), 
+                                        Color.fromRGBO(0, 200, 83, 1)
+                                      ],
+                                      begin: Alignment.topLeft, 
+                                      end: Alignment.bottomRight, 
+                                    ),
+                                    borderRadius: BorderRadius.circular(30)
+                                  ),
+                                  child: const Align(
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 30),
+                                      child: DashboardFirstRow()))
+                                ),
+                              ),
+                            Expanded(
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 10),
+                                height: 90,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                    Color(0xFF0F2027), // Oscuro Azul-verdoso
+                                    Color(0xFF2C5364), // Azul grisáceo
+                                    Color.fromRGBO(0, 200, 83, 1)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight
+                                    ),
+                                    borderRadius: BorderRadius.circular(30)
+                                ),
+                                child: const DashboardTwoRow()
+                              ),
+                            ),
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 10),
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                      gradient:const LinearGradient(
+                                      colors: [
+                                        Color(0xFF0F2027), // Oscuro Azul-verdoso
+                                        Color(0xFF2C5364), // Azul grisáceo
+                                        Color.fromRGBO(0, 200, 83, 1)
+                                      ],
+                                      begin: Alignment.topLeft, // Inicio del degradado
+                                      end: Alignment.bottomRight, // Fin del degradado
+                                    ),
+                                    borderRadius: BorderRadius.circular(30)
+                                  ),
+                                   child: const Align(
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 30),
+                                      child: DashboardThreeRow()))
                                 ),
                               ),
                               Expanded(
-                                flex: 2,
                                 child: Container(
-                                  color: Colors.orange, // Color para identificar la tercera sección
-                                  child: const Center(child: Text("TOP 10 CUSTOMER", style: TextStyle(color: Colors.white))),
+                                  margin: const EdgeInsets.only(right: 10),
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                      gradient:const LinearGradient(
+                                        colors: [
+                                        Color(0xFF0F2027), // Oscuro Azul-verdoso
+                                        Color(0xFF2C5364), // Azul grisáceo
+                                        Color.fromRGBO(0, 200, 83, 1)
+                                      ],
+                                      begin: Alignment.topLeft, // Inicio del degradado
+                                      end: Alignment.bottomRight, // Fin del degradado
+                                    ),
+                                    borderRadius: BorderRadius.circular(30)
+                                  ),
+                                  child: const Align(
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 30),
+                                      child: DashboardFourRow()))
                                 ),
                               ),
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 10),
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                      gradient:const LinearGradient(
+                                      colors: [
+                                        Color(0xFF0F2027), // Oscuro Azul-verdoso
+                                        Color(0xFF2C5364), // Azul grisáceo
+                                        Color.fromRGBO(0, 200, 83, 1)
+                                      ],
+                                      begin: Alignment.topLeft, // Inicio del degradado
+                                      end: Alignment.bottomRight, // Fin del degradado
+                                    ),
+                                    borderRadius: BorderRadius.circular(30)
+                                  ),
+                                 child: const Align(
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 30),
+                                      child: DashboardFiveRow()))
+                                ),
+                              ),
+                            Expanded(
+                              child: Container(
+                                height: 90,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                    Color(0xFF0F2027), // Oscuro Azul-verdoso
+                                    Color(0xFF2C5364), // Azul grisáceo
+                                    Color.fromRGBO(0, 200, 83, 1)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight
+                                    ),
+                                    borderRadius: BorderRadius.circular(30)
+                                ),
+                                child: const DashboardSixRow()
+                              ),
+                            )
                             ],
                           ),
-                        ),
-                      ),
-                      const Divider(),
-                      Expanded(
-                        child: Container(
-                          color: Colors.yellow, // Color para identificar la tercera parte
-                          child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      color: Colors.red, // Color para identificar la primera sección
-                                      child: const Center(child: Text("TOTAL ORDER VS STATUS VS MONEY ", style: TextStyle(color: Colors.white))),
-                                    ),
+                        const SizedBox(height: 10),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: OrderStatusDonutChart()
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    color: Colors.green, // Color para identificar la segunda sección
+                                    child: const Center(child: Text("SALES x DAY By SR", style: TextStyle(color: Colors.white))),
                                   ),
-                                  Expanded(
-                                    child: Container(
-                                      color: Colors.green, // Color para identificar la segunda sección
-                                      child: const Center(child: Text("ORDER BY SALES VS MONEY", style: TextStyle(color: Colors.white))),
-                                    ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    color: Colors.blue, // Color para identificar la tercera sección
+                                    child: const Center(child: Text("TOTAL ORDER", style: TextStyle(color: Colors.white))),
                                   ),
-                                  Expanded(
-                                    child: Container(
-                                      color: Colors.blue, // Color para identificar la tercera sección
-                                      child: const Center(child: Text("TOP 10 PRODUCT VS MONEY VS CANTIDAD", style: TextStyle(color: Colors.white))),
-                                    ),
-                                  ),
-                                ],
+                                ),  
+                              ],
+                            ),
+                          ),
+                    const Divider(),
+                    Expanded(
+                      child: Container(
+                        color: Colors.green,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2, 
+                              child: Container(
+                                color: Colors.blue, // Color para identificar la segunda sección
+                                child: const Center(child: Text("WEEK TOP 10 PRODUCT", style: TextStyle(color: Colors.white))),
                               ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                color: Colors.orange, // Color para identificar la tercera sección
+                                child: const Center(child: Text("TOP 10 CUSTOMER", style: TextStyle(color: Colors.white))),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
                     ),
-                    Positioned(
-                      top:5,
-                      right: 5,
-                      child:               
-                    SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: ClipOval(
-                          child: image,
-                        ),
-                      ),),
-                    Positioned(
-                      bottom: 20,
-                      right: 20,
-                      child: FloatingActionButton(
-                        onPressed: (){
-
-                        },
-                        backgroundColor: Colors.black,
-                        child: const Icon(Icons.add, color: Colors.white,)
-                      )
-                      )
-                ],
-              ),
-            )
+                    const Divider(),
+                    Expanded(
+                      child: Container(
+                        color: Colors.yellow, // Color para identificar la tercera parte
+                        child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    color: Colors.red, // Color para identificar la primera sección
+                                    child: const Center(child: Text("TOTAL ORDER VS STATUS VS MONEY ", style: TextStyle(color: Colors.white))),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    color: Colors.green, // Color para identificar la segunda sección
+                                    child: const Center(child: Text("ORDER BY SALES VS MONEY", style: TextStyle(color: Colors.white))),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    color: Colors.blue, // Color para identificar la tercera sección
+                                    child: const Center(child: Text("TOP 10 PRODUCT VS MONEY VS CANTIDAD", style: TextStyle(color: Colors.white))),
+                                  ),
+                                ),
+                              ],
+                            ),
+                      ),
+                    ),
+                  ],
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    right: 20,
+                    child: FloatingActionButton(
+                      onPressed: (){
+          
+                      },
+                      backgroundColor: Colors.black,
+                      child: const Icon(Icons.add, color: Colors.white,)
+                    )
+                    )
+              ],
+            ),
           )
           else 
           // SALES REPRESENTATIVE VIEW
@@ -254,22 +364,7 @@ class _DashboardViewState extends State<DashboardView> {
                       ),
                     ],
                     ),
-                    Positioned(
-                      top:5,
-                      right: 5,
-                      child:               
-                    SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: ClipOval(
-                          child: image,
-                        ),
-                      ),),
-                    Positioned(
-                      top:20,
-                      left: 20,
-                      child: Text('DAILY RESUME', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold))),
-                    Positioned(
+                  Positioned(
                       bottom: 20,
                       right: 20,
                       child: FloatingActionButton(

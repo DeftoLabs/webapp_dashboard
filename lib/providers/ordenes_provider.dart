@@ -48,7 +48,7 @@ class OrdenesProvider extends ChangeNotifier {
     for (var orden in todaysOrders) {
       statusCount[orden.status] = (statusCount[orden.status] ?? 0) + 1;
     }
-
+    notifyListeners();
     return statusCount;
   }
 

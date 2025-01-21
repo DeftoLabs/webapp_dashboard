@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/providers.dart'; 
+import '../../../providers/providers.dart';
 
 class OrderStatusDonutChart extends StatelessWidget {
   const OrderStatusDonutChart({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Obtener los datos del estado de las órdenes del día
     final orderStatusCount = Provider.of<OrdenesProvider>(context).getOrderStatusCountForToday();
 
-    // Calcular el total de las órdenes del día
-    final totalOrders = orderStatusCount.values.fold(0, (sum, value) => sum + value);
-     String todayDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
-    // Convertir los datos en una lista de puntos para el gráfico de donuts
     final donutData = orderStatusCount.entries.map((entry) {
       return PieChartSectionData(
         value: entry.value.toDouble(),
-        title: '${entry.key}\n${entry.value}', // Mostrar nombre y cantidad
+        title: '${entry.key}\n${entry.value}',
         color: _getColorForStatus(entry.key),
-        radius: 80,
+        radius: 70, // Radio interior
         titleStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
+        borderSide: BorderSide(
+          color: _getBorderColorForStatus(entry.key), // Borde externo
+          width: 4, // Ancho del borde
+        ),
       );
     }).toList();
 
@@ -38,39 +36,46 @@ class OrderStatusDonutChart extends StatelessWidget {
             PieChartData(
               sections: donutData,
               borderData: FlBorderData(show: false),
-              sectionsSpace: 0,
-              centerSpaceRadius: 40,
+              sectionsSpace: 2, // Espacio entre secciones
+              centerSpaceRadius: 40, // Radio del espacio central
             ),
           ),
         ),
-        const SizedBox(height: 20),
-        // Mostrar total de órdenes del día
-        Text(
-          '$todayDate & ORDERS - $totalOrders', // Mostrar total de las órdenes del día
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-        const SizedBox(height: 20),
-        // Leyenda fuera del gráfico
       ],
     );
   }
 
-  // Función para asignar colores según el estado de la orden
   Color _getColorForStatus(String status) {
     switch (status) {
       case 'ORDER':
-        return const Color.fromARGB(255, 121, 195, 255);
+        return const Color.fromRGBO(0, 200, 83, 1); // Verde
       case 'APPROVED':
-        return const Color.fromARGB(255, 162, 255, 166);
+        return const Color.fromARGB(255, 52, 149, 251); 
       case 'CANCEL':
-        return Colors.red;
+        return const Color.fromRGBO(255, 152, 0, 1);
       case 'INVOICE':
-        return const Color.fromARGB(255, 255, 204, 127);
+        return Colors.grey[400]!; 
       case 'NOTE':
-        return const Color.fromARGB(255, 235, 122, 255);
+        return Colors.grey[600]!; 
       default:
-        return const Color.fromARGB(255, 203, 199, 199);
+        return Colors.grey;
     }
   }
 
+  Color _getBorderColorForStatus(String status) {
+    switch (status) {
+      case 'ORDER':
+        return const Color.fromRGBO(177, 255, 46, 1);
+      case 'APPROVED':
+        return const Color.fromARGB(255, 88, 164, 246); 
+      case 'CANCEL':
+        return const Color.fromARGB(255, 255, 194, 102); 
+      case 'INVOICE':
+        return Colors.grey[500]!;
+      case 'NOTE':
+        return Colors.grey[700]!; 
+      default:
+        return Colors.black;
+    }
+  }
 }

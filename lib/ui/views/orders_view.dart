@@ -156,7 +156,7 @@ class _OrdersViewState extends State<OrdersView> {
                        width: 170,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: const Color.fromRGBO(177, 255, 46, 100),
+                        color: const Color.fromRGBO(177, 255, 46, 1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: const Color.fromARGB(255, 0, 0, 0),
