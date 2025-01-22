@@ -12,6 +12,7 @@ class WeeklyOrdersBarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final weeklyOrderCount = Provider.of<OrdenesProvider>(context).getWeeklyOrderCount();
 
+    // Crear grupos de barras
     final barGroups = weeklyOrderCount.entries.map((entry) {
       return BarChartGroupData(
         x: entry.key, // Índice del día (0: hace 6 días, 6: hoy)
@@ -31,7 +32,7 @@ class WeeklyOrdersBarChart extends StatelessWidget {
       children: [
         Text(
           'ORDER FROM THE LAST 7 DAYS',
-          style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold)
+          style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 20),
         Flexible(
@@ -50,14 +51,18 @@ class WeeklyOrdersBarChart extends StatelessWidget {
                     ),
                   ),
                 ),
-          bottomTitles: AxisTitles(
+                bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
                     getTitlesWidget: (value, meta) {
                       final today = DateTime.now();
-                      final daysAgo = today.subtract(Duration(days: 6 - value.toInt()));
-                      final formattedDate = "${daysAgo.day.toString().padLeft(2, '0')}/${daysAgo.month.toString().padLeft(2, '0')}";
-                      
+                      final dayIndex = value.toInt();
+                      if (dayIndex < 0 || dayIndex > 6) return const SizedBox.shrink();
+
+                      final targetDate = today.subtract(Duration(days: 6 - dayIndex));
+                      final formattedDate =
+                          "${targetDate.day.toString().padLeft(2, '0')}/${targetDate.month.toString().padLeft(2, '0')}";
+
                       return Text(
                         formattedDate,
                         style: const TextStyle(fontSize: 12),
@@ -65,10 +70,8 @@ class WeeklyOrdersBarChart extends StatelessWidget {
                     },
                   ),
                 ),
-                topTitles: const AxisTitles(  // Esto es lo que se debe añadir
-                  sideTitles: SideTitles(
-                    showTitles: false,  // Deshabilita los títulos en la parte superior
-                  ),
+                topTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false), // Deshabilita los títulos en la parte superior
                 ),
               ),
             ),

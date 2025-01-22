@@ -59,25 +59,27 @@ class OrdenesProvider extends ChangeNotifier {
   // Método para obtener las órdenes agrupadas por los últimos 7 días
 Map<int, int> getWeeklyOrderCount() {
   final today = DateTime.now();
-  final startOfWeek = today.subtract(const Duration(days: 6)); // Hace 7 días
+  final startOfWeek = DateTime(today.year, today.month, today.day).subtract(const Duration(days: 6)); // Inicio del día hace 6 días
+  final endOfDayToday = DateTime(today.year, today.month, today.day).add(const Duration(days: 1)); // Fin del día de hoy
+
+  // Filtrar órdenes de los últimos 7 días
   final ordersInLast7Days = ordenes.where((orden) {
-    // Ajustamos la comparación para asegurarnos de que la fecha del 15/01 se incluya correctamente
-    return orden.fechacreado.isAfter(startOfWeek.subtract(const Duration(hours: 24))) && 
-           orden.fechacreado.isBefore(today.add(const Duration(days: 1)));
+    return orden.fechacreado.isAfter(startOfWeek) && orden.fechacreado.isBefore(endOfDayToday);
   }).toList();
 
-  // Inicializar el mapa con 0 órdenes para cada día de la semana
-  Map<int, int> weeklyOrders = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
+  // Inicializar el mapa con días de la semana y valores en 0
+  Map<int, int> weeklyOrders = {for (int i = 0; i < 7; i++) i: 0};
 
   for (var orden in ordersInLast7Days) {
-    // Calcular la diferencia en días desde el inicio de la semana
-    final daysAgo = today.difference(orden.fechacreado).inDays;
-    final dayIndex = 6 - daysAgo; // Ajustar índice (0 para hace 6 días, 6 para hoy)
-    if (weeklyOrders.containsKey(dayIndex)) {
+    // Redondear la fecha de creación al inicio del día
+    final ordenDate = DateTime(orden.fechacreado.year, orden.fechacreado.month, orden.fechacreado.day);
+    final daysAgo = today.difference(ordenDate).inDays;
+    final dayIndex = 6 - daysAgo; // Ajustar el índice (0 para hace 6 días, 6 para hoy)
+
+    if (dayIndex >= 0 && dayIndex <= 6) {
       weeklyOrders[dayIndex] = (weeklyOrders[dayIndex] ?? 0) + 1;
     }
   }
-
   return weeklyOrders;
 }
 
