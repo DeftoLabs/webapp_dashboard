@@ -83,6 +83,39 @@ Map<int, int> getWeeklyOrderCount() {
   return weeklyOrders;
 }
 
+Map<int, double> getWeeklySales() {
+  final today = DateTime.now();
+  final startOfWeek = DateTime(today.year, today.month, today.day).subtract(const Duration(days: 6));
+  final endOfDayToday = DateTime(today.year, today.month, today.day).add(const Duration(days: 1));
+
+  // Filtrar órdenes de los últimos 7 días
+  final ordersInLast7Days = ordenes.where((orden) {
+    return orden.fechacreado.isAfter(startOfWeek) && orden.fechacreado.isBefore(endOfDayToday);
+  }).toList();
+
+  Map<int, double> dailySales = {for (int i = 0; i < 7; i++) i: 0.0};
+
+  for (var orden in ordersInLast7Days) {
+    // Asegurarse de comparar las fechas sin la parte de la hora
+    final normalizedOrderDate = DateTime(orden.fechacreado.year, orden.fechacreado.month, orden.fechacreado.day);
+    final normalizedToday = DateTime(today.year, today.month, today.day);
+
+    // Calculamos la diferencia en días entre las fechas normalizadas
+    final dayDifference = normalizedToday.difference(normalizedOrderDate).inDays;
+
+    if (dayDifference >= 0 && dayDifference <= 6) {
+      final dayIndex = 6 - dayDifference;
+      final subtotal = orden.subtotal;
+
+      // Acumulamos las ventas por día
+      dailySales[dayIndex] = (dailySales[dayIndex] ?? 0.0) + subtotal;
+    }
+  }
+
+  return dailySales;
+}
+
+
    Future<Ordenes?> getOrdenById (String id) async {
 
       try {

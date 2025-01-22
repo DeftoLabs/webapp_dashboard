@@ -152,42 +152,52 @@ class _DashboardViewState extends State<DashboardView> {
                           Expanded(
                             child: Row(
                               children: [
-                                const Flexible(
-                                  child: WeeklyOrdersBarChart()
-                                ),
-                                Expanded(
+                               Flexible(
                                   child: Container(
-                                    color: Colors.green, // Color para identificar la segunda sección
-                                    child: const Center(child: Text("SALES x DAY By SR", style: TextStyle(color: Colors.white))),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue, 
+                                      borderRadius: BorderRadius.circular(12), 
+                                    ),
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: const WeeklyOrdersBarChart(),
                                   ),
                                 ),
+                                 const SizedBox(width: 10),
+                                 Flexible(
+                                  child: Container(
+                                    color: Colors.red,
+                                    child: const Center(child: Text("TOTAL ORDER VS STATUS VS MONEY ", style: TextStyle(color: Colors.white))),
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
                               ],
                             ),
                           ),
-                    const Divider(),
-                    Expanded(
-                      child: Container(
-                        color: Colors.green,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2, 
-                              child: Container(
-                                color: Colors.blue, // Color para identificar la segunda sección
-                                child: const Center(child: Text("WEEK TOP 10 PRODUCT", style: TextStyle(color: Colors.white))),
-                              ),
+                    const SizedBox(height: 10),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  child: Container(
+                                    color: Colors.red, // Color para identificar la primera sección
+                                    child: const Center(child: Text("TOTAL ORDER VS STATUS VS MONEY ", style: TextStyle(color: Colors.white))),
+                                  ),
+                                ),
+                                 const SizedBox(width: 10),
+                               Flexible(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue, // Color de fondo
+                                      borderRadius: BorderRadius.circular(12), // Esquinas redondeadas
+                                    ),
+                                    padding: const EdgeInsets.all(16.0), // Padding opcional
+                                    child: const SalesLineChart(),
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                              ],
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                color: Colors.orange, // Color para identificar la tercera sección
-                                child: const Center(child: Text("TOP 10 CUSTOMER", style: TextStyle(color: Colors.white))),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
                     const Divider(),
                     Expanded(
                       child: Container(

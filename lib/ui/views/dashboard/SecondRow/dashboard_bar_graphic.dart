@@ -51,6 +51,10 @@ class WeeklyOrdersBarChart extends StatelessWidget {
                     ),
                   ),
                 ),
+                rightTitles: const AxisTitles(
+                  sideTitles: SideTitles(showTitles: false), 
+                ),
+                
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
