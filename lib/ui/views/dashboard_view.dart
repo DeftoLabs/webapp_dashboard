@@ -163,10 +163,14 @@ class _DashboardViewState extends State<DashboardView> {
                                   ),
                                 ),
                                  const SizedBox(width: 10),
-                                 Flexible(
+                                   Flexible(
                                   child: Container(
-                                    color: Colors.red,
-                                    child: const Center(child: Text("TOTAL ORDER VS STATUS VS MONEY ", style: TextStyle(color: Colors.white))),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue, 
+                                      borderRadius: BorderRadius.circular(12), 
+                                    ),
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: const StackedAreaChartWidget()
                                   ),
                                 ),
                                 const SizedBox(width: 20),

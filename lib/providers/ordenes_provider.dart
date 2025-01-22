@@ -116,6 +116,40 @@ Map<int, double> getWeeklySales() {
 }
 
 
+/// Método para agrupar las órdenes por día y usuarioZona
+Map<String, Map<String, int>> getOrdersGroupedByDayAndUserZone() {
+  // Mapa para almacenar los resultados: { "yyyy-MM-dd": { "usuarioZona": cantidad } }
+  Map<String, Map<String, int>> groupedOrders = {};
+
+  // Obtener la fecha de hace 7 días
+  final sevenDaysAgo = DateTime.now().subtract(const Duration(days: 7));
+
+  for (var orden in ordenes) {
+    // Obtener la fecha en formato yyyy-MM-dd
+    final orderDate = "${orden.fechacreado.year}-${orden.fechacreado.month.toString().padLeft(2, '0')}-${orden.fechacreado.day.toString().padLeft(2, '0')}";
+    final orderDateTime = DateTime.parse(orderDate); // Convierte la fecha a DateTime
+
+    // Solo incluir órdenes de los últimos 7 días
+    if (orderDateTime.isAfter(sevenDaysAgo)) {
+      // Verificar si la orden tiene una ruta asociada y un usuarioZona
+      if (orden.ruta.isNotEmpty && orden.ruta.first.usuarioZona.zone.isNotEmpty) {
+        final userZone = orden.ruta.first.usuarioZona.zone;
+
+        // Inicializar la estructura para el día si no existe
+        if (!groupedOrders.containsKey(orderDate)) {
+          groupedOrders[orderDate] = {};
+        }
+
+        // Inicializar el contador para la zona de usuario si no existe
+        groupedOrders[orderDate]![userZone] = (groupedOrders[orderDate]![userZone] ?? 0) + 1;
+      }
+    }
+  }
+
+  return groupedOrders;
+}
+
+
    Future<Ordenes?> getOrdenById (String id) async {
 
       try {
