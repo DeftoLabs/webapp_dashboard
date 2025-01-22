@@ -73,10 +73,10 @@ class StackedAreaChartWidget extends StatelessWidget {
       return LineChartBarData(
         spots: spots,
         isCurved: true,
-        color: Colors.amber.withOpacity(0.3),
+        color:const Color.fromRGBO(177, 255, 46, 1),
         belowBarData: BarAreaData(
           show: true,
-          color: Colors.red.withOpacity(0.3),
+          color: const Color.fromRGBO(177, 255, 46, 1).withOpacity(0.3),
         ),
         dotData: const FlDotData(show: false),
       );
