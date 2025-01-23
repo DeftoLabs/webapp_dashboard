@@ -166,10 +166,10 @@ class _DashboardViewState extends State<DashboardView> {
                                    Flexible(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.blue, 
+                                      color: Colors.white, 
                                       borderRadius: BorderRadius.circular(12), 
                                     ),
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.only(right: 16, left: 16),
                                     child: const StackedAreaChartWidget()
                                   ),
                                 ),

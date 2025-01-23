@@ -117,7 +117,7 @@ Map<int, double> getWeeklySales() {
 
 
 /// Método para agrupar las órdenes por día y usuarioZona
-Map<String, Map<String, int>> getOrdersGroupedByDayAndUserZone() {
+Map<String, Map<String, int>> getOrdersGroupedByDayAndUserName() {
   // Mapa para almacenar los resultados: { "yyyy-MM-dd": { "usuarioZona": cantidad } }
   Map<String, Map<String, int>> groupedOrders = {};
 
@@ -132,8 +132,8 @@ Map<String, Map<String, int>> getOrdersGroupedByDayAndUserZone() {
     // Solo incluir órdenes de los últimos 7 días
     if (orderDateTime.isAfter(sevenDaysAgo)) {
       // Verificar si la orden tiene una ruta asociada y un usuarioZona
-      if (orden.ruta.isNotEmpty && orden.ruta.first.usuarioZona.zone.isNotEmpty) {
-        final userZone = orden.ruta.first.usuarioZona.zone;
+      if (orden.ruta.isNotEmpty && orden.ruta.first.usuarioZona.nombre.isNotEmpty) {
+        final userName = orden.ruta.first.usuarioZona.nombre;
 
         // Inicializar la estructura para el día si no existe
         if (!groupedOrders.containsKey(orderDate)) {
@@ -141,7 +141,7 @@ Map<String, Map<String, int>> getOrdersGroupedByDayAndUserZone() {
         }
 
         // Inicializar el contador para la zona de usuario si no existe
-        groupedOrders[orderDate]![userZone] = (groupedOrders[orderDate]![userZone] ?? 0) + 1;
+        groupedOrders[orderDate]![userName] = (groupedOrders[orderDate]![userName] ?? 0) + 1;
       }
     }
   }

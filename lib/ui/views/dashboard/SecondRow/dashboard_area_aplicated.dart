@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -9,25 +10,29 @@ class StackedAreaChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final groupedOrders = Provider.of<OrdenesProvider>(context).getOrdersGroupedByDayAndUserZone();
-    final chartData = _processChartData(groupedOrders); // Se pasa el Map<String, Map<String, int>>
+    final groupedOrdersByUser = Provider.of<OrdenesProvider>(context).getOrdersGroupedByDayAndUserName();
+    final chartData = _processChartData(groupedOrdersByUser);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0.0),
         child: Column(
           children: [
+            const SizedBox(height: 12),
             Text(
-              'TOTAL SOLD LAST 7 DAYS',
+              'ORDERS BY SALES REPRESENTATIVE LAST 7 DAYS',
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Expanded(
-              child: LineChart(
-                _buildLineChartData(chartData),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: LineChart(
+                  _buildLineChartData(chartData),
+                ),
               ),
             ),
           ],
@@ -36,19 +41,16 @@ class StackedAreaChartWidget extends StatelessWidget {
     );
   }
 
-  /// Convierte el mapa de datos en una lista adecuada para el gráfico
-  List<_ChartData> _processChartData(Map<String, Map<String, int>> groupedOrders) {
+  /// Procesa los datos del gráfico y evita duplicados
+  List<_ChartData> _processChartData(Map<String, Map<String, int>> groupedOrdersByUser) {
     List<_ChartData> chartData = [];
-
-    // Filtrar solo las fechas de los últimos 7 días
     final sevenDaysAgo = DateTime.now().subtract(const Duration(days: 7));
-    groupedOrders.forEach((date, zonesData) {
-      final orderDateTime = DateTime.parse(date); // Convertir la fecha en String a DateTime
 
-      // Incluir solo las fechas dentro de los últimos 7 días
+    groupedOrdersByUser.forEach((date, userData) {
+      final orderDateTime = DateTime.parse(date);
       if (orderDateTime.isAfter(sevenDaysAgo)) {
-        zonesData.forEach((zone, count) {
-          chartData.add(_ChartData(date, zone, count));
+        userData.forEach((userName, count) {
+          chartData.add(_ChartData(date, userName, count)); // userName en vez de zone
         });
       }
     });
@@ -58,14 +60,27 @@ class StackedAreaChartWidget extends StatelessWidget {
 
   /// Configura los datos y la apariencia del gráfico
   LineChartData _buildLineChartData(List<_ChartData> data) {
-    final zones = data.map((e) => e.zone).toSet();
+
+      if (data.isEmpty) {
+    return LineChartData(
+      lineBarsData: [],
+      gridData: const FlGridData(show: false),
+      titlesData: const FlTitlesData(show: false),
+      borderData: FlBorderData(show: false),
+    );
+  }
+
+    final userNames = data.map((e) => e.userName).toSet(); // Cambiado de zones a userNames
     final dates = data.map((e) => e.date).toSet().toList()..sort();
 
-    List<LineChartBarData> areaSeries = zones.map((zone) {
+    // Mapa de colores aleatorios por usuario
+    final userColors = _generateRandomColors(userNames);
+
+    List<LineChartBarData> areaSeries = userNames.map((userName) {
       List<FlSpot> spots = dates.map((date) {
         final entry = data.firstWhere(
-          (d) => d.zone == zone && d.date == date,
-          orElse: () => _ChartData(date, zone, 0),
+          (d) => d.userName == userName && d.date == date,
+          orElse: () => _ChartData(date, userName, 0),
         );
         return FlSpot(dates.indexOf(date).toDouble(), entry.count.toDouble());
       }).toList();
@@ -73,10 +88,10 @@ class StackedAreaChartWidget extends StatelessWidget {
       return LineChartBarData(
         spots: spots,
         isCurved: true,
-        color:const Color.fromRGBO(177, 255, 46, 1),
+        color: userColors[userName], // Asigna un color único
         belowBarData: BarAreaData(
           show: true,
-          color: const Color.fromRGBO(177, 255, 46, 1).withOpacity(0.3),
+          color: userColors[userName]!.withOpacity(0.3),
         ),
         dotData: const FlDotData(show: false),
       );
@@ -89,7 +104,7 @@ class StackedAreaChartWidget extends StatelessWidget {
           sideTitles: SideTitles(showTitles: false),
         ),
         rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false), // Sin títulos a la derecha
+          sideTitles: SideTitles(showTitles: false),
         ),
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
@@ -100,8 +115,8 @@ class StackedAreaChartWidget extends StatelessWidget {
               final index = value.toInt();
               if (index >= 0 && index < dates.length) {
                 final rawDate = dates[index];
-                final parts = rawDate.split('-'); // Formato yyyy-MM-dd
-                final formattedDate = '${parts[2]}/${parts[1]}'; // Formato dd/MM
+                final parts = rawDate.split('-');
+                final formattedDate = '${parts[2]}/${parts[1]}';
                 return Text(
                   formattedDate,
                   style: const TextStyle(fontSize: 10),
@@ -112,20 +127,67 @@ class StackedAreaChartWidget extends StatelessWidget {
           ),
         ),
         topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false), // Sin títulos en la parte superior
+          sideTitles: SideTitles(showTitles: false),
         ),
       ),
-      gridData: const FlGridData(show: true),
+      gridData: const FlGridData(show: false),
       borderData: FlBorderData(show: false),
+      lineTouchData: LineTouchData(
+        touchTooltipData: LineTouchTooltipData(
+          tooltipRoundedRadius: 8,
+          tooltipMargin: 10,
+          tooltipPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          fitInsideHorizontally: true,
+          fitInsideVertically: true,
+          maxContentWidth: 150,
+          getTooltipItems: (spots) {
+            return spots.map((spot) {
+              final userName = userNames.elementAt(spots.indexOf(spot)).length > 16
+                  ? '${userNames.elementAt(spots.indexOf(spot)).substring(0, 16)}...'
+                  : userNames.elementAt(spots.indexOf(spot));
+              final count = spot.y.toInt();
+
+              return LineTooltipItem(
+                '$userName - $count',
+                GoogleFonts.plusJakartaSans(fontSize: 10, color: Colors.white),
+              );
+            }).toList();
+          },
+        ),
+        touchSpotThreshold: 10,
+        handleBuiltInTouches: true,
+      ),
     );
   }
+
+  /// Genera un mapa de colores aleatorios para cada usuario
+Map<String, Color> _generateRandomColors(Set<String> userNames) {
+  final palette = [
+    const Color(0xFF6AC259), // Verde
+    const Color(0xFF4A90E2), // Azul
+    const Color(0xFFFFA726), // Naranja
+    const Color(0xFFFF5252), // Rojo suave
+    const Color(0xFFAB47BC), // Púrpura
+    const Color(0xFF29B6F6), // Cian
+    const Color(0xFF66BB6A), // Verde más oscuro
+  ];
+  final random = Random();
+  final userColors = <String, Color>{};
+
+  for (var userName in userNames) {
+    userColors[userName] = palette[userColors.length % palette.length]
+        .withOpacity(0.8 + (random.nextDouble() * 0.2)); // Variaciones leves
+  }
+  return userColors;
+}
+
 }
 
 /// Clase para estructurar los datos del gráfico
 class _ChartData {
-  final String date; // Fecha en formato yyyy-MM-dd
-  final String zone; // Zona de usuario
-  final int count; // Cantidad de órdenes
+  final String date;
+  final String userName;
+  final int count;
 
-  _ChartData(this.date, this.zone, this.count);
+  _ChartData(this.date, this.userName, this.count);
 }
