@@ -26,13 +26,6 @@ class _DashboardViewState extends State<DashboardView> {
 
     final activeUser = Provider.of<AuthProvider>(context).user!;
 
-    final profileProvider = Provider.of<ProfileProvider>(context);
-    final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
-
-    if (profile == null) {
-    return const Center(child: Text(''));
-    }
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -44,6 +37,7 @@ class _DashboardViewState extends State<DashboardView> {
             height: MediaQuery.of(context).size.height,
             child: Stack(
               children: [
+                // FIRST ROW
                 Column(
                         children: [
                           const SizedBox(height: 20),
@@ -149,6 +143,7 @@ class _DashboardViewState extends State<DashboardView> {
                             ],
                           ),
                         const SizedBox(height: 40),
+                        // SECOND ROW
                           Expanded(
                             child: Row(
                               children: [
@@ -170,7 +165,7 @@ class _DashboardViewState extends State<DashboardView> {
                                       borderRadius: BorderRadius.circular(12), 
                                     ),
                                     padding: const EdgeInsets.only(right: 16, left: 16),
-                                    child: const StackedAreaChartWidget()
+                                    child: const DashboardTop5ProductByDay()
                                   ),
                                 ),
                                 const SizedBox(width: 20),
@@ -178,13 +173,18 @@ class _DashboardViewState extends State<DashboardView> {
                             ),
                           ),
                     const SizedBox(height: 10),
+                        // THIRD ROW
                           Expanded(
                             child: Row(
                               children: [
-                                Flexible(
+                                   Flexible(
                                   child: Container(
-                                    color: Colors.red, // Color para identificar la primera sección
-                                    child: const Center(child: Text("TOTAL ORDER VS STATUS VS MONEY ", style: TextStyle(color: Colors.white))),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white, 
+                                      borderRadius: BorderRadius.circular(12), 
+                                    ),
+                                    padding: const EdgeInsets.only(right: 16, left: 16),
+                                    child: const StackedAreaChartWidget()
                                   ),
                                 ),
                                  const SizedBox(width: 10),

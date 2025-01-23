@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/ordenes_response.dart';
 import 'package:web_dashboard/models/ordenes.dart';
+import 'package:web_dashboard/models/products.dart';
 
 class OrdenesProvider extends ChangeNotifier {
 
@@ -182,6 +183,39 @@ void refreshOrden(Ordenes newOrden) {
   ).toList();
   notifyListeners();
 }
+
+  /// Método para obtener los 5 productos más vendidos del día
+List<Producto> getTop5ProductsOfToday() {
+  final today = DateTime.now();
+  final todayStart = DateTime(today.year, today.month, today.day);
+  final todayEnd = todayStart.add(const Duration(days: 1));
+
+  // Filtrar las órdenes del día
+  final todaysOrders = ordenes.where((orden) {
+    return orden.fechacreado.isAfter(todayStart) && orden.fechacreado.isBefore(todayEnd);
+  }).toList();
+
+  // Crear un mapa para acumular la cantidad vendida por producto
+  final productSales = <String, Producto>{};
+
+  for (var orden in todaysOrders) {
+    for (var producto in orden.productos) {
+      if (productSales.containsKey(producto.id)) {
+        productSales[producto.id]!.cantidad = (productSales[producto.id]!.cantidad ?? 0) + (producto.cantidad ?? 0);
+      } else {
+        productSales[producto.id] = producto..cantidad = producto.cantidad ?? 0;
+      }
+    }
+  }
+
+  // Ordenar los productos por cantidad vendida en orden descendente
+  final sortedProducts = productSales.values.toList()
+    ..sort((a, b) => (b.cantidad ?? 0).compareTo(a.cantidad ?? 0));
+
+  // Devolver los 5 más vendidos
+  return sortedProducts.take(5).toList();
+}
+
 
     Future deleteOrden (String id) async {
    try{

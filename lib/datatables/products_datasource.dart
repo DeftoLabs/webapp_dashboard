@@ -16,8 +16,6 @@ class ProductsDTS extends DataTableSource {
 
     final product = productos[index];
 
-
-
     final image = (product.img == null) 
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35,) 
     : FadeInImage.assetNetwork(

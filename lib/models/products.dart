@@ -65,7 +65,8 @@ class Producto {
       tax: 0.0, 
       disponible: false, 
       stock: 0.0, 
-      unid: '');
+      unid: '',
+      img: '');
   }
 
 factory Producto.fromMap(Map<String, dynamic> json) => Producto(
@@ -105,7 +106,9 @@ factory Producto.fromMap(Map<String, dynamic> json) => Producto(
   unid: json.containsKey("producto") && json["producto"] != null
       ? json["producto"]["unid"] ?? ''
       : json["unid"] ?? '',
-  img: json["img"],
+  img: json.containsKey("producto") && json["producto"] != null
+      ? json["producto"]["img"] ?? ''
+      : json["img"] ?? '',
   precio: json["precio"]?.toDouble(),
   cantidad: json["cantidad"]?.toDouble(),
   totalitem: json["totalitem"]?.toDouble(),
