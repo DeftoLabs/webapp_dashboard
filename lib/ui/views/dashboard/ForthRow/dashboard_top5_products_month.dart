@@ -3,20 +3,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../../providers/ordenes_provider.dart';
 
-class DashboardTop5ProductByDay extends StatelessWidget {
-  const DashboardTop5ProductByDay({super.key});
+class DashboardTop5ProductByMonth extends StatelessWidget {
+  const DashboardTop5ProductByMonth({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<OrdenesProvider>(
       builder: (context, ordenesProvider, child) {
-        final top5Productos = ordenesProvider.getTop5ProductsOfToday();
+        final top5Productos = ordenesProvider.getTop5ProductsOfLast30Days();
 
         // Verificar si la lista está vacía
         if (top5Productos.isEmpty) {
           return Center(
             child: Text(
-              'NO PRODUCT SOLD TODAY',
+              'NO INFO',
               style: GoogleFonts.plusJakartaSans(
                   fontSize: 16, fontWeight: FontWeight.bold),
             ),
@@ -31,7 +31,7 @@ class DashboardTop5ProductByDay extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical:10, horizontal: 5),
               child: Center(
                 child: Text(
-                  'TOP 5 PRODUCT TODAY', // Título dinámico con fecha
+                  'TOP 5 PRODUCT IN THE LAST 30 DAYS', // Título dinámico con fecha
                   style: GoogleFonts.plusJakartaSans(
                       fontSize: 14, fontWeight: FontWeight.bold),
                 ),
@@ -55,8 +55,8 @@ class DashboardTop5ProductByDay extends StatelessWidget {
 
                   // Cambiar el fondo de cada línea de manera alterna
                   final backgroundColor = index % 2 == 0
-                      ? Colors.amber.shade50 // Fondo claro para índices pares
-                      : Colors.amber.shade100; // Fondo más oscuro para índices impares
+                      ? Colors.purple.shade50 // Fondo claro para índices pares
+                      : Colors.purple.shade100; // Fondo más oscuro para índices impares
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10.0),

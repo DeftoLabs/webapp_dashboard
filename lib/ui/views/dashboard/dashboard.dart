@@ -11,6 +11,13 @@ export 'package:web_dashboard/ui/views/dashboard/SecondRow/dashboard_top5_produc
 // Third Row
 export 'package:web_dashboard/ui/views/dashboard/ThirdRow/dashboard_line_graphic.dart';
 export 'package:web_dashboard/ui/views/dashboard/ThirdRow/dashboard_area_aplicated.dart';
+// Forth Row
+export 'package:web_dashboard/ui/views/dashboard/ForthRow/dashboard_top5_customer.dart';
+export 'package:web_dashboard/ui/views/dashboard/ForthRow/dashboard_top5_customer_by_month.dart';
+export 'package:web_dashboard/ui/views/dashboard/ForthRow/dashboard_top5_products_month.dart';
+
+
+
 
 
 

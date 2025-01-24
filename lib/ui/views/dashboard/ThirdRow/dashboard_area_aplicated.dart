@@ -50,7 +50,7 @@ class StackedAreaChartWidget extends StatelessWidget {
       final orderDateTime = DateTime.parse(date);
       if (orderDateTime.isAfter(sevenDaysAgo)) {
         userData.forEach((userName, count) {
-          chartData.add(_ChartData(date, userName, count)); // userName en vez de zone
+          chartData.add(_ChartData(date, userName, count));
         });
       }
     });
@@ -60,20 +60,17 @@ class StackedAreaChartWidget extends StatelessWidget {
 
   /// Configura los datos y la apariencia del gráfico
   LineChartData _buildLineChartData(List<_ChartData> data) {
+    if (data.isEmpty) {
+      return LineChartData(
+        lineBarsData: [],
+        gridData: const FlGridData(show: false),
+        titlesData: const FlTitlesData(show: false),
+        borderData: FlBorderData(show: false),
+      );
+    }
 
-      if (data.isEmpty) {
-    return LineChartData(
-      lineBarsData: [],
-      gridData: const FlGridData(show: false),
-      titlesData: const FlTitlesData(show: false),
-      borderData: FlBorderData(show: false),
-    );
-  }
-
-    final userNames = data.map((e) => e.userName).toSet(); // Cambiado de zones a userNames
+    final userNames = data.map((e) => e.userName).toSet();
     final dates = data.map((e) => e.date).toSet().toList()..sort();
-
-    // Mapa de colores aleatorios por usuario
     final userColors = _generateRandomColors(userNames);
 
     List<LineChartBarData> areaSeries = userNames.map((userName) {
@@ -88,7 +85,7 @@ class StackedAreaChartWidget extends StatelessWidget {
       return LineChartBarData(
         spots: spots,
         isCurved: true,
-        color: userColors[userName], // Asigna un color único
+        color: userColors[userName],
         belowBarData: BarAreaData(
           show: true,
           color: userColors[userName]!.withOpacity(0.3),
@@ -161,26 +158,25 @@ class StackedAreaChartWidget extends StatelessWidget {
   }
 
   /// Genera un mapa de colores aleatorios para cada usuario
-Map<String, Color> _generateRandomColors(Set<String> userNames) {
-  final palette = [
-    const Color(0xFF6AC259), // Verde
-    const Color(0xFF4A90E2), // Azul
-    const Color(0xFFFFA726), // Naranja
-    const Color(0xFFFF5252), // Rojo suave
-    const Color(0xFFAB47BC), // Púrpura
-    const Color(0xFF29B6F6), // Cian
-    const Color(0xFF66BB6A), // Verde más oscuro
-  ];
-  final random = Random();
-  final userColors = <String, Color>{};
+  Map<String, Color> _generateRandomColors(Set<String> userNames) {
+    final palette = [
+      const Color(0xFF6AC259),
+      const Color(0xFF4A90E2),
+      const Color(0xFFFFA726),
+      const Color(0xFFFF5252),
+      const Color(0xFFAB47BC),
+      const Color(0xFF29B6F6),
+      const Color(0xFF66BB6A),
+    ];
+    final random = Random();
+    final userColors = <String, Color>{};
 
-  for (var userName in userNames) {
-    userColors[userName] = palette[userColors.length % palette.length]
-        .withOpacity(0.8 + (random.nextDouble() * 0.2)); // Variaciones leves
+    for (var userName in userNames) {
+      userColors[userName] = palette[userColors.length % palette.length]
+          .withOpacity(0.8 + (random.nextDouble() * 0.2));
+    }
+    return userColors;
   }
-  return userColors;
-}
-
 }
 
 /// Clase para estructurar los datos del gráfico

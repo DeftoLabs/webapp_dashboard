@@ -40,7 +40,7 @@ class _DashboardViewState extends State<DashboardView> {
                 // FIRST ROW
                 Column(
                         children: [
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
                           Row(
                             children: [
                               Expanded(
@@ -142,7 +142,7 @@ class _DashboardViewState extends State<DashboardView> {
                               
                             ],
                           ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 10),
                         // SECOND ROW
                           Expanded(
                             child: Row(
@@ -202,39 +202,54 @@ class _DashboardViewState extends State<DashboardView> {
                               ],
                             ),
                           ),
-                    const Divider(),
+                    const SizedBox(height: 10),
                     Expanded(
-                      child: Container(
-                        color: Colors.yellow, // Color para identificar la tercera parte
-                        child: Row(
-                              children: [
-                                Expanded(
+                      child: Row(
+                            children: [
+                                   Flexible(
                                   child: Container(
-                                    color: Colors.red, // Color para identificar la primera sección
-                                    child: const Center(child: Text("TOTAL ORDER VS STATUS VS MONEY ", style: TextStyle(color: Colors.white))),
-                                  ),
-                                ),
-                                Expanded(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white, 
+                                      borderRadius: BorderRadius.circular(12), 
+                                    ),
+                                    padding: const EdgeInsets.only(right: 16, left: 16, bottom: 5),
+                                    child: const DashboardTop5CustomerByDay()
+                                      ),
+                                      
+                                      ),
+                                      const SizedBox(width: 10),
+                                  Flexible(
                                   child: Container(
-                                    color: Colors.green, // Color para identificar la segunda sección
-                                    child: const Center(child: Text("ORDER BY SALES VS MONEY", style: TextStyle(color: Colors.white))),
-                                  ),
-                                ),
-                                Expanded(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white, 
+                                      borderRadius: BorderRadius.circular(12), 
+                                    ),
+                                    padding: const EdgeInsets.only(right: 16, left: 16, bottom: 5),
+                                    child: const DashboardTop5CustomerByMonth()
+                                      ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                Flexible(
                                   child: Container(
-                                    color: Colors.blue, // Color para identificar la tercera sección
-                                    child: const Center(child: Text("TOP 10 PRODUCT VS MONEY VS CANTIDAD", style: TextStyle(color: Colors.white))),
-                                  ),
-                                ),
-                              ],
-                            ),
-                      ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white, 
+                                      borderRadius: BorderRadius.circular(12), 
+                                    ),
+                                    padding: const EdgeInsets.only(right: 16, left: 16),
+                                    child: const DashboardTop5ProductByMonth()
+                                      ),
+                                      ),
+                            ],
+                          ),
                     ),
+                    Container(
+                      height: 20,
+                    )
                   ],
                   ),
                   Positioned(
-                    bottom: 20,
-                    right: 20,
+                    top: 100,
+                    right: 10,
                     child: FloatingActionButton(
                       onPressed: (){
           

@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
+import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/http/ordenes_response.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/models/products.dart';
@@ -119,30 +120,37 @@ Map<int, double> getWeeklySales() {
 
 /// Método para agrupar las órdenes por día y usuarioZona
 Map<String, Map<String, int>> getOrdersGroupedByDayAndUserName() {
-  // Mapa para almacenar los resultados: { "yyyy-MM-dd": { "usuarioZona": cantidad } }
+  // Mapa para almacenar los resultados
   Map<String, Map<String, int>> groupedOrders = {};
 
-  // Obtener la fecha de hace 7 días
+  // Obtener la fecha límite (hace 7 días)
   final sevenDaysAgo = DateTime.now().subtract(const Duration(days: 7));
 
   for (var orden in ordenes) {
-    // Obtener la fecha en formato yyyy-MM-dd
-    final orderDate = "${orden.fechacreado.year}-${orden.fechacreado.month.toString().padLeft(2, '0')}-${orden.fechacreado.day.toString().padLeft(2, '0')}";
-    final orderDateTime = DateTime.parse(orderDate); // Convierte la fecha a DateTime
+    // Obtener la fecha de la orden como DateTime
+    final orderDate = DateTime(
+      orden.fechacreado.year,
+      orden.fechacreado.month,
+      orden.fechacreado.day,
+    );
 
     // Solo incluir órdenes de los últimos 7 días
-    if (orderDateTime.isAfter(sevenDaysAgo)) {
-      // Verificar si la orden tiene una ruta asociada y un usuarioZona
+    if (orderDate.isAfter(sevenDaysAgo)) {
+      // Verificar si la orden tiene un usuarioZona válido
       if (orden.ruta.isNotEmpty && orden.ruta.first.usuarioZona.nombre.isNotEmpty) {
-        final userName = orden.ruta.first.usuarioZona.nombre;
+        final userName = orden.ruta.first.usuarioZona.nombre.trim();
+
+        // Formatear la fecha como cadena para agrupar
+        final formattedDate = "${orderDate.year}-${orderDate.month.toString().padLeft(2, '0')}-${orderDate.day.toString().padLeft(2, '0')}";
 
         // Inicializar la estructura para el día si no existe
-        if (!groupedOrders.containsKey(orderDate)) {
-          groupedOrders[orderDate] = {};
+        if (!groupedOrders.containsKey(formattedDate)) {
+          groupedOrders[formattedDate] = {};
         }
 
-        // Inicializar el contador para la zona de usuario si no existe
-        groupedOrders[orderDate]![userName] = (groupedOrders[orderDate]![userName] ?? 0) + 1;
+        // Incrementar el contador para el usuarioZona
+        groupedOrders[formattedDate]![userName] =
+            (groupedOrders[formattedDate]![userName] ?? 0) + 1;
       }
     }
   }
@@ -215,6 +223,163 @@ List<Producto> getTop5ProductsOfToday() {
   // Devolver los 5 más vendidos
   return sortedProducts.take(5).toList();
 }
+
+List<Producto> getTop5ProductsOfLast30Days() {
+  final today = DateTime.now();
+  final startDate = today.subtract(const Duration(days: 30)); // Fecha de inicio hace 30 días
+
+  // Filtrar las órdenes de los últimos 30 días
+  final recentOrders = ordenes.where((orden) {
+    return orden.fechacreado.isAfter(startDate) && orden.fechacreado.isBefore(today);
+  }).toList();
+
+  // Crear un mapa para acumular la cantidad vendida por producto
+  final productSales = <String, Producto>{};
+
+  for (var orden in recentOrders) {
+    for (var producto in orden.productos) {
+      if (productSales.containsKey(producto.id)) {
+        productSales[producto.id]!.cantidad = (productSales[producto.id]!.cantidad ?? 0) + (producto.cantidad ?? 0);
+      } else {
+        productSales[producto.id] = producto..cantidad = producto.cantidad ?? 0;
+      }
+    }
+  }
+
+  // Ordenar los productos por cantidad vendida en orden descendente
+  final sortedProducts = productSales.entries.toList()
+    ..sort((a, b) => b.value.cantidad!.compareTo(a.value.cantidad!));
+
+  // Obtener los 5 productos más vendidos
+  final top5Products = sortedProducts.take(5).map((entry) => entry.value).toList();
+
+  return top5Products;
+}
+
+
+List<Customer> getTop5CustomersOfToday() {
+  final today = DateTime.now();
+  final todayStart = DateTime(today.year, today.month, today.day);
+  final todayEnd = todayStart.add(const Duration(days: 1));
+
+  // Filtrar las órdenes creadas hoy
+  final todaysOrders = ordenes.where((orden) {
+    return orden.fechacreado.isAfter(todayStart) && orden.fechacreado.isBefore(todayEnd);
+  }).toList();
+
+  // Crear un mapa para acumular el subtotal por cliente
+  final customerSubtotals = <String, double>{};
+  final customerMap = <String, Customer>{};
+
+  for (var orden in todaysOrders) {
+    for (var cliente in orden.clientes) {
+      if (customerSubtotals.containsKey(cliente.id)) {
+        customerSubtotals[cliente.id] =
+            (customerSubtotals[cliente.id] ?? 0) + orden.subtotal;
+      } else {
+        customerSubtotals[cliente.id] = orden.subtotal;
+        customerMap[cliente.id] = cliente;
+      }
+    }
+  }
+
+  // Ordenar los clientes por subtotal en orden descendente
+  final sortedCustomers = customerSubtotals.entries.toList()
+    ..sort((a, b) => b.value.compareTo(a.value));
+
+  // Obtener los 5 clientes con más subtotal
+  final topCustomers = sortedCustomers.take(5).map((entry) => customerMap[entry.key]!).toList();
+
+  return topCustomers;
+}
+
+double getCustomerSubtotalOfToday(String customerId) {
+  final today = DateTime.now();
+  final todayStart = DateTime(today.year, today.month, today.day);
+  final todayEnd = todayStart.add(const Duration(days: 1));
+
+  // Filtrar órdenes de hoy para un cliente específico
+  return ordenes
+      .where((orden) =>
+          orden.fechacreado.isAfter(todayStart) &&
+          orden.fechacreado.isBefore(todayEnd) &&
+          orden.clientes.any((cliente) => cliente.id == customerId))
+      .fold(0.0, (sum, orden) => sum + orden.subtotal);
+}
+
+int getCustomerOrderCountOfToday(String customerId) {
+  final today = DateTime.now();
+  final todayStart = DateTime(today.year, today.month, today.day);
+  final todayEnd = todayStart.add(const Duration(days: 1));
+
+  // Filtrar órdenes de hoy para un cliente específico
+  return ordenes
+      .where((orden) =>
+          orden.fechacreado.isAfter(todayStart) &&
+          orden.fechacreado.isBefore(todayEnd) &&
+          orden.clientes.any((cliente) => cliente.id == customerId))
+      .length;
+}
+
+List<Ordenes> getOrdersForCustomer(String customerId) {
+  return ordenes.where((orden) =>
+      orden.clientes.any((cliente) => cliente.id == customerId)).toList();
+}
+
+List<Customer> getTop5CustomersOfLast30Days() {
+  final thirtyDaysAgo = DateTime.now().subtract(const Duration(days: 30));
+
+  // Filtrar las órdenes de los últimos 30 días
+  final recentOrders = ordenes.where((orden) {
+    return orden.fechacreado.isAfter(thirtyDaysAgo);
+  }).toList();
+
+  final customerSubtotals = <String, double>{};
+  final customerMap = <String, Customer>{};
+
+  for (var orden in recentOrders) {
+    for (var cliente in orden.clientes) {
+      if (customerSubtotals.containsKey(cliente.id)) {
+        customerSubtotals[cliente.id] =
+            (customerSubtotals[cliente.id] ?? 0) + orden.subtotal;
+      } else {
+        customerSubtotals[cliente.id] = orden.subtotal;
+        customerMap[cliente.id] = cliente;
+      }
+    }
+  }
+
+  // Ordenar por subtotal
+  final sortedCustomers = customerSubtotals.entries.toList()
+    ..sort((a, b) => b.value.compareTo(a.value));
+
+  // Obtener los 5 primeros
+  final topCustomers = sortedCustomers.take(5).map((entry) => customerMap[entry.key]!).toList();
+
+  return topCustomers;
+}
+
+double getCustomerSubtotalOfLast30Days(String customerId) {
+  final thirtyDaysAgo = DateTime.now().subtract(const Duration(days: 30));
+
+  return ordenes
+      .where((orden) =>
+          orden.fechacreado.isAfter(thirtyDaysAgo) &&
+          orden.clientes.any((cliente) => cliente.id == customerId))
+      .fold(0.0, (sum, orden) => sum + orden.subtotal);
+}
+
+int getCustomerOrderCountOfLast30Days(String customerId) {
+  final thirtyDaysAgo = DateTime.now().subtract(const Duration(days: 30));
+
+  return ordenes
+      .where((orden) =>
+          orden.fechacreado.isAfter(thirtyDaysAgo) &&
+          orden.clientes.any((cliente) => cliente.id == customerId))
+      .length;
+}
+
+
 
 
     Future deleteOrden (String id) async {
