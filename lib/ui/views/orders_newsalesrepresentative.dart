@@ -945,7 +945,7 @@ Center(
                                       actions: [
                                         TextButton(
                                           onPressed: () {
-                                           NavigationService.replaceTo('/dashboard/orders'); 
+                                           NavigationService.replaceTo('/dashboard/orderbyrepresentative'); 
                                           },
                                           child: Text('YES', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
                                         ),
@@ -1040,7 +1040,7 @@ Center(
                                                  if (saved == null) {
                                               if (!context.mounted) return;
                                               NotificationService.showSnackBa('Orden Created');
-                                              NavigationService.replaceTo('/dashboard/orders');
+                                              NavigationService.replaceTo('/dashboard/orderbyrepresentative');
                                           }
                                       } catch (e) {
                                           NotificationService.showSnackBarError('No se pudo guardar la Orden: $e');

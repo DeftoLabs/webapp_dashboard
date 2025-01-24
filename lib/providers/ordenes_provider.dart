@@ -3,11 +3,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/http/ordenes_response.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/models/products.dart';
+import 'package:web_dashboard/providers/auth_provider.dart';
 
 class OrdenesProvider extends ChangeNotifier {
 
@@ -58,6 +60,39 @@ class OrdenesProvider extends ChangeNotifier {
     return statusCount;
   }
 
+  Map<String, int> getOrderStatusByUserCountForToday(BuildContext context) {
+  // Obtener el usuario activo
+  final activeUser = Provider.of<AuthProvider>(context, listen: false).user!;
+  final userUid = activeUser.uid;
+
+  final today = DateTime.now();
+  final todayStart = DateTime(today.year, today.month, today.day);
+  final todayEnd = todayStart.add(const Duration(days: 1));
+
+  // Filtrar las órdenes del día y del usuario activo
+  final todaysOrders = ordenes.where((orden) {
+    final isToday = orden.fechacreado.isAfter(todayStart) && orden.fechacreado.isBefore(todayEnd);
+    final isUserOrder = orden.ruta.any((ruta) => ruta.usuarioZona.uid == userUid);
+    return isToday && isUserOrder;
+  }).toList();
+
+  // Contar los diferentes estados de las órdenes
+  Map<String, int> statusCount = {
+    'ORDER': 0,
+    'APPROVED': 0,
+    'CANCEL': 0,
+    'INVOICE': 0,
+    'NOTE': 0,
+    'OTHER': 0,
+  };
+
+  for (var orden in todaysOrders) {
+    statusCount[orden.status] = (statusCount[orden.status] ?? 0) + 1;
+  }
+  return statusCount;
+}
+
+
   // Método para obtener las órdenes agrupadas por los últimos 7 días
 Map<int, int> getWeeklyOrderCount() {
   final today = DateTime.now();
@@ -84,6 +119,40 @@ Map<int, int> getWeeklyOrderCount() {
   }
   return weeklyOrders;
 }
+
+// Método para obtener las órdenes agrupadas por los últimos 7 días, solo del usuario en sesión
+Map<int, int> getWeeklyOrderCountByUser(BuildContext context) {
+  final today = DateTime.now();
+  final startOfWeek = DateTime(today.year, today.month, today.day).subtract(const Duration(days: 6)); // Inicio de hace 6 días
+  final endOfDayToday = DateTime(today.year, today.month, today.day).add(const Duration(days: 1)); // Fin del día de hoy
+
+  // Obtener el usuario activo
+  final activeUser = Provider.of<AuthProvider>(context, listen: false).user!;
+  final activeUserId = activeUser.uid;
+
+  // Filtrar órdenes de los últimos 7 días y que pertenezcan al usuario activo
+  final ordersInLast7Days = ordenes.where((orden) {
+    final isWithinDateRange = orden.fechacreado.isAfter(startOfWeek) && orden.fechacreado.isBefore(endOfDayToday);
+    final belongsToActiveUser = orden.ruta.any((ruta) => ruta.usuarioZona.uid == activeUserId);
+    return isWithinDateRange && belongsToActiveUser;
+  }).toList();
+
+  // Inicializar el mapa con días de la semana y valores en 0
+  Map<int, int> weeklyOrders = {for (int i = 0; i < 7; i++) i: 0};
+
+  for (var orden in ordersInLast7Days) {
+    // Redondear la fecha de creación al inicio del día
+    final ordenDate = DateTime(orden.fechacreado.year, orden.fechacreado.month, orden.fechacreado.day);
+    final daysAgo = today.difference(ordenDate).inDays;
+    final dayIndex = 6 - daysAgo; // Ajustar el índice (0 para hace 6 días, 6 para hoy)
+
+    if (dayIndex >= 0 && dayIndex <= 6) {
+      weeklyOrders[dayIndex] = (weeklyOrders[dayIndex] ?? 0) + 1;
+    }
+  }
+  return weeklyOrders;
+}
+
 
 Map<int, double> getWeeklySales() {
   final today = DateTime.now();
@@ -116,6 +185,42 @@ Map<int, double> getWeeklySales() {
 
   return dailySales;
 }
+Map<int, double> getWeeklySalesByUser(BuildContext context) {
+  final activeUser = Provider.of<AuthProvider>(context).user!;  // Usuario activo de la sesión
+  final today = DateTime.now();
+  final startOfWeek = DateTime(today.year, today.month, today.day).subtract(const Duration(days: 6));
+  final endOfDayToday = DateTime(today.year, today.month, today.day).add(const Duration(days: 1));
+
+  // Filtrar órdenes de los últimos 7 días y que pertenezcan al usuario activo
+  final ordersInLast7Days = ordenes.where((orden) {
+    // Verificar si el uid del usuario en la orden coincide con el del usuario activo
+    return orden.fechacreado.isAfter(startOfWeek) &&
+           orden.fechacreado.isBefore(endOfDayToday) &&
+           orden.ruta.any((ruta) => ruta.usuarioZona.uid == activeUser.uid);
+  }).toList();
+
+  Map<int, double> dailySales = {for (int i = 0; i < 7; i++) i: 0.0};
+
+  for (var orden in ordersInLast7Days) {
+    // Asegurarse de comparar las fechas sin la parte de la hora
+    final normalizedOrderDate = DateTime(orden.fechacreado.year, orden.fechacreado.month, orden.fechacreado.day);
+    final normalizedToday = DateTime(today.year, today.month, today.day);
+
+    // Calculamos la diferencia en días entre las fechas normalizadas
+    final dayDifference = normalizedToday.difference(normalizedOrderDate).inDays;
+
+    if (dayDifference >= 0 && dayDifference <= 6) {
+      final dayIndex = 6 - dayDifference;
+      final subtotal = orden.subtotal;
+
+      // Acumulamos las ventas por día
+      dailySales[dayIndex] = (dailySales[dayIndex] ?? 0.0) + subtotal;
+    }
+  }
+
+  return dailySales;
+}
+
 
 
 /// Método para agrupar las órdenes por día y usuarioZona
@@ -256,6 +361,44 @@ List<Producto> getTop5ProductsOfLast30Days() {
   return top5Products;
 }
 
+List<Producto> getTop5ProductsOfTodayByUser(BuildContext context) {
+  final activeUser = Provider.of<AuthProvider>(context).user!;
+  final userUid = activeUser.uid;
+
+  final today = DateTime.now();
+  final todayStart = DateTime(today.year, today.month, today.day);
+  final todayEnd = todayStart.add(const Duration(days: 1));
+
+  // Filtrar las órdenes del día para el usuario en sesión
+  final todaysOrders = ordenes.where((orden) {
+    // Comprobar si el usuario de la ruta coincide con el usuario activo
+    final userMatch = orden.ruta.any((ruta) => ruta.usuarioZona.uid == userUid);
+
+    return userMatch && orden.fechacreado.isAfter(todayStart) && orden.fechacreado.isBefore(todayEnd);
+  }).toList();
+
+  // Crear un mapa para acumular la cantidad vendida por producto
+  final productSales = <String, Producto>{};
+
+  for (var orden in todaysOrders) {
+    for (var producto in orden.productos) {
+      if (productSales.containsKey(producto.id)) {
+        productSales[producto.id]!.cantidad = (productSales[producto.id]!.cantidad ?? 0) + (producto.cantidad ?? 0);
+      } else {
+        productSales[producto.id] = producto..cantidad = producto.cantidad ?? 0;
+      }
+    }
+  }
+
+  // Ordenar los productos por cantidad vendida en orden descendente
+  final sortedProducts = productSales.values.toList()
+    ..sort((a, b) => (b.cantidad ?? 0).compareTo(a.cantidad ?? 0));
+
+  // Devolver los 5 más vendidos
+  return sortedProducts.take(5).toList();
+}
+
+
 
 List<Customer> getTop5CustomersOfToday() {
   final today = DateTime.now();
@@ -292,6 +435,48 @@ List<Customer> getTop5CustomersOfToday() {
 
   return topCustomers;
 }
+
+List<Customer> getTop5CustomersOfTodayByUser(BuildContext context) {
+  final activeUser = Provider.of<AuthProvider>(context).user!; // Obtén el usuario activo
+  final today = DateTime.now();
+  final todayStart = DateTime(today.year, today.month, today.day);
+  final todayEnd = todayStart.add(const Duration(days: 1));
+
+  // Filtrar las órdenes creadas hoy
+  final todaysOrders = ordenes.where((orden) {
+    return orden.fechacreado.isAfter(todayStart) && orden.fechacreado.isBefore(todayEnd);
+  }).toList();
+
+  // Crear un mapa para acumular el subtotal por cliente
+  final customerSubtotals = <String, double>{};
+  final customerMap = <String, Customer>{};
+
+  for (var orden in todaysOrders) {
+    // Filtrar por el usuario activo en la zona de la ruta
+    for (var ruta in orden.ruta) {
+      if (ruta.usuarioZona.uid == activeUser.uid) { // Verificamos que el usuario coincida
+        for (var cliente in orden.clientes) {
+          if (customerSubtotals.containsKey(cliente.id)) {
+            customerSubtotals[cliente.id] = (customerSubtotals[cliente.id] ?? 0) + orden.subtotal;
+          } else {
+            customerSubtotals[cliente.id] = orden.subtotal;
+            customerMap[cliente.id] = cliente;
+          }
+        }
+      }
+    }
+  }
+
+  // Ordenar los clientes por subtotal en orden descendente
+  final sortedCustomers = customerSubtotals.entries.toList()
+    ..sort((a, b) => b.value.compareTo(a.value));
+
+  // Obtener los 5 clientes con más subtotal
+  final topCustomers = sortedCustomers.take(5).map((entry) => customerMap[entry.key]!).toList();
+
+  return topCustomers;
+}
+
 
 double getCustomerSubtotalOfToday(String customerId) {
   final today = DateTime.now();

@@ -37,7 +37,7 @@ class DashboardTop5ProductByDay extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 2),
             // Lista de productos
             Expanded(
               child: ListView.builder(
@@ -73,7 +73,7 @@ class DashboardTop5ProductByDay extends StatelessWidget {
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Row(
                           children: [
                             // Imagen del producto
@@ -95,7 +95,7 @@ class DashboardTop5ProductByDay extends StatelessWidget {
                                     producto.descripcion ?? 'NOT DESCRIPTION',
                                     style: GoogleFonts.plusJakartaSans(fontSize: 12),
                                   ),
-                                  const SizedBox(height: 4),
+                                  const SizedBox(height: 2),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
