@@ -186,7 +186,6 @@ class _OrdersViewState extends State<OrdersView> {
           ),
           const SizedBox(height: 10),
 
-          const SizedBox(height: 10),
 Column(
   children: [
     Container(
