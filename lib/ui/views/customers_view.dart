@@ -32,7 +32,7 @@ class _CustomersViewState extends State<CustomersView> {
     final customerProvider = Provider.of<CustomersProvider>(context);
     final customersDataSource = CustomersDatasource( customerProvider.customers );
 
-  final profileProvider = Provider.of<ProfileProvider>(context);
+    final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
 
     if (profile == null) {
@@ -71,7 +71,7 @@ class _CustomersViewState extends State<CustomersView> {
                         onPressed: () {
                          NavigationService.replaceTo('/dashboard/newcustomer');
                         }, 
-                        icon: const Icon(Icons.add),
+                        icon: const Icon(Icons.add, color: Colors.black),
                         label: Text(
                           'Customer',
                           style: GoogleFonts.plusJakartaSans(

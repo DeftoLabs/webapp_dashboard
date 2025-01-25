@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/products_datasource.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
+import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 import 'package:web_dashboard/ui/modals/product_new_modal.dart';
@@ -28,52 +29,64 @@ class _ProductsViewState extends State<ProductsView> {
     final productsProvider = Provider.of<ProductsProvider>(context);
     final productDataSource = ProductsDTS(productsProvider.productos, context);
 
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
+
+    if (profile == null) {
+    return const Center(child: Text(''));
+    }
+
+    final image = (profile.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
+    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Row(
-              children: [
-                const SizedBox(height: 50),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    'Products',
-                    style: CustomLabels.h1,
-                  ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(177, 255, 46, 100),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                        width: 0.6,
-                      )),
-                    child: TextButton.icon(
-                      label: Text(
-                        'PDF List',
-                        style: GoogleFonts.plusJakartaSans(
-                            color: const Color.fromARGB(255, 0, 0, 0)),
-                      ),
-                      onPressed: () {
-                        //TODO Create .pdf list
-                      },
-                      icon: const Icon(
-                        Icons.share,
-                        color: Color.fromARGB(255, 0, 0, 0),
+             Row(
+            children: [
+              const SizedBox(width: 20),
+              Expanded
+              (
+                child: Text('PRODUCTS VIEW', style: GoogleFonts.plusJakartaSans(fontSize: 22, fontWeight: FontWeight.bold),)),
+                  const SizedBox(width: 20),
+                Container(
+                       height: 50,
+                       width: 140,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(177, 255, 46, 1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          width: 0.6,
+                        )),
+                      child: TextButton.icon(
+                        onPressed: () {
+                        
+                        }, 
+                        icon: const Icon(Icons.share, color: Colors.black,),
+                        label: Text(
+                          'PDF LIST',
+                          style: GoogleFonts.plusJakartaSans(
+                              color: const Color.fromARGB(255, 0, 0, 0)),
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(width: 50),
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: ClipOval(
+                  child: image,
                 ),
-                const SizedBox(width: 10),
-              ],
-            ),
+              ),
+              const SizedBox(width: 20),
+            ],
+          ),
+          const SizedBox(height: 10),
             const SizedBox(height: 10),
             PaginatedDataTable(
               sortAscending: productsProvider.ascending,
@@ -103,7 +116,7 @@ class _ProductsViewState extends State<ProductsView> {
                 const DataColumn(label: Text('Actions')),
               ],
               source: productDataSource,
-              header: const Text(' List of Products', maxLines: 2),
+              header: Text(' LIST OF PRODUCTS', maxLines: 2, style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),),
               onRowsPerPageChanged: (value) {
                 setState(() {
                   _rowsPerPage = value ?? 10;
@@ -122,7 +135,7 @@ class _ProductsViewState extends State<ProductsView> {
                       },
                     );
                   },
-                  text: 'Create New Product',
+                  text: 'ADD PRODUCT',
                   icon: Icons.add_outlined,
                 ),
               ],
