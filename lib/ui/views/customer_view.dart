@@ -66,7 +66,7 @@ class _CustomerViewState extends State<CustomerView> {
     }
 
     return WhiteCardCustomer(
-      title: 'Customer View',
+      title: 'CUSTOMER VIEW',
       child: Form(
         key: customerFormProvider.formKey,
         child: Column(
@@ -82,7 +82,7 @@ class _CustomerViewState extends State<CustomerView> {
                       WhiteCard(
                           child: Column(
                         children: [
-                          Text('Credit & Sales Data',
+                          Text('CREDIT & SALES DATA',
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -202,7 +202,7 @@ class _CustomerViewState extends State<CustomerView> {
                       WhiteCard(
                           child: Column(
                         children: [
-                          Text('Contact Info',
+                          Text('CONTACT INFO',
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -691,7 +691,7 @@ class _CustomerViewState extends State<CustomerView> {
                       WhiteCard(
                           child: Column(
                         children: [
-                          Text('Aditonal Information',
+                          Text('ADITIONAL INFORMATION',
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,

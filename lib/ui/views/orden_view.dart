@@ -68,6 +68,7 @@ class _OrdenViewState extends State<OrdenView> {
   Widget build(BuildContext context) {
 
     final currentUser = Provider.of<AuthProvider>(context).user;
+    final todayDay = DateFormat('dd/MM/yy').format(DateTime.now());
 
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -78,12 +79,34 @@ class _OrdenViewState extends State<OrdenView> {
             Row(
               children: [
                 if(currentUser?.rol == 'MASTER_ROLE'|| currentUser?.rol == 'ADMIN_ROLE')
-                IconButton(
-                    color: Colors.black,
-                    onPressed: () {
-                      NavigationService.navigateTo('/dashboard/orders/records');
-                    },
-                    icon: const Icon(Icons.arrow_back_rounded))
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                            color: Colors.black,
+                            onPressed: () {
+                              NavigationService.navigateTo('/dashboard/orders/records');
+                            },
+                            icon: const Icon(Icons.arrow_back_rounded)),
+                            const SizedBox(width: 5),
+                            Text('TO ORDERS RECORDS', style: GoogleFonts.plusJakartaSans(fontSize: 10, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                      Row(
+                      children: [
+                        IconButton(
+                            color: Colors.black,
+                            onPressed: () {
+                              NavigationService.navigateTo('/dashboard/orders');
+                            },
+                            icon: const Icon(Icons.arrow_back_rounded)),
+                            const SizedBox(width: 5),
+                            Text('TO ORDERS $todayDay', style: GoogleFonts.plusJakartaSans(fontSize: 10, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ],
+                )
                 else if(currentUser?.rol == 'USER_ROLE')
                 IconButton(
                     color: Colors.black,

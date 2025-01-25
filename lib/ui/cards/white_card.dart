@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/providers/profile_form_provider.dart';
+import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
 class WhiteCard extends StatelessWidget {
@@ -144,25 +145,24 @@ class _WhiteCardCustomerState extends State<WhiteCardCustomer> {
  @override
   Widget build(BuildContext context) {
 
-     final profileFormProvider = Provider.of<ProfileFormProvider>(context);
-    final profile = profileFormProvider.profile;
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
 
-    final image = (profile?.img?.isEmpty ?? true)
-    ? const SizedBox(
-        width: 55,
-        height: 55,
-        child: Image(image: AssetImage('noimage.jpeg')),
-      )
-    : SizedBox(
-        width: 35,
-        height: 35,
-        child: FadeInImage.assetNetwork(
-          placeholder: 'load.gif',
-          image: profile!.img!,
-          fit: BoxFit.cover, // Asegura que la imagen se ajuste bien al contenedor
-        ),
-      );
+    if (profile == null) {
+    return const Center(child: Text(''));
+    }
 
+    final image = (profile.img == null) 
+    ? const Image(image: AssetImage('noimage.jpeg'), width: 60, height: 60) 
+    : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 60, height: 60);
+
+      SizedBox(
+            width: 60,
+            height: 60,
+            child: ClipOval(
+              child: image,
+            ),
+          );
     return Container(
       width: widget.width,
       margin: const EdgeInsets.all(8),
