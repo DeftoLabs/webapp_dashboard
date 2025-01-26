@@ -61,7 +61,7 @@ class ProductsProvider extends ChangeNotifier {
     required double stock,
     required String unid,
     required String categoria,
-    String? taxsales,
+    double? tax,
   }) async {
     final data = {
       'nombre': nombre,
@@ -74,7 +74,7 @@ class ProductsProvider extends ChangeNotifier {
       'stock': stock,
       'unid': unid,
       'categoria': categoria,
-      'taxsales': taxsales != null ? { "_id": taxsales } : null,
+      'tax': tax,
     };
     
     try {

@@ -79,6 +79,14 @@ class _CategoryModalState extends State<CategoryModal> {
                 ),
               ),
               style: GoogleFonts.plusJakartaSans(color: Colors.white),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please Enter a Category';
+                } else if( value.length > 10 ) {
+                  return 'Category Must Not Exceed 10 Characters';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 40),
             Container(

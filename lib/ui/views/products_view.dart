@@ -1,11 +1,22 @@
+import 'dart:convert';
+
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/datatables/products_datasource.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
+import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
-import 'package:web_dashboard/ui/labels/custom_labels.dart';
 import 'package:web_dashboard/ui/modals/product_new_modal.dart';
 
 class ProductsView extends StatefulWidget {
@@ -40,6 +51,8 @@ class _ProductsViewState extends State<ProductsView> {
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
+    final todayDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
@@ -64,9 +77,51 @@ class _ProductsViewState extends State<ProductsView> {
                           width: 0.6,
                         )),
                       child: TextButton.icon(
-                        onPressed: () {
-                        
-                        }, 
+                         onPressed: () async {
+                    try {
+                      // Llama a la API
+                      final response = await CafeApi.getJson('/productReport/listOfProduct');
+                  
+                      // Procesar datos si la respuesta es exitosa
+                      final String base64Pdf = response['data'];
+                      final Uint8List pdfBytes = base64Decode(base64Pdf); // Decodifica el Base64 a bytes
+                  
+                      if (kIsWeb) {
+                        // Lógica para descargar en la web
+                        final blob = html.Blob([pdfBytes], 'application/pdf');
+                        final url = html.Url.createObjectUrlFromBlob(blob);
+                        final anchor = html.AnchorElement(href: url)
+                          ..target = 'blank'
+                          ..download = 'Product List $todayDate.pdf';
+                        anchor.click();
+                        html.Url.revokeObjectUrl(url);
+                  
+                        NotificationService.showSnackBa('Product List Downloaded Successfully.');
+                      } else if (Platform.isAndroid || Platform.isIOS) {
+                        // Lógica para móviles
+                        final directory = await getApplicationDocumentsDirectory();
+                        final filePath = '${directory.path}/Product List $todayDate.pdf';
+                        final file = File(filePath);
+                  
+                        await file.writeAsBytes(pdfBytes);
+                        await OpenFile.open(filePath);
+                  
+                        NotificationService.showSnackBa('Product List Downloaded Successfully.');
+                      }
+                    } on HttpException catch (e) {
+                      if (e.message.contains('That date has no orders')) {
+                        // Manejo específico del caso "That date has no orders"
+                        NotificationService.showSnackBarError('No Product List Founded');
+                      } else {
+                        // Manejo genérico de otros errores HTTP
+                        NotificationService.showSnackBarError('An error occurred while fetching the data. Please try again.');
+                      }
+                    } catch (e) {
+                      // Manejo genérico para cualquier otro error
+                      NotificationService.showSnackBarError('An unexpected error occurred. Please try again.');
+                    }
+                  },
+
                         icon: const Icon(Icons.share, color: Colors.black,),
                         label: Text(
                           'PDF LIST',

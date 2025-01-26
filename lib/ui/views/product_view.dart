@@ -402,8 +402,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   if (value == null || value.isEmpty) {
                     return 'Description is Required';
                   }
-                  if (value.length >= 31) {
-                    return 'Description cannot be more than 30 characters';
+                  if (value.length >= 41) {
+                    return 'Description cannot be more than 40 characters';
                   }
                   return null;
                 },
@@ -568,9 +568,10 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   const SizedBox(height: 20),
                   Consumer<TaxSalesProvider>(
                 builder: (context, taxsalesProvider, child) {
-                  String? selectedValue = taxsalesProvider.taxsales.any((tax) => tax.id == producto.taxsales.id)
+                  String? selectedValue = taxsalesProvider.taxsales.any((tax) => tax.id.toString() == producto.taxsales.id.toString())
                   ? producto.taxsales.id
                   : null;
+
 
                   return DropdownButtonFormField<String>(
                    value: selectedValue,
@@ -655,7 +656,7 @@ class _AvatarState extends State<_Avatar> {
     final productFormProvider = Provider.of<ProductFormProvider>(context);
     final producto = productFormProvider.producto!;
 
-    final image = (producto.img == null)
+    final image = (producto.img == null || producto.img!.isEmpty)
         ? const Image(image: AssetImage('noimage.jpeg'))
         : FadeInImage.assetNetwork(
             placeholder: 'load.gif', image: producto.img!);

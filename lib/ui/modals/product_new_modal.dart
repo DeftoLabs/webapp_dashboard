@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/models/products.dart';
+import 'package:web_dashboard/models/taxsales.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
@@ -164,58 +165,64 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                             value.trim().isEmpty) {
                                           return 'This field is required';
                                         }
-                                        if (value.length > 20) {
-                                          return 'The code cannot have more than 20 characters';
+                                        if (value.length > 15) {
+                                          return 'The code cannot have more than 14 characters';
                                         }
                                         return null;
                                       },
                                     ),
                                   const SizedBox(height: 20),
-                                  TextFormField(
-                                    controller: _stockController,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                            decimal: true),
-                                    decoration: InputDecoration(
-                                      hintText: 'Stock',
-                                      labelText:
-                                          'Stock - (Accept 2 Digits )e.g. 10.20',
-                                      labelStyle: GoogleFonts.plusJakartaSans(
-                                          color: Colors.black, fontSize: 12),
-                                      hintStyle: GoogleFonts.plusJakartaSans(
-                                          color: Colors.black.withOpacity(0.7)),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color.fromRGBO(0, 0, 0, 1),
-                                            width: 1.0),
-                                      ),
-                                      enabledBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.black, width: 1.0),
-                                      ),
-                                      border: const OutlineInputBorder(),
+                                 TextFormField(
+                                  controller: _stockController,
+                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                  decoration: InputDecoration(
+                                    hintText: 'Stock',
+                                    labelText: 'Stock - (Accept 2 Digits )e.g. 10.20',
+                                    labelStyle: GoogleFonts.plusJakartaSans(
+                                      color: Colors.black, 
+                                      fontSize: 12,
                                     ),
-                                    style: GoogleFonts.plusJakartaSans(
-                                        color: Colors.black),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Stock is required';
-                                      }
-                                      if (!RegExp(r'^\d+(\.\d{1,2})?$')
-                                          .hasMatch(value)) {
+                                    hintStyle: GoogleFonts.plusJakartaSans(
+                                      color: Colors.black.withOpacity(0.7),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color.fromRGBO(0, 0, 0, 1), 
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black, 
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    border: const OutlineInputBorder(),
+                                  ),
+                                  style: GoogleFonts.plusJakartaSans(
+                                    color: Colors.black,
+                                  ),
+                                  validator: (value) {
+                                    if (value != null && value.isNotEmpty) {
+                                      if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
                                         return 'Invalid Stock Format. Use "." for decimals and Max 2 Decimals';
                                       }
                                       if (double.tryParse(value) == null) {
                                         return 'Invalid number';
                                       }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      if (double.tryParse(value) != null) {
-                                        stock = double.tryParse(value) ?? 0.0;
-                                      }
-                                    },
-                                  ),
+                                    }
+                                    // Si el campo está vacío, no es un error (se asignará 0 después).
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    stock = value.isEmpty ? 0.0 : double.tryParse(value) ?? 0.0;
+                                  },
+                                  onSaved: (value) {
+                                    // Asegúrate de guardar el valor como 0 si el campo está vacío.
+                                    stock = value?.isEmpty ?? true ? 0.0 : double.tryParse(value!) ?? 0.0;
+                                  },
+                                ),
+
                                   const SizedBox(height: 20),
                                   Consumer<ProductsProvider>(
                                     builder: (context, productProvider, child) {
@@ -282,8 +289,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         if (value == null || value.isEmpty) {
                                           return 'Description is Required';
                                         }
-                                        if (value.length >= 31) {
-                                          return 'Description cannot be more than 30 characters';
+                                        if (value.length >= 41) {
+                                          return 'Description cannot be more than 40 characters';
                                         }
                                         return null;
                                       },
@@ -806,6 +813,16 @@ class _ProductNewModalState extends State<ProductNewModal> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           try {
+                            // Obtén el taxsalesProvider del contexto
+                            final taxsalesProvider = Provider.of<TaxSalesProvider>(context, listen: false);
+
+                            // Busca el TAX seleccionado
+                            final selectedTax = taxsalesProvider.taxsales.firstWhere(
+                              (element) => element.id == taxsales,
+                              orElse: () => TaxSales(id: '', taxnumber: 0.0, taxname: ''),
+                            );
+
+                            // Crea el producto con los datos seleccionados
                             await productProvider.newCreateProduct(
                               nombre: nombre,
                               precio1: precio1,
@@ -817,8 +834,9 @@ class _ProductNewModalState extends State<ProductNewModal> {
                               stock: stock,
                               unid: unid!,
                               categoria: categoria!,
-                              taxsales: taxsales!,
+                              tax: selectedTax.taxnumber, // Aquí asegúrate de enviar el número de TAX
                             );
+
                             if (!context.mounted) return;
                             NotificationService.showSnackBa('$descripcion Created');
                             Navigator.of(context).pop();
@@ -827,7 +845,6 @@ class _ProductNewModalState extends State<ProductNewModal> {
                           }
                         }
                       },
-
                       text: 'Save',
                       color: Colors.white,
                     ),

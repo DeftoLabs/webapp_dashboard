@@ -18,7 +18,9 @@ class TaxSales {
 
     factory TaxSales.fromMap(Map<String, dynamic> json) => TaxSales(
         id: json["_id"] ?? '',
-        taxnumber: json["taxnumber"] ?? '',
+           taxnumber: (json["taxnumber"] is String)
+            ? double.parse(json["taxnumber"])
+            : json["taxnumber"]?.toDouble() ?? 0.0,
         taxname: json["taxname"] ?? '',
     );
 
