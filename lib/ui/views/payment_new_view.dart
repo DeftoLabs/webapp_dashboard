@@ -131,7 +131,7 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                       width: 170,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: const Color.fromRGBO(177, 255, 46, 100),
+                        color: const Color.fromRGBO(177, 255, 46, 1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: const Color.fromARGB(255, 0, 0, 0),
@@ -163,7 +163,7 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                                 );
                     
                                 if (!context.mounted) return;
-                                NotificationService.showSnackBa('Payment Registered in System');
+                                NotificationService.showSnackBa('PAYMENT REGISTERED');
                                 Provider.of<PaymentsProvider>(context, listen: false).getPaginetedPayments();
                                 showDialog(
                           context: context,
@@ -171,22 +171,31 @@ class _PaymentNewViewState extends State<PaymentNewView> {
                             backgroundColor: Colors.white, // Fondo blanco
                             child: Container(
                               width: 300, // Ancho del Dialog
-                              height: 230, // Alto del Dialog
+                              height: 280, // Alto del Dialog
                               padding: const EdgeInsets.all(16),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   const SizedBox(height: 20),
-                                  const Text(
-                                    'Do you want to attach a file?',
-                                    style: TextStyle(fontSize: 18),
+                                  Center(
+                                    child: Text(
+                                      'DO YOU WANT TO ATTACH A FILE?',
+                                      style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold)
+                                    ),
                                   ),
+                                  const SizedBox(height: 30),
+                                   Center(
+                                     child: Text(
+                                      'ALLOWED FORMATS: .jpg .jpeg .png',
+                                      style: GoogleFonts.plusJakartaSans(fontSize: 12)
+                                                                       ),
+                                   ),
                                   const SizedBox(height: 30),
                                   TextButton.icon(
                                     onPressed: () async {
                                 FilePickerResult? result = await FilePicker.platform.pickFiles(
                                 type: FileType.custom,
-                                allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+                                allowedExtensions: ['jpg', 'jpeg', 'png'],
                                 allowMultiple: false,
                               );
                               if (result != null) {

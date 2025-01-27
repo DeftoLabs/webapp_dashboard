@@ -79,14 +79,14 @@ class _OrdersViewState extends State<OrdersView> {
                 child: Text('ORDERS VIEW', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
                 ordersDataSource.rowCount > 0 ?
                Container(
-        height: 50,
-        width: 150,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: TextButton.icon(
+                  height: 50,
+                  width: 150,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: TextButton.icon(
                  onPressed: () async {
                     try {
                       // Llama a la API
