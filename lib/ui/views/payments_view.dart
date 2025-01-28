@@ -95,7 +95,7 @@ class _PaymentsViewState extends State<PaymentsView> {
                       anchor.click();
                       html.Url.revokeObjectUrl(url);
 
-                      NotificationService.showSnackBa('Order downloaded successfully.');
+                      NotificationService.showSnackBa('Payment downloaded successfully.');
                     } else if (Platform.isAndroid || Platform.isIOS) {
                       // Lógica para móviles
                       final directory = await getApplicationDocumentsDirectory();
@@ -105,12 +105,12 @@ class _PaymentsViewState extends State<PaymentsView> {
                       await file.writeAsBytes(pdfBytes);
                       await OpenFile.open(filePath);
 
-                      NotificationService.showSnackBa('Order downloaded successfully.');
+                      NotificationService.showSnackBa('Payment downloaded successfully.');
                     }
                   } on HttpException catch (e) {
-                    if (e.message.contains('That date has no orders')) {
+                    if (e.message.contains('That date has no payments')) {
                       // Manejo específico del caso "That date has no orders"
-                      NotificationService.showSnackBarError('No orders found for the requested date.');
+                      NotificationService.showSnackBarError('No payment found for the requested date.');
                     } else {
                       // Manejo genérico de otros errores HTTP
                       NotificationService.showSnackBarError('An error occurred while fetching the data. Please try again.');
