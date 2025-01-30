@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
 import 'package:flutter/foundation.dart';
@@ -77,49 +77,54 @@ class _PaymentsViewState extends State<PaymentsView> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: TextButton.icon(
-                        onPressed: () async {
-                          try {
-              // Llama a la API
-                    final response = await CafeApi.getJson('/paymentReport/byDate/$searchDate');
-                    // Procesar datos si la respuesta es exitosa
-                    final String base64Pdf = response['data'];
-                    final Uint8List pdfBytes = base64Decode(base64Pdf); // Decodifica el Base64 a bytes
+                      onPressed: () async {
+                        try {
+                          // Llama a la API
+                          final response = await CafeApi.getJson('/paymentReport/byDate/$searchDate');
 
-                    if (kIsWeb) {
-                      // Lógica para descargar en la web
-                      final blob = html.Blob([pdfBytes], 'application/pdf');
-                      final url = html.Url.createObjectUrlFromBlob(blob);
-                      final anchor = html.AnchorElement(href: url)
-                        ..target = 'blank'
-                        ..download = 'Payment_$searchDate.pdf';
-                      anchor.click();
-                      html.Url.revokeObjectUrl(url);
+                          // Verifica si la respuesta contiene la clave 'data' y si es un arreglo
+                          if (response.containsKey('data')) {
+                            final data = response['data'];
 
-                      NotificationService.showSnackBa('Payment downloaded successfully.');
-                    } else if (Platform.isAndroid || Platform.isIOS) {
-                      // Lógica para móviles
-                      final directory = await getApplicationDocumentsDirectory();
-                      final filePath = '${directory.path}/Payment_$searchDate.pdf';
-                      final file = File(filePath);
+                            // Verifica si el 'data' es un arreglo de tipo String
+                            if (data is List) {
+                              final String base64Pdf = data.join(); // Combina los elementos si es un arreglo
 
-                      await file.writeAsBytes(pdfBytes);
-                      await OpenFile.open(filePath);
+                              // Decodificar el Base64 a bytes
+                              final Uint8List pdfBytes = base64Decode(base64Pdf);
 
-                      NotificationService.showSnackBa('Payment downloaded successfully.');
-                    }
-                  } on HttpException catch (e) {
-                    if (e.message.contains('That date has no payments')) {
-                      // Manejo específico del caso "That date has no orders"
-                      NotificationService.showSnackBarError('No payment found for the requested date.');
-                    } else {
-                      // Manejo genérico de otros errores HTTP
-                      NotificationService.showSnackBarError('An error occurred while fetching the data. Please try again.');
-                    }
-                  } catch (e) {
-                    // Manejo genérico para cualquier otro error
-                    NotificationService.showSnackBarError('An unexpected error occurred. Please try again.');
-                  }
-                },
+                              if (kIsWeb) {
+                                // Lógica para descargar en la web
+                                final blob = html.Blob([pdfBytes], 'application/pdf');
+                                final url = html.Url.createObjectUrlFromBlob(blob);
+                                final anchor = html.AnchorElement(href: url)
+                                  ..target = 'blank'
+                                  ..download = 'order_$searchDate.pdf';
+                                anchor.click();
+                                html.Url.revokeObjectUrl(url);
+
+                                NotificationService.showSnackBa('Order downloaded successfully.');
+                              } else if (Platform.isAndroid || Platform.isIOS) {
+                                // Lógica para móviles
+                                final directory = await getApplicationDocumentsDirectory();
+                                final filePath = '${directory.path}/order_$searchDate.pdf';
+                                final file = File(filePath);
+
+                                await file.writeAsBytes(pdfBytes);
+                                await OpenFile.open(filePath);
+
+                                NotificationService.showSnackBa('Order downloaded successfully.');
+                              }
+                            } else {
+                              NotificationService.showSnackBarError('Invalid data format.');
+                            }
+                          } else {
+                            NotificationService.showSnackBarError('No data available for the requested date.');
+                          }
+                        } catch (e) {
+                          NotificationService.showSnackBarError('An unexpected error occurred. Please try again.');
+                        }
+                      },
                 label: Text(
                   todayDate,
                   style: GoogleFonts.plusJakartaSans(color: Colors.white),
