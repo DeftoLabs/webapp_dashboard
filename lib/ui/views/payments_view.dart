@@ -48,6 +48,7 @@ class _PaymentsViewState extends State<PaymentsView> {
 
     final paymentsDataSource = PaymentsDataSource( paymentProvider.payments );
 
+    String searchDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     String todayDate = DateFormat('dd MM yy').format(DateTime.now());
 
     final activeUser = Provider.of<AuthProvider>(context).user!;
@@ -79,8 +80,7 @@ class _PaymentsViewState extends State<PaymentsView> {
                         onPressed: () async {
                           try {
               // Llama a la API
-                    final response = await CafeApi.getJson('/ordercustomer/byDate/');
-
+                    final response = await CafeApi.getJson('/paymentReport/byDate/$searchDate');
                     // Procesar datos si la respuesta es exitosa
                     final String base64Pdf = response['data'];
                     final Uint8List pdfBytes = base64Decode(base64Pdf); // Decodifica el Base64 a bytes
@@ -91,7 +91,7 @@ class _PaymentsViewState extends State<PaymentsView> {
                       final url = html.Url.createObjectUrlFromBlob(blob);
                       final anchor = html.AnchorElement(href: url)
                         ..target = 'blank'
-                        ..download = 'order_.pdf';
+                        ..download = 'Payment_$searchDate.pdf';
                       anchor.click();
                       html.Url.revokeObjectUrl(url);
 
@@ -99,7 +99,7 @@ class _PaymentsViewState extends State<PaymentsView> {
                     } else if (Platform.isAndroid || Platform.isIOS) {
                       // Lógica para móviles
                       final directory = await getApplicationDocumentsDirectory();
-                      final filePath = '${directory.path}/order_.pdf';
+                      final filePath = '${directory.path}/Payment_$searchDate.pdf';
                       final file = File(filePath);
 
                       await file.writeAsBytes(pdfBytes);
