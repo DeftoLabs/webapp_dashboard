@@ -664,7 +664,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                           builder: (context, productProvider,
                                               child) {
                                             return SizedBox(
-                                              width: 275,
+                                              width: 370,
                                               child: DropdownButtonFormField<String>(
                                                 value: productData['producto'],
                                                 decoration: InputDecoration(

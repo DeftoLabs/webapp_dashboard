@@ -77,54 +77,43 @@ class _PaymentsViewState extends State<PaymentsView> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: TextButton.icon(
-                      onPressed: () async {
-                        try {
-                          // Llama a la API
-                          final response = await CafeApi.getJson('/paymentReport/byDate/$searchDate');
-
-                          // Verifica si la respuesta contiene la clave 'data' y si es un arreglo
-                          if (response.containsKey('data')) {
-                            final data = response['data'];
-
-                            // Verifica si el 'data' es un arreglo de tipo String
-                            if (data is List) {
-                              final String base64Pdf = data.join(); // Combina los elementos si es un arreglo
-
-                              // Decodificar el Base64 a bytes
-                              final Uint8List pdfBytes = base64Decode(base64Pdf);
-
-                              if (kIsWeb) {
-                                // Lógica para descargar en la web
-                                final blob = html.Blob([pdfBytes], 'application/pdf');
-                                final url = html.Url.createObjectUrlFromBlob(blob);
-                                final anchor = html.AnchorElement(href: url)
-                                  ..target = 'blank'
-                                  ..download = 'order_$searchDate.pdf';
-                                anchor.click();
-                                html.Url.revokeObjectUrl(url);
-
-                                NotificationService.showSnackBa('Order downloaded successfully.');
-                              } else if (Platform.isAndroid || Platform.isIOS) {
-                                // Lógica para móviles
-                                final directory = await getApplicationDocumentsDirectory();
-                                final filePath = '${directory.path}/order_$searchDate.pdf';
-                                final file = File(filePath);
-
-                                await file.writeAsBytes(pdfBytes);
-                                await OpenFile.open(filePath);
-
-                                NotificationService.showSnackBa('Order downloaded successfully.');
+                        onPressed: () async {
+                          try {
+                            final response = await CafeApi.getJson('/paymentReport/byDate/$searchDate');
+                            if (response.containsKey('data')) {
+                              final base64Pdf = response['data'];
+                        
+                              if (base64Pdf is String && base64Pdf.isNotEmpty) {
+                                final Uint8List pdfBytes = base64Decode(base64Pdf);
+                                if (kIsWeb) {
+                                  final blob = html.Blob([pdfBytes], 'application/pdf');
+                                  final url = html.Url.createObjectUrlFromBlob(blob);
+                                  final anchor = html.AnchorElement(href: url)
+                                    ..target = 'blank'
+                                    ..download = 'order_$searchDate.pdf';
+                                  anchor.click();
+                                  html.Url.revokeObjectUrl(url);
+                        
+                                  NotificationService.showSnackBa('Payment $searchDate Downloaded Successfully.');
+                                } else if (Platform.isAndroid || Platform.isIOS) {
+                                  final directory = await getApplicationDocumentsDirectory();
+                                  final filePath = '${directory.path}/order_$searchDate.pdf';
+                                  final file = File(filePath);
+                                  await file.writeAsBytes(pdfBytes);
+                                  await OpenFile.open(filePath);
+                                  NotificationService.showSnackBa('Payment $searchDate Downloaded Successfully.');
+                                }
+                              } else {
+                                NotificationService.showSnackBarError('Invalid data format.');
                               }
                             } else {
-                              NotificationService.showSnackBarError('Invalid data format.');
+                              NotificationService.showSnackBarError('No data available for the requested date.');
                             }
-                          } else {
-                            NotificationService.showSnackBarError('No data available for the requested date.');
+                          } catch (e) {
+                            NotificationService.showSnackBarError('An unexpected error occurred. Please try again.');
                           }
-                        } catch (e) {
-                          NotificationService.showSnackBarError('An unexpected error occurred. Please try again.');
-                        }
-                      },
+                        },
+
                 label: Text(
                   todayDate,
                   style: GoogleFonts.plusJakartaSans(color: Colors.white),

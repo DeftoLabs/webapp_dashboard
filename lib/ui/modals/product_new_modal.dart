@@ -90,7 +90,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Container(
-          height: 700,
+          height: 820,
           width: 800,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -289,8 +289,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         if (value == null || value.isEmpty) {
                                           return 'Description is Required';
                                         }
-                                        if (value.length >= 41) {
-                                          return 'Description cannot be more than 40 characters';
+                                        if (value.length >= 36) {
+                                          return 'Description cannot be more than 35 characters';
                                         }
                                         return null;
                                       },
