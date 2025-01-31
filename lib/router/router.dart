@@ -43,6 +43,9 @@ class Flurorouter {
 
   static String newPaymentRoute     = '/dashboard/payment/create';
 
+  static String paymentsSalesRoute      = '/dashboard/paymentsbyrepresentative';
+  static String paymentsNewSalesRoute   = '/dashboard/paymentsbyrepresentative/create';
+
   static String gpsRoute        = '/dashboard/gps';
 
   static String productsRoute   = '/dashboard/products';
@@ -128,6 +131,9 @@ class Flurorouter {
     router.define (paymentsRoute,       handler:   DashboardHandlers.payments, transitionType: TransitionType.fadeIn);
     router.define (paymentRoute,        handler:   DashboardHandlers.payment, transitionType: TransitionType.fadeIn);
     router.define (newPaymentRoute,     handler:   DashboardHandlers.newPayment, transitionType: TransitionType.fadeIn) ;
+    // Payments Sales Representative Route
+    router.define (paymentsSalesRoute,      handler:   DashboardHandlers.paymentsbyrepresentative, transitionType: TransitionType.fadeIn) ;
+    router.define (paymentsNewSalesRoute,   handler:   DashboardHandlers.newSalesPayment, transitionType: TransitionType.fadeIn) ;
 
     // GPS
     router.define (gpsRoute,        handler:  DashboardHandlers.gps,        transitionType: TransitionType.fadeIn);

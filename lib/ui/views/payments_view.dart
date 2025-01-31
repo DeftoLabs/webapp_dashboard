@@ -52,7 +52,6 @@ class _PaymentsViewState extends State<PaymentsView> {
     String todayDate = DateFormat('dd MM yy').format(DateTime.now());
 
     final activeUser = Provider.of<AuthProvider>(context).user!;
-    
 
 
 

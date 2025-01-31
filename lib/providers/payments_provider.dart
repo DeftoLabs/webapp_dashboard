@@ -24,6 +24,22 @@ class PaymentsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+      Future<void> getPaymentByRepresentative(String usuarioZona) async {
+    try {  
+      final resp = await CafeApi.httpGet('/payment/usuarioZona/$usuarioZona');
+      
+      if (resp is Map<String, dynamic> && resp.containsKey('payments') && (resp['payments'] as List).isEmpty) {
+      throw Exception('Sales Representative With No Orders');
+    }
+     payments = (resp['payments'] as List).map((orden) => Payment.fromMap(orden)).toList();
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+  }
+
     Future<Payment> getPaymentsByID( String id ) async {
 
       try {

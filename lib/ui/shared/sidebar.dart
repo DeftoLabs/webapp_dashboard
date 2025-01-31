@@ -65,7 +65,7 @@ class Sidebar extends StatelessWidget {
         onPressed: ()=> navigateTo(Flurorouter.ordersRoute),
         isActive: sideMenuProvider.currentPage == Flurorouter.ordersRoute,)
         : const SizedBox.shrink(),
-
+      // USER_ROLE
         (currentUser.rol != 'MASTER_ROL' && currentUser.rol != 'ADMIN_ROLE') 
         ? MenuItem(
         text: 'Order',
@@ -80,8 +80,22 @@ class Sidebar extends StatelessWidget {
             onPressed: ()=> navigateTo(Flurorouter.shipmentRoute)
         ),
 
-        MenuItem(text: 'Payments', icon: Icons.account_balance_wallet_outlined,      
-        onPressed: ()=> navigateTo(Flurorouter.paymentsRoute)),
+              // ADMIN_ROLE
+        currentUser.rol != 'USER_ROLE'
+        ? 
+        MenuItem(text: 'Payments', 
+        icon: Icons.account_balance_wallet_outlined,    
+        onPressed: ()=> navigateTo(Flurorouter.paymentsRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.paymentsRoute)
+        : const SizedBox.shrink(),
+      // USER_ROLE
+        (currentUser.rol != 'MASTER_ROL' && currentUser.rol != 'ADMIN_ROLE') 
+        ? MenuItem(
+        text: 'Payment',
+        icon: Icons.account_balance_wallet_outlined,
+        onPressed: ()=> navigateTo(Flurorouter.paymentsSalesRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.paymentsSalesRoute)
+        : const SizedBox.shrink(),
         
         const SizedBox(height: 10),
 

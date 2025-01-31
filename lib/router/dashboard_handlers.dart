@@ -25,8 +25,10 @@ import 'package:web_dashboard/ui/views/orders_neworden.dart';
 import 'package:web_dashboard/ui/views/orders_records_view.dart';
 import 'package:web_dashboard/ui/views/orders_search_route.dart';
 import 'package:web_dashboard/ui/views/orders_search_sales.dart';
+import 'package:web_dashboard/ui/views/payment_new_salesrepresentative_view.dart';
 import 'package:web_dashboard/ui/views/payment_new_view.dart';
 import 'package:web_dashboard/ui/views/payment_view.dart';
+import 'package:web_dashboard/ui/views/payments_salesrepresentative_view.dart';
 import 'package:web_dashboard/ui/views/payments_view.dart';
 import 'package:web_dashboard/ui/views/product_view.dart';
 import 'package:web_dashboard/ui/views/profile_view.dart';
@@ -267,8 +269,12 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.paymentsRoute);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
+   if( authProvider.authStatus == AuthStatus.authenticated) {
+         if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const PaymentsView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
@@ -293,8 +299,42 @@ class DashboardHandlers {
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.newPaymentRoute);
-      if( authProvider.authStatus == AuthStatus.authenticated) {
+     if( authProvider.authStatus == AuthStatus.authenticated) {
+         if (authProvider.user?.rol == 'ADMIN_ROLE' || authProvider.user?.rol == 'MASTER_ROLE') {
         return const PaymentNewView();
+        } else {
+          return const NoPageAccessView();
+        }
+      } return const LoginView();
+
+    }
+  );
+
+    static Handler paymentsbyrepresentative = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.ordersRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        if(authProvider.user?.rol == 'USER_ROLE') {
+        return const PaymentsSalesRepresentativeView();
+        } else {
+          return const NoPageAccessView();
+        }
+      } return const LoginView();
+
+    }
+  );
+
+      static Handler newSalesPayment = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.paymentsNewSalesRoute);
+     if( authProvider.authStatus == AuthStatus.authenticated) {
+         if (authProvider.user?.rol == 'USER_ROLE') {
+        return const PaymentNewSalesRepresentativeView();
+        } else {
+          return const NoPageAccessView();
+        }
       } return const LoginView();
 
     }
