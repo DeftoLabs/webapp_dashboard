@@ -18,7 +18,7 @@ class DashboardTop5ProductByDayUserRole extends StatelessWidget {
             child: Text(
               'NO PRODUCT SOLD TODAY',
               style: GoogleFonts.plusJakartaSans(
-                  fontSize: 16, fontWeight: FontWeight.bold),
+                  fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
           );
         }
@@ -33,7 +33,7 @@ class DashboardTop5ProductByDayUserRole extends StatelessWidget {
                 child: Text(
                   'TOP 5 PRODUCT TODAY', // Título dinámico con fecha
                   style: GoogleFonts.plusJakartaSans(
-                      fontSize: 14, fontWeight: FontWeight.bold),
+                      fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ),
@@ -55,8 +55,8 @@ class DashboardTop5ProductByDayUserRole extends StatelessWidget {
 
                   // Cambiar el fondo de cada línea de manera alterna
                   final backgroundColor = index % 2 == 0
-                      ? Colors.amber.shade50 // Fondo claro para índices pares
-                      : Colors.amber.shade100; // Fondo más oscuro para índices impares
+                      ? Colors.white
+                      : Colors.white;
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10.0),

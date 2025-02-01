@@ -34,6 +34,7 @@ class SalesLineChartUserRole extends StatelessWidget {
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white
                   ),
                 ),
               ),
@@ -56,7 +57,7 @@ class SalesLineChartUserRole extends StatelessWidget {
                               axisSide: meta.axisSide,
                               child: Text(
                                 formattedValue,
-                                style: const TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 12, color: Colors.white),
                               ),
                             );
                           },
@@ -86,7 +87,7 @@ class SalesLineChartUserRole extends StatelessWidget {
                               axisSide: meta.axisSide,
                               child: Text(
                                 '${date.day}/${date.month}',
-                                style: const TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 12, color: Colors.white),
                               ),
                             );
                           },

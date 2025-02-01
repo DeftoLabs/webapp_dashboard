@@ -45,10 +45,8 @@ class _DashboardViewState extends State<DashboardView> {
                                   decoration: BoxDecoration(
                                      gradient: const LinearGradient(
                                       colors: [
-                                        Color(0xFF0F2027), 
-                                        Color(0xFF2C5364), 
-                                        Color.fromRGBO(0, 200, 83, 1),
-                                        Color.fromRGBO(177, 255, 46, 1),
+                                       Color.fromARGB(255, 58, 60, 65),
+                                       Color.fromARGB(255, 64, 68, 75),
                                       ],
                                       begin: Alignment.topLeft, 
                                       end: Alignment.bottomRight, 
@@ -69,10 +67,8 @@ class _DashboardViewState extends State<DashboardView> {
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
                                     colors: [
-                                      Color.fromRGBO(177, 255, 46, 1),
-                                      Color.fromRGBO(0, 200, 83, 1),
-                                      Color(0xFF2C5364),                                  
-                                      Color(0xFF0F2027), 
+                                       Color.fromARGB(255, 58, 60, 65),
+                                       Color.fromARGB(255, 64, 68, 75),
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight
@@ -93,10 +89,8 @@ class _DashboardViewState extends State<DashboardView> {
                                   decoration: BoxDecoration(
                                       gradient:const LinearGradient(
                                       colors: [
-                                        Color(0xFF0F2027), 
-                                        Color(0xFF2C5364), 
-                                        Color.fromRGBO(0, 200, 83, 1),
-                                        Color.fromRGBO(177, 255, 46, 1),
+                                       Color.fromARGB(255, 58, 60, 65),
+                                       Color.fromARGB(255, 64, 68, 75),
                                       ],
                                       begin: Alignment.topLeft, // Inicio del degradado
                                       end: Alignment.bottomRight, // Fin del degradado
@@ -117,10 +111,8 @@ class _DashboardViewState extends State<DashboardView> {
                                   decoration: BoxDecoration(
                                       gradient:const LinearGradient(
                                     colors: [
-                                      Color.fromRGBO(177, 255, 46, 1),
-                                      Color.fromRGBO(0, 200, 83, 1),
-                                      Color(0xFF2C5364),                                  
-                                      Color(0xFF0F2027), 
+                                       Color.fromARGB(255, 58, 60, 65),
+                                       Color.fromARGB(255, 64, 68, 75),
                                     ],
                                       begin: Alignment.topLeft, // Inicio del degradado
                                       end: Alignment.bottomRight, // Fin del degradado
@@ -145,7 +137,7 @@ class _DashboardViewState extends State<DashboardView> {
                                Flexible(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.blue, 
+                                       color: const Color.fromARGB(255, 145, 148, 154),
                                       borderRadius: BorderRadius.circular(12), 
                                     ),
                                     padding: const EdgeInsets.all(16.0),
@@ -175,7 +167,7 @@ class _DashboardViewState extends State<DashboardView> {
                                    Flexible(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white, 
+                                      color: const Color.fromARGB(255, 145, 148, 154),
                                       borderRadius: BorderRadius.circular(12), 
                                     ),
                                     padding: const EdgeInsets.only(right: 16, left: 16),
@@ -186,7 +178,7 @@ class _DashboardViewState extends State<DashboardView> {
                                Flexible(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.blue, // Color de fondo
+                                       color: const Color.fromARGB(255, 145, 148, 154),
                                       borderRadius: BorderRadius.circular(12), // Esquinas redondeadas
                                     ),
                                     padding: const EdgeInsets.all(16.0), // Padding opcional
@@ -265,7 +257,7 @@ class _DashboardViewState extends State<DashboardView> {
                 children: [
                   Column(
                           children: [
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             Row(
                               children: [
                                 Expanded(
@@ -275,10 +267,8 @@ class _DashboardViewState extends State<DashboardView> {
                                     decoration: BoxDecoration(
                                        gradient: const LinearGradient(
                                         colors: [
-                                          Color(0xFF0F2027), 
-                                          Color(0xFF2C5364), 
-                                          Color.fromRGBO(0, 200, 83, 1),
-                                          Color.fromRGBO(177, 255, 46, 1),
+                                       Color.fromARGB(255, 58, 60, 65),
+                                       Color.fromARGB(255, 64, 68, 75),
                                         ],
                                         begin: Alignment.topLeft, 
                                         end: Alignment.bottomRight, 
@@ -299,10 +289,8 @@ class _DashboardViewState extends State<DashboardView> {
                                   decoration: BoxDecoration(
                                     gradient: const LinearGradient(
                                       colors: [
-                                        Color.fromRGBO(177, 255, 46, 1),
-                                        Color.fromRGBO(0, 200, 83, 1),
-                                        Color(0xFF2C5364),                                  
-                                        Color(0xFF0F2027), 
+                                       Color.fromARGB(255, 58, 60, 65),
+                                       Color.fromARGB(255, 64, 68, 75),
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight
@@ -323,10 +311,8 @@ class _DashboardViewState extends State<DashboardView> {
                                     decoration: BoxDecoration(
                                         gradient:const LinearGradient(
                                         colors: [
-                                          Color(0xFF0F2027), 
-                                          Color(0xFF2C5364), 
-                                          Color.fromRGBO(0, 200, 83, 1),
-                                          Color.fromRGBO(177, 255, 46, 1),
+                                       Color.fromARGB(255, 58, 60, 65),
+                                       Color.fromARGB(255, 64, 68, 75),
                                         ],
                                         begin: Alignment.topLeft, // Inicio del degradado
                                         end: Alignment.bottomRight, // Fin del degradado
@@ -347,10 +333,8 @@ class _DashboardViewState extends State<DashboardView> {
                                     decoration: BoxDecoration(
                                         gradient:const LinearGradient(
                                       colors: [
-                                        Color.fromRGBO(177, 255, 46, 1),
-                                        Color.fromRGBO(0, 200, 83, 1),
-                                        Color(0xFF2C5364),                                  
-                                        Color(0xFF0F2027), 
+                                       Color.fromARGB(255, 58, 60, 65),
+                                       Color.fromARGB(255, 64, 68, 75),
                                       ],
                                         begin: Alignment.topLeft, // Inicio del degradado
                                         end: Alignment.bottomRight, // Fin del degradado
@@ -374,7 +358,7 @@ class _DashboardViewState extends State<DashboardView> {
                                Flexible(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.blue, 
+                                      color: const Color.fromARGB(255, 145, 148, 154),
                                       borderRadius: BorderRadius.circular(12), 
                                     ),
                                     padding: const EdgeInsets.all(16.0),
@@ -385,7 +369,7 @@ class _DashboardViewState extends State<DashboardView> {
                                    Flexible(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white, 
+                                      color: const Color.fromARGB(255, 145, 148, 154),
                                       borderRadius: BorderRadius.circular(12), 
                                     ),
                                     padding: const EdgeInsets.only(right: 16, left: 16),
@@ -403,7 +387,7 @@ class _DashboardViewState extends State<DashboardView> {
                                Flexible(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white, 
+                                      color:  const Color.fromARGB(255, 145, 148, 154),
                                       borderRadius: BorderRadius.circular(12), 
                                     ),
                                     padding: const EdgeInsets.all(16.0),
@@ -414,7 +398,7 @@ class _DashboardViewState extends State<DashboardView> {
                                    Flexible(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white, 
+                                      color:  const Color.fromARGB(255, 145, 148, 154),
                                       borderRadius: BorderRadius.circular(12), 
                                     ),
                                     padding: const EdgeInsets.only(right: 16, left: 16),

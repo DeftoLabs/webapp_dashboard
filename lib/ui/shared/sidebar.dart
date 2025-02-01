@@ -225,7 +225,7 @@ class Sidebar extends StatelessWidget {
     gradient: LinearGradient(
       colors: [
         Color.fromARGB(255, 58, 60, 65),
-        Color.fromARGB(255, 37, 40, 45),
+        Color.fromARGB(255, 64, 68, 75),
       ]
       ),
       boxShadow: [

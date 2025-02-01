@@ -25,6 +25,7 @@ class StackedAreaChartWidget extends StatelessWidget {
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
+                color: Colors.white
               ),
             ),
             Expanded(
@@ -116,7 +117,7 @@ class StackedAreaChartWidget extends StatelessWidget {
                 final formattedDate = '${parts[2]}/${parts[1]}';
                 return Text(
                   formattedDate,
-                  style: const TextStyle(fontSize: 10),
+                  style: const TextStyle(fontSize: 10, color: Colors.white),
                 );
               }
               return const SizedBox.shrink();
@@ -160,13 +161,17 @@ class StackedAreaChartWidget extends StatelessWidget {
   /// Genera un mapa de colores aleatorios para cada usuario
   Map<String, Color> _generateRandomColors(Set<String> userNames) {
     final palette = [
-      const Color(0xFF6AC259),
-      const Color(0xFF4A90E2),
-      const Color(0xFFFFA726),
-      const Color(0xFFFF5252),
-      const Color(0xFFAB47BC),
-      const Color(0xFF29B6F6),
-      const Color(0xFF66BB6A),
+      const Color.fromRGBO(177, 255, 46, 1),
+      const Color.fromRGBO(0, 102, 255, 1),
+      const Color.fromRGBO(255, 140, 0, 1),
+      const Color.fromRGBO(255, 0, 50, 1),
+      const Color.fromRGBO(0, 255, 200, 1),
+      const Color.fromRGBO(255, 20, 147, 1),
+      const Color.fromRGBO(138, 43, 226, 1),
+      const Color.fromRGBO(255, 215, 0, 1),
+      const Color.fromRGBO(255, 82, 82, 1),
+      const Color.fromRGBO(0, 200, 83, 1)
+
     ];
     final random = Random();
     final userColors = <String, Color>{};

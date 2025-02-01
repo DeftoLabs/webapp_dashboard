@@ -20,6 +20,8 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+                color: const Color.fromARGB(255, 99, 99, 99)
+                
               ),
             ),
           );
@@ -37,6 +39,7 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 99, 99, 99)
                   ),
                 ),
               ),
@@ -53,9 +56,8 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
 
                   // Cambiar el fondo de cada línea de manera alterna
                   final backgroundColor = index % 2 == 0
-                      ? Colors.green.shade50
-                      : Colors.green.shade100;
-
+                      ? Colors.grey.shade50 // Fondo claro para índices pares
+                      : Colors.grey.shade100; // Fondo más oscuro para índices impares
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10.0),
                     child: Container(

@@ -32,7 +32,7 @@ class WeeklyOrdersBarChart extends StatelessWidget {
       children: [
         Text(
           'ORDER FROM THE LAST 7 DAYS',
-          style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
+          style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         const SizedBox(height: 20),
         Flexible(
@@ -47,7 +47,7 @@ class WeeklyOrdersBarChart extends StatelessWidget {
                     showTitles: true,
                     getTitlesWidget: (value, meta) => Text(
                       value.toInt().toString(),
-                      style: const TextStyle(fontSize: 12),
+                      style: const TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
                 ),
@@ -69,7 +69,7 @@ class WeeklyOrdersBarChart extends StatelessWidget {
 
                       return Text(
                         formattedDate,
-                        style: const TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 12, color: Colors.white),
                       );
                     },
                   ),

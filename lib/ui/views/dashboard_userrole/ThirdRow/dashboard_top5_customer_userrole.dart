@@ -20,6 +20,7 @@ class DashboardTop5CustomerByDayUserRole extends StatelessWidget {
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+                color: Colors.white
               ),
             ),
           );
@@ -37,6 +38,7 @@ class DashboardTop5CustomerByDayUserRole extends StatelessWidget {
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white
                   ),
                 ),
               ),
@@ -54,8 +56,8 @@ class DashboardTop5CustomerByDayUserRole extends StatelessWidget {
 
                   // Cambiar el fondo de cada línea de manera alterna
                   final backgroundColor = index % 2 == 0
-                      ? const Color.fromRGBO(177, 255, 46, 1) // Fondo claro para índices pares
-                      : const Color.fromRGBO(177, 255, 46, 1).withOpacity(0.8) ; // Fondo más oscuro para índices impares
+                      ? const Color.fromRGBO(177, 255, 46, 1).withOpacity(1)
+                      : const Color.fromRGBO(177, 255, 46, 1).withOpacity(1);
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10.0),
