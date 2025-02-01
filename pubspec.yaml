@@ -98,6 +98,7 @@ flutter:
     - assets/
     - assets/noimage.jpeg
     - assets/nofile.png
+    - assets/bozzia.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

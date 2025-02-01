@@ -50,8 +50,8 @@ class _CategoryModalState extends State<CategoryModal> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.categoria?.nombre ?? 'Add Category',
-                  style: CustomLabels.h1.copyWith(color: Colors.white),
+                  widget.categoria?.nombre ?? 'ADD CATEGORY',
+                  style: GoogleFonts.plusJakartaSans(fontSize: 12, color: Colors.white)
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
@@ -65,7 +65,7 @@ class _CategoryModalState extends State<CategoryModal> {
 
              TextFormField(
               initialValue: widget.categoria?.nombre ?? '',
-              onChanged: (value) => nombre = value,
+              onChanged: (value) => nombre = value.toUpperCase(),
               decoration: InputDecoration(
                 hintText: 'Category Name',
                 labelText: 'Category',

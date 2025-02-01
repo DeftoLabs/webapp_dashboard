@@ -235,25 +235,54 @@ class _DashboardViewState extends State<DashboardView> {
                     )
                   ],
                   ),
-              Positioned(
-                top: 90,
-                right: 20,
-                child: FloatingActionButton(
-                  onPressed: () {},
-                  backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //const Icon(Icons.add, color: Color.fromARGB(255, 145, 148, 154)),
-                      //const SizedBox(height: 4), // Espaciado entre icono y texto
-                      Text(
-                        'IA',
-                        style: GoogleFonts.plusJakartaSans(fontSize: 20,fontWeight: FontWeight.bold, color:const Color.fromARGB(255, 58, 60, 65),)
-                      ),
-                    ],
+            Positioned(
+              top: 90,
+              right: 10,
+              child: Material(
+                color: Colors.transparent, // Para que el fondo no interfiera
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(35), // Ajusta el radio al del CircleAvatar
+                  onTap: () {
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context) {
+                            return AlertDialog(
+                          backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                          title: Center(
+                            child: 
+                            Text('BOZZ     IA', 
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold
+                            ))),
+                            content: SizedBox(
+                              width: 200,
+                              child: Text('AVAILABLE SOON', 
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),)),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Cerrar el diálogo
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.black
+                              ),
+                              child: Text('OK',
+                              style: GoogleFonts.plusJakartaSans(fontSize: 14, color: Colors.white))
+                            ),
+                          ],
+                        );
+                      });
+                  },
+                  child: const CircleAvatar(
+                    maxRadius: 30,
+                    backgroundColor:  Color.fromRGBO(177, 255, 46, 1),
+                    backgroundImage: AssetImage('bozzia.png'),
                   ),
                 ),
-              )
+              ),
+            )
 
               ],
             ),
@@ -422,25 +451,25 @@ class _DashboardViewState extends State<DashboardView> {
                        
                     ],
                     ),
-              Positioned(
-                top: 90,
-                right: 20,
-                child: FloatingActionButton(
-                  onPressed: () {},
-                  backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //const Icon(Icons.add, color: Color.fromARGB(255, 145, 148, 154)),
-                      //const SizedBox(height: 4), // Espaciado entre icono y texto
-                      Text(
-                        'IA',
-                        style: GoogleFonts.plusJakartaSans(fontSize: 20,fontWeight: FontWeight.bold, color:const Color.fromARGB(255, 58, 60, 65),)
+                Positioned(
+                  top: 90,
+                  right: 10,
+                  child: Material(
+                    color: Colors.transparent, // Para que el fondo no interfiera
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(35), // Ajusta el radio al del CircleAvatar
+                      onTap: () {
+                      
+                      },
+                      child: const CircleAvatar(
+                        maxRadius: 30,
+                        backgroundColor:  Color.fromRGBO(177, 255, 46, 1),
+                        backgroundImage: AssetImage('bozzia.png'),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              )
+                )
+
                 ],
               ),
             )

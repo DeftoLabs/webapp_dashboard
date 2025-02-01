@@ -18,6 +18,7 @@ class OrdenesProvider extends ChangeNotifier {
   bool ascending = true;
   int? sortColumnIndex;
 
+
   OrdenesProvider() {
     getPaginatedOrdenes();
   //  Timer.periodic(const Duration(seconds: 30), (timer) {
@@ -57,6 +58,7 @@ class OrdenesProvider extends ChangeNotifier {
     for (var orden in todaysOrders) {
       statusCount[orden.status] = (statusCount[orden.status] ?? 0) + 1;
     }
+    notifyListeners();
     return statusCount;
   }
 
