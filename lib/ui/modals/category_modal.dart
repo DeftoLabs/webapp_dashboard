@@ -5,7 +5,6 @@ import 'package:web_dashboard/models/categories.dart';
 import 'package:web_dashboard/providers/categories_provider.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
-import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 class CategoryModal extends StatefulWidget {
   final Categoria? categoria;
