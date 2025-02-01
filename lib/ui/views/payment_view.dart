@@ -66,6 +66,8 @@ class _PaymentViewState extends State<PaymentView> {
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
+    final currentUser = Provider.of<AuthProvider>(context).user;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: ListView(
@@ -73,12 +75,17 @@ class _PaymentViewState extends State<PaymentView> {
             children: [
               Row(
                 children: [
-                  IconButton(
-                      color: Colors.black,
-                      onPressed: () {
+                 IconButton(
+                    color: Colors.black,
+                    onPressed: () {
+                      if (currentUser?.rol == 'MASTER_ROLE' || currentUser?.rol == 'ADMIN_ROLE') {
                         NavigationService.navigateTo('/dashboard/payments');
-                      },
-                      icon: const Icon(Icons.arrow_back_rounded)),
+                      } else if (currentUser?.rol == 'USER_ROLE') {
+                        NavigationService.navigateTo('/dashboard/paymentsbyrepresentative');
+                      }
+                    },
+                    icon: const Icon(Icons.arrow_back_rounded),
+                  ),
                   Expanded(
                     child: Column(
                       children: [

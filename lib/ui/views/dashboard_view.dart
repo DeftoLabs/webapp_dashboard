@@ -248,7 +248,7 @@ class _DashboardViewState extends State<DashboardView> {
                       //const SizedBox(height: 4), // Espaciado entre icono y texto
                       Text(
                         'IA',
-                        style: GoogleFonts.plusJakartaSans(fontSize: 14,fontWeight: FontWeight.bold, color:const Color.fromARGB(255, 58, 60, 65),)
+                        style: GoogleFonts.plusJakartaSans(fontSize: 20,fontWeight: FontWeight.bold, color:const Color.fromARGB(255, 58, 60, 65),)
                       ),
                     ],
                   ),
@@ -422,17 +422,25 @@ class _DashboardViewState extends State<DashboardView> {
                        
                     ],
                     ),
-                  Positioned(
-                      bottom: 20,
-                      right: 20,
-                      child: FloatingActionButton(
-                        onPressed: (){
-            
-                        },
-                        backgroundColor: Colors.black,
-                        child: const Icon(Icons.add, color: Colors.white,)
-                      )
-                      )
+              Positioned(
+                top: 90,
+                right: 20,
+                child: FloatingActionButton(
+                  onPressed: () {},
+                  backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //const Icon(Icons.add, color: Color.fromARGB(255, 145, 148, 154)),
+                      //const SizedBox(height: 4), // Espaciado entre icono y texto
+                      Text(
+                        'IA',
+                        style: GoogleFonts.plusJakartaSans(fontSize: 20,fontWeight: FontWeight.bold, color:const Color.fromARGB(255, 58, 60, 65),)
+                      ),
+                    ],
+                  ),
+                ),
+              )
                 ],
               ),
             )
