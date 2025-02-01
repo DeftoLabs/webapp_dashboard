@@ -138,19 +138,24 @@ class StackedAreaChartWidget extends StatelessWidget {
           fitInsideHorizontally: true,
           fitInsideVertically: true,
           maxContentWidth: 150,
-          getTooltipItems: (spots) {
-            return spots.map((spot) {
-              final userName = userNames.elementAt(spots.indexOf(spot)).length > 16
-                  ? '${userNames.elementAt(spots.indexOf(spot)).substring(0, 16)}...'
-                  : userNames.elementAt(spots.indexOf(spot));
-              final count = spot.y.toInt();
+            getTooltipItems: (spots) {
+              return spots.map((spot) {
+                //final touchedIndex = spot.spotIndex; // Índice del punto tocado
+                final lineIndex = spot.barIndex; // Índice de la serie (usuario)
 
-              return LineTooltipItem(
-                '$userName - $count',
-                GoogleFonts.plusJakartaSans(fontSize: 10, color: Colors.white),
-              );
-            }).toList();
-          },
+                // Verifica si el índice está dentro del rango
+                if (lineIndex >= 0 && lineIndex < userNames.length) {
+                  final userName = userNames.elementAt(lineIndex);
+                  final count = spot.y.toInt();
+
+                  return LineTooltipItem(
+                    '$userName - $count',
+                    GoogleFonts.plusJakartaSans(fontSize: 10, color: Colors.white),
+                  );
+                }
+                return null;
+              }).whereType<LineTooltipItem>().toList();
+            }
         ),
         touchSpotThreshold: 10,
         handleBuiltInTouches: true,

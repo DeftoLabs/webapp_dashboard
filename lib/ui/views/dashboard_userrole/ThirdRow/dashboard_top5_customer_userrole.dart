@@ -56,8 +56,8 @@ class DashboardTop5CustomerByDayUserRole extends StatelessWidget {
 
                   // Cambiar el fondo de cada línea de manera alterna
                   final backgroundColor = index % 2 == 0
-                      ? const Color.fromRGBO(177, 255, 46, 1).withOpacity(1)
-                      : const Color.fromRGBO(177, 255, 46, 1).withOpacity(1);
+                      ? Colors.white
+                      : Colors.white;
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10.0),
@@ -67,7 +67,7 @@ class DashboardTop5CustomerByDayUserRole extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8), // Opcional, para bordes redondeados
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.black26, // Color de la sombra
+                            color: Colors.white38, // Color de la sombra
                             blurRadius: 4, // Difusión de la sombra
                             offset: Offset(0, 2), // Posición de la sombra
                           ),

@@ -20,7 +20,7 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 99, 99, 99)
+                color: Colors.white
                 
               ),
             ),
@@ -39,7 +39,7 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 99, 99, 99)
+                    color: Colors.white
                   ),
                 ),
               ),
@@ -85,6 +85,7 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 11,
                                       fontWeight: FontWeight.bold,
+                                      color: const Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
                                   Text(
@@ -92,6 +93,7 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 11,
                                       fontWeight: FontWeight.bold,
+                                      color: const Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
                                   const SizedBox(height: 4),
@@ -99,12 +101,14 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
                                     'SUBTOTAL: \$ ${subtotal.toStringAsFixed(2)}',
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 10,
+                                      color: const Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
                                   Text(
                                     'ORDERS: $orderCount',
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 10,
+                                      color: const Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
                                 ],

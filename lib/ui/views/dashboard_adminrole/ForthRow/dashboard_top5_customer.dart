@@ -20,7 +20,7 @@ class DashboardTop5CustomerByDay extends StatelessWidget {
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(255, 99, 99, 99)
+                color: Colors.white
               ),
             ),
           );
@@ -38,7 +38,7 @@ class DashboardTop5CustomerByDay extends StatelessWidget {
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 99, 99, 99)
+                    color: Colors.white
                   ),
                 ),
               ),
@@ -67,7 +67,7 @@ class DashboardTop5CustomerByDay extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8), // Opcional, para bordes redondeados
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.black26, // Color de la sombra
+                            color: Colors.white24, // Color de la sombra
                             blurRadius: 4, // Difusión de la sombra
                             offset: Offset(0, 2), // Posición de la sombra
                           ),
@@ -86,6 +86,7 @@ class DashboardTop5CustomerByDay extends StatelessWidget {
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 11,
                                       fontWeight: FontWeight.bold,
+                                      color: const Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
                                   Text(
@@ -93,6 +94,7 @@ class DashboardTop5CustomerByDay extends StatelessWidget {
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 11,
                                       fontWeight: FontWeight.bold,
+                                      color: const Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
                                   const SizedBox(height: 4),
@@ -100,12 +102,14 @@ class DashboardTop5CustomerByDay extends StatelessWidget {
                                     'SUBTOTAL: \$ ${subtotal.toStringAsFixed(2)}',
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 10,
+                                      color: const Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
                                   Text(
                                     '# CONTROL: $control',
                                     style: GoogleFonts.plusJakartaSans(
                                       fontSize: 10,
+                                      color: const Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
                                 ],

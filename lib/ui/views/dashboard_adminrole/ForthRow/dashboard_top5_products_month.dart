@@ -19,7 +19,7 @@ class DashboardTop5ProductByMonth extends StatelessWidget {
               'NO INFO',
               style: GoogleFonts.plusJakartaSans(
                   fontSize: 16, fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 99, 99, 99)),
+                  color: Colors.white),
             ),
           );
         }
@@ -34,7 +34,7 @@ class DashboardTop5ProductByMonth extends StatelessWidget {
                 child: Text(
                   'TOP 5 PRODUCT IN THE LAST 30 DAYS', // Título dinámico con fecha
                   style: GoogleFonts.plusJakartaSans(
-                      fontSize: 14, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 99, 99, 99)),
+                      fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ),
@@ -93,7 +93,7 @@ class DashboardTop5ProductByMonth extends StatelessWidget {
                                 children: [
                                   Text(
                                     producto.descripcion ?? 'NOT DESCRIPTION',
-                                    style: GoogleFonts.plusJakartaSans(fontSize: 12),
+                                    style: GoogleFonts.plusJakartaSans(fontSize: 12, color:const Color.fromARGB(255, 58, 60, 65),),
                                   ),
                                   const SizedBox(height: 4),
                                   Row(
@@ -103,13 +103,13 @@ class DashboardTop5ProductByMonth extends StatelessWidget {
                                       Text(
                                         'QTY: ${producto.cantidad}',
                                         style: GoogleFonts.plusJakartaSans(
-                                            fontSize: 10, fontWeight: FontWeight.bold),
+                                            fontSize: 10, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 58, 60, 65),),
                                       ),
                                       // UNIT
                                       Text(
                                         producto.unid,
                                         style: GoogleFonts.plusJakartaSans(
-                                            fontSize: 10, fontWeight: FontWeight.bold),
+                                            fontSize: 10, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 58, 60, 65),),
                                       ),
                                     ],
                                   ),

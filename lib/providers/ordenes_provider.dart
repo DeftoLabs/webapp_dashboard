@@ -221,8 +221,6 @@ Map<int, double> getWeeklySalesByUser(BuildContext context) {
   return dailySales;
 }
 
-
-
 /// Método para agrupar las órdenes por día y usuarioZona
 Map<String, Map<String, int>> getOrdersGroupedByDayAndUserName() {
   // Mapa para almacenar los resultados
@@ -247,7 +245,6 @@ Map<String, Map<String, int>> getOrdersGroupedByDayAndUserName() {
 
         // Formatear la fecha como cadena para agrupar
         final formattedDate = "${orderDate.year}-${orderDate.month.toString().padLeft(2, '0')}-${orderDate.day.toString().padLeft(2, '0')}";
-
         // Inicializar la estructura para el día si no existe
         if (!groupedOrders.containsKey(formattedDate)) {
           groupedOrders[formattedDate] = {};
