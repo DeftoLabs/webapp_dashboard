@@ -105,10 +105,13 @@ class Sidebar extends StatelessWidget {
           color: Color.fromRGBO(177, 255, 46, 1),
         ),
 
+        currentUser.rol != 'USER_ROLE'
+        ?
         MenuItem(text: 'Products', 
         icon: Icons.shopping_bag_outlined,    
         onPressed: ()=> navigateTo(Flurorouter.productsRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.productsRoute,),
+        isActive: sideMenuProvider.currentPage == Flurorouter.productsRoute,)
+        : const SizedBox.shrink(),
 
         MenuItem(text: 'Catalog', icon: Icons.share_rounded,      
          onPressed: ()=> navigateTo(Flurorouter.catalogRoute)
@@ -122,23 +125,31 @@ class Sidebar extends StatelessWidget {
         isActive: sideMenuProvider.currentPage == Flurorouter.categoriesRoute,)
         : const SizedBox.shrink(),
 
-        const SizedBox(height: 10),
+        currentUser.rol != 'USER_ROLE'
+        ?
+        const SizedBox(height: 10)
+        : const SizedBox.shrink(),
 
+        currentUser.rol != 'USER_ROLE'
+        ?
         const Divider(
           indent: 30,
           endIndent: 30,
-          color: Color.fromRGBO(177, 255, 46, 1),
-        ),
+          color: Color.fromRGBO(177, 255, 46, 1),)
+          : const SizedBox.shrink(),
 
+        currentUser.rol != 'USER_ROLE'
+        ?
         MenuItem(text: 'Customers', 
         icon: Icons.add_business_outlined,  
        onPressed: ()=> navigateTo(Flurorouter.customersRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.customersRoute,),
+        isActive: sideMenuProvider.currentPage == Flurorouter.customersRoute,)
+        : const SizedBox.shrink(),
 
         const SizedBox(height: 10),
 
         currentUser.rol != 'USER_ROLE'
-        ? 
+        ?  
         const Divider(
           indent: 30,
           endIndent: 30,
@@ -210,7 +221,7 @@ class Sidebar extends StatelessWidget {
         MenuItem(text: 'Logout',
         icon: Icons.logout_outlined,
         onPressed: (){
-          Provider.of<AuthProvider>(context, listen: false).logout();
+          Provider.of<AuthProvider>(context, listen: false).logout(context);
         }),
 
         const SizedBox(height: 30),

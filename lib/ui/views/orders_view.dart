@@ -80,7 +80,7 @@ class _OrdersViewState extends State<OrdersView> {
                 ordersDataSource.rowCount > 0 ?
                Container(
                   height: 50,
-                  width: 150,
+                  width: 160,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.black,

@@ -13,6 +13,11 @@ class OrdenDateProvider extends ChangeNotifier {
     getOrdenByDay();
   }
 
+    void clearOrders() {
+    ordenes = [];
+    notifyListeners();
+  }
+
  Future<void> getOrdenByDay() async {
  try {
       String todayDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -81,21 +86,32 @@ Future<void> getOrdenByCustomer(String customerID) async {
   }
 }
 
-    Future<void> getOrdenByRepresentative(String usuarioZona) async {
-    try {  
-      final resp = await CafeApi.httpGet('/ordens/usuarioZona/$usuarioZona');
-      
-      if (resp is Map<String, dynamic> && resp.containsKey('ordenes') && (resp['ordenes'] as List).isEmpty) {
-      throw Exception('Sales Representative With No Orders');
+Future<void> getOrdenByRepresentative(String usuarioZona) async {
+  try {
+    final resp = await CafeApi.httpGet('/ordens/usuarioZona/$usuarioZona');
+    
+    if (resp is Map<String, dynamic> && resp.containsKey('ordenes')) {
+      if ((resp['ordenes'] as List).isEmpty) {
+        ordenes = [];
+      } else {
+        ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
+      }
     }
-     ordenes = (resp['ordenes'] as List).map((orden) => Ordenes.fromMap(orden)).toList();
+    isLoading = false;
+    notifyListeners();
+  } catch (e) {
+    if (e.toString().contains('Sales Representative With No Orders')) {
+      ordenes = [];
       isLoading = false;
       notifyListeners();
-    } catch (e) {
+    } else {
       isLoading = false;
+      notifyListeners();
       rethrow;
     }
   }
+}
+
 
     Future<void> getOrdenByProducto(String productoID) async {
     try {  

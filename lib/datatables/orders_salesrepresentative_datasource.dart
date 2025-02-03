@@ -14,10 +14,11 @@ class OrdersSalesRepresentativeDataSource extends DataTableSource {
 
   @override
   DataRow getRow(int index) {
+     if (index >= ordenes.length) return const DataRow(cells: []);
 
     final ordenesOrdenadas = List.from(ordenes)..sort((a, b) => b.fechacreado.compareTo(a.fechacreado));
 
-    final Ordenes orden = ordenesOrdenadas[index];
+    final orden = ordenesOrdenadas[index];
 
     final formattedDate = DateFormat('dd/MM/yy').format(orden.fechacreado);
     

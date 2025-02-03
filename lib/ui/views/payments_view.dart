@@ -29,9 +29,19 @@ class PaymentsView extends StatefulWidget {
 
 class _PaymentsViewState extends State<PaymentsView> {
 
+  @override
+  void initState() {
+    super.initState();
+    final paymentsProvider = Provider.of<PaymentsProvider>(context, listen: false);
+    paymentsProvider.getPaginetedPayments();
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
+    final paymentProvider = Provider.of<PaymentsProvider>(context);
+    final paymentsDataSource = PaymentsDataSource( paymentProvider.payments );
 
     final profileProvider = Provider.of<ProfileProvider>(context);
     final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
@@ -44,9 +54,6 @@ class _PaymentsViewState extends State<PaymentsView> {
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
-    final paymentProvider = Provider.of<PaymentsProvider>(context);
-
-    final paymentsDataSource = PaymentsDataSource( paymentProvider.payments );
 
     String searchDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     String todayDate = DateFormat('dd MM yy').format(DateTime.now());

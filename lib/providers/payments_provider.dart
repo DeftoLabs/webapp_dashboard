@@ -1,17 +1,27 @@
 
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/payment_response.dart';
 import 'package:web_dashboard/models/payment.dart';
 
 class PaymentsProvider extends ChangeNotifier {
-
-  List<Payment> payments = [];
   bool isLoading = true;
+  bool isRequesting = false;
+  List<Payment> payments = [];
+  Completer<void>? _requestCompleter;
+
+
 
   PaymentsProvider() {
     getPaginetedPayments();
+  }
+
+  void clearPayments(){
+    payments = [];
+    notifyListeners();
   }
 
   getPaginetedPayments() async {
@@ -24,21 +34,42 @@ class PaymentsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-      Future<void> getPaymentByRepresentative(String usuarioZona) async {
-    try {  
-      final resp = await CafeApi.httpGet('/payment/usuarioZona/$usuarioZona');
-      
-      if (resp is Map<String, dynamic> && resp.containsKey('payments') && (resp['payments'] as List).isEmpty) {
-      throw Exception('Sales Representative With No Orders');
+  Future<void> getPaymentByRepresentative(String usuarioZona) async {
+    if (_requestCompleter != null && !_requestCompleter!.isCompleted) {
+      // Si ya hay una petición en curso, esperamos a que termine
+      return _requestCompleter!.future;
     }
-     payments = (resp['payments'] as List).map((orden) => Payment.fromMap(orden)).toList();
+
+    _requestCompleter = Completer<void>();
+
+    try {
+      isLoading = true;
+      notifyListeners();
+
+      final resp = await CafeApi.httpGet('/payment/usuarioZona/$usuarioZona');
+
+      if (resp is Map<String, dynamic> && resp.containsKey('payments')) {
+        List<Payment> newPayments = (resp['payments'] as List)
+            .map((orden) => Payment.fromMap(orden))
+            .toList();
+
+        if (newPayments.isNotEmpty) {
+          payments = List.from(newPayments);
+        } else {
+          payments.clear();
+        }
+      }
+
+      _requestCompleter!.complete();
+    } catch (e) {
+      debugPrint('Error fetching payments: $e');
+      _requestCompleter!.completeError(e);
+    } finally {
       isLoading = false;
       notifyListeners();
-    } catch (e) {
-      isLoading = false;
-      rethrow;
     }
   }
+
 
     Future<Payment> getPaymentsByID( String id ) async {
 

@@ -27,7 +27,7 @@ class _DashboardViewState extends State<DashboardView> {
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          if(activeUser.rol == 'ADMIN_ROLE' || activeUser.rol == 'MASTER_ROLE')
+          if(activeUser.rol == 'ADMIN_ROLE' || activeUser.rol == 'MASTER_ROL')
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,

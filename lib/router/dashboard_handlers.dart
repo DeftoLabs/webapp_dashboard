@@ -86,7 +86,7 @@ class DashboardHandlers {
     }
   );
 
-   // ACCESS TO ADMIN_ROLE AND MASTER_ROLE
+   // ACCESS TO ADMIN_ROLE AND MASTER_ROL
     static Handler orders = Handler (
     handlerFunc: (context, params) {
       final authProvider = Provider.of<AuthProvider>(context!);

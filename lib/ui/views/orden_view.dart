@@ -78,7 +78,7 @@ class _OrdenViewState extends State<OrdenView> {
             const SizedBox(height: 20),
             Row(
               children: [
-                if(currentUser?.rol == 'MASTER_ROLE'|| currentUser?.rol == 'ADMIN_ROLE')
+                if(currentUser?.rol == 'MASTER_ROL'|| currentUser?.rol == 'ADMIN_ROLE')
                 Column(
                   children: [
                     Row(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/models/http/auth_response.dart';
 import 'package:web_dashboard/models/usuario.dart';
+import 'package:web_dashboard/providers/orden_date_provider.dart';
+import 'package:web_dashboard/providers/payments_provider.dart';
 import 'package:web_dashboard/router/router.dart';
 
 import 'package:web_dashboard/services/local_storage.dart';
@@ -108,7 +111,7 @@ class AuthProvider extends ChangeNotifier {
 
         final resp = await CafeApi.httpGet('/auth');
         final authResponse = AuthResponse.fromJson(resp);
-        LocalStorage.prefs.setString('key', authResponse.token);
+        LocalStorage.prefs.setString('token', authResponse.token);
         user = authResponse.usuario;
         authStatus = AuthStatus.authenticated;
         notifyListeners();
@@ -121,9 +124,11 @@ class AuthProvider extends ChangeNotifier {
       }
     }
 
-    logout () {
+    logout (BuildContext context) {
       LocalStorage.prefs.remove('token');
       authStatus = AuthStatus.notAuthenticaded;
+      Provider.of<OrdenDateProvider>(context, listen: false).clearOrders();
+      Provider.of<PaymentsProvider>(context, listen: false).clearPayments();
       notifyListeners();
     }
 

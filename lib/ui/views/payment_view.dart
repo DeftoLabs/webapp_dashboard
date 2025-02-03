@@ -78,7 +78,7 @@ class _PaymentViewState extends State<PaymentView> {
                  IconButton(
                     color: Colors.black,
                     onPressed: () {
-                      if (currentUser?.rol == 'MASTER_ROLE' || currentUser?.rol == 'ADMIN_ROLE') {
+                      if (currentUser?.rol == 'MASTER_ROL' || currentUser?.rol == 'ADMIN_ROLE') {
                         NavigationService.navigateTo('/dashboard/payments');
                       } else if (currentUser?.rol == 'USER_ROLE') {
                         NavigationService.navigateTo('/dashboard/paymentsbyrepresentative');
