@@ -120,7 +120,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                     labelStyle: GoogleFonts.plusJakartaSans(
                                         color: Colors.black, fontSize: 16),
                                     hintStyle: GoogleFonts.plusJakartaSans(
-                                        color: Colors.black.withOpacity(0.7)),
+                                        color: Colors.black.withValues(alpha: 0.7)),
                                     focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Colors.black, width: 1.0),

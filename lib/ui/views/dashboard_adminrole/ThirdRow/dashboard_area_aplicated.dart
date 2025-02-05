@@ -89,7 +89,7 @@ class StackedAreaChartWidget extends StatelessWidget {
         color: userColors[userName],
         belowBarData: BarAreaData(
           show: true,
-          color: userColors[userName]!.withOpacity(0.3),
+          color: userColors[userName]!.withValues(alpha: 0.3), 
         ),
         dotData: const FlDotData(show: false),
       );
@@ -183,7 +183,7 @@ class StackedAreaChartWidget extends StatelessWidget {
 
     for (var userName in userNames) {
       userColors[userName] = palette[userColors.length % palette.length]
-          .withOpacity(0.8 + (random.nextDouble() * 0.2));
+          .withValues(alpha: 0.8 + (random.nextDouble() * 0.2));
     }
     return userColors;
   }

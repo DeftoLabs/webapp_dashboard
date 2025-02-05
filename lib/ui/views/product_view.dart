@@ -120,7 +120,7 @@ class _PriceProductView extends StatelessWidget {
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
-                      color: Colors.white.withOpacity(0.7)),
+                      color: Colors.white.withValues(alpha: (0.7))),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -161,7 +161,7 @@ class _PriceProductView extends StatelessWidget {
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
-                      color: Colors.white.withOpacity(0.7)),
+                      color: Colors.white.withValues(alpha: (0.7))),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -202,7 +202,7 @@ class _PriceProductView extends StatelessWidget {
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
-                      color: Colors.white.withOpacity(0.7)),
+                      color: Colors.white.withValues(alpha: (0.7))),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -243,7 +243,7 @@ class _PriceProductView extends StatelessWidget {
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
-                      color: Colors.white.withOpacity(0.7)),
+                      color: Colors.white.withValues(alpha: (0.7))),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -284,7 +284,7 @@ class _PriceProductView extends StatelessWidget {
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
-                      color: Colors.white.withOpacity(0.7)),
+                      color: Colors.white.withValues(alpha: (0.7))),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -380,7 +380,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                   hintStyle: GoogleFonts.plusJakartaSans(
-                      color: Colors.white.withOpacity(0.7)),
+                      color: Colors.white.withValues(alpha: (0.7))),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
@@ -418,7 +418,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                 decoration: InputDecoration(
                   hintText: 'STOCK',
                   hintStyle: GoogleFonts.plusJakartaSans(
-                      color: Colors.white.withOpacity(0.7)),
+                      color: Colors.white.withValues(alpha: (0.7))),
                   labelText: 'STOCK - (Accept up to 4 decimals) e.g. 10.1234',
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white,
@@ -469,7 +469,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
                       hintStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.white.withOpacity(0.7)),
+                          color: Colors.white.withValues(alpha: (0.7))),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromRGBO(177, 255, 46, 100),
@@ -520,7 +520,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
                       hintStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.white.withOpacity(0.7)),
+                          color: Colors.white.withValues(alpha: (0.7))),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromRGBO(177, 255, 46, 100),
@@ -583,7 +583,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
                       hintStyle: GoogleFonts.plusJakartaSans(
-                          color: Colors.white.withOpacity(0.7)),
+                          color: Colors.white.withValues(alpha: (0.7))),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Color.fromRGBO(177, 255, 46, 100),

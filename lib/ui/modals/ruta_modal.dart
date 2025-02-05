@@ -85,7 +85,7 @@ class _RutaModalState extends State<RutaModal> {
                   hintText: 'Route Code',
                   labelText: 'Route Code',
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                   focusedBorder:const OutlineInputBorder(
                     borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                   ),
@@ -121,7 +121,7 @@ class _RutaModalState extends State<RutaModal> {
                   hintText: 'Route Name',
                   labelText: 'Route Name',
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                   focusedBorder:const OutlineInputBorder(
                     borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                   ),

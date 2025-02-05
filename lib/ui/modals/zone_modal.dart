@@ -86,7 +86,7 @@ class _ZoneModalState extends State<ZoneModal> {
                   hintText: 'Internal Zone Code',
                   labelText: 'Zone Code',
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                   focusedBorder:const OutlineInputBorder(
                     borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                   ),
@@ -122,7 +122,7 @@ class _ZoneModalState extends State<ZoneModal> {
                   hintText: 'Zone Name',
                   labelText: 'Zone Name',
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                   focusedBorder:const OutlineInputBorder(
                     borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                   ),
@@ -159,7 +159,7 @@ class _ZoneModalState extends State<ZoneModal> {
                   hintText: 'Description',
                   labelText: 'Description',
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                  hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                   focusedBorder:const OutlineInputBorder(
                     borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                   ),

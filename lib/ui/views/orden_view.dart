@@ -302,7 +302,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
+                color: Colors.grey.withValues(alpha: 0.5),
                 spreadRadius: 5,
                 blurRadius: 7,
                 offset: const Offset(0, 3))
@@ -416,7 +416,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withValues(alpha: 0.5),
                         spreadRadius: 2,
                         blurRadius: 9,
                         offset: const Offset(0, 1),
@@ -452,7 +452,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
+                        color: Colors.grey.withValues(alpha: 0.3),
                         spreadRadius: 2,
                         blurRadius: 9,
                         offset: const Offset(0, 1),
@@ -578,7 +578,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     spreadRadius: 2,
                     blurRadius: 9,
                     offset: const Offset(0, 1),
@@ -926,7 +926,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                         title: Center(
                                           child: 
                                           Text('Warning', 
@@ -1064,7 +1064,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withValues(alpha: 0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: const Offset(0, 3))
@@ -1187,7 +1187,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       ),
                      onPressed: () async {
                           final dialog = AlertDialog(
-                            backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                            backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                             title: Center(
                               child: Text('Are you sure to delete this Order?', 
                                style: GoogleFonts.plusJakartaSans(
@@ -1304,7 +1304,7 @@ class CreditInfo extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withValues(alpha: 0.3),
             spreadRadius: 2,
             blurRadius: 9,
             offset: const Offset(0, 1),

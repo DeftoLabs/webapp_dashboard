@@ -34,6 +34,12 @@ class OrdenesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> loadOrders() async {
+  isLoading = true;
+  notifyListeners();
+  await getPaginatedOrdenes();
+}
+
     // Método para obtener las órdenes del día y contar los estados
   Map<String, int> getOrderStatusCountForToday() {
     final today = DateTime.now();

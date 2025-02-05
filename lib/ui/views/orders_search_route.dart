@@ -131,7 +131,7 @@ class _OrdersSearchRouteState extends State<OrdersSearchRoute> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                         title: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
@@ -165,7 +165,7 @@ class _OrdersSearchRouteState extends State<OrdersSearchRoute> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                          backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                           title: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [

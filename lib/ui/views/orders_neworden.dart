@@ -137,7 +137,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withValues(alpha: 0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: const Offset(0, 3))
@@ -914,7 +914,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                       title: Center(
                                         child: 
                                         Text('Warning', 
@@ -978,7 +978,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                       title: Center(
                                         child: 
                                         Text('Warning', 

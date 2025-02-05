@@ -147,7 +147,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                             color: Colors.black, fontSize: 12),
                                         hintStyle: GoogleFonts.plusJakartaSans(
                                             color:
-                                                Colors.black.withOpacity(0.7)),
+                                                Colors.black.withValues(alpha: 0.7)),
                                         focusedBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color: Color.fromRGBO(0, 0, 0, 1),
@@ -183,7 +183,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       fontSize: 12,
                                     ),
                                     hintStyle: GoogleFonts.plusJakartaSans(
-                                      color: Colors.black.withOpacity(0.7),
+                                      color: Colors.black.withValues(alpha: 0.7),
                                     ),
                                     focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -237,8 +237,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                   fontSize: 12),
                                           hintStyle:
                                               GoogleFonts.plusJakartaSans(
-                                                  color: Colors.black
-                                                      .withOpacity(0.7)),
+                                                  color: Colors.black.withValues(alpha: 0.7)),
                                           focusedBorder:
                                               const OutlineInputBorder(
                                             borderSide: BorderSide(
@@ -304,7 +303,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       labelStyle: GoogleFonts.plusJakartaSans(
                                           color: Colors.black, fontSize: 12),
                                       hintStyle: GoogleFonts.plusJakartaSans(
-                                          color: Colors.black.withOpacity(0.7)),
+                                          color: Colors.black.withValues(alpha: 0.7)),
                                       focusedBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color.fromRGBO(0, 0, 0, 1),
@@ -333,8 +332,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                     fontSize: 12),
                                             hintStyle:
                                                 GoogleFonts.plusJakartaSans(
-                                                    color: Colors.black
-                                                        .withOpacity(0.7)),
+                                                    color: Colors.black.withValues(alpha: 0.7)),
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -389,7 +387,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                     color: Colors.black,
                                                     fontSize: 12),
                                         hintStyle:  GoogleFonts.plusJakartaSans(
-                                                    color: Colors.black.withOpacity(0.7)),
+                                                    color: Colors.black.withValues(alpha: 0.7)),
                                            focusedBorder: const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color.fromRGBO(0, 0, 0, 1), width: 1.0),),
@@ -468,7 +466,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
                                                             255, 0, 0, 0)
-                                                        .withOpacity(0.7)),
+                                                        .withValues(alpha: 0.7)),
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -539,7 +537,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
                                                             255, 0, 0, 0)
-                                                        .withOpacity(0.7)),
+                                                        .withValues(alpha: 0.7)),
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -610,7 +608,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
                                                             255, 0, 0, 0)
-                                                        .withOpacity(0.7)),
+                                                          .withValues(alpha: 0.7)),
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -681,7 +679,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
                                                             255, 0, 0, 0)
-                                                        .withOpacity(0.7)),
+                                                         .withValues(alpha: 0.7)),
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -752,7 +750,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
                                                             255, 0, 0, 0)
-                                                        .withOpacity(0.7)),
+                                                          .withValues(alpha: 0.7)),
                                             focusedBorder:
                                                 const OutlineInputBorder(
                                               borderSide: BorderSide(

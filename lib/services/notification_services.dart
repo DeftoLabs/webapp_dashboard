@@ -10,7 +10,7 @@ class NotificationService {
   static showSnackBarError ( String message ) {
 
     final snackBar = SnackBar(
-      backgroundColor: Colors.red.withOpacity(0.9),
+      backgroundColor: Colors.red.withValues(alpha: 0.9),
       content: Text(message, style: const TextStyle(color: Colors.white, fontSize: 20), )
       );
 
@@ -20,7 +20,7 @@ class NotificationService {
    static showSnackBa ( String message ) {
 
     final snackBar = SnackBar(
-      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
       content: Text(message, style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 20), )
       );
 

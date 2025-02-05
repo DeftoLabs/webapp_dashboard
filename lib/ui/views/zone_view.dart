@@ -178,7 +178,7 @@ class _RouteViewForm extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: 'Code',
                         hintStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white.withOpacity(0.7)),
+                            color: Colors.white.withValues(alpha: 0.7)),
                         labelText: 'Internal Zone Code',
                         labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontSize: 16),
@@ -211,7 +211,7 @@ class _RouteViewForm extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: 'Zone Name',
                         hintStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white.withOpacity(0.7)),
+                            color: Colors.white..withValues(alpha: 0.7)),
                         labelText: 'Zone Name',
                         labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontSize: 16),
@@ -245,7 +245,7 @@ class _RouteViewForm extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: 'Zone Descripcion',
                         hintStyle: GoogleFonts.plusJakartaSans(
-                            color: Colors.white.withOpacity(0.7)),
+                            color: Colors.white..withValues(alpha: 0.7)),
                         labelText: 'Description',
                         labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontSize: 16),

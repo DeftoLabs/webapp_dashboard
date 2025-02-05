@@ -69,7 +69,7 @@ class _CategoryModalState extends State<CategoryModal> {
                 hintText: 'Category Name',
                 labelText: 'Category',
                 labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
-                hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withOpacity(0.7)),
+                hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                 focusedBorder:const OutlineInputBorder(
                   borderSide: BorderSide(color: Color.fromRGBO(177, 255, 46, 100), width: 2.0),
                 ),

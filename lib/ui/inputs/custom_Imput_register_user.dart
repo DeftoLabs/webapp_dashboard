@@ -13,9 +13,9 @@ class CustomInputsRegisterUser {
 
     return InputDecoration(
       border: OutlineInputBorder(
-        borderSide: BorderSide(color:const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3))),
+        borderSide: BorderSide(color:const Color.fromARGB(255, 0, 0, 0).withValues(alpha: 0.3))),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3))),
+          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0).withValues(alpha: 0.3))),
           hintText: hint,
           labelText: label,
           prefixIcon: Icon ( icon, color: const Color.fromARGB(255, 0, 0, 0)),
@@ -47,9 +47,9 @@ class CustomInputsRegisterUser {
 
     return InputDecoration(
       border: OutlineInputBorder(
-        borderSide: BorderSide(color:const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3))),
+        borderSide: BorderSide(color:const Color.fromARGB(255, 0, 0, 0).withValues(alpha: 0.3))),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3))),
+          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0).withValues(alpha: 0.3))),
           hintText: hint,
           labelText: label,
           prefixIcon: Icon ( icon, color: const Color.fromARGB(255, 0, 0, 0)),

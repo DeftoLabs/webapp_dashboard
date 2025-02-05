@@ -152,7 +152,7 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                     backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                     backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                     title: Text(
                                       'Warning',
                                       style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
@@ -187,7 +187,7 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                       title: Text(
                                         'No Orders Found',
                                         style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
@@ -290,7 +290,7 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                     backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                     backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                     title: Text(
                                       'Warning',
                                       style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
@@ -325,7 +325,7 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                       title: Text(
                                         'No Orders Found',
                                         style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),

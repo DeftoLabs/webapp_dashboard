@@ -53,7 +53,7 @@ class WhiteCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
           )
         ],
@@ -113,7 +113,7 @@ class WhiteCardColor extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
           )
         ],
@@ -215,7 +215,7 @@ class _WhiteCardCustomerState extends State<WhiteCardCustomer> {
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
           )
         ],
@@ -269,7 +269,7 @@ class WhiteCardNoMargin extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
           )
         ],

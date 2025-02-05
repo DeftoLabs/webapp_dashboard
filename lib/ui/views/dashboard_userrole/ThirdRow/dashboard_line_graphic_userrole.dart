@@ -116,7 +116,7 @@ class SalesLineChartUserRole extends StatelessWidget {
                         barWidth: 3,
                         belowBarData: BarAreaData(
                           show: true,
-                           color: const Color.fromRGBO(177, 255, 46, 1).withOpacity(0.3),
+                           color: const Color.fromRGBO(177, 255, 46, 1).withValues(alpha: 0.3), 
                         ),
                       ),
                     ],

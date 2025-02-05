@@ -10,13 +10,20 @@ import '../../providers/providers.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
+  
 
   @override
   State<DashboardView> createState() => _DashboardViewState();
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  
+
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  Provider.of<OrdenesProvider>(context, listen: false).loadOrders();
+}
+
   @override
   Widget build(BuildContext context) {
 
@@ -247,7 +254,7 @@ class _DashboardViewState extends State<DashboardView> {
                       context: context, 
                       builder: (BuildContext context) {
                             return AlertDialog(
-                          backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withOpacity(0.9),
+                          backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9), 
                           title: Center(
                             child: 
                             Text('BOZZ     IA', 

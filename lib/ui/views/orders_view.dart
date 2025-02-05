@@ -356,7 +356,7 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
                 shape: BoxShape.circle
               ),
             child: Center(
@@ -377,7 +377,7 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
                 shape: BoxShape.circle
               ),
               child: IconButton(

@@ -11,10 +11,10 @@ class CustomInput {
 
     return InputDecoration(
       border: OutlineInputBorder(
-        borderSide: BorderSide(color:Colors.white.withOpacity(0.3))),
+        borderSide: BorderSide(color:Colors.white.withValues(alpha: 0.3))),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.3))),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.3))),
         focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20), // Borde redondeado cuando está enfocado
         borderSide: const BorderSide(color: Colors.white, width: 1),
@@ -58,9 +58,9 @@ class CustomInput {
 
     return InputDecoration(
       border: OutlineInputBorder(
-        borderSide: BorderSide(color:const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3))),
+        borderSide: BorderSide(color:const Color.fromARGB(255, 0, 0, 0).withValues(alpha: 0.3))),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.3))),
+          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0).withValues(alpha: 0.3))),
           hintText: hint,
           labelText: label,
           prefixIcon: Icon ( icon, color: const Color.fromARGB(255, 0, 0, 0)),

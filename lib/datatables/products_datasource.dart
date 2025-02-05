@@ -53,7 +53,7 @@ class ProductsDTS extends DataTableSource {
                 } 
               ),
               IconButton(
-                icon: Icon(Icons.delete_outline, color: Colors.red.withOpacity(0.4)),
+                icon: Icon(Icons.delete_outline, color: Colors.red.withValues(alpha: 0.4)),
                 onPressed: (){
                   final dialog = AlertDialog(
                     title: const Text('Are you sure to delete this register?'),
