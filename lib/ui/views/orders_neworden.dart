@@ -839,7 +839,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const SizedBox(height: 10),
-                                              Container(
+                    Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text('OBSERVATIONS AND COMMENTS:',
@@ -1011,7 +1011,6 @@ class _OrdenBodyState extends State<OrdenBody> {
                                       } else
                                         if (formKey.currentState!.validate()) {
                                                 try {
-
                                                   List<Map<String, dynamic>> productos = productsList.map((productData) {
                                                       return {
                                                         'producto': productData['producto'],

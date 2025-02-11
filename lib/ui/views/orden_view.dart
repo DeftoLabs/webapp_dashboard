@@ -674,7 +674,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           DataColumn(label: Text('QTY / EDIT',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                           DataColumn(label: Text('UNID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                           DataColumn(label: Text('PRICE / EDIT',style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                          DataColumn(label: Text('DELETE',            style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('DELETE',      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
                         ],
                         rows: orden.productos.map((producto) {
                           return DataRow(cells: [
@@ -1279,7 +1279,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
               ],
             ),
                
-          const SizedBox(height: 40),
+            const SizedBox(height: 40),
               ],
             ),
           );
