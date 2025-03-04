@@ -101,11 +101,197 @@ abstract class AppLocalizations {
   /// **'Hello!'**
   String get hello;
 
+  /// No description provided for @dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboard;
+
+  /// No description provided for @analityc.
+  ///
+  /// In en, this message translates to:
+  /// **'Analisis'**
+  String get analityc;
+
+  /// No description provided for @orders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get orders;
+
+  /// No description provided for @shipment.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipment'**
+  String get shipment;
+
+  /// No description provided for @payments.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get payments;
+
+  /// No description provided for @products.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get products;
+
+  /// No description provided for @catalog.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog'**
+  String get catalog;
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @customers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get customers;
+
+  /// No description provided for @gps.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS'**
+  String get gps;
+
+  /// No description provided for @route.
+  ///
+  /// In en, this message translates to:
+  /// **'Routes'**
+  String get route;
+
+  /// No description provided for @zone.
+  ///
+  /// In en, this message translates to:
+  /// **'Zone'**
+  String get zone;
+
+  /// No description provided for @users.
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get users;
+
+  /// No description provided for @marketing.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing'**
+  String get marketing;
+
+  /// No description provided for @message.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get message;
+
+  /// No description provided for @preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferences;
+
   /// No description provided for @settings.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'LogOut'**
+  String get logout;
+
+  /// No description provided for @todayorders.
+  ///
+  /// In en, this message translates to:
+  /// **'TODAY\'S ORDERS'**
+  String get todayorders;
+
+  /// No description provided for @neworder.
+  ///
+  /// In en, this message translates to:
+  /// **'NEW ORDERS'**
+  String get neworder;
+
+  /// No description provided for @approved.
+  ///
+  /// In en, this message translates to:
+  /// **'APPROVED'**
+  String get approved;
+
+  /// No description provided for @noteinvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'NOTE / INVOICE'**
+  String get noteinvoice;
+
+  /// No description provided for @orderfromlast7days.
+  ///
+  /// In en, this message translates to:
+  /// **'ORDER FROM LAST 7 DAYS'**
+  String get orderfromlast7days;
+
+  /// No description provided for @top5productstoday.
+  ///
+  /// In en, this message translates to:
+  /// **'TOP 5 PRODUCTS TODAY'**
+  String get top5productstoday;
+
+  /// No description provided for @noproductsoldtoday.
+  ///
+  /// In en, this message translates to:
+  /// **'NO PRODUCT SOLD TODAY'**
+  String get noproductsoldtoday;
+
+  /// No description provided for @ordersbysalesrepresntativelast7days.
+  ///
+  /// In en, this message translates to:
+  /// **'ORDERS BY SALES REPRESENTATIVE LAST 7 DAYS'**
+  String get ordersbysalesrepresntativelast7days;
+
+  /// No description provided for @totalsoldlast7days.
+  ///
+  /// In en, this message translates to:
+  /// **'TOTAL SOLD LAST 7 DAYS'**
+  String get totalsoldlast7days;
+
+  /// No description provided for @top5customertoday.
+  ///
+  /// In en, this message translates to:
+  /// **'TOP 5 CUSTOMER TODAY'**
+  String get top5customertoday;
+
+  /// No description provided for @top5customerlast30days.
+  ///
+  /// In en, this message translates to:
+  /// **'TOP 5 CUSTOMER IN THE LAST 30 DAYS'**
+  String get top5customerlast30days;
+
+  /// No description provided for @norderlast30days.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ORDERS IN THE LAST 30 DAYS'**
+  String get norderlast30days;
+
+  /// No description provided for @top5productinthelast30days.
+  ///
+  /// In en, this message translates to:
+  /// **'TOP 5 PRODUCT IN THE LAST 30 DAYS'**
+  String get top5productinthelast30days;
+
+  /// No description provided for @availablesoon.
+  ///
+  /// In en, this message translates to:
+  /// **'AVAILABLE SOON'**
+  String get availablesoon;
 
   /// No description provided for @bussinesssettings.
   ///

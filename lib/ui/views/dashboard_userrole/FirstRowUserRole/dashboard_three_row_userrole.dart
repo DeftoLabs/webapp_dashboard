@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 
 import '../../../../providers/providers.dart';
 
@@ -28,7 +29,7 @@ class DashboardThreeRowUserRole extends StatelessWidget {
               if (!isSmallScreen) 
                 Center(
                   child: Text(
-                    "APPROVED",
+                    AppLocalizations.of(context)!.approved,
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 11, // Tamaño de texto normal
                       color: Colors.white,

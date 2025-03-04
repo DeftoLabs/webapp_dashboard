@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 
 import '../../../../../providers/providers.dart';
 
@@ -27,7 +28,7 @@ class DashboardFirstRowUserRole extends StatelessWidget {
               children: [
               if (!isSmallScreen) 
                 Text(
-                  "TODAY'S ORDERS",
+                  AppLocalizations.of(context)!.todayorders,
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 11, // Tamaño de texto normal
                     color: Colors.white,

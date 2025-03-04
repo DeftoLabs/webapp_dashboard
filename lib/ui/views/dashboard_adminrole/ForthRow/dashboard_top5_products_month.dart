@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import '../../../../providers/ordenes_provider.dart';
 
 class DashboardTop5ProductByMonth extends StatelessWidget {
@@ -16,7 +17,7 @@ class DashboardTop5ProductByMonth extends StatelessWidget {
         if (top5Productos.isEmpty) {
           return Center(
             child: Text(
-              'NO INFO',
+              AppLocalizations.of(context)!.norderlast30days,
               style: GoogleFonts.plusJakartaSans(
                   fontSize: 16, fontWeight: FontWeight.bold,
                   color: Colors.white),
@@ -32,7 +33,7 @@ class DashboardTop5ProductByMonth extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical:10, horizontal: 5),
               child: Center(
                 child: Text(
-                  'TOP 5 PRODUCT IN THE LAST 30 DAYS', // Título dinámico con fecha
+                  AppLocalizations.of(context)!.top5productinthelast30days,
                   style: GoogleFonts.plusJakartaSans(
                       fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                 ),

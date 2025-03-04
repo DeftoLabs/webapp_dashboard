@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 
 import 'package:web_dashboard/ui/views/dashboard_adminrole/dashboard.dart';
 
@@ -264,7 +265,7 @@ void didChangeDependencies() {
                             ))),
                             content: SizedBox(
                               width: 200,
-                              child: Text('AVAILABLE SOON', 
+                                child: Text(AppLocalizations.of(context)!.availablesoon, 
                               textAlign: TextAlign.center,
                               style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),)),
                           actions: [
@@ -458,24 +459,54 @@ void didChangeDependencies() {
                        
                     ],
                     ),
-                Positioned(
-                  top: 90,
-                  right: 10,
-                  child: Material(
-                    color: Colors.transparent, // Para que el fondo no interfiera
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(35), // Ajusta el radio al del CircleAvatar
-                      onTap: () {
-                      
-                      },
-                      child: const CircleAvatar(
-                        maxRadius: 30,
-                        backgroundColor:  Color.fromRGBO(177, 255, 46, 1),
-                        backgroundImage: AssetImage('bozzia.png'),
-                      ),
-                    ),
+                    Positioned(
+              top: 90,
+              right: 10,
+              child: Material(
+                color: Colors.transparent, // Para que el fondo no interfiera
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(35), // Ajusta el radio al del CircleAvatar
+                  onTap: () {
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context) {
+                            return AlertDialog(
+                          backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9), 
+                          title: Center(
+                            child: 
+                            Text('BOZZ     IA', 
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold
+                            ))),
+                            content: SizedBox(
+                              width: 200,
+                              child: Text(AppLocalizations.of(context)!.availablesoon, 
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),)),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Cerrar el diálogo
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.black
+                              ),
+                              child: Text('OK',
+                              style: GoogleFonts.plusJakartaSans(fontSize: 14, color: Colors.white))
+                            ),
+                          ],
+                        );
+                      });
+                  },
+                  child: const CircleAvatar(
+                    maxRadius: 30,
+                    backgroundColor:  Color.fromRGBO(177, 255, 46, 1),
+                    backgroundImage: AssetImage('bozzia.png'),
                   ),
-                )
+                ),
+              ),
+            )
 
                 ],
               ),

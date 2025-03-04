@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import '../../../../providers/ordenes_provider.dart';
 
 class DashboardTop5ProductByDayUserRole extends StatelessWidget {
@@ -16,7 +17,7 @@ class DashboardTop5ProductByDayUserRole extends StatelessWidget {
         if (top5Productos.isEmpty) {
           return Center(
             child: Text(
-              'NO PRODUCT SOLD TODAY',
+              AppLocalizations.of(context)!.noproductsoldtoday,
               style: GoogleFonts.plusJakartaSans(
                   fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
@@ -31,7 +32,7 @@ class DashboardTop5ProductByDayUserRole extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical:10, horizontal: 5),
               child: Center(
                 child: Text(
-                  'TOP 5 PRODUCT TODAY', // Título dinámico con fecha
+                  AppLocalizations.of(context)!.top5productstoday,
                   style: GoogleFonts.plusJakartaSans(
                       fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                 ),

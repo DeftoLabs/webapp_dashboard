@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import '../../../../providers/ordenes_provider.dart';
 
 class DashboardTop5CustomerByMonth extends StatelessWidget {
@@ -16,7 +17,7 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
         if (top5Customers.isEmpty) {
           return Center(
             child: Text(
-              'NO ORDERS IN THE LAST 30 DAYS',
+              AppLocalizations.of(context)!.norderlast30days,
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -35,11 +36,11 @@ class DashboardTop5CustomerByMonth extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: Center(
                 child: Text(
-                  'TOP 5 CUSTOMER IN THE LAST 30 DAYS',
+                  AppLocalizations.of(context)!.top5customerlast30days,
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white
+                    color: Colors.white,
                   ),
                 ),
               ),

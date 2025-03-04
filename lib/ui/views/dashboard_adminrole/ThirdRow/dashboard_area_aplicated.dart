@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/ordenes_provider.dart';
 
 class StackedAreaChartWidget extends StatelessWidget {
@@ -21,7 +22,7 @@ class StackedAreaChartWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 12),
             Text(
-              'ORDERS BY SALES REPRESENTATIVE LAST 7 DAYS',
+              AppLocalizations.of(context)!.ordersbysalesrepresntativelast7days,
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,

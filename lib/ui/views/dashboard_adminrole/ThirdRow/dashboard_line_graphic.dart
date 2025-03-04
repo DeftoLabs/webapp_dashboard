@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart'; // Importa intl
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 
 import '../../../../providers/providers.dart';
 
@@ -30,7 +31,7 @@ class SalesLineChart extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Center(
                 child: Text(
-                  'TOTAL SOLD LAST 7 DAYS',
+                  AppLocalizations.of(context)!.totalsoldlast7days,
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

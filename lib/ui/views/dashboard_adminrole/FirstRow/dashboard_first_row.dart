@@ -5,9 +5,6 @@ import 'package:web_dashboard/l10n/app_localizations.dart';
 
 import '../../../../providers/providers.dart';
 
-
-
-
 class DashboardFirstRow extends StatelessWidget {
   const DashboardFirstRow({super.key});
 
@@ -31,7 +28,7 @@ class DashboardFirstRow extends StatelessWidget {
               children: [
               if (!isSmallScreen) 
                 Text(
-                  AppLocalizations.of(context)!.hello,
+                 AppLocalizations.of(context)!.todayorders,
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 11, // Tamaño de texto normal
                     color: Colors.white,

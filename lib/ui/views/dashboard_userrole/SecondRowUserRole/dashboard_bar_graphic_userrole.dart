@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 
 import '../../../../providers/providers.dart';
 
@@ -31,7 +32,7 @@ class WeeklyOrdersBarChartUserRole extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'ORDER FROM THE LAST 7 DAYS',
+          AppLocalizations.of(context)!.orderfromlast7days,
           style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         const SizedBox(height: 20),

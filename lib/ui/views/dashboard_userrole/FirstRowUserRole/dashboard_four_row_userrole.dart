@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 
 import '../../../../providers/providers.dart';
 
@@ -28,7 +29,7 @@ class DashboardFourRowUserRole extends StatelessWidget {
               if (!isSmallScreen) 
                 Center(
                   child: Text(
-                    "NOTE / INVOICE",
+                    AppLocalizations.of(context)!.noteinvoice,
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 11, // Tamaño de texto normal
                       color: Colors.white,
