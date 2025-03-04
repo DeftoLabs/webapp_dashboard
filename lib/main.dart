@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:web_dashboard/providers/payment_form_provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'providers/providers.dart';
 import 'api/cafeapi.dart';
 import 'gps/blocs/blocs.dart';
@@ -15,6 +15,10 @@ import 'services/notification_services.dart';
 import 'ui/layouts/auth/auth_layout.dart';
 import 'ui/layouts/dashboard/dashboard_layout.dart';
 import 'ui/layouts/splash/splash_layout.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,6 +80,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TaxOperationFormProvider()),
         ChangeNotifierProvider(create: (_) => PaymentsProvider()),
         ChangeNotifierProvider(create: (_) => PaymentFormProvider()),
+        ChangeNotifierProvider(create: (_) => LanguageProvider())
 
         
 
@@ -99,9 +104,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bozz Web',
+       locale: languageProvider.locale,
+      supportedLocales: const [
+        Locale('en'), // Inglés
+        Locale('es'), // Español
+      ],
+      localizationsDelegates: const [
+        AppLocalizations.delegate, 
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       initialRoute: '/',
       onGenerateRoute: Flurorouter.router.generator,
       navigatorKey: NavigationService.navigatorKey,

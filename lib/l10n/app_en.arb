@@ -1,0 +1,15 @@
+{
+    "@@locale": "en",
+    "hello": "Hello!",
+
+
+    "settings":"Settings",
+    "bussinesssettings":"Bussiness Settings",
+    "profile":"Profile",
+    "accountsettings":"Account Settings",
+    "financesettings":"Finance Settings",
+    "banksaccount":"Bank Account",
+    "generalsettings":"General Settings",
+    "inactiveusers":"Inactive ",
+    "language":"English"
+}

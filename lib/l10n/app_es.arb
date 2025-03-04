@@ -1,0 +1,15 @@
+{
+    "@@locale": "es",
+    "hello": "¡Hola!",
+
+    "settings":"Configuración",
+    "bussinesssettings":"Configuración de la Empresa",
+    "profile":"Perfil",
+    "accountsettings":"Configuración de la Cuenta",
+    "financesettings":"Finanzas / Monedas",
+    "banksaccount":"Cuentas Bancarias",
+    "generalsettings":"Configuración General",
+    "inactiveusers":"Usuarios Inactivos",
+    "language":"Español"
+  }
+  
