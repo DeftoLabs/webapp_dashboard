@@ -61,7 +61,145 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
+  String get support => 'Support';
+
+  @override
   String get logout => 'LogOut';
+
+  @override
+  String get createpayment => 'CREATE PAYMENT\'';
+
+  @override
+  String get save => 'SAVE';
+
+  @override
+  String get paymentregistered => 'PAYMENT REGISTERED';
+
+  @override
+  String get doyouwant => 'DO YOU WANT TO ATTACH A FILE?';
+
+  @override
+  String get formatsallowed => 'ALLOWED FORMATS: .jpg .jpeg .png';
+
+  @override
+  String get errorimage => 'Failed to Upload Image';
+
+  @override
+  String get attachfile => 'Attach File';
+
+  @override
+  String get errorpayment => 'Could not save the Payment:';
+
+  @override
+  String get representative => 'Representative';
+
+  @override
+  String get customer => 'CUSTOMER';
+
+  @override
+  String get selectacustomer => 'PLEASE SELECT A CUSTOMER';
+
+  @override
+  String get paymenttype => 'PAYMENT TYPE';
+
+  @override
+  String get selectpayment => 'PLEASE SELECT A PAYMENT TYPE';
+
+  @override
+  String get errorcurrency01 => 'NO CURRENCIES AVAILABLE';
+
+  @override
+  String get currency => 'CURRENCY';
+
+  @override
+  String get selectcurrency => 'PLEASE SELECT A CURRENCY';
+
+  @override
+  String get amount => 'AMOUNT';
+
+  @override
+  String get selectamount => 'PLEASE ENTER AN AMOUNT';
+
+  @override
+  String get validnumber => 'PLEASE ENTER A VALID NUMBER';
+
+  @override
+  String get maxlegth12 => 'NOT EXCEED 12 CHARACTERS';
+
+  @override
+  String get errorbank01 => 'NO BANKS AVAILABLE';
+
+  @override
+  String get bankaccount => 'BANK ACCOUNT';
+
+  @override
+  String get selectbank => 'PLEASE SELECT A BANK RECEIVER';
+
+  @override
+  String get datepayment => 'DATE PAYMENT';
+
+  @override
+  String get selectadate => 'PLEASE SELECT A DATE';
+
+  @override
+  String get reference => 'REFERENCE';
+
+  @override
+  String get selectreference => 'PLEASE ENTER A REFERENCE\'';
+
+  @override
+  String get maxlegth30 => 'COMMENTS MUST NOT EXCEED 30 CHARACTERS';
+
+  @override
+  String get bank => 'BANK';
+
+  @override
+  String get selectbankemisor => 'PLEASE ENTER A BANK NAME';
+
+  @override
+  String get detailsandcomments => 'DETAILS AND COMMENTS';
+
+  @override
+  String get selectdetails => 'PLEASE ENTER A COMMENTS OR DETAILS';
+
+  @override
+  String get maxlegth50 => 'NOT EXCEED 50 CHARACTERS';
+
+  @override
+  String get cash => 'CASH';
+
+  @override
+  String get transfer => 'TRANSFER';
+
+  @override
+  String get check => 'CHECK';
+
+  @override
+  String get usernotauth => 'USER NOT AUTHENTICATED';
+
+  @override
+  String get paymentview => 'Payment View';
+
+  @override
+  String get createpaymentview => 'Create Payment';
+
+  @override
+  String get date => 'DATE';
+
+  @override
+  String get control => 'CONTROL';
+
+  @override
+  String get type => 'TYPE';
+
+  @override
+  String get customerview => 'CUSTOMER';
+
+  @override
+  String get edit => 'EDIT';
+
+  @override
+  String get nopaymentsavailable => 'NO PAYMENTS AVAILABLE';
 
   @override
   String get todayorders => 'TODAY\'S ORDERS';

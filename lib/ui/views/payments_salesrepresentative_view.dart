@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/payments_salesrepresentative_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/payments_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
@@ -15,45 +16,62 @@ class PaymentsSalesRepresentativeView extends StatefulWidget {
 }
 
 class _PaymentsSalesRepresentativeViewState extends State<PaymentsSalesRepresentativeView> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      final paymentProvider = Provider.of<PaymentsProvider>(context, listen: false);
-      
-      if (authProvider.authStatus == AuthStatus.authenticated && authProvider.user != null) {
-        paymentProvider.getPaymentByRepresentative(authProvider.user!.uid);
-      }
-    });
+
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final paymentProvider = Provider.of<PaymentsProvider>(context, listen: false);
+
+    if (authProvider.authStatus == AuthStatus.authenticated && authProvider.user != null) {
+       await Future.delayed(const Duration(seconds: 1));
+      await paymentProvider.getPaymentByRepresentative(authProvider.user!.uid);
+    }
+  });
+}
+
+
+@override
+Widget build(BuildContext context) {
+  final authProvider = Provider.of<AuthProvider>(context);
+  final profileProvider = Provider.of<ProfileProvider>(context);
+
+  final localizations = AppLocalizations.of(context)!;
+
+  if (authProvider.authStatus == AuthStatus.checking) {
+    return const Center(child: CircularProgressIndicator());
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
-    final profileProvider = Provider.of<ProfileProvider>(context);
-    final paymentProvider = Provider.of<PaymentsProvider>(context);
+  if (authProvider.authStatus == AuthStatus.notAuthenticaded) {
+    return Center(child: Text(localizations.usernotauth));
+  }
 
-    if (authProvider.authStatus == AuthStatus.checking) {
-      return const Center(child: CircularProgressIndicator());
-    }
+  final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
+  if (profile == null) {
+    return const Center(child: Text(''));
+  }
 
-    if (authProvider.authStatus == AuthStatus.notAuthenticaded) {
-      return const Center(child: Text('Usuario no autenticado'));
-    }
+  final image = (profile.img == null)
+      ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35)
+      : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
-    final profile = profileProvider.profiles.isNotEmpty ? profileProvider.profiles[0] : null;
-    if (profile == null) {
-      return const Center(child: Text(''));
-    }
-
-    final image = (profile.img == null)
-        ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35)
-        : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
-
+      return Consumer<PaymentsProvider>(
+  builder: (context, paymentProvider, child) {
     if (paymentProvider.isLoading) {
-      return const Center(child: CircularProgressIndicator(  color: Color.fromRGBO(255, 0, 200, 0.612),
-          strokeWidth: 4.0),);
+      return const Center(child: CircularProgressIndicator(
+        color: Color.fromRGBO(255, 0, 200, 0.612),
+        strokeWidth: 4.0,
+      ));
+    }
+
+    if (paymentProvider.payments.isEmpty) {
+      return Center(child: 
+      Text(localizations.nopaymentsavailable, 
+      style: GoogleFonts.plusJakartaSans(
+        fontSize: 20,
+        fontWeight: FontWeight.bold
+      )));
     }
 
     final paymentsDataSource = PaymentsSalesRepresentativeDataSource(paymentProvider.payments);
@@ -68,7 +86,7 @@ class _PaymentsSalesRepresentativeViewState extends State<PaymentsSalesRepresent
             children: [
               const SizedBox(width: 20),
               Expanded(
-                  child: Text('Payment View',
+                  child: Text(localizations.paymentview,
                       style: GoogleFonts.plusJakartaSans(fontSize: 22))),
               const SizedBox(width: 20),
               Container(
@@ -84,8 +102,9 @@ class _PaymentsSalesRepresentativeViewState extends State<PaymentsSalesRepresent
                     )),
                 child: TextButton(
                   child: Text(
-                    'Create Payment',
+                    localizations.createpayment,
                     style: GoogleFonts.plusJakartaSans(
+                        fontSize: 12,
                         color: const Color.fromARGB(255, 0, 0, 0)),
                   ),
                   onPressed: () {
@@ -106,18 +125,20 @@ class _PaymentsSalesRepresentativeViewState extends State<PaymentsSalesRepresent
           ),
           const SizedBox(height: 10),
           PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('DATE')),
-                DataColumn(label: Text('CONTROL')),
-                DataColumn(label: Text('TYPE')),
-                DataColumn(label: Text('CUSTOMER')),
-                DataColumn(label: Text('')),
-                DataColumn(label: Text('AMOUNT')),
-                DataColumn(label: Text('EDIT')),
+              columns: [
+                DataColumn(label: Text(localizations.date)),
+                DataColumn(label: Text(localizations.control)),
+                DataColumn(label: Text(localizations.type)),
+                DataColumn(label: Text(localizations.customer)),
+                const DataColumn(label: Text('')),
+                DataColumn(label: Text(localizations.amount)),
+                DataColumn(label: Text(localizations.edit)),
               ],
               source: paymentsDataSource)
         ],
       ),
     );
-  }
+  },
+);
+}
 }

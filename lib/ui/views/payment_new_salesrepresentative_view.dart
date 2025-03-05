@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/ruta.dart';
 import 'package:web_dashboard/models/usuario.dart';
-import 'package:web_dashboard/providers/payment_form_provider.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
@@ -33,6 +33,19 @@ class _PaymentNewSalesRepresentativeViewState extends State<PaymentNewSalesRepre
   bool isSaveButtonVisible = false;
 
   final List<String> types = ['CASH', 'TRANSFER', 'CHECK'];
+
+  String translatePaymentType(BuildContext context, String type) {
+  switch (type) {
+    case 'CASH':
+      return AppLocalizations.of(context)!.cash;
+    case 'TRANSFER':
+      return AppLocalizations.of(context)!.transfer;
+    case 'CHECK':
+      return AppLocalizations.of(context)!.check;
+    default:
+      return type;
+  }
+}
 
   InputDecoration _buildInputDecoration(String label) {
     return InputDecoration(
@@ -101,6 +114,8 @@ class _PaymentNewSalesRepresentativeViewState extends State<PaymentNewSalesRepre
         : FadeInImage.assetNetwork(
             placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
+    final localizations = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -120,7 +135,7 @@ class _PaymentNewSalesRepresentativeViewState extends State<PaymentNewSalesRepre
                   children: [
                     const SizedBox(height: 20),
                     Text(
-                      'CREATE PAYMENT',
+                      localizations.createpayment,
                       style: GoogleFonts.plusJakartaSans(fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
@@ -142,7 +157,7 @@ class _PaymentNewSalesRepresentativeViewState extends State<PaymentNewSalesRepre
                       ),
                       child: TextButton(
                         child: Text(
-                          'SAVE',
+                          localizations.save,
                           style: GoogleFonts.plusJakartaSans(
                             color: const Color.fromARGB(255, 0, 0, 0),
                           ),
@@ -165,7 +180,7 @@ class _PaymentNewSalesRepresentativeViewState extends State<PaymentNewSalesRepre
                                 );
                     
                                 if (!context.mounted) return;
-                                NotificationService.showSnackBa('PAYMENT REGISTERED');
+                                NotificationService.showSnackBa(localizations.paymentregistered);
                                 Provider.of<PaymentsProvider>(context, listen: false).getPaginetedPayments();
                                 showDialog(
                           context: context,
@@ -181,14 +196,14 @@ class _PaymentNewSalesRepresentativeViewState extends State<PaymentNewSalesRepre
                                   const SizedBox(height: 20),
                                   Center(
                                     child: Text(
-                                      'DO YOU WANT TO ATTACH A FILE?',
+                                      localizations.doyouwant,
                                       style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.bold)
                                     ),
                                   ),
                                   const SizedBox(height: 30),
                                    Center(
                                      child: Text(
-                                      'ALLOWED FORMATS: .jpg .jpeg .png',
+                                      localizations.formatsallowed,
                                       style: GoogleFonts.plusJakartaSans(fontSize: 12)
                                                                        ),
                                    ),
@@ -207,15 +222,15 @@ class _PaymentNewSalesRepresentativeViewState extends State<PaymentNewSalesRepre
                                         if (!context.mounted) return;
                                          Navigator.of(context).pop();
                                         if(uploadSuccess != null ) {
-                                        NavigationService.replaceTo('/dashboard/payments');
+                                        NavigationService.replaceTo('/dashboard/paymentsbyrepresentative');
                                         }
                                       } else { 
-                                        NotificationService.showSnackBarError('Failed to Upload Image');
+                                        NotificationService.showSnackBarError(localizations.errorimage);
                                       }
                                         },
                                         icon: const Icon(Icons.attach_file, color: Colors.white), // Ícono
                                         label: Text(
-                                          'Attach File',
+                                          localizations.attachfile,
                                           style: GoogleFonts.plusJakartaSans(fontSize: 14, color: Colors.white)
                                         ),
                                         style: TextButton.styleFrom(
@@ -246,7 +261,7 @@ class _PaymentNewSalesRepresentativeViewState extends State<PaymentNewSalesRepre
                                          }
                                        } catch (e) {
                                          NotificationService.showSnackBarError(
-                                           'Could not save the Payment: $e',
+                                           localizations.errorpayment,
                                          );
                                        }
                           }
@@ -337,7 +352,7 @@ Ruta activeZona = rutaProvider.rutas.firstWhere(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Representative: ${activeZona.usuarioZona.nombre}',
+            '${AppLocalizations.of(context)!.representative} ${activeZona.usuarioZona.nombre}',
             style: GoogleFonts.plusJakartaSans(color: Colors.black, fontSize: 16),
           ),
           const SizedBox(height: 10),
@@ -357,7 +372,7 @@ Widget _buildClientesDropdown(BuildContext context) {
 
       return DropdownButtonFormField<String>(
         value: cliente,
-        decoration: _buildInputDecoration('CUSTOMER'),
+        decoration: _buildInputDecoration(AppLocalizations.of(context)!.customer),
         icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
         style: GoogleFonts.plusJakartaSans(color: Colors.black),
         dropdownColor: Colors.white,
@@ -378,7 +393,7 @@ Widget _buildClientesDropdown(BuildContext context) {
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'PLEASE SELECT A CUSTOMER';
+            return AppLocalizations.of(context)!.selectacustomer;
           }
           return null;
         },
@@ -390,7 +405,7 @@ Widget _buildClientesDropdown(BuildContext context) {
   Widget _buildTypeDropdown() {
     return DropdownButtonFormField<String>(
       value: type,
-      decoration: _buildInputDecoration('PAYMENT TYPE'),
+      decoration: _buildInputDecoration(AppLocalizations.of(context)!.paymenttype),
       icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
       style: GoogleFonts.plusJakartaSans(color: Colors.black),
       dropdownColor: Colors.white,
@@ -398,7 +413,7 @@ Widget _buildClientesDropdown(BuildContext context) {
         return DropdownMenuItem<String>(
           value: type,
           child: Text(
-            type,
+             translatePaymentType(context, type),
             style: const TextStyle(color: Colors.black),
           ),
         );
@@ -410,7 +425,7 @@ Widget _buildClientesDropdown(BuildContext context) {
       },
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'PLEASE SELECT A PAYMENT TYPE';
+          return AppLocalizations.of(context)!.selectpayment;
         }
         return null;
       },
@@ -421,7 +436,7 @@ Widget _buildCurrencyDropdown(BuildContext context) {
   return Consumer<FinanceProvider>(
     builder: (context, financeProvider, child) {
       if (financeProvider.finances.isEmpty) {
-        return const Text('No currencies available');
+        return Text(AppLocalizations.of(context)!.errorcurrency01);
       }
       // Crear una lista con las dos monedas de cada objeto Finance
       final currencies = <Map<String, String>>[];
@@ -438,7 +453,7 @@ Widget _buildCurrencyDropdown(BuildContext context) {
 
       return DropdownButtonFormField<String>(
         value: currencySymbol,
-        decoration: _buildInputDecoration('CURRENCY'),
+        decoration: _buildInputDecoration(AppLocalizations.of(context)!.currency),
         icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
         style: GoogleFonts.plusJakartaSans(color: Colors.black),
         dropdownColor: Colors.white,
@@ -458,7 +473,7 @@ Widget _buildCurrencyDropdown(BuildContext context) {
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'PLEASE SELECT A CURRENCY';
+            return AppLocalizations.of(context)!.selectcurrency;
           }
           return null;
         },
@@ -469,7 +484,7 @@ Widget _buildCurrencyDropdown(BuildContext context) {
 
 Widget _buildAmountInput() {
   return TextFormField(
-    decoration: _buildInputDecoration('AMOUNT').copyWith(
+    decoration: _buildInputDecoration(AppLocalizations.of(context)!.amount).copyWith(
       prefixText: currencySymbol != null ? '$currencySymbol ' : null,
     ),
     keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -484,13 +499,13 @@ Widget _buildAmountInput() {
     },
     validator: (value) {
       if (value == null || value.isEmpty) {
-        return 'PLEASE ENTER AN AMOUNT';
+        return AppLocalizations.of(context)!.selectamount;
       }
       if (double.tryParse(value) == null) {
-        return 'PLEASE ENTER A VALID NUMBER';
+        return AppLocalizations.of(context)!.validnumber;
       }
       if (value.length >12) {
-        return 'COMMENTS MUST NOT EXCEED 12 CHARACTERS';
+        return AppLocalizations.of(context)!.maxlegth12;
       }
       return null;
     },
@@ -501,12 +516,12 @@ Widget _buildBancoReceptorDropdown(BuildContext context) {
   return Consumer<BankProvider>(
     builder: (context, bankProvider, child) {
       if (bankProvider.banks.isEmpty) {
-        return const Text('No banks available');
+        return Text(AppLocalizations.of(context)!.errorbank01);
       }
 
       return DropdownButtonFormField<String>(
         value: bancoreceptor,
-        decoration: _buildInputDecoration('BANK ACCOUNT'),
+        decoration: _buildInputDecoration(AppLocalizations.of(context)!.bankaccount),
         icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
         style: GoogleFonts.plusJakartaSans(color: Colors.black),
         dropdownColor: Colors.white,
@@ -526,7 +541,7 @@ Widget _buildBancoReceptorDropdown(BuildContext context) {
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'PLEASE SELECT A BANK RECEIVER';
+            return AppLocalizations.of(context)!.selectbank;
           }
           return null;
         },
@@ -538,7 +553,7 @@ Widget _buildBancoReceptorDropdown(BuildContext context) {
 Widget _buildDateSelector(BuildContext context) {
   return TextFormField(
     decoration: InputDecoration(
-      labelText: 'DATE PAYMENT',
+      labelText: AppLocalizations.of(context)!.datepayment,
       labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),
       prefixIcon: const Icon(Icons.calendar_month_rounded),
     ),
@@ -552,7 +567,7 @@ Widget _buildDateSelector(BuildContext context) {
     },
     validator: (value) {
       if (fechapago == null) {
-        return 'PLEASE SELECT A DATE';
+        return AppLocalizations.of(context)!.selectadate;
       }
       return null;
     },
@@ -562,7 +577,7 @@ Widget _buildDateSelector(BuildContext context) {
 
 Widget _buildReferenciaInput() {
   return TextFormField(
-    decoration: _buildInputDecoration('# REFERENCE'),
+    decoration: _buildInputDecoration('# ${AppLocalizations.of(context)!.reference}'),
     keyboardType: const TextInputType.numberWithOptions(decimal: true),
     style: GoogleFonts.plusJakartaSans(color: Colors.black),
     onChanged: (value) {
@@ -572,10 +587,10 @@ Widget _buildReferenciaInput() {
     },
     validator: (value) {
       if (value == null || value.isEmpty) {
-        return 'PLEASE ENTER A REFERENCE';
+        return AppLocalizations.of(context)!.selectreference;
       }
       if (value.length > 30) {
-        return 'COMMENTS MUST NOT EXCEED 30 CHARACTERS';
+        return AppLocalizations.of(context)!.maxlegth30;
       }
       return null;
     },
@@ -584,7 +599,7 @@ Widget _buildReferenciaInput() {
 
 Widget _buildBancoEmisorInput() {
   return TextFormField(
-    decoration: _buildInputDecoration('BANK'),
+    decoration: _buildInputDecoration(AppLocalizations.of(context)!.bank),
     style: GoogleFonts.plusJakartaSans(color: Colors.black),
     onChanged: (value) {
       setState(() {
@@ -593,10 +608,10 @@ Widget _buildBancoEmisorInput() {
     },
     validator: (value) {
       if (value == null || value.isEmpty) {
-        return 'PLEASE ENTER A BANK NAME';
+        return AppLocalizations.of(context)!.selectbankemisor;
       }
       if (value.length > 30) {
-        return 'COMMENTS MUST NOT EXCEED 30 CHARACTERS';
+        return AppLocalizations.of(context)!.maxlegth30;
       }
       return null;
     },
@@ -604,7 +619,7 @@ Widget _buildBancoEmisorInput() {
 }
 Widget _buildComentariosInput() {
   return TextFormField(
-    decoration: _buildInputDecoration('DETAILS AND COMMENTS'),
+    decoration: _buildInputDecoration(AppLocalizations.of(context)!.detailsandcomments),
     style: GoogleFonts.plusJakartaSans(color: Colors.black),
     onChanged: (value) {
       setState(() {
@@ -614,10 +629,10 @@ Widget _buildComentariosInput() {
     },
     validator: (value) {
       if (value == null || value.isEmpty) {
-        return 'PLEASE ENTER A COMMENTS OR DETAILS';
+        return AppLocalizations.of(context)!.selectdetails;
       }
       if (value.length > 50) {
-        return 'COMMENTS MUST NOT EXCEED 50 CHARACTERS';
+        return AppLocalizations.of(context)!.maxlegth50;
       }
       return null;
     },

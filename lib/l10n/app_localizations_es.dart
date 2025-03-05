@@ -61,7 +61,145 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settings => 'Configuración';
 
   @override
+  String get support => 'Soporte';
+
+  @override
   String get logout => 'Cerrar sesión';
+
+  @override
+  String get createpayment => 'CREAR PAGO';
+
+  @override
+  String get save => 'GUARDAR';
+
+  @override
+  String get paymentregistered => 'PAGO REGISTRADO';
+
+  @override
+  String get doyouwant => '¿DESEAS ADJUNTAR UN ARCHIVO?';
+
+  @override
+  String get formatsallowed => 'FORMATOS PERMITIDOS: .JPG .JPEG .PNG';
+
+  @override
+  String get errorimage => 'FALLÓ LA CARGA DE LA IMAGEN';
+
+  @override
+  String get attachfile => 'ADJUNTAR ARCHIVO';
+
+  @override
+  String get errorpayment => 'NO SE PUDO GUARDAR EL PAGO:';
+
+  @override
+  String get representative => 'REPRESENTANTE';
+
+  @override
+  String get customer => 'CLIENTE';
+
+  @override
+  String get selectacustomer => 'POR FAVOR, SELECCIONA UN CLIENTE';
+
+  @override
+  String get paymenttype => 'TIPO DE PAGO';
+
+  @override
+  String get selectpayment => 'POR FAVOR, SELECCIONA UN TIPO DE PAGO';
+
+  @override
+  String get errorcurrency01 => 'NO HAY MONEDAS DISPONIBLES';
+
+  @override
+  String get currency => 'MONEDA';
+
+  @override
+  String get selectcurrency => 'POR FAVOR, SELECCIONA UNA MONEDA';
+
+  @override
+  String get amount => 'MONTO';
+
+  @override
+  String get selectamount => 'POR FAVOR, INGRESA UN MONTO';
+
+  @override
+  String get validnumber => 'POR FAVOR, INGRESA UN NÚMERO VÁLIDO';
+
+  @override
+  String get maxlegth12 => 'NO EXCEDER 12 CARACTERES';
+
+  @override
+  String get errorbank01 => 'NO HAY BANCOS DISPONIBLES';
+
+  @override
+  String get bankaccount => 'CUENTA BANCARIA';
+
+  @override
+  String get selectbank => 'POR FAVOR, SELECCIONA UN BANCO RECEPTOR';
+
+  @override
+  String get datepayment => 'FECHA DE PAGO';
+
+  @override
+  String get selectadate => 'POR FAVOR, SELECCIONA UNA FECHA';
+
+  @override
+  String get reference => 'REFERENCIA';
+
+  @override
+  String get selectreference => 'POR FAVOR, INGRESA UNA REFERENCIA';
+
+  @override
+  String get maxlegth30 => 'LOS COMENTARIOS NO DEBEN EXCEDER 30 CARACTERES';
+
+  @override
+  String get bank => 'BANCO';
+
+  @override
+  String get selectbankemisor => 'POR FAVOR, INGRESA UN NOMBRE DE BANCO';
+
+  @override
+  String get detailsandcomments => 'DETALLES Y COMENTARIOS';
+
+  @override
+  String get selectdetails => 'POR FAVOR, INGRESA UN COMENTARIO O DETALLE';
+
+  @override
+  String get maxlegth50 => 'NO EXCEDER 50 CARACTERES';
+
+  @override
+  String get cash => 'EFECTIVO';
+
+  @override
+  String get transfer => 'TRANSFERENCIA';
+
+  @override
+  String get check => 'CHEQUE';
+
+  @override
+  String get usernotauth => 'USUARIO NO AUTENTICADO';
+
+  @override
+  String get paymentview => 'Resumen de Pagos';
+
+  @override
+  String get createpaymentview => 'Registrar un Pago';
+
+  @override
+  String get date => 'FECHA';
+
+  @override
+  String get control => 'CONTROL';
+
+  @override
+  String get type => 'TIPO';
+
+  @override
+  String get customerview => 'CLIENTE';
+
+  @override
+  String get edit => 'EDITAR';
+
+  @override
+  String get nopaymentsavailable => 'NO TIENE REGISTRO DE PAGOS';
 
   @override
   String get todayorders => 'ORDENES DE HOY';

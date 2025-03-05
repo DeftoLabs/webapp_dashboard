@@ -203,11 +203,287 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settings;
 
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
   /// No description provided for @logout.
   ///
   /// In en, this message translates to:
   /// **'LogOut'**
   String get logout;
+
+  /// No description provided for @createpayment.
+  ///
+  /// In en, this message translates to:
+  /// **'CREATE PAYMENT\''**
+  String get createpayment;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE'**
+  String get save;
+
+  /// No description provided for @paymentregistered.
+  ///
+  /// In en, this message translates to:
+  /// **'PAYMENT REGISTERED'**
+  String get paymentregistered;
+
+  /// No description provided for @doyouwant.
+  ///
+  /// In en, this message translates to:
+  /// **'DO YOU WANT TO ATTACH A FILE?'**
+  String get doyouwant;
+
+  /// No description provided for @formatsallowed.
+  ///
+  /// In en, this message translates to:
+  /// **'ALLOWED FORMATS: .jpg .jpeg .png'**
+  String get formatsallowed;
+
+  /// No description provided for @errorimage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to Upload Image'**
+  String get errorimage;
+
+  /// No description provided for @attachfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Attach File'**
+  String get attachfile;
+
+  /// No description provided for @errorpayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the Payment:'**
+  String get errorpayment;
+
+  /// No description provided for @representative.
+  ///
+  /// In en, this message translates to:
+  /// **'Representative'**
+  String get representative;
+
+  /// No description provided for @customer.
+  ///
+  /// In en, this message translates to:
+  /// **'CUSTOMER'**
+  String get customer;
+
+  /// No description provided for @selectacustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE SELECT A CUSTOMER'**
+  String get selectacustomer;
+
+  /// No description provided for @paymenttype.
+  ///
+  /// In en, this message translates to:
+  /// **'PAYMENT TYPE'**
+  String get paymenttype;
+
+  /// No description provided for @selectpayment.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE SELECT A PAYMENT TYPE'**
+  String get selectpayment;
+
+  /// No description provided for @errorcurrency01.
+  ///
+  /// In en, this message translates to:
+  /// **'NO CURRENCIES AVAILABLE'**
+  String get errorcurrency01;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'CURRENCY'**
+  String get currency;
+
+  /// No description provided for @selectcurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE SELECT A CURRENCY'**
+  String get selectcurrency;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'AMOUNT'**
+  String get amount;
+
+  /// No description provided for @selectamount.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE ENTER AN AMOUNT'**
+  String get selectamount;
+
+  /// No description provided for @validnumber.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE ENTER A VALID NUMBER'**
+  String get validnumber;
+
+  /// No description provided for @maxlegth12.
+  ///
+  /// In en, this message translates to:
+  /// **'NOT EXCEED 12 CHARACTERS'**
+  String get maxlegth12;
+
+  /// No description provided for @errorbank01.
+  ///
+  /// In en, this message translates to:
+  /// **'NO BANKS AVAILABLE'**
+  String get errorbank01;
+
+  /// No description provided for @bankaccount.
+  ///
+  /// In en, this message translates to:
+  /// **'BANK ACCOUNT'**
+  String get bankaccount;
+
+  /// No description provided for @selectbank.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE SELECT A BANK RECEIVER'**
+  String get selectbank;
+
+  /// No description provided for @datepayment.
+  ///
+  /// In en, this message translates to:
+  /// **'DATE PAYMENT'**
+  String get datepayment;
+
+  /// No description provided for @selectadate.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE SELECT A DATE'**
+  String get selectadate;
+
+  /// No description provided for @reference.
+  ///
+  /// In en, this message translates to:
+  /// **'REFERENCE'**
+  String get reference;
+
+  /// No description provided for @selectreference.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE ENTER A REFERENCE\''**
+  String get selectreference;
+
+  /// No description provided for @maxlegth30.
+  ///
+  /// In en, this message translates to:
+  /// **'COMMENTS MUST NOT EXCEED 30 CHARACTERS'**
+  String get maxlegth30;
+
+  /// No description provided for @bank.
+  ///
+  /// In en, this message translates to:
+  /// **'BANK'**
+  String get bank;
+
+  /// No description provided for @selectbankemisor.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE ENTER A BANK NAME'**
+  String get selectbankemisor;
+
+  /// No description provided for @detailsandcomments.
+  ///
+  /// In en, this message translates to:
+  /// **'DETAILS AND COMMENTS'**
+  String get detailsandcomments;
+
+  /// No description provided for @selectdetails.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE ENTER A COMMENTS OR DETAILS'**
+  String get selectdetails;
+
+  /// No description provided for @maxlegth50.
+  ///
+  /// In en, this message translates to:
+  /// **'NOT EXCEED 50 CHARACTERS'**
+  String get maxlegth50;
+
+  /// No description provided for @cash.
+  ///
+  /// In en, this message translates to:
+  /// **'CASH'**
+  String get cash;
+
+  /// No description provided for @transfer.
+  ///
+  /// In en, this message translates to:
+  /// **'TRANSFER'**
+  String get transfer;
+
+  /// No description provided for @check.
+  ///
+  /// In en, this message translates to:
+  /// **'CHECK'**
+  String get check;
+
+  /// No description provided for @usernotauth.
+  ///
+  /// In en, this message translates to:
+  /// **'USER NOT AUTHENTICATED'**
+  String get usernotauth;
+
+  /// No description provided for @paymentview.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment View'**
+  String get paymentview;
+
+  /// No description provided for @createpaymentview.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Payment'**
+  String get createpaymentview;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'DATE'**
+  String get date;
+
+  /// No description provided for @control.
+  ///
+  /// In en, this message translates to:
+  /// **'CONTROL'**
+  String get control;
+
+  /// No description provided for @type.
+  ///
+  /// In en, this message translates to:
+  /// **'TYPE'**
+  String get type;
+
+  /// No description provided for @customerview.
+  ///
+  /// In en, this message translates to:
+  /// **'CUSTOMER'**
+  String get customerview;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'EDIT'**
+  String get edit;
+
+  /// No description provided for @nopaymentsavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'NO PAYMENTS AVAILABLE'**
+  String get nopaymentsavailable;
 
   /// No description provided for @todayorders.
   ///
