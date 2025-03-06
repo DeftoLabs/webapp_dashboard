@@ -11,6 +11,7 @@ class OrdenFormProvider extends ChangeNotifier {
   Ordenes? orden;
 
   late GlobalKey<FormState> formKey;
+  Map<String, GlobalKey<FormState>> productFormKeys = {};
 
   copyOrdenesWith({
     String? id,

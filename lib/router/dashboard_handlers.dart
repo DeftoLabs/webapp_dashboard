@@ -49,6 +49,7 @@ import 'package:web_dashboard/ui/views/products_view.dart';
 import 'package:web_dashboard/ui/views/ruta_view.dart';
 import 'package:web_dashboard/ui/views/rutas_view.dart';
 import 'package:web_dashboard/ui/views/shipment_view.dart';
+import 'package:web_dashboard/ui/views/support_view.dart';
 import 'package:web_dashboard/ui/views/zone_view.dart';
 import 'package:web_dashboard/ui/views/zones_view.dart';
 import 'package:web_dashboard/ui/views/settings_view.dart';
@@ -535,6 +536,17 @@ static Handler route = Handler(
       Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.messageRoute);
       if( authProvider.authStatus == AuthStatus.authenticated) {
         return const MessageView();
+      } return const LoginView();
+
+    }
+  );
+
+  static Handler support = Handler (
+    handlerFunc: (context, params) {
+      final authProvider = Provider.of<AuthProvider>(context!);
+      Provider.of<SideMenuProvider>(context, listen: false).setCurrentPageUrl(Flurorouter.supportRoute);
+      if( authProvider.authStatus == AuthStatus.authenticated) {
+        return const SupportView();
       } return const LoginView();
 
     }

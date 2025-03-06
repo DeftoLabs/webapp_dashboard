@@ -219,10 +219,10 @@ class Sidebar extends StatelessWidget {
         isActive: sideMenuProvider.currentPage == Flurorouter.settingsRoute,)
         : const SizedBox.shrink(),   
 
-        MenuItem(text:  localization.message, 
+        MenuItem(text:  localization.support, 
         icon: Icons.sms,
-        onPressed: ()=> navigateTo(Flurorouter.messageRoute),
-        isActive: sideMenuProvider.currentPage == Flurorouter.messageRoute,
+        onPressed: ()=> navigateTo(Flurorouter.supportRoute),
+        isActive: sideMenuProvider.currentPage == Flurorouter.supportRoute,
         ),
 
 

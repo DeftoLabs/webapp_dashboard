@@ -34,28 +34,34 @@ class _OrdenViewState extends State<OrdenView> {
   OrdenFormProvider? ordenFormProvider;
   bool isInitialized = false;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!isInitialized) {
-      ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
-      ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  if (!isInitialized) {
+    ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
+    ordenFormProvider = Provider.of<OrdenFormProvider>(context, listen: false);
 
-      ordenesProvider!.getOrdenById(widget.id).then((ordenDB) {
-        if (ordenDB != null) {
-          ordenFormProvider!.orden = ordenDB;
-          ordenFormProvider!.formKey = GlobalKey<FormState>();
+    ordenesProvider!.getOrdenById(widget.id).then((ordenDB) {
+      if (ordenDB != null) {
+        ordenFormProvider!.orden = ordenDB;
+        ordenFormProvider!.formKey = GlobalKey<FormState>();
+        ordenFormProvider!.productFormKeys;
+
+        // Usa addPostFrameCallback para evitar setState durante la construcción
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           setState(() {
             orden = ordenDB;
           });
-        } else {
-          NavigationService.replaceTo('/dashboard/orders/records');
-        }
-      });
+        });
+      } else {
+        NavigationService.replaceTo('/dashboard/orders/records');
+      }
+    });
 
-      isInitialized = true;
-    }
+    isInitialized = true;
   }
+}
+
 
  @override
   void dispose() {
@@ -683,81 +689,89 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                               child: Text(producto.nombre),
                             )),
                             DataCell(Text(producto.descripcion.toString())),
-                            DataCell(
-                              orden.status != 'ORDER' && orden.status != 'APPROVED'
-                                  ? Text(
-                                      producto.cantidad.toString(),
-                                      style: GoogleFonts.plusJakartaSans(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  : ( currentUser?.rol != 'USER_ROLE')?
-                                  SizedBox(
-                                      width: 90,
-                                      height: 40,
-                                      child: TextFormField(
-                                        initialValue: producto.cantidad.toString(),
-                                        style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        maxLength: 8,
-                                        textAlign: TextAlign.center,
-                                        decoration: InputDecoration(
-                                          counterText: "",
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(15),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(15),
-                                            borderSide: const BorderSide(
-                                              color: Color.fromARGB(255, 194, 190, 190),
-                                              width: 2,
-                                            ),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(15),
-                                            borderSide: const BorderSide(
-                                              color: Colors.grey,
-                                              width: 1,
-                                            ),
-                                          ),
-                                        ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'This field cannot be empty';
-                                          }
-                                          if (!RegExp(r'^\d{1,4}(\.\d{0,2})?$').hasMatch(value)) {
-                                            return 'Max 4 digits and 2 decimals';
-                                          }
-                                          return null;
-                                        },
-                                        onChanged: (value) {
-                                          double? cantidad = double.tryParse(value);
-                                          if (cantidad != null) {
-                                            ordenFormProvider.copyOrdenesWith(
-                                              productId: producto.id, // Pasa el ID del producto que se está actualizando
-                                              cantidad: cantidad,
-                                            );
-                                          }
-                                        },
-                                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d{1,4}(\.\d{0,2})?$'), // Permite solo números con hasta 4 enteros y 2 decimales
-                                          ),
-                                        ],
-                                      ),
-                                    ) : Text(
+                           DataCell(
+                                orden.status != 'ORDER' && orden.status != 'APPROVED'
+                                    ? Text(
                                         producto.cantidad.toString(),
                                         style: GoogleFonts.plusJakartaSans(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                      ),
-                            ),
+                                      )
+                                    : (currentUser?.rol != 'USER_ROLE')
+                                        ? SizedBox(
+                                            width: 90,
+                                            height: 40,
+                                            child: Form(
+                                              key: ordenFormProvider.productFormKeys.putIfAbsent(
+                                                  producto.id, 
+                                                  () => GlobalKey<FormState>()
+                                              ),
+                                              child: TextFormField(
+                                                initialValue: producto.cantidad.toString(),
+                                                style: GoogleFonts.plusJakartaSans(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                maxLength: 8,
+                                                textAlign: TextAlign.center,
+                                                decoration: InputDecoration(
+                                                  counterText: "",
+                                                  contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                  ),
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                    borderSide: const BorderSide(
+                                                      color: Color.fromARGB(255, 194, 190, 190),
+                                                      width: 2,
+                                                    ),
+                                                  ),
+                                                  enabledBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                    borderSide: const BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                ),
+                                                validator: (value) {
+                                                  if (value == null || value.isEmpty) {
+                                                    return 'This field cannot be empty';
+                                                  }
+                                                  if (!RegExp(r'^\d+(\.\d{0,2})?$').hasMatch(value)) {
+                                                    return 'Max 4 digits and 2 decimals';
+                                                  }
+                                                  return null;
+                                                },
+                                                onChanged: (value) {
+                                                  double? cantidad = double.tryParse(value);
+                                                  if (cantidad != null) {
+                                                    ordenFormProvider.copyOrdenesWith(
+                                                      productId: producto.id, // Aquí es donde actualizas la cantidad del producto específico
+                                                      cantidad: cantidad,
+                                                    );
+                                                  }
+                                                },
+                                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter.allow(
+                                                    RegExp(r'^\d{1,4}(\.\d{0,2})?$'), // Permite solo números con hasta 4 enteros y 2 decimales
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : Text(
+                                            producto.cantidad.toString(),
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                              ),
+
                             DataCell(Text(producto.unid)),
                             DataCell(
                               orden.status != 'ORDER' && orden.status != 'APPROVED' ? 
@@ -1264,7 +1278,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           NotificationService.showSnackBa('Order Updated');
                           if (!context.mounted) return;
                           Provider.of<OrdenesProvider>(context, listen: false).getPaginatedOrdenes;
-                          NavigationService.navigateTo('/dashboard/orders/records');
+                          NavigationService.navigateTo('/dashboard/orders');
                         } else {
                           NotificationService.showSnackBarError('Error to Update Order');
                         }

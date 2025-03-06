@@ -20,9 +20,11 @@ class DashboardView extends StatefulWidget {
 class _DashboardViewState extends State<DashboardView> {
 
 @override
-void didChangeDependencies() {
-  super.didChangeDependencies();
-  Provider.of<OrdenesProvider>(context, listen: false).loadOrders();
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Provider.of<OrdenesProvider>(context, listen: false).loadOrders();
+  });
 }
 
   @override

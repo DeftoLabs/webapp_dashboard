@@ -76,6 +76,8 @@ class Flurorouter {
   static String marketingRoute  = '/dashboard/marketing';
   static String messageRoute    = '/dashboard/message';
 
+  static String supportRoute    = '/dashboard/support';
+
   static String userRoute       = '/dashboard/users/:uid';
 
 
@@ -173,6 +175,9 @@ class Flurorouter {
 
     // Message
     router.define (messageRoute, handler:     DashboardHandlers.message,    transitionType: TransitionType.fadeIn);
+
+    // Support
+    router.define (supportRoute, handler:     DashboardHandlers.support,    transitionType: TransitionType.fadeIn);
 
     // ELEMENTS 
     router.define (userRoute, handler:        DashboardHandlers.user,    transitionType: TransitionType.fadeIn);
