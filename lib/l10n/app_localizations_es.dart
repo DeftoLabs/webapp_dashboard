@@ -10,6 +10,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get hello => '¡Hola!';
 
   @override
+  String get welcome => 'Bienvenido';
+
+  @override
   String get dashboard => 'Panel Control';
 
   @override
@@ -242,6 +245,111 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get availablesoon => 'DISPONIBLE PRONTO';
+
+  @override
+  String get createorder => 'CREAR UNA ORDEN';
+
+  @override
+  String get deliverydate => 'FECHA DE ENTREGA';
+
+  @override
+  String get ordertype => 'TIPO DE ORDEN';
+
+  @override
+  String get errorordertype => 'SELECCIONE UN TIPO DE ORDEN';
+
+  @override
+  String get noroute => 'SIN RUTA ASIGNADA O';
+
+  @override
+  String get custumerassigned => 'NO TIENE CLIENTES ASIGNADOS';
+
+  @override
+  String get selectcustomer => 'POR FAVOR SELECCIONE UN CLIENTE';
+
+  @override
+  String get addproduct => 'AGREGAR PRODUCTO';
+
+  @override
+  String get item => 'ARTICULO';
+
+  @override
+  String get selectitem => 'SELECCIONE UN ARTICULO';
+
+  @override
+  String get price => 'PRECIO';
+
+  @override
+  String get selectprice => 'SELECCIONE UN PRECIO';
+
+  @override
+  String get quantity => 'CANTIDAD';
+
+  @override
+  String get selectqunatity => 'INGRESE LA CANTIDAD';
+
+  @override
+  String get maxlength4 => 'MAXIMO 4 CARACTERES';
+
+  @override
+  String get observationsandcomments => 'OBSERVACIONES & COMENTARIOS';
+
+  @override
+  String get maxlegth100 => 'NO PUEDE EXCEDER LOS 1O0 CARACETERES';
+
+  @override
+  String get cancel => 'CANCELAR';
+
+  @override
+  String get warning => 'Advertencia';
+
+  @override
+  String get warningmessage01 => 'Esta seguro que desea cancelar esta orden?';
+
+  @override
+  String get yes => 'SI';
+
+  @override
+  String get warningmessage02 => 'Esta Orden no tiene Articulos. Debe de agregar por lo menos ( 1 ) articulo';
+
+  @override
+  String get ordercreated => 'Orden Creada';
+
+  @override
+  String get ordererror => 'No se pudo guardar la Orden';
+
+  @override
+  String get order => 'ORDEN';
+
+  @override
+  String get branch => 'SUCURSAL';
+
+  @override
+  String get noroderfound => 'NO SE ENCONTRARON ORDENES PARA: ';
+
+  @override
+  String get shipmentstatus => 'Status de Entregas';
+
+  @override
+  String get productcatalog => 'Catalogo & Lista de Productos';
+
+  @override
+  String get noproductsavailable => 'NO PRODUCTS AVAILABLE';
+
+  @override
+  String get catalogproducts => 'CATALOGO DE PRODUCTOS';
+
+  @override
+  String get bybrand => 'Marca';
+
+  @override
+  String get bycategories => 'Categoria';
+
+  @override
+  String get byavailable => 'Disponible';
+
+  @override
+  String get nutricional => 'INFORMACION NUTRICIONAL';
 
   @override
   String get bussinesssettings => 'Configuración de la Empresa';

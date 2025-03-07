@@ -101,6 +101,12 @@ abstract class AppLocalizations {
   /// **'Hello!'**
   String get hello;
 
+  /// No description provided for @welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get welcome;
+
   /// No description provided for @dashboard.
   ///
   /// In en, this message translates to:
@@ -568,6 +574,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'AVAILABLE SOON'**
   String get availablesoon;
+
+  /// No description provided for @createorder.
+  ///
+  /// In en, this message translates to:
+  /// **'CREATE A ORDER'**
+  String get createorder;
+
+  /// No description provided for @deliverydate.
+  ///
+  /// In en, this message translates to:
+  /// **'DELIVERY DATE'**
+  String get deliverydate;
+
+  /// No description provided for @ordertype.
+  ///
+  /// In en, this message translates to:
+  /// **'ORDER TYPE'**
+  String get ordertype;
+
+  /// No description provided for @errorordertype.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT A ORDER TYPE'**
+  String get errorordertype;
+
+  /// No description provided for @noroute.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ROUTE or'**
+  String get noroute;
+
+  /// No description provided for @custumerassigned.
+  ///
+  /// In en, this message translates to:
+  /// **'CUSTOMER ASSIGNED'**
+  String get custumerassigned;
+
+  /// No description provided for @selectcustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'PLEASE SELECT A CUSTOMER'**
+  String get selectcustomer;
+
+  /// No description provided for @addproduct.
+  ///
+  /// In en, this message translates to:
+  /// **'ADD PRODUCT'**
+  String get addproduct;
+
+  /// No description provided for @item.
+  ///
+  /// In en, this message translates to:
+  /// **'ITEM'**
+  String get item;
+
+  /// No description provided for @selectitem.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT A ITEM'**
+  String get selectitem;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'PRICE'**
+  String get price;
+
+  /// No description provided for @selectprice.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT A PRICE'**
+  String get selectprice;
+
+  /// No description provided for @quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'QUANTITY'**
+  String get quantity;
+
+  /// No description provided for @selectqunatity.
+  ///
+  /// In en, this message translates to:
+  /// **'ENTER THE QUANTITY'**
+  String get selectqunatity;
+
+  /// No description provided for @maxlength4.
+  ///
+  /// In en, this message translates to:
+  /// **'CANNOT EXCEED 4 CHARACTERS'**
+  String get maxlength4;
+
+  /// No description provided for @observationsandcomments.
+  ///
+  /// In en, this message translates to:
+  /// **'OBSERVATIONS AND COMMENTS:'**
+  String get observationsandcomments;
+
+  /// No description provided for @maxlegth100.
+  ///
+  /// In en, this message translates to:
+  /// **'CANNOT EXCEED 100 CHARACTERS'**
+  String get maxlegth100;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'CANCEL'**
+  String get cancel;
+
+  /// No description provided for @warning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get warning;
+
+  /// No description provided for @warningmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel this order?'**
+  String get warningmessage01;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'SI'**
+  String get yes;
+
+  /// No description provided for @warningmessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'The product list is empty. Please add at least one product.'**
+  String get warningmessage02;
+
+  /// No description provided for @ordercreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Created'**
+  String get ordercreated;
+
+  /// No description provided for @ordererror.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the Order'**
+  String get ordererror;
+
+  /// No description provided for @order.
+  ///
+  /// In en, this message translates to:
+  /// **'ORDER'**
+  String get order;
+
+  /// No description provided for @branch.
+  ///
+  /// In en, this message translates to:
+  /// **'BRANCH'**
+  String get branch;
+
+  /// No description provided for @noroderfound.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ORDERS FOUND FOR: '**
+  String get noroderfound;
+
+  /// No description provided for @shipmentstatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipment Status'**
+  String get shipmentstatus;
+
+  /// No description provided for @productcatalog.
+  ///
+  /// In en, this message translates to:
+  /// **'Product List & Catalog'**
+  String get productcatalog;
+
+  /// No description provided for @noproductsavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'NO PRODUCTS AVAILABLE'**
+  String get noproductsavailable;
+
+  /// No description provided for @catalogproducts.
+  ///
+  /// In en, this message translates to:
+  /// **'PRODUCT CATALOG'**
+  String get catalogproducts;
+
+  /// No description provided for @bybrand.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand'**
+  String get bybrand;
+
+  /// No description provided for @bycategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get bycategories;
+
+  /// No description provided for @byavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get byavailable;
+
+  /// No description provided for @nutricional.
+  ///
+  /// In en, this message translates to:
+  /// **'NUTRITIONAL INFO'**
+  String get nutricional;
 
   /// No description provided for @bussinesssettings.
   ///

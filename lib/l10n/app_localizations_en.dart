@@ -10,6 +10,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hello => 'Hello!';
 
   @override
+  String get welcome => 'Welcome';
+
+  @override
   String get dashboard => 'Dashboard';
 
   @override
@@ -242,6 +245,111 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get availablesoon => 'AVAILABLE SOON';
+
+  @override
+  String get createorder => 'CREATE A ORDER';
+
+  @override
+  String get deliverydate => 'DELIVERY DATE';
+
+  @override
+  String get ordertype => 'ORDER TYPE';
+
+  @override
+  String get errorordertype => 'SELECT A ORDER TYPE';
+
+  @override
+  String get noroute => 'NO ROUTE or';
+
+  @override
+  String get custumerassigned => 'CUSTOMER ASSIGNED';
+
+  @override
+  String get selectcustomer => 'PLEASE SELECT A CUSTOMER';
+
+  @override
+  String get addproduct => 'ADD PRODUCT';
+
+  @override
+  String get item => 'ITEM';
+
+  @override
+  String get selectitem => 'SELECT A ITEM';
+
+  @override
+  String get price => 'PRICE';
+
+  @override
+  String get selectprice => 'SELECT A PRICE';
+
+  @override
+  String get quantity => 'QUANTITY';
+
+  @override
+  String get selectqunatity => 'ENTER THE QUANTITY';
+
+  @override
+  String get maxlength4 => 'CANNOT EXCEED 4 CHARACTERS';
+
+  @override
+  String get observationsandcomments => 'OBSERVATIONS AND COMMENTS:';
+
+  @override
+  String get maxlegth100 => 'CANNOT EXCEED 100 CHARACTERS';
+
+  @override
+  String get cancel => 'CANCEL';
+
+  @override
+  String get warning => 'Warning';
+
+  @override
+  String get warningmessage01 => 'Are you sure you want to cancel this order?';
+
+  @override
+  String get yes => 'SI';
+
+  @override
+  String get warningmessage02 => 'The product list is empty. Please add at least one product.';
+
+  @override
+  String get ordercreated => 'Order Created';
+
+  @override
+  String get ordererror => 'Could not save the Order';
+
+  @override
+  String get order => 'ORDER';
+
+  @override
+  String get branch => 'BRANCH';
+
+  @override
+  String get noroderfound => 'NO ORDERS FOUND FOR: ';
+
+  @override
+  String get shipmentstatus => 'Shipment Status';
+
+  @override
+  String get productcatalog => 'Product List & Catalog';
+
+  @override
+  String get noproductsavailable => 'NO PRODUCTS AVAILABLE';
+
+  @override
+  String get catalogproducts => 'PRODUCT CATALOG';
+
+  @override
+  String get bybrand => 'Brand';
+
+  @override
+  String get bycategories => 'Categories';
+
+  @override
+  String get byavailable => 'Available';
+
+  @override
+  String get nutricional => 'NUTRITIONAL INFO';
 
   @override
   String get bussinesssettings => 'Bussiness Settings';

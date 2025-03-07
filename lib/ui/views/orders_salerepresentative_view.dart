@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_salesrepresentative_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
@@ -71,6 +72,8 @@ void _loadOrders() async {
 
     final ordersDataSource = OrdersSalesRepresentativeDataSource(ordenDateProvider.ordenes);
 
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -81,7 +84,7 @@ void _loadOrders() async {
             children: [
               const SizedBox(width: 20),
               Expanded(
-                child: Text('Welcome ${currentUser.nombre}', style: GoogleFonts.plusJakartaSans(fontSize: 22)
+                child: Text('${localization.welcome} ${currentUser.nombre}', style: GoogleFonts.plusJakartaSans(fontSize: 22)
                 ),
               ),
               Container(
@@ -89,7 +92,7 @@ void _loadOrders() async {
                 width: 170,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(177, 255, 46, 100),
+                  color: const Color.fromRGBO(177, 255, 46, 1),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: const Color.fromARGB(255, 0, 0, 0),
@@ -98,8 +101,9 @@ void _loadOrders() async {
                 ),
                 child: TextButton(
                   child: Text(
-                    'Create Order',
+                    localization.createorder,
                     style: GoogleFonts.plusJakartaSans(
+                      fontSize: 12,
                       color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
@@ -138,9 +142,9 @@ void _loadOrders() async {
                                   color: Colors.black,
                                 ),
                                 children: [
-                                  const TextSpan(
-                                    text: 'NO ORDERS FOUND FOR: ',
-                                    style: TextStyle(fontWeight: FontWeight.normal),
+                                  TextSpan(
+                                    text: localization.noroderfound,
+                                    style: const TextStyle(fontWeight: FontWeight.normal),
                                   ),
                                   TextSpan(
                                     text: currentUser.nombre,
@@ -153,12 +157,12 @@ void _loadOrders() async {
                         )
                       : PaginatedDataTable(
                           columns: [
-                            DataColumn(label: Text('# ORDER', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text('DATE', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text('CUSTOMER', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text('BRANCH', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text('STATUS', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text('EDIT', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text(localization.order   , style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text(localization.date    , style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text(localization.customer, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text(localization.branch  , style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text('STATUS'             , style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text(localization.edit    , style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                           ],
                           source: ordersDataSource,
                         ),

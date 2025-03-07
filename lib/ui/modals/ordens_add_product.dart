@@ -67,7 +67,7 @@ class _OrdensAddProductState extends State<OrdensAddProduct> {
                   Consumer<ProductsProvider>(
                     builder: (context, productProvider, child) {
                       return SizedBox(
-                        width: 275,
+                        width: 400,
                         child: DropdownButtonFormField<String>(
                           value: productData['producto'],
                           decoration: InputDecoration(
@@ -147,133 +147,135 @@ class _OrdensAddProductState extends State<OrdensAddProduct> {
             ),
             const SizedBox(height: 20),
             if (productData['producto'] != null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                     Consumer<ProductsProvider>(
-                    builder: (context, productProvider, child) {
-                      final productoSeleccionado = productProvider.productos
-                          .firstWhere(
-                              (producto) =>
-                                  producto.id == productData['producto'],
-                              orElse: () => Producto.empty());
-                      return SizedBox(
-                        width: 215,
-                        child: DropdownButtonFormField<String>(
-                          value: productData['precio']?.toString(),
-                          decoration: InputDecoration(
-                            labelText: 'PRICE',
-                            labelStyle: GoogleFonts.plusJakartaSans(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                       Consumer<ProductsProvider>(
+                      builder: (context, productProvider, child) {
+                        final productoSeleccionado = productProvider.productos
+                            .firstWhere(
+                                (producto) =>
+                                    producto.id == productData['producto'],
+                                orElse: () => Producto.empty());
+                        return SizedBox(
+                          width: 310,
+                          child: DropdownButtonFormField<String>(
+                            value: productData['precio']?.toString(),
+                            decoration: InputDecoration(
+                              labelText: 'PRICE',
+                              labelStyle: GoogleFonts.plusJakartaSans(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: const BorderSide(
+                                    color: Colors.white, width: 1),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: const BorderSide(
+                                    color: Colors.white, width: 1),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(
-                                  color: Colors.white, width: 1),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(
-                                  color: Colors.white, width: 1),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
+                            style: const TextStyle(color: Colors.white),
+                            selectedItemBuilder: (BuildContext context) {
+                              return [
+                                productoSeleccionado.precio1,
+                                productoSeleccionado.precio2,
+                                productoSeleccionado.precio3,
+                                productoSeleccionado.precio4,
+                                productoSeleccionado.precio5,
+                              ].map<Widget>((precio) {
+                                return Text(
+                                  '$precio',
+                                  style: const TextStyle(
+                                      color: Colors
+                                          .white), // Estilo para el valor seleccionado
+                                );
+                              }).toList();
+                            },
+                            items: [
+                              DropdownMenuItem(
+                                  value: productoSeleccionado.precio1.toString(),
+                                  child: Text(
+                                    '${productoSeleccionado.precio1}',
+                                    style: const TextStyle(color: Colors.black),
+                                  )),
+                              DropdownMenuItem(
+                                  value: productoSeleccionado.precio2.toString(),
+                                  child: Text(
+                                    '${productoSeleccionado.precio2}',
+                                    style: const TextStyle(color: Colors.black),
+                                  )),
+                              DropdownMenuItem(
+                                  value: productoSeleccionado.precio3.toString(),
+                                  child: Text(
+                                    '${productoSeleccionado.precio3}',
+                                    style: const TextStyle(color: Colors.black),
+                                  )),
+                              DropdownMenuItem(
+                                  value: productoSeleccionado.precio4.toString(),
+                                  child: Text(
+                                    '${productoSeleccionado.precio4}',
+                                    style: const TextStyle(color: Colors.black),
+                                  )),
+                              DropdownMenuItem(
+                                  value: productoSeleccionado.precio5.toString(),
+                                  child: Text(
+                                    '${productoSeleccionado.precio5}',
+                                    style: const TextStyle(color: Colors.black),
+                                  )),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                productData['precio'] = double.tryParse(value!);
+                              });
+                            },
                           ),
-                          style: const TextStyle(color: Colors.white),
-                          selectedItemBuilder: (BuildContext context) {
-                            return [
-                              productoSeleccionado.precio1,
-                              productoSeleccionado.precio2,
-                              productoSeleccionado.precio3,
-                              productoSeleccionado.precio4,
-                              productoSeleccionado.precio5,
-                            ].map<Widget>((precio) {
-                              return Text(
-                                '$precio',
-                                style: const TextStyle(
-                                    color: Colors
-                                        .white), // Estilo para el valor seleccionado
-                              );
-                            }).toList();
-                          },
-                          items: [
-                            DropdownMenuItem(
-                                value: productoSeleccionado.precio1.toString(),
-                                child: Text(
-                                  '${productoSeleccionado.precio1}',
-                                  style: const TextStyle(color: Colors.black),
-                                )),
-                            DropdownMenuItem(
-                                value: productoSeleccionado.precio2.toString(),
-                                child: Text(
-                                  '${productoSeleccionado.precio2}',
-                                  style: const TextStyle(color: Colors.black),
-                                )),
-                            DropdownMenuItem(
-                                value: productoSeleccionado.precio3.toString(),
-                                child: Text(
-                                  '${productoSeleccionado.precio3}',
-                                  style: const TextStyle(color: Colors.black),
-                                )),
-                            DropdownMenuItem(
-                                value: productoSeleccionado.precio4.toString(),
-                                child: Text(
-                                  '${productoSeleccionado.precio4}',
-                                  style: const TextStyle(color: Colors.black),
-                                )),
-                            DropdownMenuItem(
-                                value: productoSeleccionado.precio5.toString(),
-                                child: Text(
-                                  '${productoSeleccionado.precio5}',
-                                  style: const TextStyle(color: Colors.black),
-                                )),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              productData['precio'] = double.tryParse(value!);
-                            });
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    width: 95,
-                    child: TextFormField(
-                      initialValue: productData['cantidad'].toString(),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        labelText: 'QUANTITY',
-                        labelStyle: GoogleFonts.plusJakartaSans(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 1),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 1),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      style: const TextStyle(color: Colors.white),
-                      onChanged: (value) {
-                        setState(() {
-                          productData['cantidad'] = int.tryParse(value) ?? 1;
-                        });
+                        );
                       },
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 40),
+                    SizedBox(
+                      width: 95,
+                      child: TextFormField(
+                        initialValue: productData['cantidad'].toString(),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          labelText: 'QUANTITY',
+                          labelStyle: GoogleFonts.plusJakartaSans(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide:
+                                const BorderSide(color: Colors.white, width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide:
+                                const BorderSide(color: Colors.white, width: 1),
+                          ),
+                        ),
+                        keyboardType: TextInputType.number,
+                        style: const TextStyle(color: Colors.white),
+                        onChanged: (value) {
+                          setState(() {
+                            productData['cantidad'] = int.tryParse(value) ?? 1;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             const SizedBox(height: 30),
             Container(

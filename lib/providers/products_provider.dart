@@ -31,6 +31,11 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Producto>> obtenerProductos() async {
+  await getProducts(); // Esto es lo que ya tienes en getProducts
+  return productos;
+}
+
     Future<Producto?> getProductById (String id) async {
       try {
         final resp = await CafeApi.httpGet('/productos/$id');
