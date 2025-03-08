@@ -106,8 +106,8 @@ void didChangeDependencies() {
                     icon: const Icon(Icons.arrow_back_rounded)),
                 Expanded(
                   child: Text(
-                    localization.gerenalorders,
-                    style: GoogleFonts.plusJakartaSans(fontSize: 30),
+                    '',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
                 ), 
@@ -349,6 +349,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   children: [
                     const SizedBox(height: 5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(localization.create,
                             style: GoogleFonts.plusJakartaSans(
@@ -365,6 +366,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       ],
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(localization.modify,
                             style: GoogleFonts.plusJakartaSans(

@@ -166,11 +166,17 @@ class _OrdersViewState extends State<OrdersView> {
                           width: 0.6,
                         )),
                       child: TextButton(
-                        child: Text(
-                          locallization.createorder,
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
-                              color: const Color.fromARGB(255, 0, 0, 0)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.add, size: 16, color: Colors.black),
+                            Text(
+                              locallization.createorderm,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 13,
+                                  color: const Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                          ],
                         ),
                         onPressed: () {
                          NavigationService.replaceTo('/dashboard/orders/neworder');
@@ -197,7 +203,7 @@ Column(
       height: 540,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: const Color.fromARGB(255, 58, 60, 65),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
@@ -206,7 +212,7 @@ Column(
           Text(
             '${locallization.orderoftheday}  $todayDate',
             style: GoogleFonts.plusJakartaSans(
-                fontSize: 16, fontWeight: FontWeight.bold),
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           const SizedBox(height: 20),
           // Mostrar la tabla o el mensaje condicionalmente
@@ -228,8 +234,8 @@ Column(
               : PaginatedDataTable(
                   columns:[
                     DataColumn(label: Text(locallization.order        ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text(locallization.date         ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text(locallization.deliverydate ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.create         ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.deliveryh ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                     DataColumn(label: Text(locallization.customer     ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                     DataColumn(label: Text(locallization.branch       ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                     DataColumn(label: Text('STATUS'                   ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
@@ -317,7 +323,7 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Search By Date',
+                title: localization.searchbydate,
                 width: 200,
                 child: const Center(child: Icon(Icons.date_range_rounded)),
                 onTap: () {
@@ -326,27 +332,27 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Search By Sales',
+                title: localization.searchbyrepresentative,
                 width: 200,
-                child: const Center(child: Icon(Icons.person_outline_rounded)),
+                child: const Center(child: Icon(Icons.accessibility_outlined)),
                 onTap: () {
                   NavigationService.replaceTo('/dashboard/orders/sales');
                 },
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Search By Product',
+                title: localization.searchbyproduct,
                 width: 200,
-                child: const Center(child: Icon(Icons.add_box_outlined)),
+                child: const Center(child: Icon(Icons.shopping_bag_outlined)),
                 onTap: () {
                   NavigationService.replaceTo('/dashboard/orders/delivery');
                 },
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Search By Route',
+                title: localization.searchbyroute,
                 width: 200,
-                child: const Center(child: Icon(Icons.add_box_outlined)),
+                child: const Center(child: Icon(Icons.route_rounded)),
                 onTap: () {
                   NavigationService.replaceTo('/dashboard/orders/route');
                 },

@@ -45,7 +45,7 @@ class Sidebar extends StatelessWidget {
 
         currentUser.rol != 'USER_ROLE'
           ? MenuItem(
-              text: localization.analityc,
+              text: localization.estadistic,
               icon: Icons.account_tree_outlined,
              onPressed: ()=> navigateTo(Flurorouter.analitycRoute)
             )

@@ -119,6 +119,12 @@ abstract class AppLocalizations {
   /// **'Analisis'**
   String get analityc;
 
+  /// No description provided for @estadistic.
+  ///
+  /// In en, this message translates to:
+  /// **'Estadistics'**
+  String get estadistic;
+
   /// No description provided for @orders.
   ///
   /// In en, this message translates to:
@@ -575,6 +581,12 @@ abstract class AppLocalizations {
   /// **'AVAILABLE SOON'**
   String get availablesoon;
 
+  /// No description provided for @createorderm.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a Order'**
+  String get createorderm;
+
   /// No description provided for @createorder.
   ///
   /// In en, this message translates to:
@@ -971,6 +983,12 @@ abstract class AppLocalizations {
   /// **'Representantive'**
   String get searchbyrepresentative;
 
+  /// No description provided for @seachbysalesrepresentative.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders by Sales Representative'**
+  String get seachbysalesrepresentative;
+
   /// No description provided for @searchbyproduct.
   ///
   /// In en, this message translates to:
@@ -1079,11 +1097,173 @@ abstract class AppLocalizations {
   /// **'Available'**
   String get byavailable;
 
+  /// No description provided for @select.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT AN OPTION'**
+  String get select;
+
+  /// No description provided for @noorder.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ORDERS'**
+  String get noorder;
+
+  /// No description provided for @selectcustomermessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a Customer'**
+  String get selectcustomermessage;
+
+  /// No description provided for @nocustomerorder01.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer With No Orders'**
+  String get nocustomerorder01;
+
+  /// No description provided for @nocustomerorder02.
+  ///
+  /// In en, this message translates to:
+  /// **'The customer currently has no Orders.'**
+  String get nocustomerorder02;
+
+  /// No description provided for @nocustomerorder03.
+  ///
+  /// In en, this message translates to:
+  /// **'Error with the Customer Order'**
+  String get nocustomerorder03;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'SEARCH'**
+  String get search;
+
+  /// No description provided for @noorderscustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ORDERS FOUND FOR THIS CUSTOMER'**
+  String get noorderscustomer;
+
+  /// No description provided for @selectdeliverydate.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a Delivery Date'**
+  String get selectdeliverydate;
+
+  /// No description provided for @selectcreatedate.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a Delivery Date'**
+  String get selectcreatedate;
+
+  /// No description provided for @noorderdate.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders were found for the selected date.'**
+  String get noorderdate;
+
+  /// No description provided for @selectasalesrepresentative.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a Sales Representative'**
+  String get selectasalesrepresentative;
+
+  /// No description provided for @noordernysalesrepresentative.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Representative With No Orders'**
+  String get noordernysalesrepresentative;
+
+  /// No description provided for @noordercurrentlysalesrepresentative.
+  ///
+  /// In en, this message translates to:
+  /// **'\'The Sales Representative currently has no Orders'**
+  String get noordercurrentlysalesrepresentative;
+
+  /// No description provided for @selectproductmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a Product'**
+  String get selectproductmessage01;
+
+  /// No description provided for @selectproductmessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'Products With No Orders'**
+  String get selectproductmessage02;
+
+  /// No description provided for @selectproductmessage03.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders were found for the selected product.'**
+  String get selectproductmessage03;
+
+  /// No description provided for @selectproductmessage04.
+  ///
+  /// In en, this message translates to:
+  /// **'Error retrieving product orders'**
+  String get selectproductmessage04;
+
+  /// No description provided for @noroderfoundsales.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ORDERS FOUND FOR THIS SALES REPRESENTATIVE'**
+  String get noroderfoundsales;
+
+  /// No description provided for @nororderfoundproduct.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ORDERS FOUND FOR THIS PRODUCT'**
+  String get nororderfoundproduct;
+
+  /// No description provided for @selectroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a Route'**
+  String get selectroute;
+
+  /// No description provided for @selectroutemessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Routes With No Orders'**
+  String get selectroutemessage01;
+
+  /// No description provided for @selectroutemessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders were found for the selected route'**
+  String get selectroutemessage02;
+
+  /// No description provided for @selectroutemessage03.
+  ///
+  /// In en, this message translates to:
+  /// **'Error retrieving route orders'**
+  String get selectroutemessage03;
+
+  /// No description provided for @selectroutemessage04.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ORDERS FOUND FOR THIS ROUTE'**
+  String get selectroutemessage04;
+
+  /// No description provided for @product.
+  ///
+  /// In en, this message translates to:
+  /// **'PRODUCT'**
+  String get product;
+
   /// No description provided for @nutricional.
   ///
   /// In en, this message translates to:
   /// **'NUTRITIONAL INFO'**
   String get nutricional;
+
+  /// No description provided for @dataanalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Analysis'**
+  String get dataanalysis;
 
   /// No description provided for @bussinesssettings.
   ///

@@ -13,7 +13,7 @@ class RectangularCard extends StatelessWidget {
 
 
   const RectangularCard({
-    super.key,  
+  super.key,  
   required this.child,
   this.title, 
   this.width,

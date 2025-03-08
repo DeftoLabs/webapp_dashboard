@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_searchdatedatasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
@@ -49,6 +50,8 @@ class _OrdersSearchCustomerState extends State<OrdersSearchCustomer> {
 
      final double screenWidth = MediaQuery.of(context).size.width;
 
+     final localization = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -66,7 +69,7 @@ class _OrdersSearchCustomerState extends State<OrdersSearchCustomer> {
                 const SizedBox(width: 20),
                 Expanded(
                     child: Text(
-                  'Orders View By Customer',
+                  localization.searchbycustomer,
                   style: GoogleFonts.plusJakartaSans(fontSize: 22),
                 )),
                 SizedBox(
@@ -86,7 +89,7 @@ class _OrdersSearchCustomerState extends State<OrdersSearchCustomer> {
                     width: MediaQuery.of(context).size.width * 0.90,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: const Color.fromARGB(255, 58, 60, 65),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
@@ -95,23 +98,32 @@ class _OrdersSearchCustomerState extends State<OrdersSearchCustomer> {
                     Row(
                   children: [
                     Text(
-                      'CUSTOMER:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 13),
+                      localization.customer,
+                      style: GoogleFonts.plusJakartaSans(fontSize: 13, color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(width: 10),
                     Consumer<CustomersProvider>(
                       builder: (context, customersProvider, child) {
                         if (customersProvider.isLoading) {
-                          return const CircularProgressIndicator(); // Mostrar indicador de carga
+                          return CircularProgressIndicator(color: Colors.pink[300], strokeWidth: 2);
                         }
                         // DropdownButton con la lista de clientes
                         return DropdownButton<String>(
                           value: customerID,
-                          hint: Text('SELECT', style: GoogleFonts.plusJakartaSans(fontSize: 13, color: Colors.black)),
+                          hint: Text(localization.select, style: GoogleFonts.plusJakartaSans(fontSize: 13, color: Colors.white)),
+                          icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                          dropdownColor:  const Color.fromARGB(255, 145, 148, 154).withValues(alpha: 0.9),
                           items: customersProvider.customers.map((customer) {
                             return DropdownMenuItem<String>(
                               value: customer.id,
-                              child: Text(customer.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                              child: Row(
+                                children: [
+                                  Text(customer.nombre, style: GoogleFonts.plusJakartaSans(fontSize: 13, color: Colors.white)),
+                                  const SizedBox(width: 5),
+                                  Text(customer.sucursal, style: GoogleFonts.plusJakartaSans(fontSize: 13, color: Colors.amber, fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                              
                             );
                           }).toList(),
                           onChanged: (String? newValue) {
@@ -135,7 +147,7 @@ onPressed: () async {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Warning', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
+                Text(localization.warning, style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -144,7 +156,7 @@ onPressed: () async {
                 ),
               ],
             ),
-            content: Text('Please select a Customer', style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black)),
+            content: Text(localization.selectcustomermessage, style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black)),
           );
         },
       );
@@ -153,7 +165,7 @@ onPressed: () async {
       await context.read<OrdenDateProvider>().getOrdenByCustomer(customerID!);
     }
   } catch (e) {
-    if (e.toString().contains('Customer With No Orders')) {
+    if (e.toString().contains(localization.nocustomerorder01)) {
 if (context.mounted) {
   showDialog(
     context: context,
@@ -163,7 +175,7 @@ if (context.mounted) {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('No Orders', style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text(localization.noorder , style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold)),
               IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -172,13 +184,14 @@ if (context.mounted) {
                 ),
           ],
         ),
-        content: Text('The customer currently has no Orders.', style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black)),
+        content: Text(localization.nocustomerorder02, 
+        style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black)),
       );
     },
   );
 }
     } else {
-      NotificationService.showSnackBarError('Error with the Customer Order');
+      NotificationService.showSnackBarError(localization.nocustomerorder03);
     }
   }
 },
@@ -190,11 +203,11 @@ if (context.mounted) {
       color: Colors.black,
       width: 1,
     ),
-    backgroundColor: Colors.grey[300],
+    backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
   ),
   child: Text(
-    'SEARCH',
+    localization.search,
     style: GoogleFonts.plusJakartaSans(
       fontSize: 14,
       color: Colors.black,
@@ -211,7 +224,7 @@ if (context.mounted) {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 200),
                     child: Text(
-                      'NO ORDERS FOUND FOR THIS CUSTOMER',
+                      localization.noorderscustomer,
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -223,14 +236,14 @@ if (context.mounted) {
                 )
               : PaginatedDataTable(
                   columns:[
-                    DataColumn(label: Text('# ORDER',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('DATE',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('DELIVERY',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('CUSTOMER',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('BRANCH',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.order ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.date,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.deliverydate,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.customer,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.branch,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                     DataColumn(label: Text('STATUS',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('SALES',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('EDIT',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.representative,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.edit,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                   ],
                   source: ordersDataSource,
                   columnSpacing: screenWidth * 0.04,

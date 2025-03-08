@@ -19,6 +19,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get analityc => 'Analisis';
 
   @override
+  String get estadistic => 'Estadistics';
+
+  @override
   String get orders => 'Orders';
 
   @override
@@ -247,6 +250,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get availablesoon => 'AVAILABLE SOON';
 
   @override
+  String get createorderm => 'Create a Order';
+
+  @override
   String get createorder => 'CREATE A ORDER';
 
   @override
@@ -445,6 +451,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchbyrepresentative => 'Representantive';
 
   @override
+  String get seachbysalesrepresentative => 'Orders by Sales Representative';
+
+  @override
   String get searchbyproduct => 'Product';
 
   @override
@@ -499,7 +508,88 @@ class AppLocalizationsEn extends AppLocalizations {
   String get byavailable => 'Available';
 
   @override
+  String get select => 'SELECT AN OPTION';
+
+  @override
+  String get noorder => 'NO ORDERS';
+
+  @override
+  String get selectcustomermessage => 'Please select a Customer';
+
+  @override
+  String get nocustomerorder01 => 'Customer With No Orders';
+
+  @override
+  String get nocustomerorder02 => 'The customer currently has no Orders.';
+
+  @override
+  String get nocustomerorder03 => 'Error with the Customer Order';
+
+  @override
+  String get search => 'SEARCH';
+
+  @override
+  String get noorderscustomer => 'NO ORDERS FOUND FOR THIS CUSTOMER';
+
+  @override
+  String get selectdeliverydate => 'Please select a Delivery Date';
+
+  @override
+  String get selectcreatedate => 'Please select a Delivery Date';
+
+  @override
+  String get noorderdate => 'No orders were found for the selected date.';
+
+  @override
+  String get selectasalesrepresentative => 'Please select a Sales Representative';
+
+  @override
+  String get noordernysalesrepresentative => 'Sales Representative With No Orders';
+
+  @override
+  String get noordercurrentlysalesrepresentative => '\'The Sales Representative currently has no Orders';
+
+  @override
+  String get selectproductmessage01 => 'Please select a Product';
+
+  @override
+  String get selectproductmessage02 => 'Products With No Orders';
+
+  @override
+  String get selectproductmessage03 => 'No orders were found for the selected product.';
+
+  @override
+  String get selectproductmessage04 => 'Error retrieving product orders';
+
+  @override
+  String get noroderfoundsales => 'NO ORDERS FOUND FOR THIS SALES REPRESENTATIVE';
+
+  @override
+  String get nororderfoundproduct => 'NO ORDERS FOUND FOR THIS PRODUCT';
+
+  @override
+  String get selectroute => 'Please select a Route';
+
+  @override
+  String get selectroutemessage01 => 'Routes With No Orders';
+
+  @override
+  String get selectroutemessage02 => 'No orders were found for the selected route';
+
+  @override
+  String get selectroutemessage03 => 'Error retrieving route orders';
+
+  @override
+  String get selectroutemessage04 => 'NO ORDERS FOUND FOR THIS ROUTE';
+
+  @override
+  String get product => 'PRODUCT';
+
+  @override
   String get nutricional => 'NUTRITIONAL INFO';
+
+  @override
+  String get dataanalysis => 'Data Analysis';
 
   @override
   String get bussinesssettings => 'Bussiness Settings';

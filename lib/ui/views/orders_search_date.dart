@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_searchdatedatasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
@@ -49,7 +50,9 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
 
     final ordersDataSource = OrdersSearchDateDataSource(ordenDateProvider.ordenes);
 
-     final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    final localizations = AppLocalizations.of(context)!;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -68,7 +71,7 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                 const SizedBox(width: 20),
                 Expanded(
                     child: Text(
-                  'Orders View By Date',
+                  localizations.searchbydate,
                   style: GoogleFonts.plusJakartaSans(fontSize: 22),
                 )),
                 SizedBox(
@@ -88,7 +91,7 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                     width: MediaQuery.of(context).size.width * 0.90,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: const Color.fromARGB(255, 58, 60, 65),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
@@ -100,12 +103,12 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                          Row(
                               children: [
                                 Text(
-                                  'DELIVERY DATE:',
-                                  style: GoogleFonts.plusJakartaSans(fontSize: 13),
+                                  localizations.deliverydate,
+                                  style: GoogleFonts.plusJakartaSans(fontSize: 13, color: Colors.white),
                                 ),
                                 const SizedBox(width: 5),
                                 IconButton(
-                                  icon: const Icon(Icons.calendar_today),
+                                  icon: const Icon(Icons.calendar_today, color: Colors.white),
                                   onPressed: () async {
                                     DateTime now = DateTime.now();
                                     // Abrir el selector de fechas
@@ -142,7 +145,7 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                 fechaentrega != null
                                     ? DateFormat('dd/MM/yy').format(fechaentrega!) // Formato de la fecha seleccionada
                                     : '', // Texto por defecto
-                               
+                                      style: GoogleFonts.plusJakartaSans(color: Colors.white),
                               ),
                               const SizedBox(width: 10),
                         TextButton(
@@ -154,11 +157,11 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                   return AlertDialog(
                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                     title: Text(
-                                      'Warning',
+                                      localizations.warning,
                                       style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
                                     ),
                                     content: Text(
-                                      'Please select a Delivery Date',
+                                      localizations.selectdeliverydate,
                                       style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
                                     ),
                                     actions: [
@@ -189,11 +192,11 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                     return AlertDialog(
                                        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                       title: Text(
-                                        'No Orders Found',
+                                        localizations.noroderfound,
                                         style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
                                       ),
                                       content: Text(
-                                        'No orders were found for the selected date.',
+                                        localizations.noorderdate,
                                         style: GoogleFonts.plusJakartaSans(fontSize: 18),
                                       ),
                                       actions: [
@@ -221,11 +224,11 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                               color: Colors.black,
                               width: 1,
                             ),
-                            backgroundColor: Colors.grey[300],
+                            backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
                             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           ),
                           child: Text(
-                            'SEARCH',
+                            localizations.search,
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 14,
                               color: Colors.black,
@@ -238,12 +241,12 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                               Row(
                               children: [
                                 Text(
-                                  'CREATE DATE:',
-                                  style: GoogleFonts.plusJakartaSans(fontSize: 13),
+                                  localizations.create,
+                                  style: GoogleFonts.plusJakartaSans(fontSize: 13, color: Colors.white),
                                 ),
                                 const SizedBox(width: 5),
                                 IconButton(
-                                  icon: const Icon(Icons.calendar_today),
+                                  icon: const Icon(Icons.calendar_today, color: Colors.white),
                                   onPressed: () async {
                                     DateTime now = DateTime.now();
                                     // Abrir el selector de fechas
@@ -279,7 +282,8 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                 Text(
                                 fechacreado != null
                                     ? DateFormat('dd/MM/yy').format(fechacreado!) // Formato de la fecha seleccionada
-                                    : '', // Texto por defecto
+                                    : '', 
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.white),
                                
                               ),
                               const SizedBox(width: 10),
@@ -292,11 +296,11 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                   return AlertDialog(
                                      backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                     title: Text(
-                                      'Warning',
+                                      localizations.warning,
                                       style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
                                     ),
                                     content: Text(
-                                      'Please select a Created Date',
+                                      localizations.selectcreatedate,
                                       style: GoogleFonts.plusJakartaSans(fontSize: 18, color: Colors.black),
                                     ),
                                     actions: [
@@ -327,11 +331,11 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                                     return AlertDialog(
                                        backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                       title: Text(
-                                        'No Orders Found',
+                                        localizations.noroderfound,
                                         style: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.bold),
                                       ),
                                       content: Text(
-                                        'No orders were found for the selected date.',
+                                        localizations.noorderdate,
                                         style: GoogleFonts.plusJakartaSans(fontSize: 18),
                                       ),
                                       actions: [
@@ -359,11 +363,11 @@ class _OrdersSearchDateState extends State<OrdersSearchDate> {
                               color: Colors.black,
                               width: 1,
                             ),
-                            backgroundColor: Colors.grey[300],
+                            backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
                             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           ),
                           child: Text(
-                            'SEARCH',
+                            localizations.search,
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 14,
                               color: Colors.black,
