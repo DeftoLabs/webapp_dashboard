@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/orders_records_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
@@ -13,6 +14,15 @@ class OrdersRecordsView extends StatefulWidget {
 }
 
 class _OrdersRecordsViewState extends State<OrdersRecordsView> {
+
+      @override
+  void initState() {
+    super.initState();
+    final ordenProvider = Provider.of<OrdenesProvider>(context, listen: false);
+    ordenProvider.getPaginatedOrdenes();
+   
+  }
+
   DateTime? selectedDate;
   String? selectedStatus;
   String? selectedSales;
@@ -51,6 +61,8 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
 
      final double screenWidth = MediaQuery.of(context).size.width;
 
+     final localization = AppLocalizations.of(context)!;
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
@@ -68,7 +80,7 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
                 const SizedBox(width: 20),
                 Expanded(
                     child: Text(
-                  'Orders Records',
+                  localization.ordersrecords,
                   style: GoogleFonts.plusJakartaSans(fontSize: 22),
                 )),
                 SizedBox(
@@ -85,21 +97,16 @@ class _OrdersRecordsViewState extends State<OrdersRecordsView> {
             Column(
               children: [
                 PaginatedDataTable(
-                  header: Text(
-                    'Order Records',
-                    style: GoogleFonts.plusJakartaSans(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
                   columns: [
                     DataColumn(label: 
-                    Text('# ORDER', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('DATE',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('DELIVERY', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('CUSTOMER', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('BRANCH', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    Text(localization.order, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.date,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.deliverydate, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.customer, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.branch, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                     DataColumn(label: Text('STATUS', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('SALES', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)), ),
-                    DataColumn(label: Text('EDIT', style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(localization.rsales, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)), ),
+                    DataColumn(label: Text(localization.edit, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                   ],
                   source: ordersDataSource,
                   columnSpacing: screenWidth * 0.015,

@@ -328,6 +328,156 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noroderfound => 'NO ORDERS FOUND FOR: ';
 
   @override
+  String get dowload => 'DOWNLOAD';
+
+  @override
+  String get ordermessagedownload => 'Download Order\'';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get create => 'CREATE';
+
+  @override
+  String get modify => 'MODIFY';
+
+  @override
+  String get customerinfo => 'CUSTOMER INFO';
+
+  @override
+  String get code => 'CODE';
+
+  @override
+  String get address => 'ADDRESS';
+
+  @override
+  String get phoneh => 'PHONE';
+
+  @override
+  String get credit => 'CREDIT';
+
+  @override
+  String get days => 'DAYS';
+
+  @override
+  String get routeh => 'ROUTE';
+
+  @override
+  String get deliveryh => 'DELIVERY';
+
+  @override
+  String get typeh => 'TYPE';
+
+  @override
+  String get tax => 'TAX';
+
+  @override
+  String get selectdate => 'SELECT DATE';
+
+  @override
+  String get delete => 'DELETE';
+
+  @override
+  String get qtymessage01 => 'This field cannot be empty';
+
+  @override
+  String get qtymessage02 => 'Max 4 digits and 2 decimals';
+
+  @override
+  String get pricemessage01 => 'Enter a Price';
+
+  @override
+  String get pricemessage02 => 'Enter a Number';
+
+  @override
+  String get priceenter => 'ENTER PRICE';
+
+  @override
+  String get orderdelete01 => 'This order has only 1 item. To cancel the order, please use: ';
+
+  @override
+  String get orderdelete02 => 'Product Deleted';
+
+  @override
+  String get orderdelete03 => 'Error to Update the Order';
+
+  @override
+  String get salesrepresentative => 'SALES REPRESENTATIVE';
+
+  @override
+  String get manager => 'GENERAL INFO';
+
+  @override
+  String get commentsmessage01 => 'Cannot be empty';
+
+  @override
+  String get maxlegth25 => 'Cannot exceed 25 characters';
+
+  @override
+  String get deleteorder => 'Are you sure to DELETE this ORDER?';
+
+  @override
+  String get yesdelete => 'YES, DELETE';
+
+  @override
+  String get messageorderdelete => 'The ORDER has been DELETED';
+
+  @override
+  String get messageorder01 => 'Order Updated';
+
+  @override
+  String get messageorder02 => 'Error to Update Order';
+
+  @override
+  String get messageorder03 => 'Contact to Support';
+
+  @override
+  String get ordersrecords => 'Orders Records';
+
+  @override
+  String get searchbycustomer => 'Customer';
+
+  @override
+  String get searchbydate => 'Date';
+
+  @override
+  String get searchbyrepresentative => 'Representantive';
+
+  @override
+  String get searchbyproduct => 'Product';
+
+  @override
+  String get searchbyroute => 'Route';
+
+  @override
+  String get rsales => 'REPRESENTATIVE';
+
+  @override
+  String get gerenalorders => 'ORDERS VIEW';
+
+  @override
+  String get orderdownloadmessage01 => 'Order downloaded successfully.';
+
+  @override
+  String get orderdownloadmessage02 => 'That date has no orders';
+
+  @override
+  String get orderdownloadmessage03 => 'No orders found for the requested date';
+
+  @override
+  String get orderdownloadmessage04 => 'An error occurred while fetching the data. Please try again.';
+
+  @override
+  String get orderdownloadmessage05 => 'An unexpected error occurred. Please try again.';
+
+  @override
+  String get orderoftheday => 'Order of the Day';
+
+  @override
+  String get norodertoday => 'NO ORDERS RECEIVED FOR TODAY';
+
+  @override
   String get shipmentstatus => 'Shipment Status';
 
   @override

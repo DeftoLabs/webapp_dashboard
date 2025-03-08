@@ -193,9 +193,12 @@ class _CatalogViewState extends State<CatalogView> {
            SingleChildScrollView(
                      scrollDirection: Axis.vertical,
                      child: Container(
-             width: double.infinity,
-             color: const Color.fromARGB(255, 28, 28, 29),
-             child: Column(children: [
+                      width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 28, 28, 29),
+                        borderRadius: BorderRadius.circular(30)
+                    ),
+                      child: Column(children: [
                Container(
                    width: MediaQuery.of(context).size.width * 0.95,
                    padding: const EdgeInsets.all(16),
@@ -232,190 +235,226 @@ class _CatalogViewState extends State<CatalogView> {
                      const SizedBox(height: 25),
            
                      // PRODUCT VIEW
-                     SizedBox(
-                       height: 460,
-                       child: FutureBuilder<List<Producto>>(
-                         future: productosFuture,
-                         builder: (context, snapshot) {
-                           if (snapshot.connectionState ==
-                               ConnectionState.waiting) {
-                             return const Center(
-                                 child: CircularProgressIndicator(color: Color.fromRGBO(177, 255, 46, 1), strokeWidth: 5));
-                           }
-           
-                           if (snapshot.hasError) {
-                             return Center(
-                                 child: Text('Error: ${snapshot.error}'));
-                           }
-           
-                           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                             return Center(
-                               child: Text(
-                                 AppLocalizations.of(context)!
-                                     .noproductsavailable,
-                                 style: GoogleFonts.plusJakartaSans(
-                                     fontSize: 14,
-                                     color: Colors.white,
-                                     fontWeight: FontWeight.bold),
-                               ),
-                             );
-                           }
-           
-                           final productos = snapshot.data!;
-                           productos.sort((a, b) => a.descripcion!.compareTo(b.descripcion!));
-           
-                           return Column(
-                             children: [
-                               Expanded(
-                                 child: PageView.builder(
-                                   controller: _pageController,
-                                   itemCount: productos.length,
-                                   itemBuilder: (context, index) {
-                                     final producto = productos[index];
-                                     final image = (producto.img == null ||
-                                             producto.img!.isEmpty)
-                                         ? Image.asset('assets/noimage.jpeg',
-                                             width: 300, height: 300)
-                                         : FadeInImage.assetNetwork(
-                                             placeholder: 'assets/load.gif',
-                                             image: producto.img!,
-                                             width: 300,
-                                             height: 300,
-                                             fit: BoxFit.fill,
-                                             imageErrorBuilder:
-                                                 (context, error, stackTrace) {
-                                               return Image.asset(
-                                                   'assets/noimage.jpeg',
-                                                   width: 300,
-                                                   height: 300);
-                                             },
-                                           );
-           
-                                     return Container(
-                                       width:
-                                           MediaQuery.of(context).size.width *
-                                               0.8,
-                                       height: 350,
-                                       margin: const EdgeInsets.symmetric(
-                                           horizontal: 10),
-                                       decoration: BoxDecoration(
+                     Column(
+                       children: [
+                         SizedBox(
+                           height: 460,
+                           child: FutureBuilder<List<Producto>>(
+                             future: productosFuture,
+                             builder: (context, snapshot) {
+                               if (snapshot.connectionState ==
+                                   ConnectionState.waiting) {
+                                 return const Center(
+                                     child: CircularProgressIndicator(color: Color.fromRGBO(177, 255, 46, 1), strokeWidth: 5));
+                               }
+                                    
+                               if (snapshot.hasError) {
+                                 return Center(
+                                     child: Text('Error: ${snapshot.error}'));
+                               }
+                                    
+                               if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                 return Center(
+                                   child: Text(
+                                     AppLocalizations.of(context)!
+                                         .noproductsavailable,
+                                     style: GoogleFonts.plusJakartaSans(
+                                         fontSize: 14,
                                          color: Colors.white,
-                                         borderRadius:
-                                             BorderRadius.circular(30),
-                                       ),
-                                       child: Column(
-                                         mainAxisAlignment:
-                                             MainAxisAlignment.center,
-                                         children: [
-                                           Padding(
-                                             padding: const EdgeInsets.only(
-                                                 right: 1),
-                                             child: Row(
-                                               mainAxisAlignment:
-                                                   MainAxisAlignment.end,
+                                         fontWeight: FontWeight.bold),
+                                   ),
+                                 );
+                               }
+                                    
+                               final productos = snapshot.data!;
+                               productos.sort((a, b) => a.descripcion!.compareTo(b.descripcion!));
+                                    
+                               return Column(
+                                 children: [
+                                   Expanded(
+                                     child: Stack(
+                                       children: [
+                                         PageView.builder(
+                                           controller: _pageController,
+                                           itemCount: productos.length,
+                                           itemBuilder: (context, index) {
+                                             final producto = productos[index];
+                                             final image = (producto.img == null ||
+                                                     producto.img!.isEmpty)
+                                                 ? Image.asset('assets/noimage.jpeg',
+                                                     width: 300, height: 300)
+                                                 : FadeInImage.assetNetwork(
+                                                     placeholder: 'assets/load.gif',
+                                                     image: producto.img!,
+                                                     width: 300,
+                                                     height: 300,
+                                                     fit: BoxFit.fill,
+                                                     imageErrorBuilder:
+                                                         (context, error, stackTrace) {
+                                                       return Image.asset(
+                                                           'assets/noimage.jpeg',
+                                                           width: 300,
+                                                           height: 300);
+                                                     },
+                                                   );
+                                                                             
+                                             return Stack(
                                                children: [
-                                                 IconButton(
-                                                   onPressed: () {
-                                                     showDialog(
-                                                       context: context,
-                                                       builder: (BuildContext
-                                                           context) {
-                                                         return AlertDialog(
-                                                           backgroundColor:
-                                                               Colors.white,
-                                                           title: Center(
-                                                             child: Row(
-                                                               mainAxisAlignment:
-                                                                   MainAxisAlignment.end,
-                                                               children: [
-                                                                 Text(localization.nutricional,
-                                                                   style: GoogleFonts.plusJakartaSans(
-                                                                       fontSize: 14,
-                                                                       color: Colors.black,
-                                                                       fontWeight:FontWeight.bold),
-                                                                 ),
-                                                                 IconButton(
-                                                                   onPressed:
-                                                                       () {
-                                                                     Navigator.of(context) .pop();
-                                                                   },
-                                                                   icon: const Icon( Icons.close),
-                                                                 )
-                                                               ],
-                                                             ),
+                                                 Center(
+                                                   child: Container(
+                                                     width: MediaQuery.of(context).size.width * 0.8,
+                                                     height: 450,
+                                                     margin: const EdgeInsets.symmetric(
+                                                         horizontal: 10),
+                                                     decoration: BoxDecoration(
+                                                       color: Colors.white,
+                                                       borderRadius:
+                                                           BorderRadius.circular(30),
+                                                     ),
+                                                     child: Column(
+                                                       mainAxisAlignment: MainAxisAlignment.center,
+                                                       children: [
+                                                         Padding(
+                                                           padding: const EdgeInsets.only( right: 20),
+                                                           child: Row(
+                                                             mainAxisAlignment: MainAxisAlignment.end,
+                                                             children: [
+                                                               IconButton(
+                                                                 onPressed: () {
+                                                                   showDialog(
+                                                                     context: context,
+                                                                     builder: (BuildContext
+                                                                         context) {
+                                                                       return AlertDialog(
+                                                                         backgroundColor:
+                                                                             Colors.white,
+                                                                         title: Center(
+                                                                           child: Row(
+                                                                             mainAxisAlignment:
+                                                                                 MainAxisAlignment.end,
+                                                                             children: [
+                                                                               Text(localization.nutricional,
+                                                                                 style: GoogleFonts.plusJakartaSans(
+                                                                                     fontSize: 14,
+                                                                                     color: Colors.black,
+                                                                                     fontWeight:FontWeight.bold),
+                                                                               ),                                       
+                                                                               IconButton(
+                                                                                 onPressed:
+                                                                                     () {
+                                                                                   Navigator.of(context) .pop();
+                                                                                 },
+                                                                                 icon: const Icon( Icons.close),
+                                                                               ),
+                                                                             ],
+                                                                           ),
+                                                                         ),
+                                                                         content: SizedBox(
+                                                                           width: MediaQuery.of(context) .size .width * 0.7,
+                                                                           height: MediaQuery.of(context) .size .height * 0.4,
+                                                                           child:
+                                                                               const Column(
+                                                                             mainAxisSize: MainAxisSize.min,
+                                                                             children: [
+                                                                               // INFO O IMAGENES
+                                                                             ],
+                                                                           ),
+                                                                         ),
+                                                                       );
+                                                                     },
+                                                                   );
+                                                                 },
+                                                                 icon: const Icon(Icons.search_outlined),
+                                                               )
+                                                             ],
                                                            ),
-                                                           content: SizedBox(
-                                                             width: MediaQuery.of(context) .size .width * 0.7,
-                                                             height: MediaQuery.of(context) .size .height * 0.4,
-                                                             child:
-                                                                 const Column(
-                                                               mainAxisSize: MainAxisSize.min,
-                                                               children: [
-                                                                 // INFO O IMAGENES
-                                                               ],
-                                                             ),
-                                                           ),
-                                                         );
-                                                       },
-                                                     );
-                                                   },
-                                                   icon: const Icon(Icons.search_outlined),
-                                                 )
+                                                         ),
+                                                         ClipRRect(
+                                                           borderRadius:
+                                                               BorderRadius.circular(10),
+                                                           child: image,
+                                                         ),
+                                                         const SizedBox(height: 10),
+                                                         Text(
+                                                           producto.descripcion.toString(),
+                                                           style:
+                                                               GoogleFonts.plusJakartaSans(
+                                                                   fontSize: 14,
+                                                                   color: Colors.black,
+                                                                   fontWeight:FontWeight.bold),
+                                                         ),
+                                                        
+                                                         const Divider(
+                                                           indent: 30,
+                                                           endIndent: 30,
+                                                           color: Colors.black,
+                                                         ),
+                                                         Text(
+                                                           'MARCA',
+                                                           style:
+                                                               GoogleFonts.plusJakartaSans(
+                                                                   fontSize: 12,
+                                                                   color: Colors.black),
+                                                         ),
+                                                         const SizedBox(height: 20),
+                                                       ],
+                                                     ),
+                                                   ),
+                                                 ),
+                                                                        Positioned(
+                                                  left: 20,
+                                                  top: MediaQuery.of(context).size.height * 0.2,
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      _pageController.previousPage(
+                                                        duration: const Duration(milliseconds: 300),
+                                                        curve: Curves.easeInOut,
+                                                      );
+                                                    },
+                                                    icon: const Icon(Icons.arrow_back_ios, size: 30),
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  right: 20,
+                                                  top: MediaQuery.of(context).size.height * 0.2,
+                                                  child: IconButton(
+                                                    onPressed: () {
+                                                      _pageController.nextPage(
+                                                        duration: const Duration(milliseconds: 300),
+                                                        curve: Curves.easeInOut,
+                                                      );
+                                                    },
+                                                    icon: const Icon(Icons.arrow_forward_ios, size: 30),
+                                                  ),
+                                                ),
                                                ],
-                                             ),
-                                           ),
-                                           ClipRRect(
-                                             borderRadius:
-                                                 BorderRadius.circular(10),
-                                             child: image,
-                                           ),
-                                           const SizedBox(height: 10),
-                                           Text(
-                                             producto.descripcion.toString(),
-                                             style:
-                                                 GoogleFonts.plusJakartaSans(
-                                                     fontSize: 14,
-                                                     color: Colors.black,
-                                                     fontWeight:FontWeight.bold),
-                                           ),
-                                           const Divider(
-                                             indent: 30,
-                                             endIndent: 30,
-                                             color: Colors.black,
-                                           ),
-                                           Text(
-                                             'MARCA',
-                                             style:
-                                                 GoogleFonts.plusJakartaSans(
-                                                     fontSize: 12,
-                                                     color: Colors.black),
-                                           ),
-                                           const SizedBox(height: 20),
-                                         ],
-                                       ),
-                                     );
-                                   },
-                                 ),
-                               ),
-                               const SizedBox(height:10), // Espaciado entre la lista y el indicador
-                               SmoothPageIndicator(
-                                 controller: _pageController,
-                                 count: 5,
-                                 effect: const ScrollingDotsEffect(
-                                   activeDotColor:
-                                       Color.fromRGBO(177, 255, 46, 1),
-                                   dotColor: Colors.grey,
-                                   dotHeight: 8,
-                                   dotWidth: 8,
-                                   spacing: 4,
-                                   maxVisibleDots:
-                                       5, // Limita la cantidad de puntos mostrados
-                                 ),
-                               ),
-                             ],
-                           );
-                         },
-                       ),
+                                             );
+                                           },
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                   const SizedBox(height:10), // Espaciado entre la lista y el indicador
+                                   SmoothPageIndicator(
+                                     controller: _pageController,
+                                     count: 5,
+                                     effect: const ScrollingDotsEffect(
+                                       activeDotColor:
+                                           Color.fromRGBO(177, 255, 46, 1),
+                                       dotColor: Colors.grey,
+                                       dotHeight: 8,
+                                       dotWidth: 8,
+                                       spacing: 4,
+                                       maxVisibleDots:
+                                           5, // Limita la cantidad de puntos mostrados
+                                     ),
+                                   ),
+                                 ],
+                               );
+                             },
+                           ),
+                         ),
+                       ],
                      ),
            
                      const SizedBox(height: 30),

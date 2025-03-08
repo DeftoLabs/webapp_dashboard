@@ -12,6 +12,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/ordenes.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -74,7 +75,8 @@ void didChangeDependencies() {
   Widget build(BuildContext context) {
 
     final currentUser = Provider.of<AuthProvider>(context).user;
-    final todayDay = DateFormat('dd/MM/yy').format(DateTime.now());
+
+    final localization = AppLocalizations.of(context)!;
 
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -87,30 +89,12 @@ void didChangeDependencies() {
                 if(currentUser?.rol == 'MASTER_ROL'|| currentUser?.rol == 'ADMIN_ROLE')
                 Column(
                   children: [
-                    Row(
-                      children: [
-                        IconButton(
-                            color: Colors.black,
-                            onPressed: () {
-                              NavigationService.navigateTo('/dashboard/orders/records');
-                            },
-                            icon: const Icon(Icons.arrow_back_rounded)),
-                            const SizedBox(width: 5),
-                            Text('TO ORDERS RECORDS', style: GoogleFonts.plusJakartaSans(fontSize: 10, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                      Row(
-                      children: [
-                        IconButton(
-                            color: Colors.black,
-                            onPressed: () {
-                              NavigationService.navigateTo('/dashboard/orders');
-                            },
-                            icon: const Icon(Icons.arrow_back_rounded)),
-                            const SizedBox(width: 5),
-                            Text('TO ORDERS $todayDay', style: GoogleFonts.plusJakartaSans(fontSize: 10, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
+                      IconButton(
+                          color: Colors.black,
+                          onPressed: () {
+                            NavigationService.navigateTo('/dashboard/orders');
+                          },
+                          icon: const Icon(Icons.arrow_back_rounded)),
                   ],
                 )
                 else if(currentUser?.rol == 'USER_ROLE')
@@ -122,7 +106,7 @@ void didChangeDependencies() {
                     icon: const Icon(Icons.arrow_back_rounded)),
                 Expanded(
                   child: Text(
-                    'Orden View',
+                    localization.gerenalorders,
                     style: GoogleFonts.plusJakartaSans(fontSize: 30),
                     textAlign: TextAlign.center,
                   ),
@@ -136,7 +120,7 @@ void didChangeDependencies() {
                         borderRadius: BorderRadius.circular(20),),
                     child: TextButton(
                       child: Text(
-                        'DOWNLOAD',
+                        localization.dowload,
                         style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
@@ -172,12 +156,12 @@ void didChangeDependencies() {
 
                             await file.writeAsBytes(pdfBytes);
                             await OpenFile.open(filePath); // Abre el archivo
-                            NotificationService.showSnackBa('Download Order');
+                            NotificationService.showSnackBa(localization.ordermessagedownload);
                           } else {
-                            throw UnsupportedError('Platform Not Supported');
+                            throw UnsupportedError(localization.orderdownloadmessage05);
                           }
                         } catch (e) {
-                          NotificationService.showSnackBarError('Invalid data. Please Contact Customer Service.');
+                          NotificationService.showSnackBarError(localization.orderdownloadmessage05);
                         }
                       }
                   ),
@@ -300,6 +284,25 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
           }
         }
 
+        String getStatusTranslation(String status) {
+          switch (status) {
+            case 'ORDER':
+              return 'ORDEN';
+            case 'APPROVED':
+              return 'APROVADO';
+            case 'CANCEL':
+              return 'CANCELADO';
+            case 'INVOICE':
+              return 'FACTURA';
+            case 'NOTE':
+              return 'NOTA';
+            default:
+              return 'ERROR'; // Para cualquier otro estado
+          }
+        }
+
+        final localization = AppLocalizations.of(context)!;
+
     return Container(
       width: 250,
       margin: const EdgeInsets.all(5),
@@ -330,7 +333,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   Text(profile.direccion,
                       style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                   const SizedBox(height: 2),
-                  Text('Phone: ${profile.telefono}',
+                  Text('${localization.phone} ${profile.telefono}',
                       style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                   const SizedBox(height: 2),
                   Text('email: ${profile.email1}',
@@ -347,15 +350,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     const SizedBox(height: 5),
                     Row(
                       children: [
-                        Text('CREATE:',
+                        Text(localization.create,
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, fontWeight: FontWeight.bold)),
+                                fontSize: 12, fontWeight: FontWeight.bold)),
                         const SizedBox(width: 5),
                         Text(
                           DateFormat('dd/MM/yy - HH:mm')
                               .format(orden.fechacreado),
                           style: GoogleFonts.plusJakartaSans(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -363,15 +366,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                     ),
                     Row(
                       children: [
-                        Text('MODIFY:',
+                        Text(localization.modify,
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, fontWeight: FontWeight.bold)),
+                                fontSize: 12, fontWeight: FontWeight.bold)),
                         const SizedBox(width: 5),
                         Text(
                           DateFormat('dd/MM/yy - HH:mm')
                               .format(orden.updatedAt),
                           style: GoogleFonts.plusJakartaSans(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -431,7 +434,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   ),
                   child: Center(
                     child: Text(
-                      orden.status,
+                      getStatusTranslation(orden.status),
                       style: GoogleFonts.plusJakartaSans(
                         color: Colors.white,
                         fontSize: 16,
@@ -473,46 +476,46 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 20),
-                          Text('CUSTOMER INFO',
+                          Text(localization.customerinfo,
                               style: GoogleFonts.plusJakartaSans(
                                   fontSize: 14, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 10),
                           Row(
                             children: [
-                              Text('CODE:',
+                              Text(localization.code,
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 13)),
+                                      fontSize: 12)),
                               const SizedBox(width: 5),
                               Text(orden.clientes.first.codigo,
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold)),
                             ],
                           ),
                           const SizedBox(height: 5),
                           Text(orden.clientes.first.nombre,
                               style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold)),
                          const SizedBox(height: 5),
                               Row(
                                 children: [
-                                  Text('BRANCH:', 
+                                  Text(localization.branch, 
                                   style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 14)),
+                                  fontSize: 12)),
                                   const SizedBox(width: 5),
                                   Text(orden.clientes.first.sucursal,
                                       style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 14,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.bold)),
                                 ],
                               ),
                           const SizedBox(height: 5),
                           Row(
                             children: [
-                              Text('ADDRESS:',
+                              Text(localization.address,
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold)),
                               const SizedBox(width: 5),
                               SizedBox(
@@ -520,7 +523,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                 child: Text(
                                   orden.clientes.first.direccion,
                                   style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.normal,
                                   ),
                                   maxLines: null,
@@ -532,13 +535,13 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           const SizedBox(height: 5),
                           Row(
                             children: [
-                              Text('PHONE:',
+                              Text(localization.phoneh,
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 13)),
+                                      fontSize: 12)),
                               const SizedBox(width: 5),
                               Text(orden.clientes.first.telefono,
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold)),
                             ],
                           ),
@@ -547,11 +550,11 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             children: [
                               Text('email:',
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 13)),
+                                      fontSize: 12)),
                               const SizedBox(width: 5),
                               Text(orden.clientes.first.correo,
                                   style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold)),
                             ],
                           ),
@@ -597,15 +600,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
               Row(
               children: [
                 const SizedBox(width: 20),
-                Text('DELIVERY DATE:',
-                    style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                Text(localization.deliverydate,
+                    style: GoogleFonts.plusJakartaSans(fontSize: 12)),
                 const SizedBox(width: 5),
                 Text(
                   fechaEntrega != null
                       ? DateFormat('dd/MM/yy').format(fechaEntrega!) // Formato de la fecha
-                      : 'SELECT DATE', // Cambiar a 'SELECT DATE'
+                      : localization.selectdate, // Cambiar a 'SELECT DATE'
                   style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -647,7 +650,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                 orden.status != 'INVOICE' && 
                 orden.status != 'NOTE' && 
                 orden.status != 'OTHER' ? 
-                Text('ADD PRODUCT',
+                Text(localization.addproduct,
                   style: GoogleFonts.plusJakartaSans(
                   fontSize: 12,
                   color: Colors.black,
@@ -675,20 +678,20 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
                         columns: [
-                          DataColumn(label: Text('CODE',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                          DataColumn(label: Text('DESCRIPTION', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                          DataColumn(label: Text('QTY / EDIT',  style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                          DataColumn(label: Text('UNID',        style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                          DataColumn(label: Text('PRICE / EDIT',style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
-                          DataColumn(label: Text('DELETE',      style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text(localization.code,     style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text(localization.item,     style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text(localization.quantity, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text('UNID',                style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text(localization.price,    style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),)),
+                          DataColumn(label: Text(localization.delete,   style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold),)),
                         ],
                         rows: orden.productos.map((producto) {
                           return DataRow(cells: [
                             DataCell(Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: Text(producto.nombre),
+                              child: Text(producto.nombre, style: const TextStyle(fontSize: 12),),
                             )),
-                            DataCell(Text(producto.descripcion.toString())),
+                            DataCell(Text(producto.descripcion.toString(), style: const TextStyle(fontSize: 12),)),
                            DataCell(
                                 orden.status != 'ORDER' && orden.status != 'APPROVED'
                                     ? Text(
@@ -710,7 +713,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                               child: TextFormField(
                                                 initialValue: producto.cantidad.toString(),
                                                 style: GoogleFonts.plusJakartaSans(
-                                                  fontSize: 14,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                                 maxLength: 8,
@@ -738,10 +741,10 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                                 ),
                                                 validator: (value) {
                                                   if (value == null || value.isEmpty) {
-                                                    return 'This field cannot be empty';
+                                                    return localization.qtymessage01;
                                                   }
                                                   if (!RegExp(r'^\d+(\.\d{0,2})?$').hasMatch(value)) {
-                                                    return 'Max 4 digits and 2 decimals';
+                                                    return localization.qtymessage02;
                                                   }
                                                   return null;
                                                 },
@@ -766,7 +769,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                         : Text(
                                             producto.cantidad.toString(),
                                             style: GoogleFonts.plusJakartaSans(
-                                              fontSize: 14,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -777,7 +780,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                               orden.status != 'ORDER' && orden.status != 'APPROVED' ? 
                               Text(producto.precio.toString(),
                               style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold
                               )
                               ) :
@@ -837,21 +840,21 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                                   },
                                                   validator: (value) {
                                                     if (value == null || value.isEmpty) {
-                                                      return 'Enter a Price';
+                                                      return localization.pricemessage01;
                                                     }
                                                     if (double.tryParse(value) == null) {
-                                                      return 'Enter a Number';
+                                                      return localization.pricemessage02;
                                                     }
                                                     return null; // No error
                                                   },
                                                   style: GoogleFonts.plusJakartaSans(
-                                                    fontSize: 14, 
+                                                    fontSize: 12, 
                                                     fontWeight: FontWeight.bold, 
                                                     color: Colors.black),
                                                   decoration: InputDecoration(
-                                                    hintText: 'ENTER PRICE',
+                                                    hintText: localization.priceenter,
                                                     hintStyle: GoogleFonts.plusJakartaSans(
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       color: Colors.black
                                                     ),
                                                     border: OutlineInputBorder(
@@ -902,7 +905,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                                   DropdownMenuItem<double>(
                                                     value: -1, // Valor para activar el precio manual
                                                     child: Text(
-                                                      'ENTER PRICE',
+                                                      localization.priceenter,
                                                       style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
@@ -918,7 +921,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                               ) 
                               : Text(producto.precio.toString(),
                               style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold
                               )
                               )
@@ -943,7 +946,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                         backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                         title: Center(
                                           child: 
-                                          Text('Warning', 
+                                          Text(localization.warning, 
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 24,
                                             fontWeight: FontWeight.bold
@@ -954,15 +957,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                                 fontSize: 18,
                                                 color: Colors.black, // Color del texto general
                                               ),
-                                              children: const <TextSpan>[
-                                                TextSpan(text: 'This order has only 1 item. To cancel the order, please use: '),
+                                              children: <TextSpan>[
+                                                TextSpan(text: localization.orderdelete01),
                                                 TextSpan(
-                                                  text: '"DELETE"',
-                                                  style: TextStyle(
+                                                  text: localization.delete,
+                                                  style: const TextStyle(
                                                     fontWeight: FontWeight.bold, // Negrita para "CANCEL"
                                                   ),
                                                 ),
-                                                TextSpan(text: ' button.'),
+                                                const TextSpan(text: ' button.'),
                                               ],
                                             ),      
                                           ),
@@ -987,12 +990,12 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                   String orderId = orden.id;
                                   final saved = await ordenFormProvider.deleteProductByOrder(orderId, productId);
                                   if(saved) {
-                                  NotificationService.showSnackBa('Product Deleted');
+                                  NotificationService.showSnackBa(localization.orderdelete02);
                                   if (!context.mounted) return;
                                   Provider.of<OrdenesProvider>(context, listen: false).getOrdenById(orderId);
                                   NavigationService.replaceTo('/dashboard/orders/$orderId');
                                 } else {
-                                  NotificationService.showSnackBarError('Error to Update Order');
+                                  NotificationService.showSnackBarError(localization.orderdelete03);
                                 }
                                 }
                               },
@@ -1021,17 +1024,17 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       crossAxisAlignment:
                           CrossAxisAlignment.end, // Alineación a la derecha
                       children: [
-                        Text('SUB TOTAL: ',
+                        Text('SUB TOTAL',
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
-                        Text('TAX: ',
+                        Text(localization.tax,
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
-                        Text('TOTAL: ',
+                        Text('TOTAL ',
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
                       ],
                     ),
@@ -1042,15 +1045,15 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                       children: [
                         Text(finance?.mainCurrencysymbol ?? 'NOT',
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
                         Text('16',
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
                       Text(finance?.mainCurrencysymbol ?? 'NOT',
                             style: GoogleFonts.plusJakartaSans(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 12, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.right),
                       ],
                     ),
@@ -1089,19 +1092,20 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   Container(
                     alignment: Alignment.centerRight,
                     margin: const EdgeInsets.symmetric(horizontal: 50),
-                    child: Text('OBSERVATIONS AND COMMENTS', style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold))),
+                    child: Text(localization.observationsandcomments, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold))),
                   const SizedBox(height: 15),
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       children: [
-                        Text('OBSERVATIONS AND COMMENTS BY ',
+                        Text(localization.salesrepresentative,
                         style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14)
+                          fontSize: 12)
                         ),
+                        const SizedBox(width: 10),
                         Text(orden.ruta.first.usuarioZona.nombre, style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14, fontWeight: FontWeight.bold))
+                          fontSize: 12, fontWeight: FontWeight.bold))
                       ],
                     ),
                   ),
@@ -1118,9 +1122,9 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text('OBSERVATIONS AND COMMENTS:',
+                    child: Text(localization.manager,
                     style: GoogleFonts.plusJakartaSans(
-                    fontSize: 14, 
+                    fontSize: 12, 
                     fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 5),
@@ -1137,7 +1141,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                          initialValue: orden.comentarioRevision,
                           style: GoogleFonts.plusJakartaSans(
                             color: Colors.black,
-                            fontSize: 14),
+                            fontSize: 12),
                           decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(color: Colors.black, width: 1),
@@ -1163,9 +1167,9 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                             },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Cannot be empty.';
+                              return localization.commentsmessage01;
                             } else if (value.length > 25) {
-                              return 'Cannot exceed 25 characters.';
+                              return localization.maxlegth25;
                             }
                             return null; // Validation successful
                           },
@@ -1194,7 +1198,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                         )),
                     child: TextButton(
                       child: Text(
-                        'DELETE',
+                        localization.delete,
                         style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
@@ -1203,7 +1207,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           final dialog = AlertDialog(
                             backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                             title: Center(
-                              child: Text('Are you sure to delete this Order?', 
+                              child: Text(localization.deleteorder, 
                                style: GoogleFonts.plusJakartaSans(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold
@@ -1227,7 +1231,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                 }, 
                               ),
                               TextButton(
-                                child: Text('Yes, Delete',  
+                                child: Text(localization.yesdelete,  
                                 style: GoogleFonts.plusJakartaSans(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -1237,7 +1241,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                                   final ordenesProvider = Provider.of<OrdenesProvider>(context, listen: false);
                                   await ordenesProvider.deleteOrden(orden.id);
                                   if (context.mounted) {
-                                    NotificationService.showSnackBa('Order has been Deleted');
+                                    NotificationService.showSnackBa(localization.messageorderdelete);
                                     NavigationService.replaceTo('/dashboard/orders');
                                   }
                                   }, 
@@ -1266,7 +1270,7 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                         )),
                     child: TextButton(
                       child: Text(
-                        'SAVE',
+                        localization.save,
                         style: GoogleFonts.plusJakartaSans(
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
@@ -1280,10 +1284,10 @@ class _OrdenViewBodyState extends State<_OrdenViewBody> {
                           Provider.of<OrdenesProvider>(context, listen: false).getPaginatedOrdenes;
                           NavigationService.navigateTo('/dashboard/orders');
                         } else {
-                          NotificationService.showSnackBarError('Error to Update Order');
+                          NotificationService.showSnackBarError(localization.messageorder02);
                         }
                       } else {
-                        NotificationService.showSnackBarError('Invalid Data');
+                        NotificationService.showSnackBarError(localization.messageorder03);
                       }
                     }
                   ),
@@ -1310,6 +1314,26 @@ class CreditInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+     String getStatusTranslation(String status) {
+          switch (status) {
+            case 'ORDER':
+              return 'ORDEN';
+            case 'APPROVED':
+              return 'APROVADO';
+            case 'CANCEL':
+              return 'CANCELADO';
+            case 'INVOICE':
+              return 'FACTURA';
+            case 'NOTE':
+              return 'NOTA';
+            default:
+              return 'ERROR'; // Para cualquier otro estado
+          }
+        }
+
+      final localization = AppLocalizations.of(context)!;
+
     return Container(
       height: 240,
       margin: const EdgeInsets.all(5),
@@ -1335,16 +1359,16 @@ class CreditInfo extends StatelessWidget {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Text('CREDIT:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                  Text(localization.credit,
+                      style: GoogleFonts.plusJakartaSans(fontSize: 11)),
                   const SizedBox(width: 5),
                   Text(orden.clientes.first.credito.toString(),
                       style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14, fontWeight: FontWeight.bold)),
+                          fontSize: 12, fontWeight: FontWeight.bold)),
                   const SizedBox(width: 5),
-                  Text('DAYS',
+                  Text(localization.days,
                       style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14, fontWeight: FontWeight.bold)),
+                          fontSize: 12, fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(height: 5),
@@ -1352,39 +1376,39 @@ class CreditInfo extends StatelessWidget {
                 children: [
                   Text(orden.ruta.first.usuarioZona.nombre,
                       style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14, fontWeight: FontWeight.bold)),
+                          fontSize: 12, fontWeight: FontWeight.bold)),
                   const SizedBox(width: 15),
-                  Text('COD:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                  Text(localization.code,
+                      style: GoogleFonts.plusJakartaSans(fontSize: 11)),
                   const SizedBox(width: 5),
                   Text(orden.ruta.first.usuarioZona.zone,
                       style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14, fontWeight: FontWeight.bold)),
+                          fontSize: 12, fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(height: 5),
               Row(
                 children: [
-                  Text('ROUTE:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 14)),
+                  Text(localization.routeh,
+                      style: GoogleFonts.plusJakartaSans(fontSize: 11)),
                   const SizedBox(width: 5),
                   Text(orden.ruta.first.nombreRuta,
                       style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14, fontWeight: FontWeight.bold)),
+                          fontSize: 12, fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(height: 5),
               Row(
                 children: [
-                  Text('DELIVERY:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                  Text(localization.deliveryh,
+                      style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold)),
                   const SizedBox(width: 5),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.25,
                     child: Text(
                       orden.clientes.first.direccion,
                       style: GoogleFonts.plusJakartaSans(
-                        fontSize: 14,
+                        fontSize: 11,
                         fontWeight: FontWeight.normal,
                       ),
                       maxLines: null,
@@ -1396,12 +1420,12 @@ class CreditInfo extends StatelessWidget {
               const SizedBox(height: 10),
               Row(
                 children: [
-                  Text('TYPE:',
-                      style: GoogleFonts.plusJakartaSans(fontSize: 13)),
+                  Text(localization.type,
+                      style: GoogleFonts.plusJakartaSans(fontSize: 11)),
                   const SizedBox(width: 5),
-                  Text(orden.tipo,
+                  Text(getStatusTranslation(orden.tipo),
                       style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14, fontWeight: FontWeight.bold)),
+                          fontSize: 12, fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(height: 15),

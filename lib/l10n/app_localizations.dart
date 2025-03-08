@@ -737,6 +737,306 @@ abstract class AppLocalizations {
   /// **'NO ORDERS FOUND FOR: '**
   String get noroderfound;
 
+  /// No description provided for @dowload.
+  ///
+  /// In en, this message translates to:
+  /// **'DOWNLOAD'**
+  String get dowload;
+
+  /// No description provided for @ordermessagedownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Order\''**
+  String get ordermessagedownload;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'CREATE'**
+  String get create;
+
+  /// No description provided for @modify.
+  ///
+  /// In en, this message translates to:
+  /// **'MODIFY'**
+  String get modify;
+
+  /// No description provided for @customerinfo.
+  ///
+  /// In en, this message translates to:
+  /// **'CUSTOMER INFO'**
+  String get customerinfo;
+
+  /// No description provided for @code.
+  ///
+  /// In en, this message translates to:
+  /// **'CODE'**
+  String get code;
+
+  /// No description provided for @address.
+  ///
+  /// In en, this message translates to:
+  /// **'ADDRESS'**
+  String get address;
+
+  /// No description provided for @phoneh.
+  ///
+  /// In en, this message translates to:
+  /// **'PHONE'**
+  String get phoneh;
+
+  /// No description provided for @credit.
+  ///
+  /// In en, this message translates to:
+  /// **'CREDIT'**
+  String get credit;
+
+  /// No description provided for @days.
+  ///
+  /// In en, this message translates to:
+  /// **'DAYS'**
+  String get days;
+
+  /// No description provided for @routeh.
+  ///
+  /// In en, this message translates to:
+  /// **'ROUTE'**
+  String get routeh;
+
+  /// No description provided for @deliveryh.
+  ///
+  /// In en, this message translates to:
+  /// **'DELIVERY'**
+  String get deliveryh;
+
+  /// No description provided for @typeh.
+  ///
+  /// In en, this message translates to:
+  /// **'TYPE'**
+  String get typeh;
+
+  /// No description provided for @tax.
+  ///
+  /// In en, this message translates to:
+  /// **'TAX'**
+  String get tax;
+
+  /// No description provided for @selectdate.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT DATE'**
+  String get selectdate;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'DELETE'**
+  String get delete;
+
+  /// No description provided for @qtymessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'This field cannot be empty'**
+  String get qtymessage01;
+
+  /// No description provided for @qtymessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 4 digits and 2 decimals'**
+  String get qtymessage02;
+
+  /// No description provided for @pricemessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Price'**
+  String get pricemessage01;
+
+  /// No description provided for @pricemessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Number'**
+  String get pricemessage02;
+
+  /// No description provided for @priceenter.
+  ///
+  /// In en, this message translates to:
+  /// **'ENTER PRICE'**
+  String get priceenter;
+
+  /// No description provided for @orderdelete01.
+  ///
+  /// In en, this message translates to:
+  /// **'This order has only 1 item. To cancel the order, please use: '**
+  String get orderdelete01;
+
+  /// No description provided for @orderdelete02.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Deleted'**
+  String get orderdelete02;
+
+  /// No description provided for @orderdelete03.
+  ///
+  /// In en, this message translates to:
+  /// **'Error to Update the Order'**
+  String get orderdelete03;
+
+  /// No description provided for @salesrepresentative.
+  ///
+  /// In en, this message translates to:
+  /// **'SALES REPRESENTATIVE'**
+  String get salesrepresentative;
+
+  /// No description provided for @manager.
+  ///
+  /// In en, this message translates to:
+  /// **'GENERAL INFO'**
+  String get manager;
+
+  /// No description provided for @commentsmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot be empty'**
+  String get commentsmessage01;
+
+  /// No description provided for @maxlegth25.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot exceed 25 characters'**
+  String get maxlegth25;
+
+  /// No description provided for @deleteorder.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure to DELETE this ORDER?'**
+  String get deleteorder;
+
+  /// No description provided for @yesdelete.
+  ///
+  /// In en, this message translates to:
+  /// **'YES, DELETE'**
+  String get yesdelete;
+
+  /// No description provided for @messageorderdelete.
+  ///
+  /// In en, this message translates to:
+  /// **'The ORDER has been DELETED'**
+  String get messageorderdelete;
+
+  /// No description provided for @messageorder01.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Updated'**
+  String get messageorder01;
+
+  /// No description provided for @messageorder02.
+  ///
+  /// In en, this message translates to:
+  /// **'Error to Update Order'**
+  String get messageorder02;
+
+  /// No description provided for @messageorder03.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact to Support'**
+  String get messageorder03;
+
+  /// No description provided for @ordersrecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders Records'**
+  String get ordersrecords;
+
+  /// No description provided for @searchbycustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get searchbycustomer;
+
+  /// No description provided for @searchbydate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get searchbydate;
+
+  /// No description provided for @searchbyrepresentative.
+  ///
+  /// In en, this message translates to:
+  /// **'Representantive'**
+  String get searchbyrepresentative;
+
+  /// No description provided for @searchbyproduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get searchbyproduct;
+
+  /// No description provided for @searchbyroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Route'**
+  String get searchbyroute;
+
+  /// No description provided for @rsales.
+  ///
+  /// In en, this message translates to:
+  /// **'REPRESENTATIVE'**
+  String get rsales;
+
+  /// No description provided for @gerenalorders.
+  ///
+  /// In en, this message translates to:
+  /// **'ORDERS VIEW'**
+  String get gerenalorders;
+
+  /// No description provided for @orderdownloadmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Order downloaded successfully.'**
+  String get orderdownloadmessage01;
+
+  /// No description provided for @orderdownloadmessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'That date has no orders'**
+  String get orderdownloadmessage02;
+
+  /// No description provided for @orderdownloadmessage03.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders found for the requested date'**
+  String get orderdownloadmessage03;
+
+  /// No description provided for @orderdownloadmessage04.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while fetching the data. Please try again.'**
+  String get orderdownloadmessage04;
+
+  /// No description provided for @orderdownloadmessage05.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again.'**
+  String get orderdownloadmessage05;
+
+  /// No description provided for @orderoftheday.
+  ///
+  /// In en, this message translates to:
+  /// **'Order of the Day'**
+  String get orderoftheday;
+
+  /// No description provided for @norodertoday.
+  ///
+  /// In en, this message translates to:
+  /// **'NO ORDERS RECEIVED FOR TODAY'**
+  String get norodertoday;
+
   /// No description provided for @shipmentstatus.
   ///
   /// In en, this message translates to:

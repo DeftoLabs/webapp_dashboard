@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/datatables/orders_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
@@ -65,6 +66,8 @@ class _OrdersViewState extends State<OrdersView> {
 
      final double screenWidth = MediaQuery.of(context).size.width;
 
+     final locallization = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -76,7 +79,7 @@ class _OrdersViewState extends State<OrdersView> {
               const SizedBox(width: 20),
               Expanded
               (
-                child: Text('ORDERS VIEW', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
+                child: Text(locallization.gerenalorders, style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
                 ordersDataSource.rowCount > 0 ?
                Container(
                   height: 50,
@@ -106,7 +109,7 @@ class _OrdersViewState extends State<OrdersView> {
                         anchor.click();
                         html.Url.revokeObjectUrl(url);
                   
-                        NotificationService.showSnackBa('Order downloaded successfully.');
+                        NotificationService.showSnackBa(locallization.orderdownloadmessage01);
                       } else if (Platform.isAndroid || Platform.isIOS) {
                         // Lógica para móviles
                         final directory = await getApplicationDocumentsDirectory();
@@ -116,19 +119,19 @@ class _OrdersViewState extends State<OrdersView> {
                         await file.writeAsBytes(pdfBytes);
                         await OpenFile.open(filePath);
                   
-                        NotificationService.showSnackBa('Order downloaded successfully.');
+                        NotificationService.showSnackBa(locallization.orderdownloadmessage01);
                       }
                     } on HttpException catch (e) {
-                      if (e.message.contains('That date has no orders')) {
+                      if (e.message.contains(locallization.orderdownloadmessage02)) {
                         // Manejo específico del caso "That date has no orders"
-                        NotificationService.showSnackBarError('No orders found for the requested date.');
+                        NotificationService.showSnackBarError(locallization.orderdownloadmessage03);
                       } else {
                         // Manejo genérico de otros errores HTTP
-                        NotificationService.showSnackBarError('An error occurred while fetching the data. Please try again.');
+                        NotificationService.showSnackBarError(locallization.orderdownloadmessage04);
                       }
                     } catch (e) {
                       // Manejo genérico para cualquier otro error
-                      NotificationService.showSnackBarError('An unexpected error occurred. Please try again.');
+                      NotificationService.showSnackBarError(locallization.orderdownloadmessage05);
                     }
                   },
 
@@ -164,8 +167,9 @@ class _OrdersViewState extends State<OrdersView> {
                         )),
                       child: TextButton(
                         child: Text(
-                          'Create Order',
+                          locallization.createorder,
                           style: GoogleFonts.plusJakartaSans(
+                            fontSize: 12,
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
                         onPressed: () {
@@ -200,7 +204,7 @@ Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Order of the Day - $todayDate',
+            '${locallization.orderoftheday}  $todayDate',
             style: GoogleFonts.plusJakartaSans(
                 fontSize: 16, fontWeight: FontWeight.bold),
           ),
@@ -211,7 +215,7 @@ Column(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 200),
                     child: Text(
-                      'NO ORDERS RECEIVED FOR TODAY',
+                      locallization.norodertoday,
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -223,14 +227,14 @@ Column(
                 )
               : PaginatedDataTable(
                   columns:[
-                    DataColumn(label: Text('# ORDER',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('DATE',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('DELIVERY',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('CUSTOMER',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('BRANCH',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('STATUS',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('SALES',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('EDIT',style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.order        ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.date         ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.deliverydate ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.customer     ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.branch       ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text('STATUS'                   ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.rsales       ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
+                    DataColumn(label: Text(locallization.edit         ,style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.bold))),
                   ],
                   source: ordersDataSource,
                   columnSpacing: screenWidth * 0.019,
@@ -284,6 +288,9 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
 
   @override
   Widget build(BuildContext context) {
+
+    final localization = AppLocalizations.of(context)!;
+
     return Stack(
       children: [
         SingleChildScrollView(
@@ -292,7 +299,7 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
           child: Row(
             children: [
               RectangularCard(
-                title: 'Order Records',
+                title: localization.ordersrecords,
                 width: 200,
                 child: const Center(child: Icon(Icons.push_pin_rounded)),
                 onTap: () {
@@ -301,7 +308,7 @@ class OrdersScrollRowState extends State<OrdersScrollRow> {
               ),
               const SizedBox(width: 16),
               RectangularCard(
-                title: 'Search By Customer',
+                title: localization.searchbycustomer,
                 width: 200,
                 child: const Center(child: Icon(Icons.add_business_sharp)),
                 onTap: () {

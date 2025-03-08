@@ -23,7 +23,8 @@ void initState() {
   
   // Usamos addPostFrameCallback para asegurarnos de que la carga de órdenes
   // se haga después de la construcción del widget
-  WidgetsBinding.instance.addPostFrameCallback((_) {
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+     await Future.delayed(const Duration(seconds: 1));
     _loadOrders();
   });
 }

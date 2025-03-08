@@ -328,6 +328,156 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noroderfound => 'NO SE ENCONTRARON ORDENES PARA: ';
 
   @override
+  String get dowload => 'DESCARGAR';
+
+  @override
+  String get ordermessagedownload => 'Orden Descargada';
+
+  @override
+  String get phone => 'Telefono';
+
+  @override
+  String get create => 'CREADA';
+
+  @override
+  String get modify => 'MODIFICADA';
+
+  @override
+  String get customerinfo => 'INFORMACION DEL CLIENTE';
+
+  @override
+  String get code => 'CODIGO';
+
+  @override
+  String get address => 'DIRECCION';
+
+  @override
+  String get phoneh => 'TELEFONO';
+
+  @override
+  String get credit => 'CREDITO';
+
+  @override
+  String get days => 'DIAS';
+
+  @override
+  String get routeh => 'RUTA';
+
+  @override
+  String get deliveryh => 'ENTREGA';
+
+  @override
+  String get typeh => 'TIPO';
+
+  @override
+  String get tax => 'IMPUESTO';
+
+  @override
+  String get selectdate => 'SELECCIONE UNA FECHA';
+
+  @override
+  String get delete => 'ELIMINAR';
+
+  @override
+  String get qtymessage01 => 'Este Campo no puede estar Vacio';
+
+  @override
+  String get qtymessage02 => 'Max 4 digitos y 2 decimales';
+
+  @override
+  String get pricemessage01 => 'Ingrese un Precio';
+
+  @override
+  String get pricemessage02 => 'Ingrese un Numero';
+
+  @override
+  String get priceenter => 'INGRESE UN PRECIO';
+
+  @override
+  String get orderdelete01 => 'Esta Orden tiene 1 Articulo, para ELIMINAR, Por Favor use: ';
+
+  @override
+  String get orderdelete02 => 'Articulo Eliminado';
+
+  @override
+  String get orderdelete03 => 'Error al Actualizar la Orden';
+
+  @override
+  String get salesrepresentative => 'REPRESENTANTE DE VENTAS';
+
+  @override
+  String get manager => 'INFORMACION GENERAL';
+
+  @override
+  String get commentsmessage01 => 'Algo que Agregar ?';
+
+  @override
+  String get maxlegth25 => 'No puede tener mas de 25 Caracteres';
+
+  @override
+  String get deleteorder => 'Esta seguro en ELIMINAR esta ORDEN?';
+
+  @override
+  String get yesdelete => 'SI, ELIMINALA';
+
+  @override
+  String get messageorderdelete => 'La ORDEN ha sido ELIMINADA';
+
+  @override
+  String get messageorder01 => 'Orden Actualizada';
+
+  @override
+  String get messageorder02 => 'Error al Actualizar la Orden';
+
+  @override
+  String get messageorder03 => 'Contacte a Soporte';
+
+  @override
+  String get ordersrecords => 'Historial de Ordenes';
+
+  @override
+  String get searchbycustomer => 'Cliente';
+
+  @override
+  String get searchbydate => 'Fecha';
+
+  @override
+  String get searchbyrepresentative => 'Representante';
+
+  @override
+  String get searchbyproduct => 'Producto';
+
+  @override
+  String get searchbyroute => 'Ruta';
+
+  @override
+  String get rsales => 'REPRESENTANTE';
+
+  @override
+  String get gerenalorders => 'ORDENES';
+
+  @override
+  String get orderdownloadmessage01 => 'Ordenes Descargas';
+
+  @override
+  String get orderdownloadmessage02 => 'En esta fecha no se han emitido Ordenes';
+
+  @override
+  String get orderdownloadmessage03 => 'No se encontraron Ordenes en la Fecha Solicitada';
+
+  @override
+  String get orderdownloadmessage04 => 'Error con la Data, Intente de Nuevo Por Favor';
+
+  @override
+  String get orderdownloadmessage05 => 'Error Inesperado, Contacte a Soporte';
+
+  @override
+  String get orderoftheday => 'Ordenes Generadas';
+
+  @override
+  String get norodertoday => 'NO SE HAN RECIBIDO ORDENES HOY';
+
+  @override
   String get shipmentstatus => 'Status de Entregas';
 
   @override
