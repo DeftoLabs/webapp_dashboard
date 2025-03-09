@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -30,6 +31,8 @@ class OrdersNewOrdern extends StatelessWidget {
             width: 35,
             height: 35);
 
+            final localizations = AppLocalizations.of(context)!;
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
@@ -47,7 +50,7 @@ class OrdersNewOrdern extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back_rounded)),
                 Expanded(
                   child: Text(
-                    'CREATE A ORDER',
+                    localizations.createorder,
                     style: GoogleFonts.plusJakartaSans(fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
@@ -119,10 +122,18 @@ class _OrdenBodyState extends State<OrdenBody> {
   @override
   Widget build(BuildContext context) {
 
-    double dynamicHeight = productsList.length * 50.0;
+    double dynamicHeight = productsList.length * 100.0;
     double screenWidth = MediaQuery.of(context).size.width;
 
     final ordenNewFormProvider = Provider.of<OrdenNewFormProvider>(context);
+
+    final localization = AppLocalizations.of(context)!;
+
+    final Map<String, String> translations = {
+      'INVOICE': 'FACTURA', 
+      'NOTE': 'NOTA', 
+    };
+
 
     return Center(
       child: ConstrainedBox(
@@ -133,7 +144,7 @@ class _OrdenBodyState extends State<OrdenBody> {
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Colors.white,
+                 color: const Color.fromARGB(255, 28, 28, 29),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -167,14 +178,15 @@ class _OrdenBodyState extends State<OrdenBody> {
                                           MainAxisAlignment.center,
                                       children: [
                                         const SizedBox(width: 20),
-                                        Text('DELIVERY DATE:',
+                                        Text(localization.deliverydate,
                                             style: GoogleFonts.plusJakartaSans(
                                                 fontSize: 12,
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold)),
                                         const SizedBox(width: 5),
                                         IconButton(
                                           icon:
-                                              const Icon(Icons.calendar_today),
+                                              const Icon(Icons.calendar_today, color: Colors.white),
                                           onPressed: () async {
                                             DateTime? pickedDate =
                                                 await showDatePicker(
@@ -215,9 +227,11 @@ class _OrdenBodyState extends State<OrdenBody> {
                                         const SizedBox(width: 10),
                                         fechaentrega != null
                                             ? Text(DateFormat('dd/MM/yy')
-                                                .format(fechaentrega!))
+                                                .format(fechaentrega!),
+                                                 style:const TextStyle(color: Colors.white)
+                                                )
                                             : const SizedBox.shrink(),
-                                        const SizedBox(width: 10),
+                                        const SizedBox(width: 50),
                                         Consumer<RutaProvider>(
                                           builder:
                                               (context, rutaProvider, child) {
@@ -229,32 +243,34 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                   hintText: '',
                                                   hintStyle: GoogleFonts.plusJakartaSans(
                                                     fontSize: 12,
-                                                    color: Colors.black,
+                                                    color: Colors.white,
                                                   ),
                                                   label: Center(
-                                                    child: Text('ORDER TYPE',
+                                                    child: Text(localization.ordertype,
                                                         style: GoogleFonts.plusJakartaSans(
-                                                        fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold)),
+                                                        fontSize: 12,color: Colors.white,
+                                                        fontWeight:FontWeight.bold)),
                                                   ),
-                                                  focusedBorder:const OutlineInputBorder(borderSide: BorderSide(color:Colors.white,  width: 2.0,),
+                                                  focusedBorder:const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 46, 46, 46),  width: 2.0,),
                                                   ),
-                                                  enabledBorder:const OutlineInputBorder(borderSide: BorderSide(color:Colors.white,  width: 2.0,),
+                                                  enabledBorder:const OutlineInputBorder(borderSide: BorderSide(color:Color.fromARGB(255, 46, 46, 46),  width: 2.0,),
                                                   ),
                                                 ),
                                                 icon: const Icon(
                                                   Icons.arrow_drop_down,
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                 ),
                                                 style:GoogleFonts.plusJakartaSans(
-                                                color: Colors.black,fontSize: 12),
-                                                dropdownColor: Colors.white,
+                                                  color: Colors.black,fontSize: 12),
+                                                  dropdownColor: const Color.fromARGB(255, 145, 148, 154).withValues(alpha: 0.9),
                                                 items: [
-                                                  'INVOICE','NOTE','OTHER'
+                                                  'INVOICE','NOTE'
                                                 ].map((tipo) {
                                                   return DropdownMenuItem<String>(
                                                     value: tipo,
-                                                    child: Text(tipo,style: const TextStyle(
-                                                    color: Colors.black),
+                                                    child: Text(
+                                                      translations[tipo] ?? tipo, // Muestra la traducción, si no hay la muestra original
+                                                      style: const TextStyle(color: Colors.white),
                                                     ),
                                                   );
                                                 }).toList(),
@@ -266,7 +282,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
-                                                    return 'SELECT A ORDER TYPE';
+                                                    return localization.errorordertype;
                                                   }
                                                   return null;
                                                 },
@@ -281,11 +297,11 @@ class _OrdenBodyState extends State<OrdenBody> {
                                           MainAxisAlignment.center,
                                       children: [
                                         const SizedBox( height: 20), // Ajusta el espaciado en caso de cambiar a Column
-                                        Text('DELIVERY DATE:',
-                                            style: GoogleFonts.plusJakartaSans(fontSize: 12,fontWeight: FontWeight.bold)),
+                                          Text(localization.deliverydate,
+                                            style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold)),
                                         const SizedBox(height:10), // Espaciado vertical entre elementos en Column
                                         IconButton(
-                                          icon: const Icon(Icons.calendar_today),
+                                          icon: const Icon(Icons.calendar_today, color: Colors.white),
                                           onPressed: () async {
                                             DateTime? pickedDate = await showDatePicker(
                                               context: context,
@@ -322,21 +338,26 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 value: tipo,
                                                 decoration: InputDecoration(
                                                   hintText: '',
-                                                  hintStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black),
+                                                  hintStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.white),
                                                   label: Center(
-                                                    child: Text('ORDER TYPE',
-                                                    style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold)),
+                                                    child: Text(localization.ordertype,
+                                                    style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.white,fontWeight:FontWeight.bold)),
                                                   ),
-                                                  focusedBorder:const OutlineInputBorder(borderSide: BorderSide(color: Colors.white,width: 2.0)),
-                                                  enabledBorder:const OutlineInputBorder(borderSide: BorderSide(color: Colors.white,width: 2.0)),
+                                                  focusedBorder:const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 46, 46, 46),width: 2.0)),
+                                                  enabledBorder:const OutlineInputBorder(borderSide: BorderSide(color: Color.fromARGB(255, 46, 46, 46),width: 2.0)),
                                                 ),
-                                                icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
-                                                style:GoogleFonts.plusJakartaSans(color: Colors.black,fontSize: 12), dropdownColor: Colors.white,
-                                                items: ['INVOICE','NOTE','OTHER'
+                                                icon: const Icon(Icons.arrow_drop_down,color: Colors.white),
+                                                style:GoogleFonts.plusJakartaSans(color: Colors.black,fontSize: 12),
+                                                 dropdownColor: const Color.fromARGB(255, 145, 148, 154).withValues(alpha: 0.9),
+                                                items: ['INVOICE','NOTE'
                                                 ].map((tipo) {
                                                   return DropdownMenuItem<String>(
                                                     value: tipo,
-                                                    child: Text(tipo,style: const TextStyle(color: Colors.black)));
+                                                    child: Text(
+                                                      translations[tipo] ?? tipo, // Muestra la traducción, si no hay la muestra original
+                                                      style: const TextStyle(color: Colors.white),
+                                                    ),
+                                                    );
                                                 }).toList(),
                                                 onChanged: (value) {
                                                   setState(() {
@@ -346,7 +367,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
-                                                    return 'PLEASE SELECT A ORDER TYPE';
+                                                   return localization.errorordertype;
                                                   }
                                                   return null;
                                                 },
@@ -362,7 +383,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                           const Divider(
                             indent: 30,
                             endIndent: 30,
-                            color: Colors.black54,
+                             color: Color.fromRGBO(177, 255, 46, 1),
                           ),
                           const SizedBox(height: 10),
                           Center(
@@ -390,20 +411,21 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       decoration: InputDecoration(
                                                         label: Center(
                                                           child: Text(
-                                                            'REPRESENTATIVE',style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold),
+                                                            localization.representative,style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.white,fontWeight:FontWeight.bold),
                                                           ),         
                                                         ),
-                                                        focusedBorder: const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0)),
-                                                        enabledBorder: const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0))),
-                                                      icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
-                                                      style: GoogleFonts.plusJakartaSans(color:Colors.black),
-                                                      dropdownColor: Colors.white,
+                                                        focusedBorder: const OutlineInputBorder(borderSide:BorderSide(color: Color.fromARGB(255, 46, 46, 46), width: 2.0)),
+                                                        enabledBorder: const OutlineInputBorder(borderSide:BorderSide(color: Color.fromARGB(255, 46, 46, 46), width: 2.0))),
+                                                       icon: const Icon(Icons.arrow_drop_down,color: Colors.white),
+                                                  style:GoogleFonts.plusJakartaSans(
+                                                  color: Colors.white,fontSize: 12),
+                                                  dropdownColor: const Color.fromARGB(255, 145, 148, 154).withValues(alpha: 0.9),
                                                       items: rutaProvider.rutas
                                                           .map((rutas) {
                                                         return DropdownMenuItem<String>(
                                                           value: rutas .usuarioZona.uid,
                                                           child: Text(rutas.usuarioZona.nombre,
-                                                            style:const TextStyle( color: Colors.black)),
+                                                            style:const TextStyle( color: Colors.white)),
                                                             onTap: (){
                                                               ruta = rutas.id; 
                                                             },
@@ -420,7 +442,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       },
                                                       validator: (value) {
                                                         if (value == null || value.isEmpty) {
-                                                        return 'PLEASE SELECT A REPRESENTATIVE';
+                                                        return localization.selectasalesrepresentative;
                                                         }
                                                         return null;
                                                       },
@@ -441,19 +463,18 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       decoration: InputDecoration(
                                                         label: Center(
                                                           child: Text(
-                                                            'CUSTOMER',
-                                                            style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.black,fontWeight:FontWeight.bold),
+                                                           localization.customer,
+                                                            style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.white,fontWeight:FontWeight.bold),
                                                           ),
                                                         ),
-                                                        focusedBorder:const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0,),
+                                                        focusedBorder:const OutlineInputBorder(borderSide:BorderSide(color: Color.fromARGB(255, 46, 46, 46), width: 2.0,),
                                                         ),
-                                                        enabledBorder:
-                                                          const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0,),
+                                                        enabledBorder: const OutlineInputBorder(borderSide:BorderSide(color: Color.fromARGB(255, 46, 46, 46), width: 2.0,),
                                                         ),
                                                       ),
-                                                      icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
-                                                      style: GoogleFonts .plusJakartaSans( color:Colors.black),
-                                                      dropdownColor:  Colors.white,
+                                                      icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                                                    style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                                                    dropdownColor: const Color.fromARGB(255, 145, 148, 154).withValues(alpha: 0.9),
                                                       items: rutaProvider
                                                           .clientesRutaSeleccionada
                                                           .map((cliente) {
@@ -463,10 +484,13 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                             mainAxisAlignment: MainAxisAlignment.start,
                                                             children: [
                                                             Text(cliente.nombre,
-                                                            style:const TextStyle(color: Colors.black)),
+                                                            style:const TextStyle(color: Colors.white)),
                                                             const SizedBox(width: 5),
                                                             Text(cliente.sucursal,
-                                                            style:const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 10)),
+                                                            style:const TextStyle(
+                                                              color: Colors.amber, 
+                                                              fontWeight: FontWeight.bold, 
+                                                              fontSize: 10)),
                                                             ],
                                                           ),
                                                         );
@@ -476,7 +500,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       validator: (value) {
                                                         if (value == null ||
                                                             value.isEmpty) {
-                                                          return 'PLEASE SELECT A CUSTOMER';
+                                                           return localization.selectacustomer;
                                                         }
                                                         return null;
                                                       },
@@ -505,20 +529,21 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       decoration: InputDecoration(
                                                         label: Center(
                                                           child: Text(
-                                                            'REPRESENTATIVE',style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold),
+                                                            localization.representative,
+                                                            style: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.white,fontWeight:FontWeight.bold),
                                                           ),         
                                                         ),
-                                                        focusedBorder: const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0)),
-                                                        enabledBorder: const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0))),
-                                                      icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
-                                                      style: GoogleFonts.plusJakartaSans(color:Colors.black),
-                                                      dropdownColor: Colors.white,
+                                                        focusedBorder: const OutlineInputBorder(borderSide:BorderSide(color: Color.fromARGB(255, 46, 46, 46), width: 2.0)),
+                                                        enabledBorder: const OutlineInputBorder(borderSide:BorderSide(color: Color.fromARGB(255, 46, 46, 46), width: 2.0))),
+                                                      icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                                                      style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                                                      dropdownColor: const Color.fromARGB(255, 145, 148, 154).withValues(alpha: 0.9),
                                                       items: rutaProvider.rutas
                                                           .map((rutas) {
                                                         return DropdownMenuItem<String>(
                                                           value: rutas .usuarioZona.uid,
                                                           child: Text(rutas.usuarioZona.nombre,
-                                                            style:const TextStyle( color: Colors.black)),
+                                                            style:const TextStyle( color: Colors.white)),
                                                             onTap: (){
                                                               ruta = rutas.id; 
                                                             },
@@ -535,7 +560,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       },
                                                       validator: (value) {
                                                         if (value == null || value.isEmpty) {
-                                                        return 'PLEASE SELECT A REPRESENTATIVE';
+                                                        return localization.selectasalesrepresentative;
                                                         }
                                                         return null;
                                                       },
@@ -563,19 +588,18 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       decoration: InputDecoration(
                                                         label: Center(
                                                           child: Text(
-                                                            'CUSTOMER',
-                                                            style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.black,fontWeight:FontWeight.bold),
+                                                            localization.customer,
+                                                            style: GoogleFonts.plusJakartaSans(fontSize:12,color: Colors.white,fontWeight:FontWeight.bold),
                                                           ),
                                                         ),
-                                                        focusedBorder:const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0,),
+                                                        focusedBorder:const OutlineInputBorder(borderSide:BorderSide(color: Color.fromARGB(255, 46, 46, 46), width: 2.0,),
                                                         ),
-                                                        enabledBorder:
-                                                          const OutlineInputBorder(borderSide:BorderSide(color: Colors.white,width: 2.0,),
+                                                        enabledBorder:const OutlineInputBorder(borderSide:BorderSide(color: Color.fromARGB(255, 46, 46, 46), width: 2.0,),
                                                         ),
                                                       ),
-                                                      icon: const Icon(Icons.arrow_drop_down,color: Colors.black),
-                                                      style: GoogleFonts .plusJakartaSans( color:Colors.black),
-                                                      dropdownColor:  Colors.white,
+                                                          icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                                                          style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                                                          dropdownColor: const Color.fromARGB(255, 145, 148, 154).withValues(alpha: 0.9),
                                                       items: rutaProvider
                                                           .clientesRutaSeleccionada
                                                           .map((cliente) {
@@ -585,10 +609,13 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                             mainAxisAlignment: MainAxisAlignment.start,
                                                             children: [
                                                             Text(cliente.nombre,
-                                                            style:const TextStyle(color: Colors.black)),
+                                                            style:const TextStyle(color: Colors.white)),
                                                             const SizedBox(width: 5),
                                                             Text(cliente.sucursal,
-                                                            style:const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 10)),
+                                                            style:const TextStyle(
+                                                               color: Colors.amber,
+                                                              fontWeight: FontWeight.bold, 
+                                                              fontSize: 10)),
                                                             ],
                                                           ),
                                                         );
@@ -598,7 +625,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                       validator: (value) {
                                                         if (value == null ||
                                                             value.isEmpty) {
-                                                          return 'PLEASE SELECT A CUSTOMER';
+                                                          return localization.selectacustomer;
                                                         }
                                                         return null;
                                                       },
@@ -621,7 +648,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                     const Divider(
                       indent: 30,
                       endIndent: 30,
-                      color: Colors.black26,
+                      color:Color.fromRGBO(177, 255, 46, 1),
                     ),
                     if (cliente != null)
                     Center(
@@ -634,10 +661,10 @@ class _OrdenBodyState extends State<OrdenBody> {
                             Row(
                               children: [
                                 const SizedBox(width: 20),
-                                Text('ADD PRODUCT',
+                                 Text(localization.addproduct,
                                     style: GoogleFonts.plusJakartaSans(
                                         fontSize: 12,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold)),
                                 const SizedBox(width: 20),
                                 if (!isFirstProductAdded || productsList.isEmpty)
@@ -646,7 +673,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                         addProductRow();
                                       },
                                       icon: const Icon(
-                                          Icons.add_circle_outline_sharp))
+                                          Icons.add_circle_outline_sharp, color: Colors.white))
                               ],
                             ),
                             const SizedBox(height: 10),
@@ -656,177 +683,242 @@ class _OrdenBodyState extends State<OrdenBody> {
                                   itemCount: productsList.length,
                                   itemBuilder: (context, index) {
                                     final productData = productsList[index];
-                                    return Row(
-                                      mainAxisAlignment:MainAxisAlignment.start,
+                                    return Column(
                                       children: [
-                                        const SizedBox(width: 10),
-                                        Consumer<ProductsProvider>(
-                                          builder: (context, productProvider,
-                                              child) {
-                                            return SizedBox(
-                                              width: 370,
-                                              child: DropdownButtonFormField<String>(
-                                                value: productData['producto'],
-                                                decoration: InputDecoration(
-                                                  labelText: 'ITEM',
-                                                  labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight: FontWeight.bold,),
-                                                  focusedBorder: OutlineInputBorder(
-                                                    borderRadius:BorderRadius.circular(15),
-                                                    borderSide:const BorderSide(color: Colors.white,width: 1)),
-                                                  enabledBorder:OutlineInputBorder(borderRadius:
-                                                  BorderRadius.circular(15),
-                                                  borderSide:const BorderSide(color: Colors.white,width:1)),
-                                                  border: OutlineInputBorder(borderRadius:BorderRadius.circular(15)),
-                                                  errorStyle: const TextStyle(
-                                                  color: Colors.red, // Asegura que el mensaje sea visible
-                                                  fontSize: 12,
-                                                ),
-                                                ),
-                                                items: productProvider.productos
-                                                    .map((producto) {
-                                                  return DropdownMenuItem<String>(
-                                                    value: producto.id,
-                                                    child: Text(
-                                                        producto.descripcion.toString(),
-                                                        style: const TextStyle(color:Colors.black)),
-                                                  );
-                                                }).toList(),
-                                                validator: (value) {
-                                                  if (value == null || value.isEmpty) {
-                                                    return 'SELECT A ITEM';
-                                                  }
-                                                  return null;
-                                                },
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                  productData['producto'] = value;
-                                                  final productoSeleccionado = productProvider.productos.firstWhere(
-                                                  (producto) => producto.id == value,
-                                                  orElse: () => Producto.empty(),
+                                        Row(
+                                          mainAxisAlignment:MainAxisAlignment.start,
+                                          children: [
+                                              const SizedBox(width: 10),
+                                                       if (productData['producto'] != null)
+                                                    Container(
+                                                           width: 95, // Un poco más grande que la imagen para que el borde sea visible
+                                                            height: 95,
+                                                            decoration: BoxDecoration(
+                                                              shape: BoxShape.circle,
+                                                              border: Border.all(
+                                                                color:const Color.fromRGBO(177, 255, 46, 1),
+                                                                width: 2.0, // Grosor del borde
+                                                              ),
+                                                            ),
+                                                          child: ClipOval(
+                                                            child: SizedBox(
+                                                              width: 90,
+                                                              height: 90,
+                                                              child: Consumer<ProductsProvider>(
+                                                                builder: (context, productProvider, child) {
+                                                                  final productoSeleccionado = productProvider.productos.firstWhere(
+                                                                    (producto) => producto.id == productData['producto'],
+                                                                    orElse: () => Producto.empty(),
+                                                                  );
+                                                                                                  
+                                                                  if (productoSeleccionado.img != null && productoSeleccionado.img!.isNotEmpty) {
+                                                                    return FadeInImage.assetNetwork(
+                                                                      placeholder: 'assets/load.gif',
+                                                                      image: productoSeleccionado.img!,
+                                                                      width: 90,
+                                                                      height: 90,
+                                                                      fit: BoxFit.cover,
+                                                                    );
+                                                                  } else {
+                                                                    return const Image(
+                                                                      image: AssetImage('assets/noimage.jpeg'),
+                                                                      width: 90,
+                                                                      height: 90,
+                                                                      fit: BoxFit.cover,
+                                                                    );
+                                                                  }
+                                                                },
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                  const SizedBox(width: 20),
+                                            Consumer<ProductsProvider>(
+                                              builder: (context, productProvider,
+                                                  child) {
+                                                return SizedBox(
+                                                  width: 370,
+                                                  child: DropdownButtonFormField<String>(
+                                                    value: productData['producto'],
+                                                    decoration: InputDecoration(
+                                                       labelText: localization.item,
+                                                      labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold,),
+                                                      focusedBorder: OutlineInputBorder(
+                                                        borderRadius:BorderRadius.circular(15),
+                                                        borderSide:const BorderSide(color: Color.fromARGB(255, 28, 28, 29), width: 1),),
+                                                      enabledBorder:OutlineInputBorder(borderRadius:
+                                                      BorderRadius.circular(15),
+                                                      borderSide:const BorderSide(color: Color.fromARGB(255, 28, 28, 29), width: 1),),
+                                                      border: OutlineInputBorder(borderRadius:BorderRadius.circular(15)),
+                                                      errorStyle: const TextStyle(
+                                                      color: Colors.red, // Asegura que el mensaje sea visible
+                                                      fontSize: 12,
+                                                    ),
+                                                    ),
+                                                     icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                                                    style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                                                          
+                                                    dropdownColor: const Color.fromARGB(255, 145, 148, 154).withValues(alpha: 0.9),
+                                                    
+                                                    items: productProvider.productos
+                                                        .map((producto) {
+                                                      return DropdownMenuItem<String>(
+                                                        value: producto.id,
+                                                        child: Text(
+                                                            producto.descripcion.toString(),
+                                                            style: const TextStyle(color:Colors.white)),
+                                                      );
+                                                    }).toList(),
+                                                    validator: (value) {
+                                                      if (value == null || value.isEmpty) {
+                                                         return localization.selectitem;
+                                                      }
+                                                      return null;
+                                                    },
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                      productData['producto'] = value;
+                                                      final productoSeleccionado = productProvider.productos.firstWhere(
+                                                      (producto) => producto.id == value,
+                                                      orElse: () => Producto.empty(),
+                                                    );
+                                                      productData['precio'] = null;
+                                                      productData['unid'] = productoSeleccionado.unid;
+                                                      });
+                                                    },
+                                                  ),
                                                 );
-                                                  productData['precio'] = null;
-                                                  productData['unid'] = productoSeleccionado.unid;
-                                                  });
+                                              },
+                                            ),
+                                            const SizedBox(width: 20),
+                                             SizedBox(child: Text(productData['unid'] ?? '',
+                                             style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)
+                                             )),
+                                            const SizedBox(width: 20),
+                                            if (productData['producto'] != null)
+                                              Consumer<ProductsProvider>(
+                                                builder: (context, productProvider,
+                                                    child) {
+                                                  final productoSeleccionado =
+                                                      productProvider.productos
+                                                          .firstWhere(
+                                                              (producto) =>
+                                                                  producto.id == productData[ 'producto'],
+                                                              orElse: () =>
+                                                                  Producto.empty());
+                                        
+                                                                                                                      // Lista de precios filtrada (solo mayores a 0)
+                                                        final preciosDisponibles = [
+                                                          productoSeleccionado.precio1,
+                                                          productoSeleccionado.precio2,
+                                                          productoSeleccionado.precio3,
+                                                          productoSeleccionado.precio4,
+                                                          productoSeleccionado.precio5
+                                                        ].where((precio) => precio > 0).toList();
+                                        
+                                                  return SizedBox(
+                                                    width: 95,
+                                                    child: DropdownButtonFormField<String>(
+                                                      value:productData['precio']?.toString(),
+                                                      decoration: InputDecoration(
+                                                        labelText: localization.price,
+                                                        labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.white,fontWeight:FontWeight.bold,),
+                                                        focusedBorder:OutlineInputBorder(
+                                                          borderRadius:BorderRadius.circular(15),
+                                                          borderSide:const BorderSide(color:  Color.fromARGB(255, 28, 28, 29),  width: 1),),
+                                                        enabledBorder:OutlineInputBorder(
+                                                          borderRadius:BorderRadius.circular(15),
+                                                          borderSide:
+                                                              const BorderSide(color:  Color.fromARGB(255, 28, 28, 29),  width: 1),),
+                                                        border: OutlineInputBorder(
+                                                          borderRadius:
+                                                      BorderRadius.circular(15),),),
+                                                            items: preciosDisponibles
+                                                                .map((precio) => DropdownMenuItem<String>(
+                                                                      value: precio.toString(),
+                                                                      child: Text('$precio'),
+                                                                    ))
+                                                                .toList(),
+                                                      validator: (value) {
+                                                      if (value == null || value.isEmpty) {
+                                                        return localization.selectprice;
+                                                      }
+                                                      return null;
+                                                    },
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                        productData['precio'] = double.tryParse(value!);
+                                                       
+                                                        });
+                                                      },
+                                                    ),
+                                                  );
                                                 },
                                               ),
-                                            );
-                                          },
-                                        ),
-                                        const SizedBox(width: 20),
-                                         SizedBox(child: Text(productData['unid'] ?? '',
-                                         style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)
-                                         )),
-                                        const SizedBox(width: 20),
-                                        if (productData['producto'] != null)
-                                          Consumer<ProductsProvider>(
-                                            builder: (context, productProvider,
-                                                child) {
-                                              final productoSeleccionado =
-                                                  productProvider.productos
-                                                      .firstWhere(
-                                                          (producto) =>
-                                                              producto.id == productData[ 'producto'],
-                                                          orElse: () =>
-                                                              Producto.empty());
-                                              return SizedBox(
+                                            const SizedBox(width: 20),
+                                            if (productData['precio'] != null)
+                                              SizedBox(
                                                 width: 95,
-                                                child: DropdownButtonFormField<String>(
-                                                  value:productData['precio']?.toString(),
+                                                child: TextFormField(
+                                                  initialValue: productData['cantidad'].toString(),
+                                                  textAlign: TextAlign.center,
                                                   decoration: InputDecoration(
-                                                    labelText: 'PRICE',
-                                                    labelStyle: GoogleFonts.plusJakartaSans(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold,),
+                                                     labelText: localization.quantity,
+                                                    labelStyle:
+                                                        GoogleFonts.plusJakartaSans(
+                                                      fontSize: 12,
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
                                                     focusedBorder:OutlineInputBorder(
                                                       borderRadius:BorderRadius.circular(15),
-                                                      borderSide:const BorderSide(color:Colors.white,width: 1),),
+                                                      borderSide: const BorderSide(color: Colors.white,width: 1),),
                                                     enabledBorder:OutlineInputBorder(
-                                                      borderRadius:BorderRadius.circular(15),
-                                                      borderSide:
-                                                          const BorderSide(color:Colors.white,width: 1),),
-                                                    border: OutlineInputBorder(
-                                                      borderRadius:
-                                                  BorderRadius.circular(15),),),
-                                                  items: [
-                                                    DropdownMenuItem(value:productoSeleccionado.precio1.toString(),child: Text('${productoSeleccionado.precio1}')),
-                                                    DropdownMenuItem(value:productoSeleccionado.precio2.toString(),child: Text('${productoSeleccionado.precio2}')),
-                                                    DropdownMenuItem(value:productoSeleccionado.precio3.toString(),child: Text('${productoSeleccionado.precio3}')),
-                                                    DropdownMenuItem(value:productoSeleccionado.precio4.toString(),child: Text('${productoSeleccionado.precio4}')),
-                                                    DropdownMenuItem(value:productoSeleccionado.precio5.toString(),child: Text('${productoSeleccionado.precio5}')),
-                                                  ],
-                                                  validator: (value) {
-                                                  if (value == null || value.isEmpty) {
-                                                    return 'SELECT A PRICE';
-                                                  }
-                                                  return null;
-                                                },
+                                                      borderRadius: BorderRadius.circular(15),
+                                                      borderSide: const BorderSide(color: Colors.white,width: 1),),
+                                                    border: OutlineInputBorder(borderRadius:BorderRadius.circular(15), ),
+                                                  ),
+                                                   style: GoogleFonts.plusJakartaSans(color: Colors.white),
+                                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                                       validator: (value) {
+                                                      if (value == null || value.isEmpty) return 'NUMBER';
+                                                      if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'MAX 4 DIGITS(.)';
+                                                      return null;
+                                                    },
                                                   onChanged: (value) {
                                                     setState(() {
-                                                    productData['precio'] = double.tryParse(value!);
-                                                   
+                                                      productData['cantidad'] =double.tryParse(value) ??1;
                                                     });
                                                   },
+                                                  inputFormatters: [
+                                                    // Permitir solo números y hasta dos decimales, sin números negativos
+                                                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
+                                                  ],
                                                 ),
-                                              );
-                                            },
-                                          ),
-                                        const SizedBox(width: 20),
-                                        if (productData['precio'] != null)
-                                          SizedBox(
-                                            width: 95,
-                                            child: TextFormField(
-                                              initialValue: productData['cantidad'].toString(),
-                                              textAlign: TextAlign.center,
-                                              decoration: InputDecoration(
-                                                labelText: 'QUANTITY',
-                                                labelStyle:
-                                                    GoogleFonts.plusJakartaSans(
-                                                  fontSize: 12,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                                focusedBorder:OutlineInputBorder(
-                                                  borderRadius:BorderRadius.circular(15),
-                                                  borderSide: const BorderSide(color: Colors.white,width: 1),),
-                                                enabledBorder:OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(15),
-                                                  borderSide: const BorderSide(color: Colors.white,width: 1),),
-                                                border: OutlineInputBorder(borderRadius:BorderRadius.circular(15), ),
                                               ),
-                                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                                   validator: (value) {
-                                                  if (value == null || value.isEmpty) return 'NUMBER';
-                                                  if (!RegExp(r'^\d{1,4}(\.\d{0,4})?$').hasMatch(value)) return 'MAX 4 DIGITS(.)';
-                                                  return null;
+                                            const SizedBox(width: 20),
+                                            if (productData['precio'] != null)
+                                              IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    productsList.removeAt(
+                                                        index); // Eliminar fila
+                                                  });
                                                 },
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  productData['cantidad'] =double.tryParse(value) ??1;
-                                                });
-                                              },
-                                              inputFormatters: [
-                                                // Permitir solo números y hasta dos decimales, sin números negativos
-                                               FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')), 
-                                              ],
-                                            ),
-                                          ),
-                                        const SizedBox(width: 20),
-                                        if (productData['precio'] != null)
-                                          IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                productsList.removeAt(
-                                                    index); // Eliminar fila
-                                              });
-                                            },
-                                            icon: const Icon(
-                                                Icons.delete_outline),
-                                          ),
-                                        if (productData['precio'] != null)
-                                          IconButton(
-                                              onPressed: addProductRow,
-                                              icon: const Icon(Icons.add))
+                                                icon: const Icon(
+                                                   Icons.delete_outline, color:  Colors.red,),
+                                              ),
+                                            if (productData['precio'] != null)
+                                              IconButton(
+                                                  onPressed: addProductRow,
+                                                 icon: const Icon(Icons.add, color: Color.fromRGBO(177, 255, 46, 1),)),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10)
                                       ],
                                     );
-                                  }),
+                                  }
+                                  ),
                             )
                           ],
                         ),
@@ -842,9 +934,10 @@ class _OrdenBodyState extends State<OrdenBody> {
                     Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text('OBSERVATIONS AND COMMENTS:',
+                     child: Text(localization.observationsandcomments,
                     style: GoogleFonts.plusJakartaSans(
                     fontSize: 12, 
+                    color: Colors.white,
                     fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 5),
@@ -856,17 +949,17 @@ class _OrdenBodyState extends State<OrdenBody> {
                       child: TextFormField(
                          initialValue:comentario,
                           style: GoogleFonts.plusJakartaSans(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: 12),
                           decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black, width: 1),
+                            borderSide: const BorderSide(color: Colors.white, width: 1),
                             borderRadius: BorderRadius.circular(8.0),),
                           border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color:Color.fromARGB(255, 194, 190, 190), width: 2),// Color del borde enfocado
+                          borderSide: const BorderSide(color:Colors.white, width: 2),// Color del borde enfocado
                           borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorStyle: const TextStyle(
@@ -882,7 +975,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                             if (value == null) {
                               return '';
                             } else if (value.length > 100) {
-                              return 'CANNOT EXCEED 100 CHARACTERS';
+                              return localization.maxlegth100;
                             }
                             return null; // Validation successful
                           },
@@ -891,7 +984,8 @@ class _OrdenBodyState extends State<OrdenBody> {
                   ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [                             Container(
+                              children: [                             
+                                Container(
                                   height: 50,
                                   width: 150,
                                   padding: const EdgeInsets.all(10),
@@ -904,7 +998,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                       )),
                                   child: TextButton(
                                       child: Text(
-                                        'CANCEL',
+                                          localization.cancel,
                                         style: GoogleFonts.plusJakartaSans(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
@@ -917,7 +1011,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                       title: Center(
                                         child: 
-                                        Text('Warning', 
+                                        Text(localization.warning, 
                                         style: GoogleFonts.plusJakartaSans(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold
@@ -928,8 +1022,8 @@ class _OrdenBodyState extends State<OrdenBody> {
                                               fontSize: 18,
                                               color: Colors.black, // Color del texto general
                                             ),
-                                            children: const <TextSpan>[
-                                              TextSpan(text: 'Are you sure you want to cancel this order?'),
+                                            children: <TextSpan>[
+                                               TextSpan(text: localization.warningmessage01),
                                             ],
                                           ),      
                                         ),
@@ -938,7 +1032,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                           onPressed: () {
                                            NavigationService.replaceTo('/dashboard/orders'); 
                                           },
-                                          child: Text('YES', style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
+                                          child: Text(localization.yes, style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold)),
                                         ),
                                         TextButton(
                                           onPressed: () {
@@ -967,7 +1061,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                       )),
                                   child: TextButton(
                                       child: Text(
-                                        'SAVE',
+                                         localization.save,
                                         style: GoogleFonts.plusJakartaSans(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
@@ -981,7 +1075,7 @@ class _OrdenBodyState extends State<OrdenBody> {
                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 100).withValues(alpha: 0.9),
                                       title: Center(
                                         child: 
-                                        Text('Warning', 
+                                        Text(localization.warning, 
                                         style: GoogleFonts.plusJakartaSans(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold
@@ -992,8 +1086,8 @@ class _OrdenBodyState extends State<OrdenBody> {
                                               fontSize: 18,
                                               color: Colors.black, // Color del texto general
                                             ),
-                                            children: const <TextSpan>[
-                                              TextSpan(text: 'The product list is empty. Please add at least one product.'),
+                                            children: <TextSpan>[
+                                             TextSpan(text: localization.warningmessage02 ),
                                             ],
                                           ),      
                                         ),
@@ -1029,11 +1123,11 @@ class _OrdenBodyState extends State<OrdenBody> {
                                                   );
                                                  if (saved == null) {
                                               if (!context.mounted) return;
-                                              NotificationService.showSnackBa('Orden Created');
+                                               NotificationService.showSnackBa(localization.ordercreated);
                                               NavigationService.navigateTo('/dashboard/orders');
                                           }
                                       } catch (e) {
-                                          NotificationService.showSnackBarError('No se pudo guardar la Orden: $e');
+                                          NotificationService.showSnackBarError(localization.ordererror);
                                       }
                                               }
                                        
