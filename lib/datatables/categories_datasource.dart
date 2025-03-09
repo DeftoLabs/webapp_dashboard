@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_dashboard/models/categories.dart';
+import 'package:web_dashboard/ui/modals/category_modal.dart';
 
 
 
@@ -20,20 +21,20 @@ class CategoriesDTS extends DataTableSource {
       cells:[ 
         DataCell (Text(category.nombre)),
         DataCell (Text(category.usuario.nombre)),        
-       // DataCell (
-       //   Row(
-       //     children: [
-       //       IconButton(
-       //         icon: const Icon(Icons.edit_outlined),
-       //         onPressed: (){
-       //            showDialog(
-       //               context: context, 
-       //               builder: ( _ ) => CategoryModal(categoria: category));
-//
-       //         } ),
-//
+        DataCell (
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.edit_outlined),
+                onPressed: (){
+                   showDialog(
+                      context: context, 
+                      builder: ( _ ) => CategoryModal(categoria: category));
+
+                } ),
+
        //       // Opcion para cambiar el estado de la categoria - FALSE -
-//
+
        //       //IconButton(
        //       //  icon: Icon(Icons.delete_outline, color: Colors.red.withOpacity(0.4)),
        //       //  onPressed: (){
@@ -62,9 +63,9 @@ class CategoriesDTS extends DataTableSource {
        //       //      context: context, 
        //       //      builder: ( _ ) => dialog);
        //       //  } ),
-       //     ],
-       //   )
-       // ),
+            ],
+          )
+        ),
       ]
        );
   }

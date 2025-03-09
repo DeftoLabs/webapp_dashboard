@@ -1277,6 +1277,18 @@ abstract class AppLocalizations {
   /// **'Product Information'**
   String get productinformation;
 
+  /// No description provided for @barcode.
+  ///
+  /// In en, this message translates to:
+  /// **'BarCode & Internal Code'**
+  String get barcode;
+
+  /// No description provided for @levelprice.
+  ///
+  /// In en, this message translates to:
+  /// **'LEVELS PRICE'**
+  String get levelprice;
+
   /// No description provided for @generalinformation.
   ///
   /// In en, this message translates to:
@@ -1487,6 +1499,12 @@ abstract class AppLocalizations {
   /// **'SELECT A TAX'**
   String get taxmessage01;
 
+  /// No description provided for @taxmessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Tax'**
+  String get taxmessage02;
+
   /// No description provided for @category.
   ///
   /// In en, this message translates to:
@@ -1510,6 +1528,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'COULD NOT SAVE THE PRODUCT'**
   String get productmessage01;
+
+  /// No description provided for @fieldrequest.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get fieldrequest;
+
+  /// No description provided for @maxlegth14.
+  ///
+  /// In en, this message translates to:
+  /// **'The code cannot have more than 14 characters'**
+  String get maxlegth14;
+
+  /// No description provided for @created.
+  ///
+  /// In en, this message translates to:
+  /// **'CREATED'**
+  String get created;
+
+  /// No description provided for @categorys.
+  ///
+  /// In en, this message translates to:
+  /// **'CATEGORIES'**
+  String get categorys;
+
+  /// No description provided for @createcaterory.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a Category'**
+  String get createcaterory;
+
+  /// No description provided for @createby.
+  ///
+  /// In en, this message translates to:
+  /// **'Create by'**
+  String get createby;
 
   /// No description provided for @bussinesssettings.
   ///

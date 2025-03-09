@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/models/taxsales.dart';
 import 'package:web_dashboard/providers/providers.dart';
@@ -83,6 +84,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
     final productProvider = Provider.of<ProductsProvider>(context);
     productProvider.producto;
 
+    final localization = AppLocalizations.of(context)!;
+
     return Consumer<ProductsProvider>(
         builder: (context, productProvider, child) {
       return Dialog(
@@ -107,7 +110,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'ADD PRODUCT',
+                        localization.addproduct,
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -130,7 +133,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                         Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: WhiteCardNoMargin(
-                              title: 'PRODUCT DETAIL',
+                              title: localization.generalinformation,
                               child: Column(
                                 children: [
                                   const SizedBox(height: 10),
@@ -141,8 +144,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         nombre = uppercaseValue;          
                                       },
                                       decoration: InputDecoration(
-                                        hintText: 'BarCode & Internal Code',
-                                        labelText: 'BarCode & Internal Code',
+                                        hintText: localization.barcode,
+                                        labelText: localization.barcode,
                                         labelStyle: GoogleFonts.plusJakartaSans(
                                             color: Colors.black, fontSize: 12),
                                         hintStyle: GoogleFonts.plusJakartaSans(
@@ -163,10 +166,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       validator: (value) {
                                         if (value == null ||
                                             value.trim().isEmpty) {
-                                          return 'This field is required';
+                                          return localization.fieldrequest;
                                         }
                                         if (value.length > 15) {
-                                          return 'The code cannot have more than 14 characters';
+                                          return localization.maxlegth14;
                                         }
                                         return null;
                                       },
@@ -176,8 +179,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   controller: _stockController,
                                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                   decoration: InputDecoration(
-                                    hintText: 'Stock',
-                                    labelText: 'Stock - (Accept 2 Digits )e.g. 10.20',
+                                    hintText: localization.stockm,
+                                    labelText: localization.stockd,
                                     labelStyle: GoogleFonts.plusJakartaSans(
                                       color: Colors.black, 
                                       fontSize: 12,
@@ -205,10 +208,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                   validator: (value) {
                                     if (value != null && value.isNotEmpty) {
                                       if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
-                                        return 'Invalid Stock Format. Use "." for decimals and Max 2 Decimals';
+                                        return localization.stockmessage02;
                                       }
                                       if (double.tryParse(value) == null) {
-                                        return 'Invalid number';
+                                        return localization.pricevalidation03;
                                       }
                                     }
                                     // Si el campo está vacío, no es un error (se asignará 0 después).
@@ -229,8 +232,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       return DropdownButtonFormField<String>(
                                         value: unid,
                                         decoration: InputDecoration(
-                                          hintText: 'Unit',
-                                          labelText: 'Unit',
+                                          hintText: localization.unit,
+                                          labelText: localization.unit,
                                           labelStyle:
                                               GoogleFonts.plusJakartaSans(
                                                   color: Colors.black,
@@ -274,7 +277,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         },
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Unit is required';
+                                            return localization.unitmessage01;
                                           }
                                           return null;
                                         },
@@ -286,10 +289,10 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                     initialValue: descripcion,
                                     validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return 'Description is Required';
+                                          return localization.descriptionmessage01;
                                         }
-                                        if (value.length >= 36) {
-                                          return 'Description cannot be more than 35 characters';
+                                        if (value.length >= 41) {
+                                          return localization.descriptionmessage02;
                                         }
                                         return null;
                                       },
@@ -298,8 +301,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         descripcion = uppercaseValue;          
                                       },
                                     decoration: InputDecoration(
-                                      hintText: 'Description',
-                                      labelText: 'Description',
+                                      hintText: localization.description,
+                                      labelText: localization.description,
                                       labelStyle: GoogleFonts.plusJakartaSans(
                                           color: Colors.black, fontSize: 12),
                                       hintStyle: GoogleFonts.plusJakartaSans(
@@ -324,8 +327,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       return DropdownButtonFormField<String>(
                                         value: categoria,
                                         decoration: InputDecoration(
-                                            hintText: 'Category',
-                                            labelText: 'Category',
+                                            hintText: localization.categories,
+                                            labelText: localization.categories,
                                             labelStyle:
                                                 GoogleFonts.plusJakartaSans(
                                                     color: Colors.black,
@@ -368,7 +371,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                         },
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Please select a Category';
+                                            return localization.selectcategory;
                                           }
                                           return null;
                                         },
@@ -381,8 +384,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                       return DropdownButtonFormField<String>(
                                         value: taxsales, 
                                         decoration: InputDecoration(
-                                        hintText: 'Select a TAX',
-                                        labelText: 'TAX',
+                                        hintText: localization.taxmessage02,
+                                        labelText: localization.tax,
                                         labelStyle:  GoogleFonts.plusJakartaSans(
                                                     color: Colors.black,
                                                     fontSize: 12),
@@ -419,7 +422,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                          },
                                          validator: (value) {
                                            if (value == null || value.isEmpty) {
-                                             return 'PLEASE SELECT A TAX';
+                                             return localization.taxmessage01;
                                            }
                                            return null;
                                          },
@@ -433,7 +436,7 @@ class _ProductNewModalState extends State<ProductNewModal> {
                         ChangeNotifierProvider.value(
                           value: productProvider,
                           child: WhiteCardNoMargin(
-                            title: 'LEVELS PRICE',
+                            title: localization.levelprice,
                             width: 250,
                             child: SizedBox(
                               width: double.infinity,
@@ -455,8 +458,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           controller: _precioController1,
                                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
-                                            hintText: 'Price',
-                                            labelText: 'Price - e.g. 10.20',
+                                            hintText: localization.price,
+                                            labelText: localization.priceex,
                                             labelStyle:
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
@@ -488,15 +491,15 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return 'Price is required';
+                                            return localization.pricevalidation01;
                                             }
                                             if (!RegExp(r'^\d+(\.\d{1,2})?$')
                                                 .hasMatch(value)) {
-                                              return 'Invalid price format. Use "." for decimals';
+                                              return localization.pricevalidation02;
                                             }
                                             if (double.tryParse(value) ==
                                                 null) {
-                                              return 'Invalid number';
+                                              return localization.pricevalidation03;
                                             }
                                             return null;
                                           },
@@ -526,8 +529,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           keyboardType: const TextInputType
                                               .numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
-                                            hintText: 'Price',
-                                            labelText: 'Price - e.g. 10.20',
+                                            hintText: localization.price,
+                                            labelText: localization.priceex,
                                             labelStyle:
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
@@ -559,15 +562,15 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return 'Price is required';
+                                            return localization.pricevalidation01;
                                             }
                                             if (!RegExp(r'^\d+(\.\d{1,2})?$')
                                                 .hasMatch(value)) {
-                                              return 'Invalid price format. Use "." for decimals';
+                                              return localization.pricevalidation02;
                                             }
                                             if (double.tryParse(value) ==
                                                 null) {
-                                              return 'Invalid number';
+                                              return localization.pricevalidation03;
                                             }
                                             return null;
                                           },
@@ -597,8 +600,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           keyboardType: const TextInputType
                                               .numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
-                                            hintText: 'Price',
-                                            labelText: 'Price - e.g. 10.20',
+                                            hintText: localization.price,
+                                            labelText: localization.priceex,
                                             labelStyle:
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
@@ -630,15 +633,15 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return 'Price is required';
+                                            return localization.pricevalidation01;
                                             }
                                             if (!RegExp(r'^\d+(\.\d{1,2})?$')
                                                 .hasMatch(value)) {
-                                              return 'Invalid price format. Use "." for decimals';
+                                              return localization.pricevalidation02;
                                             }
                                             if (double.tryParse(value) ==
                                                 null) {
-                                              return 'Invalid number';
+                                              return localization.pricevalidation03;
                                             }
                                             return null;
                                           },
@@ -668,8 +671,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           keyboardType: const TextInputType
                                               .numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
-                                            hintText: 'Price',
-                                            labelText: 'Price - e.g. 10.20',
+                                            hintText: localization.price,
+                                            labelText: localization.priceex,
                                             labelStyle:
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
@@ -701,15 +704,15 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return 'Price is required';
+                                            return localization.pricevalidation01;
                                             }
                                             if (!RegExp(r'^\d+(\.\d{1,2})?$')
                                                 .hasMatch(value)) {
-                                              return 'Invalid price format. Use "." for decimals';
+                                              return localization.pricevalidation02;
                                             }
                                             if (double.tryParse(value) ==
                                                 null) {
-                                              return 'Invalid number';
+                                              return localization.pricevalidation03;
                                             }
                                             return null;
                                           },
@@ -739,8 +742,8 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           keyboardType: const TextInputType
                                               .numberWithOptions(decimal: true),
                                           decoration: InputDecoration(
-                                            hintText: 'Price',
-                                            labelText: 'Price - e.g. 10.20',
+                                            hintText: localization.price,
+                                            labelText: localization.priceex,
                                             labelStyle:
                                                 GoogleFonts.plusJakartaSans(
                                                     color: const Color.fromARGB(
@@ -772,15 +775,15 @@ class _ProductNewModalState extends State<ProductNewModal> {
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return 'Price is required';
+                                              return localization.pricevalidation01;
                                             }
                                             if (!RegExp(r'^\d+(\.\d{1,2})?$')
                                                 .hasMatch(value)) {
-                                              return 'Invalid price format. Use "." for decimals';
+                                              return localization.pricevalidation02;
                                             }
                                             if (double.tryParse(value) ==
                                                 null) {
-                                              return 'Invalid number';
+                                              return localization.pricevalidation03;
                                             }
                                             return null;
                                           },
@@ -836,14 +839,14 @@ class _ProductNewModalState extends State<ProductNewModal> {
                             );
 
                             if (!context.mounted) return;
-                            NotificationService.showSnackBa('$descripcion Created');
+                            NotificationService.showSnackBa('$descripcion ${localization.created}');
                             Navigator.of(context).pop();
                           } catch (e) {
-                            NotificationService.showSnackBarError('Could not save the Product');
+                            NotificationService.showSnackBarError(localization.productmessage01);
                           }
                         }
                       },
-                      text: 'Save',
+                      text: localization.save,
                       color: Colors.white,
                     ),
                   ),

@@ -207,6 +207,8 @@
 
     "productsview":"PRODUCTS VIEW",
     "productinformation":"Product Information",
+    "barcode":"BarCode & Internal Code",
+    "levelprice":"LEVELS PRICE",
     "generalinformation":"GENEREAL INFORMATION",
     "listofproducts":"List of Products",
     "pdflist":"PDF List",
@@ -242,10 +244,18 @@
     "selectcategory":"SELECT A CATEGORY",
     "taxm":"TAX",
     "taxmessage01":"SELECT A TAX",
+    "taxmessage02":"Select a Tax",
     "category":"Category",
     "editm":"Edit",
     "update":"UPDATE",
     "productmessage01":"COULD NOT SAVE THE PRODUCT",
+    "fieldrequest":"This field is required",
+    "maxlegth14":"The code cannot have more than 14 characters",
+    "created":"CREATED",
+
+    "categorys":"CATEGORIES",
+    "createcaterory":"Create a Category",
+    "createby":"Create by",
 
     "bussinesssettings":"Bussiness Settings",
     "profile":"Profile",

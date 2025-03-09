@@ -598,6 +598,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get productinformation => 'Product Information';
 
   @override
+  String get barcode => 'BarCode & Internal Code';
+
+  @override
+  String get levelprice => 'LEVELS PRICE';
+
+  @override
   String get generalinformation => 'GENEREAL INFORMATION';
 
   @override
@@ -703,6 +709,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxmessage01 => 'SELECT A TAX';
 
   @override
+  String get taxmessage02 => 'Select a Tax';
+
+  @override
   String get category => 'Category';
 
   @override
@@ -713,6 +722,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get productmessage01 => 'COULD NOT SAVE THE PRODUCT';
+
+  @override
+  String get fieldrequest => 'This field is required';
+
+  @override
+  String get maxlegth14 => 'The code cannot have more than 14 characters';
+
+  @override
+  String get created => 'CREATED';
+
+  @override
+  String get categorys => 'CATEGORIES';
+
+  @override
+  String get createcaterory => 'Create a Category';
+
+  @override
+  String get createby => 'Create by';
 
   @override
   String get bussinesssettings => 'Bussiness Settings';

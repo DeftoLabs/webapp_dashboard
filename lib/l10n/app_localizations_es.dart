@@ -598,6 +598,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get productinformation => 'Informacion del Producto';
 
   @override
+  String get barcode => 'Codigo de Barra & Codigo Interno';
+
+  @override
+  String get levelprice => 'NIVELES DE PRECIO';
+
+  @override
   String get generalinformation => 'INFORMACION GENERAL';
 
   @override
@@ -703,6 +709,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxmessage01 => 'Debe Selecionar un Impuesto';
 
   @override
+  String get taxmessage02 => 'Seleccione un Impuesto';
+
+  @override
   String get category => 'Categoría';
 
   @override
@@ -713,6 +722,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get productmessage01 => 'NO SE GUARDO EL PRODUCTO, CONTACTE A SOPORTE';
+
+  @override
+  String get fieldrequest => 'Este Campo es requerido';
+
+  @override
+  String get maxlegth14 => 'El codigo NO puede exceder los 14 Caracteres';
+
+  @override
+  String get created => 'CREADO';
+
+  @override
+  String get categorys => 'CATEGORIAS';
+
+  @override
+  String get createcaterory => 'Crear una Categoria';
+
+  @override
+  String get createby => 'Creada por';
 
   @override
   String get bussinesssettings => 'Configuración de la Empresa';

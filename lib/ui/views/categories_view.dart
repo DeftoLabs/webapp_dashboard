@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/auth_provider.dart';
 
 import 'package:web_dashboard/providers/categories_provider.dart';
@@ -30,7 +31,7 @@ class _CategoriesViewState extends State<CategoriesView> {
   @override
   Widget build(BuildContext context) {
 
-     final activeUser = Provider.of<AuthProvider>(context).user!;
+    final activeUser = Provider.of<AuthProvider>(context).user!;
 
     final categorias = Provider.of<CategoriesProvider>(context).categorias;
     final categoriasProvider = Provider.of<CategoriesProvider>(context);
@@ -46,6 +47,8 @@ class _CategoriesViewState extends State<CategoriesView> {
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -56,7 +59,7 @@ class _CategoriesViewState extends State<CategoriesView> {
             children: [
               const SizedBox(width: 20),
               Expanded
-              (child: Text('CATEGORY VIEW', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
+              (child: Text(localization.categorys, style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
               const SizedBox(width: 50),
               SizedBox(
                 width: 60,
@@ -73,12 +76,12 @@ class _CategoriesViewState extends State<CategoriesView> {
               sortAscending: categoriasProvider.ascending,
               sortColumnIndex: categoriasProvider.sortColumnIndex,
               columns:[
-                DataColumn(label: const Expanded(child: Text('CATEGORIES')), onSort:(colIndex, _) {
+                DataColumn(label: Expanded(child: Text(localization.categorys)), onSort:(colIndex, _) {
                   categoriasProvider.sortColumnIndex = colIndex;
                   categoriasProvider.sort((categorias) => categorias.nombre);
                 }),
-                const DataColumn(label: Text('Create by', textAlign: TextAlign.right), numeric: true),
-                // const DataColumn(label: Text('Actions', textAlign: TextAlign.right), numeric: true),                
+                DataColumn(label: Text(localization.createby, textAlign: TextAlign.right), numeric: true),
+                DataColumn(label: Text(localization.edit, textAlign: TextAlign.right), numeric: true),                
               ], 
               source: CategoriesDTS(categorias, context),
               header: const Text(''),
@@ -86,7 +89,7 @@ class _CategoriesViewState extends State<CategoriesView> {
 
             },
               actions: [
-                if (activeUser.rol == 'MASTER_ROL') 
+              //  if (activeUser.rol == 'MASTER_ROL') 
                   CustomIconButton(
                     onPressed: () {
                       showDialog(
@@ -96,7 +99,7 @@ class _CategoriesViewState extends State<CategoriesView> {
                         },
                       );
                     },
-                    text: 'Create a Category',
+                    text: localization.createcaterory,
                     icon: Icons.add_outlined,
                   ),
               ],
