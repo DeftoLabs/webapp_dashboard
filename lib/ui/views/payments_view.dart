@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/datatables/payments_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/auth_provider.dart';
 import 'package:web_dashboard/providers/payments_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
@@ -60,7 +61,7 @@ class _PaymentsViewState extends State<PaymentsView> {
 
     final activeUser = Provider.of<AuthProvider>(context).user!;
 
-
+    final localizations = AppLocalizations.of(context)!;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -73,7 +74,8 @@ class _PaymentsViewState extends State<PaymentsView> {
               const SizedBox(width: 20),
               Expanded
               (
-                child: Text('Payment View', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
+                child: Text(localizations.paymentview,
+                 style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
                     activeUser.rol != 'USER_ROLE' ? Container(
                        height: 50,
                       width: 150,
@@ -153,7 +155,7 @@ class _PaymentsViewState extends State<PaymentsView> {
                         )),
                       child: TextButton(
                         child: Text(
-                          'Create Payment',
+                          localizations.createpayment,
                           style: GoogleFonts.plusJakartaSans(
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
@@ -176,14 +178,14 @@ class _PaymentsViewState extends State<PaymentsView> {
           const SizedBox(height: 10),
           PaginatedDataTable(
 
-            columns: const [
-              DataColumn(label: Text('DATE')),
-              DataColumn(label: Text('CONTROL')),
-              DataColumn(label: Text('TYPE')),
-              DataColumn(label: Text('CUSTOMER')),
-              DataColumn(label: Text('')),
-              DataColumn(label: Text('AMOUNT')),
-              DataColumn(label: Text('EDIT')),
+            columns: [
+              DataColumn(label: Text(localizations.date)),
+              DataColumn(label: Text(localizations.control)),
+              DataColumn(label: Text(localizations.type)),
+              DataColumn(label: Text(localizations.customer)),
+              const DataColumn(label: Text('')),
+              DataColumn(label: Text(localizations.amount)),
+              DataColumn(label: Text(localizations.edit)),
             ],
             source: paymentsDataSource)
         ],
