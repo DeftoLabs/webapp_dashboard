@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
 
@@ -162,6 +163,9 @@ class _WhiteCardCustomerState extends State<WhiteCardCustomer> {
               child: image,
             ),
           );
+
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
       width: widget.width,
       margin: const EdgeInsets.all(8),
@@ -182,7 +186,7 @@ class _WhiteCardCustomerState extends State<WhiteCardCustomer> {
                     NavigationService.replaceTo('/dashboard/customers');
                   },
                   icon: const Icon(Icons.arrow_back_rounded)),
-                  Text('Back', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14)),
+                  Text(localization.back, style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14)),
                     Expanded(
                       child: Center(
                         child: Text(

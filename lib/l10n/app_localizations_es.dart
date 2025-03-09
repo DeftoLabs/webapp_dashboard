@@ -412,7 +412,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get salesrepresentative => 'REPRESENTANTE DE VENTAS';
 
   @override
-  String get manager => 'INFORMACION GENERAL';
+  String get manager => 'Manager';
 
   @override
   String get commentsmessage01 => 'Algo que Agregar ?';
@@ -740,6 +740,120 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get createby => 'Creada por';
+
+  @override
+  String get customerm => 'CLIENTES';
+
+  @override
+  String get legalname => 'Denominacion Comercial';
+
+  @override
+  String get branchm => 'Sucursal';
+
+  @override
+  String get zonem => 'Zona';
+
+  @override
+  String get contacinfo => 'Información de Contacto';
+
+  @override
+  String get creditsales => 'CREDITO & ZONA';
+
+  @override
+  String get conditionsales => 'Condiciones de Venta';
+
+  @override
+  String get creditinfo => 'Credito (Dias) & Efectivo';
+
+  @override
+  String get zonename => 'Zona';
+
+  @override
+  String get website => 'WebSite';
+
+  @override
+  String get requiredcredit => 'El Credito es Requerido';
+
+  @override
+  String get onlynumbers => 'Solo valores Numericos';
+
+  @override
+  String get maxlegth3 => 'Max 3 Caracteres';
+
+  @override
+  String get selectzone => 'Seleccione la Zona';
+
+  @override
+  String get requiredmanager => 'El Nombre del Manager es Requerido';
+
+  @override
+  String get maxlegth20 => 'Max 20 Caractres';
+
+  @override
+  String get requiredphone => 'El Telefono es Requerido';
+
+  @override
+  String get phonemessage01 => 'Solo Numeros Unicamente (Sin Espacios)';
+
+  @override
+  String get emailnotvalid => 'Email No Valido';
+
+  @override
+  String get requiredwebsite => 'WebSite es requerido';
+
+  @override
+  String get maxlegth40 => 'Max 40 Caracteres';
+
+  @override
+  String get updatecustomer => 'Cliente Actualizado';
+
+  @override
+  String get errorupdatecustomer => 'Error al Actualizar Cliente, Contacte a Soporte';
+
+  @override
+  String get requiredtaxid => 'El RIF es Requerido';
+
+  @override
+  String get minlegth3 => 'Min 3 Caracteres';
+
+  @override
+  String get requiredbussinessname => 'Nombre Comercial es Requerido';
+
+  @override
+  String get maxlegth17 => 'Max 17 Caracteres';
+
+  @override
+  String get max90legth => 'Max 90 Caracteres';
+
+  @override
+  String get requiredaddress => 'La dirección es Requerida';
+
+  @override
+  String get max179legth => 'Max 179 Caracteres';
+
+  @override
+  String get requirednote => 'La Nota es Requerida';
+
+  @override
+  String get requiredcode => 'El Codigo es Requerido';
+
+  @override
+  String get taxid => 'RIF';
+
+  @override
+  String get bussinessname => 'Nombre Comercial';
+
+  @override
+  String get aditionalinformation => 'Información Adicional';
+
+  @override
+  String get addlocation => 'Agregar Localizacion';
+
+  @override
+  String get note => 'Nota';
+
+  @override
+  String get back => 'Volver';
 
   @override
   String get bussinesssettings => 'Configuración de la Empresa';

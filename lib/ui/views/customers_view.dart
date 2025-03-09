@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/customers_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -43,6 +44,8 @@ class _CustomersViewState extends State<CustomersView> {
     ? const Image(image: AssetImage('noimage.jpeg'), width: 35, height: 35) 
     : FadeInImage.assetNetwork(placeholder: 'load.gif', image: profile.img!, width: 35, height: 35);
 
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -54,7 +57,7 @@ class _CustomersViewState extends State<CustomersView> {
               const SizedBox(width: 20),
               Expanded
               (
-                child: Text('CUSTOMERS VIEW', style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
+                child: Text(localization.customerm, style: GoogleFonts.plusJakartaSans(fontSize: 22),)),
                   const SizedBox(width: 20),
                 Container(
                        height: 50,
@@ -73,7 +76,7 @@ class _CustomersViewState extends State<CustomersView> {
                         }, 
                         icon: const Icon(Icons.add, color: Colors.black),
                         label: Text(
-                          'Customer',
+                          localization.customer,
                           style: GoogleFonts.plusJakartaSans(
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
@@ -96,17 +99,17 @@ class _CustomersViewState extends State<CustomersView> {
           sortAscending: customerProvider.ascending,
           sortColumnIndex: customerProvider.sortColumnIndex,
           columns: [
-            DataColumn(label: const Text('Code'), onSort: (colIndex, _) {
+            DataColumn(label: Text(localization.code), onSort: (colIndex, _) {
               customerProvider.sortColumnIndex = colIndex;
               customerProvider.sort((customer)=> customer.codigo);
             }),
-            DataColumn(label: const Text('Legal Name'), onSort: (colIndex, _) {
+            DataColumn(label: Text(localization.legalname), onSort: (colIndex, _) {
               customerProvider.sortColumnIndex = colIndex;
               customerProvider.sort((customer)=> customer.razons);
             }),
-            const DataColumn(label: Text('Branch')),
-            const DataColumn(label: Text('Zone')),
-            const DataColumn(label: Text('Edit')),
+            DataColumn(label: Text(localization.branchm)),
+            DataColumn(label: Text(localization.zone)),
+            DataColumn(label: Text(localization.editm)),
 
           ], 
           source: customersDataSource,

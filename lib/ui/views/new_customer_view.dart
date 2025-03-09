@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/zona.dart';
 import 'package:web_dashboard/providers/newcustomer_provider.dart';
@@ -24,8 +25,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
     final newCustomerRegisterProvider =
         Provider.of<NewCustomerProvider>(context, listen: false);
 
+    final localization = AppLocalizations.of(context)!;
+
     return WhiteCardCustomer(
-        title: 'Customer View',
+        title: localization.customer,
         child: Form(
           key: newCustomerRegisterProvider.formKey,
           child: Column(
@@ -41,7 +44,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         WhiteCard(
                             child: Column(
                           children: [
-                            Text('Contact Info',
+                            Text(localization.creditsales,
                                 style: GoogleFonts.plusJakartaSans(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -58,27 +61,27 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                   child: TextFormField(
                                       style: const TextStyle(
                                           color: Colors.black, fontSize: 16),
-                                      decoration: const InputDecoration(
-                                        hintText: 'Condition Sale',
-                                        hintStyle: TextStyle(
+                                      decoration: InputDecoration(
+                                        hintText: localization.conditionsales,
+                                        hintStyle: const TextStyle(
                                             color: Colors.black, fontSize: 16),
-                                        labelText: 'Credit (Days) & Cash',
-                                        labelStyle: TextStyle(
-                                            color: Colors.black, fontSize: 16),
-                                        prefixIcon: Icon(Icons.monetization_on,
+                                        labelText: localization.creditinfo,
+                                        labelStyle: const TextStyle(
+                                            color: Colors.black, fontSize: 12),
+                                        prefixIcon: const Icon(Icons.monetization_on,
                                             color: Colors.black, size: 20),
-                                        enabledBorder: OutlineInputBorder(
+                                        enabledBorder:  const OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: Colors.black, width: 1)),
-                                        focusedBorder: OutlineInputBorder(
+                                        focusedBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
                                           color:
                                               Color.fromARGB(255, 58, 60, 65),
                                         )),
-                                        errorBorder: OutlineInputBorder(
+                                        errorBorder: const OutlineInputBorder(
                                             borderSide:
                                                 BorderSide(color: Colors.red)),
-                                        focusedErrorBorder: OutlineInputBorder(
+                                        focusedErrorBorder: const OutlineInputBorder(
                                             borderSide: BorderSide(
                                           color:
                                               Color.fromARGB(255, 58, 60, 65),
@@ -89,20 +92,20 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                               int.tryParse(value) ?? 0,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return 'Credit is Required';
+                                          return localization.requiredcredit;
                                         }
                                         if (!RegExp(r'^[0-9]+$')
                                             .hasMatch(value)) {
-                                          return 'Only numbers are allowed';
+                                          return localization.onlynumbers;
                                         }
                                         if (value.length > 4) {
-                                          return 'Max 3 characters';
+                                          return localization.maxlegth3;
                                         }
                                         return null;
                                       }),
                                 ),
                                 const SizedBox(width: 10),
-                                Text('days',
+                                Text(localization.days,
                                     style: GoogleFonts.plusJakartaSans(
                                         color: Colors.black,
                                         fontSize: 14,
@@ -115,8 +118,8 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               builder: (context, zonasProvider, child) {
                                 return DropdownButtonFormField<Zona>(
                                   decoration: InputDecoration(
-                                    hintText: 'Zone Name',
-                                    labelText: 'Zone Name',
+                                    hintText: localization.zonename,
+                                    labelText: localization.zonename,
                                     labelStyle: GoogleFonts.plusJakartaSans(
                                         color: Colors.black, fontSize: 16),
                                     hintStyle: GoogleFonts.plusJakartaSans(
@@ -150,7 +153,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                   },
                                   validator: (value) {
                                     if (value == null) {
-                                      return 'Please, select a Route';
+                                      return localization.selectzone;
                                     }
                                     return null;
                                   },
@@ -164,7 +167,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         WhiteCard(
                             child: Column(
                           children: [
-                            Text('Contact Info',
+                            Text(localization.contacinfo,
                                 style: GoogleFonts.plusJakartaSans(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -177,26 +180,26 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             TextFormField(
                                 style: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                decoration: const InputDecoration(
-                                  hintText: 'Manager',
-                                  hintStyle: TextStyle(
+                                decoration: InputDecoration(
+                                  hintText: localization.manager,
+                                  hintStyle: const TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                  labelText: 'Manager',
-                                  labelStyle: TextStyle(
+                                  labelText: localization.manager,
+                                  labelStyle: const TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                  prefixIcon: Icon(Icons.person_rounded,
+                                  prefixIcon: const Icon(Icons.person_rounded,
                                       color: Colors.black, size: 20),
-                                  enabledBorder: OutlineInputBorder(
+                                  enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Colors.black, width: 1)),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                     color: Color.fromARGB(255, 58, 60, 65),
                                   )),
-                                  errorBorder: OutlineInputBorder(
+                                  errorBorder: const OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.red)),
-                                  focusedErrorBorder: OutlineInputBorder(
+                                  focusedErrorBorder:const OutlineInputBorder(
                                       borderSide: BorderSide(
                                     color: Color.fromARGB(255, 58, 60, 65),
                                   )),
@@ -208,10 +211,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Manager is Required';
+                                    return localization.requiredmanager;
                                   }
                                   if (value.length > 31) {
-                                    return 'Max 30 characters';
+                                    return localization.maxlegth30;
                                   }
                                   return null;
                                 }),
@@ -219,26 +222,26 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             TextFormField(
                                 style: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                decoration: const InputDecoration(
-                                  hintText: 'Phone',
-                                  hintStyle: TextStyle(
+                                decoration: InputDecoration(
+                                  hintText: localization.phone,
+                                  hintStyle: const TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                  labelText: 'Phone',
-                                  labelStyle: TextStyle(
+                                  labelText: localization.phone,
+                                  labelStyle: const TextStyle(
                                       color: Colors.black, fontSize: 14),
-                                  prefixIcon: Icon(Icons.phone_iphone_rounded,
+                                  prefixIcon: const Icon(Icons.phone_iphone_rounded,
                                       color: Colors.black, size: 20),
-                                  enabledBorder: OutlineInputBorder(
+                                  enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Colors.black, width: 1)),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                     color: Color.fromARGB(255, 58, 60, 65),
                                   )),
-                                  errorBorder: OutlineInputBorder(
+                                  errorBorder: const OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.red)),
-                                  focusedErrorBorder: OutlineInputBorder(
+                                  focusedErrorBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                     color: Color.fromARGB(255, 58, 60, 65),
                                   )),
@@ -248,13 +251,13 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                         },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Phone is Required';
+                                    return localization.requiredphone;
                                   }
                                   if (!RegExp(r'^\+?[0-9]+$').hasMatch(value)) {
-                                    return 'Only numbers and a leading + are allowed (No space allowed)';
+                                    return localization.phonemessage01;
                                   }
                                   if (value.length > 21) {
-                                    return 'Max 20 characters';
+                                    return localization.maxlegth20;
                                   }
                                   return null;
                                 }),
@@ -292,7 +295,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               },
                               validator: (value) {
                                 if (!EmailValidator.validate(value ?? '')) {
-                                  return 'Email not Valid';
+                                  return localization.emailnotvalid;
                                 }
                                 return null;
                               },
@@ -340,7 +343,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         const SizedBox(height: 30),
                         Container(
                           height: 50,
-                          width: 100,
+                          width: 150,
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: const Color.fromRGBO(177, 255, 46, 1),
@@ -351,7 +354,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               )),
                           child: TextButton(
                             child: Text(
-                              'Save',
+                              localization.save,
                               style: GoogleFonts.plusJakartaSans(
                                   color: const Color.fromARGB(255, 0, 0, 0)),
                             ),
@@ -387,7 +390,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                           children: [
                             Row(
                               children: [
-                                Text('Customer Info',
+                                Text(localization.customerinfo,
                                     style: GoogleFonts.plusJakartaSans(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
@@ -399,7 +402,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                       Icons.map,
                                       color: Colors.black,
                                     ),
-                                    label: const Text('Add Location'),
+                                    label: Text(localization.addlocation),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(16),
                                       backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
@@ -414,25 +417,25 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             TextFormField(
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16),
-                              decoration: const InputDecoration(
-                                hintText: 'Customer Internal Code',
-                                hintStyle: TextStyle(
+                              decoration: InputDecoration(
+                                hintText: localization.code,
+                                hintStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                labelText: 'Internal Code',
-                                labelStyle: TextStyle(
+                                labelText: localization.code,
+                                labelStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.black, width: 1),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
-                                errorBorder: OutlineInputBorder(
+                                errorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
+                                focusedErrorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
@@ -444,10 +447,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Internal Code is Required';
+                                  return localization.requiredcode;
                                 }
                                 if (value.length > 20) {
-                                  return 'Max 20 characters';
+                                  return localization.maxlegth20;
                                 }
                                 return null;
                               },
@@ -456,25 +459,25 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             TextFormField(
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16),
-                              decoration: const InputDecoration(
-                                hintText: 'Tax ID',
-                                hintStyle: TextStyle(
+                              decoration: InputDecoration(
+                                hintText: localization.taxid,
+                                hintStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                labelText: 'Tax ID',
-                                labelStyle: TextStyle(
+                                labelText:  localization.taxid,
+                                labelStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.black, width: 1),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
-                                errorBorder: OutlineInputBorder(
+                                errorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
+                                focusedErrorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
@@ -486,10 +489,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'TAX ID is Required';
+                                  return localization.requiredtaxid;
                                 }
                                 if (value.length > 20) {
-                                  return 'Max 20 characters';
+                                  return localization.maxlegth20;
                                 }
                                 return null;
                               },
@@ -498,25 +501,25 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             TextFormField(
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16),
-                              decoration: const InputDecoration(
-                                hintText: 'Legal Name',
-                                hintStyle: TextStyle(
+                              decoration: InputDecoration(
+                                hintText: localization.legalname,
+                                hintStyle: const  TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                labelText: 'Legal Name',
-                                labelStyle: TextStyle(
+                                labelText:  localization.legalname,
+                                labelStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.black, width: 1),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
-                                errorBorder: OutlineInputBorder(
+                                errorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
+                                focusedErrorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
@@ -528,13 +531,13 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Legal Name is Required';
+                                  return localization.requiredbussinessname;
                                 }
                                 if (value.length < 2) {
-                                  return 'The Legal Name requires a minimum of 2 characters';
+                                  return localization.minlegth3;
                                 }
                                 if (value.length > 40) {
-                                  return 'Max 40 characters';
+                                  return localization.maxlegth40;
                                 }
                                 return null;
                               },
@@ -543,25 +546,25 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             TextFormField(
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16),
-                              decoration: const InputDecoration(
-                                hintText: 'Business Name',
-                                hintStyle: TextStyle(
+                              decoration: InputDecoration(
+                                hintText: localization.bussinessname,
+                                hintStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
                                 labelText: 'Business Name',
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.black, width: 1),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
-                                errorBorder: OutlineInputBorder(
+                                errorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
+                                focusedErrorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
@@ -573,13 +576,13 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Business Name is Required';
+                                  return localization.requiredbussinessname;
                                 }
                                 if (value.length < 2) {
-                                  return 'The Business Name requires a minimum of 2 characters';
+                                  return localization.minlegth3;
                                 }
                                 if (value.length > 40) {
-                                  return 'Max 40 characters';
+                                  return localization.maxlegth40;
                                 }
                                 return null;
                               },
@@ -588,25 +591,25 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                             TextFormField(
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16),
-                              decoration: const InputDecoration(
-                                hintText: 'Branch',
-                                hintStyle: TextStyle(
+                              decoration: InputDecoration(
+                                hintText: localization.branchm,
+                                hintStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                labelText: 'Branch',
-                                labelStyle: TextStyle(
+                                labelText: localization.branchm,
+                                labelStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const  OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.black, width: 1),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
-                                errorBorder: OutlineInputBorder(
+                                errorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
+                                focusedErrorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
@@ -621,10 +624,10 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                   return null;
                                 }
                                 if (value.length < 2) {
-                                  return 'The Branch requires a minimum of 2 characters';
+                                  return localization.minlegth3;
                                 }
                                 if (value.length > 17) {
-                                  return 'Max 17 characters';
+                                  return localization.maxlegth17;
                                 }
                                 return null;
                               },
@@ -634,25 +637,25 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 16),
                               maxLines: 2,
-                              decoration: const InputDecoration(
-                                hintText: 'Address',
-                                hintStyle: TextStyle(
+                              decoration: InputDecoration(
+                                hintText: localization.address,
+                                hintStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                labelText: 'Address',
-                                labelStyle: TextStyle(
+                                labelText: localization.address,
+                                labelStyle: const TextStyle(
                                     color: Colors.black, fontSize: 16),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.black, width: 1),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
-                                errorBorder: OutlineInputBorder(
+                                errorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
+                                focusedErrorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65)),
                                 ),
@@ -664,13 +667,13 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Address is Required';
+                                  return localization.requiredaddress;
                                 }
                                 if (value.length < 2) {
-                                  return 'The Address requires a minimum of 2 characters';
+                                  return localization.minlegth3;
                                 }
                                 if (value.length > 100) {
-                                  return 'Max 100 characters';
+                                  return localization.maxlegth100;
                                 }
                                 return null;
                               },
@@ -681,7 +684,7 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                         WhiteCard(
                             child: Column(
                           children: [
-                            Text('Aditonal Information',
+                            Text(localization.aditionalinformation,
                                 style: GoogleFonts.plusJakartaSans(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -695,28 +698,28 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 style: const TextStyle(
                                     color: Colors.black, fontSize: 16),
                                 maxLines: 3,
-                                decoration: const InputDecoration(
-                                  hintText: 'Note',
-                                  hintStyle: TextStyle(
+                                decoration: InputDecoration(
+                                  hintText: localization.note,
+                                  hintStyle: const TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                  labelText: 'Note',
-                                  labelStyle: TextStyle(
+                                  labelText: localization.note,
+                                  labelStyle: const TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                  prefixIcon: Icon(Icons.info_outline_rounded,
+                                  prefixIcon: const Icon(Icons.info_outline_rounded,
                                       color: Colors.black, size: 20),
-                                  enabledBorder: OutlineInputBorder(
+                                  enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: Colors.black, width: 1),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65),
                                     ),
                                   ),
-                                  errorBorder: OutlineInputBorder(
+                                  errorBorder: const OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.red)),
-                                  focusedErrorBorder: OutlineInputBorder(
+                                  focusedErrorBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                     color: Color.fromARGB(255, 58, 60, 65),
                                   )),
@@ -728,13 +731,13 @@ class _NewCustomerViewState extends State<NewCustomerView> {
                                 },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Note is Required';
+                                    return localization.requirednote;
                                   }
                                   if (value.length < 2) {
-                                    return 'The note required minimum 3 characters';
+                                    return localization.minlegth3;
                                   }
                                   if (value.length > 180) {
-                                    return 'Max 179 characters';
+                                    return localization.max179legth;
                                   }
                                   return null;
                                 }),

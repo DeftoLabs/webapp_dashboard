@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/providers/customer_form_provider.dart';
 import 'package:web_dashboard/providers/customers_provider.dart';
@@ -79,6 +80,8 @@ void initState() {
       );
     }
 
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
     decoration: BoxDecoration(
       color: const Color.fromARGB(255, 58, 60, 65),
@@ -99,11 +102,11 @@ void initState() {
                       NavigationService.replaceTo('/dashboard/customers');
                     },
                     icon: const Icon(Icons.arrow_back_rounded)),
-                    Text('Back', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14)),
+                    Text(localization.back, style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14)),
                       Expanded(
                         child: Center(
                           child: Text(
-                            'CUSTOMER VIEW',
+                            localization.customer,
                             style: GoogleFonts.plusJakartaSans(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -134,8 +137,8 @@ void initState() {
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Column(
-                                                      children: [
-                              Text('CREDIT & SALES DATA',
+                              children: [
+                              Text(localization.creditsales,
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -153,28 +156,28 @@ void initState() {
                                         initialValue: customer.credito.toString(),
                                         style: const TextStyle(
                                             color: Colors.black, fontSize: 16),
-                                        decoration: const InputDecoration(
-                                          hintText: 'Condition Sale',
-                                          hintStyle: TextStyle(
+                                        decoration: InputDecoration(
+                                          hintText: localization.conditionsales,
+                                          hintStyle: const TextStyle(
                                               color: Colors.black, fontSize: 16),
-                                          labelText: 'Credit (Days) & Cash',
-                                          labelStyle: TextStyle(
+                                          labelText: localization.creditinfo,
+                                          labelStyle: const  TextStyle(
                                               color: Colors.black,
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
-                                          prefixIcon: Icon(Icons.monetization_on,
+                                          prefixIcon: const Icon(Icons.monetization_on,
                                               color: Colors.black, size: 20),
-                                          enabledBorder: OutlineInputBorder(
+                                          enabledBorder: const OutlineInputBorder(
                                               borderSide:
                                                   BorderSide(color: Colors.black, width: 1)),
-                                          focusedBorder: OutlineInputBorder(
+                                          focusedBorder: const OutlineInputBorder(
                                               borderSide: BorderSide(
                                             color: Color.fromARGB(255, 58, 60, 65),
                                           )),
-                                          errorBorder: OutlineInputBorder(
+                                          errorBorder: const OutlineInputBorder(
                                               borderSide:
                                                   BorderSide(color: Colors.red)),
-                                          focusedErrorBorder: OutlineInputBorder(
+                                          focusedErrorBorder: const OutlineInputBorder(
                                               borderSide: BorderSide(
                                             color: Color.fromARGB(255, 58, 60, 65),
                                           )),
@@ -184,20 +187,20 @@ void initState() {
                                                 credito: value as int),
                                         validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                        return 'Credit is Required';
+                                        return localization.requiredcredit;
                                       }
                                       if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                        return 'Only numbers are allowed';
+                                        return localization.onlynumbers;
                                       }
                                       if (value.length > 4) {
-                                        return 'Max 3 characters';
+                                        return localization.maxlegth3;
                                       }
                                       return null;
                                     }
                                         ),
                                   ),
                                   const SizedBox(width: 10),
-                                  Text('days',
+                                  Text(localization.days,
                                       style: GoogleFonts.plusJakartaSans(
                                           color: Colors.black,
                                           fontSize: 14,
@@ -211,8 +214,8 @@ void initState() {
                                 return DropdownButtonFormField<String>(
                                   value: customer.zona.id, 
                                   decoration: InputDecoration(
-                              hintText: 'Zone Name',
-                              labelText: 'Zone Name',
+                              hintText: localization.zonename,
+                              labelText: localization.zonename,
                               labelStyle: GoogleFonts.plusJakartaSans(
                                 color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
                               hintStyle: GoogleFonts.plusJakartaSans(
@@ -241,7 +244,7 @@ void initState() {
                                   },
                                   validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please, select a Route';
+                                return localization.selectzone;
                               }
                               return null;
                                    },
@@ -263,7 +266,7 @@ void initState() {
                               padding: const EdgeInsets.all(16.0),
                               child: Column(
                                                       children: [
-                              Text('CONTACT INFO',
+                              Text(localization.contacinfo,
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -277,27 +280,27 @@ void initState() {
                                   initialValue: customer.contacto,
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                  decoration: const InputDecoration(
-                                    hintText: 'Manager',
-                                    hintStyle: TextStyle(
+                                  decoration: InputDecoration(
+                                    hintText: localization.manager,
+                                    hintStyle: const TextStyle(
                                         color: Colors.black, fontSize: 16),
-                                    labelText: 'Manager',
-                                    labelStyle: TextStyle(
+                                    labelText: localization.manager,
+                                    labelStyle: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
-                                    prefixIcon: Icon(Icons.person_rounded,
+                                    prefixIcon: const Icon(Icons.person_rounded,
                                         color: Colors.black, size: 20),
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: const OutlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.black, width: 1)),
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65),
                                     )),
-                                    errorBorder: OutlineInputBorder(
+                                    errorBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(color: Colors.red)),
-                                    focusedErrorBorder: OutlineInputBorder(
+                                    focusedErrorBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65),
                                     )),
@@ -309,10 +312,10 @@ void initState() {
                                 
                                   validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                    return 'Manager is Required';
+                                    return localization.requiredmanager;
                                   }
                                   if (value.length > 31) {
-                                    return 'Max 30 characters';
+                                    return localization.maxlegth30;
                                   }
                                   return null;
                                   }
@@ -322,27 +325,27 @@ void initState() {
                                   initialValue: customer.telefono,
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                  decoration: const InputDecoration(
-                                    hintText: 'Phone',
-                                    hintStyle: TextStyle(
+                                  decoration: InputDecoration(
+                                    hintText: localization.phone,
+                                    hintStyle: const TextStyle(
                                         color: Colors.black, fontSize: 16),
-                                    labelText: 'Phone',
-                                    labelStyle: TextStyle(
+                                    labelText: localization.phone,
+                                    labelStyle: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
-                                    prefixIcon: Icon(Icons.phone_iphone_rounded,
+                                    prefixIcon: const Icon(Icons.phone_iphone_rounded,
                                         color: Colors.black, size: 20),
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: const OutlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.black, width: 1)),
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65),
                                     )),
-                                    errorBorder: OutlineInputBorder(
+                                    errorBorder:const OutlineInputBorder(
                                         borderSide: BorderSide(color: Colors.red)),
-                                    focusedErrorBorder: OutlineInputBorder(
+                                    focusedErrorBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65),
                                     )),
@@ -351,13 +354,13 @@ void initState() {
                                       .copyCustomerWith(telefono: value),
                                   validator: (value) {
                                      if (value == null || value.isEmpty) {
-                                    return 'Phone is Required';
+                                    return localization.requiredphone;
                                   }
                                    if (!RegExp(r'^\+?[0-9]+$').hasMatch(value)) {
-                                    return 'Only numbers and a leading + are allowed (No space allowed)';
+                                    return localization.phonemessage01;
                                   }
                                   if (value.length > 21) {
-                                    return 'Max 20 characters';
+                                    return localization.maxlegth20;
                                   }
                                   return null;
                                   }),
@@ -396,7 +399,7 @@ void initState() {
                                 }, 
                                 validator: (value) {
                                   if (!EmailValidator.validate(value ?? '')) {
-                                    return 'Email not Valid';
+                                    return localization.emailnotvalid;
                                   }
                                   return null;
                                 },
@@ -436,10 +439,10 @@ void initState() {
                                 }, 
                                  validator: (value) {
                                      if (value == null || value.isEmpty) {
-                                    return 'WebSite is Required';
+                                    return localization.requiredwebsite;
                                   }
                                   if (value.length > 41) {
-                                    return 'Max 40 characters';
+                                    return localization.maxlegth40;
                                   }
                                   return null;
                                   },
@@ -457,7 +460,7 @@ void initState() {
                         const SizedBox(height: 30),
                            Container(
                               height: 50,
-                              width: 100,
+                              width: 150,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   color: const Color.fromRGBO(177, 255, 46, 1),
@@ -468,7 +471,7 @@ void initState() {
                                   )),
                               child: TextButton(
                                 child: Text(
-                                  'Save',
+                                  localization.save,
                                   style: GoogleFonts.plusJakartaSans(
                                       color: const Color.fromARGB(255, 0, 0, 0)),
                                 ),
@@ -476,14 +479,14 @@ void initState() {
                                   final saved = await customerFormProvider.updateCustomer();
                                   if (saved) {
                                     if (!context.mounted) return;
-                                    NotificationService.showSnackBa('Customer Updated');
+                                    NotificationService.showSnackBa(localization.updatecustomer);
                                     Provider.of<CustomersProvider>(context, listen: false)
                                         .refreshCustomer(customer);
                                       if(!context.mounted) return;
                                     Navigator.of(context).popAndPushNamed('/dashboard/customers');
                                   } else {
                                     NotificationService.showSnackBarError(
-                                        'Error to Update the Customer');
+                                        localization.errorupdatecustomer);
                                   }
                                 },
                               ),
@@ -507,7 +510,7 @@ void initState() {
                                                       children: [
                               Row(
                                 children: [
-                                  Text('CODE: ${customer.codigo}',
+                                  Text('${localization.code} ${customer.codigo}',
                                       style: GoogleFonts.plusJakartaSans(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
@@ -525,10 +528,10 @@ void initState() {
                                 (
                                     color: Colors.black, fontSize: 16),
                                 decoration: InputDecoration(
-                                  hintText: 'Tax ID',
+                                  hintText: localization.taxid,
                                   hintStyle: const TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                  labelText: 'Tax ID',
+                                  labelText: localization.taxid,
                                   labelStyle: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -556,12 +559,12 @@ void initState() {
                                 }, 
                                 validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'TAX ID is Required';
+                                  return localization.requiredtaxid;
                                 }
                                 if (value.length < 2) {
-                                  return 'The TAX required minimum 3 characters';
+                                  return localization.maxlegth3;
                                 }
-                                if (value.length > 21) return 'Max 20 characters';
+                                if (value.length > 21) return localization.maxlegth20;
                                 return null;
                                 },
                               ),
@@ -571,10 +574,10 @@ void initState() {
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                   decoration: InputDecoration(
-                                    hintText: 'Legal Name',
+                                    hintText: localization.legalname,
                                     hintStyle: const TextStyle(
                                         color: Colors.black, fontSize: 16),
-                                    labelText: 'Legal Name',
+                                    labelText: localization.legalname,
                                     labelStyle: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -606,10 +609,10 @@ void initState() {
                                     return 'Legal Name is Required';
                                   }
                                   if (value.length < 2) {
-                                    return 'The Legal required minimum 3 characters';
+                                    return localization.minlegth3;
                                   }
                                   if (value.length > 40) {
-                                    return 'Max 40 characters';
+                                    return localization.maxlegth40;
                                   }
                                   return null;
                                   }),
@@ -619,10 +622,10 @@ void initState() {
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                   decoration: InputDecoration(
-                                    hintText: 'Bussiness Name',
+                                    hintText: localization.bussinessname,
                                     hintStyle: const TextStyle(
                                         color: Colors.black, fontSize: 16),
-                                    labelText: 'Bussiness Name',
+                                    labelText: localization.bussinessname,
                                     labelStyle: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -651,13 +654,13 @@ void initState() {
                                   }, 
                                   validator: (value) {
                                             if (value == null || value.isEmpty) {
-                                    return 'Bussiness Name is Required';
+                                    return localization.requiredbussinessname;
                                   }
                                   if (value.length < 2) {
-                                    return 'The Bussiness required minimum 3 characters';
+                                    return localization.minlegth3;
                                   }
                                   if (value.length > 40) {
-                                    return 'Max 40 characters';
+                                    return localization.maxlegth40;
                                   }
                                   return null;
                                   }
@@ -668,10 +671,10 @@ void initState() {
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                   decoration: InputDecoration(
-                                    hintText: 'Branch',
+                                    hintText: localization.branchm,
                                     hintStyle: const TextStyle(
                                         color: Colors.black, fontSize: 16),
-                                    labelText: 'Branch',
+                                    labelText: localization.branchm,
                                     labelStyle: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16),
@@ -702,10 +705,10 @@ void initState() {
                                     return null;
                                   }
                                   if (value.length < 2) {
-                                    return 'The Branch required minimum 3 characters';
+                                    return localization.minlegth3;
                                   }
                                   if (value.length > 17) {
-                                    return 'Max 17 characters';
+                                    return localization.maxlegth17;
                                   }
                                   return null;
                                   }),
@@ -715,10 +718,10 @@ void initState() {
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                   decoration: InputDecoration(
-                                    hintText: 'Address',
+                                    hintText: localization.address,
                                     hintStyle: const TextStyle(
                                         color: Colors.black, fontSize: 16),
-                                    labelText: 'Address',
+                                    labelText: localization.address,
                                     labelStyle: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -747,13 +750,13 @@ void initState() {
                                   }, 
                                   validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Address is Required';
+                                    return localization.requiredaddress;
                                   }
                                   if (value.length < 2) {
-                                    return 'The Address required minimum 3 characters';
+                                    return localization.minlegth3;
                                   }
                                   if (value.length > 91) {
-                                    return 'Max 90 characters';
+                                    return localization.max90legth;
                                   }
                                   return null;
                                   }),
@@ -771,7 +774,7 @@ void initState() {
                               padding: const EdgeInsets.all(16.0),
                               child: Column(
                                                       children: [
-                              Text('ADITIONAL INFORMATION',
+                              Text(localization.aditionalinformation,
                                   style: GoogleFonts.plusJakartaSans(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -786,28 +789,28 @@ void initState() {
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 16),
                                   maxLines: 5,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Note',
-                                    hintStyle: TextStyle(
+                                  decoration: InputDecoration(
+                                    hintText: localization.note,
+                                    hintStyle: const TextStyle(
                                         color: Colors.black, fontSize: 16),
-                                    labelText: 'Note',
-                                    labelStyle: TextStyle(
+                                    labelText: localization.note,
+                                    labelStyle: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
-                                    prefixIcon: Icon(Icons.info_outline_rounded,
+                                    prefixIcon: const Icon(Icons.info_outline_rounded,
                                         color: Colors.black, size: 20),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(color: Colors.black, width: 1),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color.fromARGB(255, 58, 60, 65),
                                       ),
                                     ),
-                                    errorBorder: OutlineInputBorder(
+                                    errorBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(color: Colors.red)),
-                                    focusedErrorBorder: OutlineInputBorder(
+                                    focusedErrorBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                       color: Color.fromARGB(255, 58, 60, 65),
                                     )),
@@ -818,12 +821,12 @@ void initState() {
                                   }, 
                                   validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Note is Required';
+                                    return localization.requirednote;
                                   }
                                   if (value.length < 2) {
-                                    return 'The note required minimum 3 characters';
+                                    return localization.minlegth3;
                                   }
-                                  if (value.length > 180) return 'Max 179 characters';
+                                  if (value.length > 180) return localization.max179legth;
                                   return null;
                                   }),
                               const SizedBox(height: 10),

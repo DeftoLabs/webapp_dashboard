@@ -1565,6 +1565,234 @@ abstract class AppLocalizations {
   /// **'Create by'**
   String get createby;
 
+  /// No description provided for @customerm.
+  ///
+  /// In en, this message translates to:
+  /// **'CUSTOMER'**
+  String get customerm;
+
+  /// No description provided for @legalname.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal Name'**
+  String get legalname;
+
+  /// No description provided for @branchm.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get branchm;
+
+  /// No description provided for @zonem.
+  ///
+  /// In en, this message translates to:
+  /// **'Zone'**
+  String get zonem;
+
+  /// No description provided for @contacinfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Info'**
+  String get contacinfo;
+
+  /// No description provided for @creditsales.
+  ///
+  /// In en, this message translates to:
+  /// **'CREDIT & SALES DATA'**
+  String get creditsales;
+
+  /// No description provided for @conditionsales.
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions Sales'**
+  String get conditionsales;
+
+  /// No description provided for @creditinfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit (Days) & Cash'**
+  String get creditinfo;
+
+  /// No description provided for @zonename.
+  ///
+  /// In en, this message translates to:
+  /// **'Zone Name'**
+  String get zonename;
+
+  /// No description provided for @website.
+  ///
+  /// In en, this message translates to:
+  /// **'WebSite'**
+  String get website;
+
+  /// No description provided for @requiredcredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit is Required'**
+  String get requiredcredit;
+
+  /// No description provided for @onlynumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Only numbers are allowed'**
+  String get onlynumbers;
+
+  /// No description provided for @maxlegth3.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 3 characters'**
+  String get maxlegth3;
+
+  /// No description provided for @selectzone.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Zone'**
+  String get selectzone;
+
+  /// No description provided for @requiredmanager.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager is Required'**
+  String get requiredmanager;
+
+  /// No description provided for @maxlegth20.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 20 characters'**
+  String get maxlegth20;
+
+  /// No description provided for @requiredphone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone is Required'**
+  String get requiredphone;
+
+  /// No description provided for @phonemessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Only numbers and a leading + are allowed (No space allowed)'**
+  String get phonemessage01;
+
+  /// No description provided for @emailnotvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Email not Valid'**
+  String get emailnotvalid;
+
+  /// No description provided for @requiredwebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'WebSite is Required'**
+  String get requiredwebsite;
+
+  /// No description provided for @maxlegth40.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 40 characters'**
+  String get maxlegth40;
+
+  /// No description provided for @updatecustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Updated'**
+  String get updatecustomer;
+
+  /// No description provided for @errorupdatecustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Error to Update the Customer'**
+  String get errorupdatecustomer;
+
+  /// No description provided for @requiredtaxid.
+  ///
+  /// In en, this message translates to:
+  /// **'TAX ID is Required'**
+  String get requiredtaxid;
+
+  /// No description provided for @minlegth3.
+  ///
+  /// In en, this message translates to:
+  /// **'Min 3 characters'**
+  String get minlegth3;
+
+  /// No description provided for @requiredbussinessname.
+  ///
+  /// In en, this message translates to:
+  /// **'Bussiness Name is Required'**
+  String get requiredbussinessname;
+
+  /// No description provided for @maxlegth17.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 17 characters'**
+  String get maxlegth17;
+
+  /// No description provided for @max90legth.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 90 characters'**
+  String get max90legth;
+
+  /// No description provided for @requiredaddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is Required'**
+  String get requiredaddress;
+
+  /// No description provided for @max179legth.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 179 characters'**
+  String get max179legth;
+
+  /// No description provided for @requirednote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note is Required'**
+  String get requirednote;
+
+  /// No description provided for @requiredcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Code Required'**
+  String get requiredcode;
+
+  /// No description provided for @taxid.
+  ///
+  /// In en, this message translates to:
+  /// **'TAX ID'**
+  String get taxid;
+
+  /// No description provided for @bussinessname.
+  ///
+  /// In en, this message translates to:
+  /// **'Bussiness Name'**
+  String get bussinessname;
+
+  /// No description provided for @aditionalinformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Aditional Information'**
+  String get aditionalinformation;
+
+  /// No description provided for @addlocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Location'**
+  String get addlocation;
+
+  /// No description provided for @note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get note;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
   /// No description provided for @bussinesssettings.
   ///
   /// In en, this message translates to:

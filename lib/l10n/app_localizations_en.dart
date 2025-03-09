@@ -742,6 +742,120 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createby => 'Create by';
 
   @override
+  String get customerm => 'CUSTOMER';
+
+  @override
+  String get legalname => 'Legal Name';
+
+  @override
+  String get branchm => 'Branch';
+
+  @override
+  String get zonem => 'Zone';
+
+  @override
+  String get contacinfo => 'Contact Info';
+
+  @override
+  String get creditsales => 'CREDIT & SALES DATA';
+
+  @override
+  String get conditionsales => 'Conditions Sales';
+
+  @override
+  String get creditinfo => 'Credit (Days) & Cash';
+
+  @override
+  String get zonename => 'Zone Name';
+
+  @override
+  String get website => 'WebSite';
+
+  @override
+  String get requiredcredit => 'Credit is Required';
+
+  @override
+  String get onlynumbers => 'Only numbers are allowed';
+
+  @override
+  String get maxlegth3 => 'Max 3 characters';
+
+  @override
+  String get selectzone => 'Select a Zone';
+
+  @override
+  String get requiredmanager => 'Manager is Required';
+
+  @override
+  String get maxlegth20 => 'Max 20 characters';
+
+  @override
+  String get requiredphone => 'Phone is Required';
+
+  @override
+  String get phonemessage01 => 'Only numbers and a leading + are allowed (No space allowed)';
+
+  @override
+  String get emailnotvalid => 'Email not Valid';
+
+  @override
+  String get requiredwebsite => 'WebSite is Required';
+
+  @override
+  String get maxlegth40 => 'Max 40 characters';
+
+  @override
+  String get updatecustomer => 'Customer Updated';
+
+  @override
+  String get errorupdatecustomer => 'Error to Update the Customer';
+
+  @override
+  String get requiredtaxid => 'TAX ID is Required';
+
+  @override
+  String get minlegth3 => 'Min 3 characters';
+
+  @override
+  String get requiredbussinessname => 'Bussiness Name is Required';
+
+  @override
+  String get maxlegth17 => 'Max 17 characters';
+
+  @override
+  String get max90legth => 'Max 90 characters';
+
+  @override
+  String get requiredaddress => 'Address is Required';
+
+  @override
+  String get max179legth => 'Max 179 characters';
+
+  @override
+  String get requirednote => 'Note is Required';
+
+  @override
+  String get requiredcode => 'Code Required';
+
+  @override
+  String get taxid => 'TAX ID';
+
+  @override
+  String get bussinessname => 'Bussiness Name';
+
+  @override
+  String get aditionalinformation => 'Aditional Information';
+
+  @override
+  String get addlocation => 'Add Location';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get back => 'Back';
+
+  @override
   String get bussinesssettings => 'Bussiness Settings';
 
   @override
