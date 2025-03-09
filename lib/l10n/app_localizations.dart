@@ -1265,6 +1265,252 @@ abstract class AppLocalizations {
   /// **'Data Analysis'**
   String get dataanalysis;
 
+  /// No description provided for @productsview.
+  ///
+  /// In en, this message translates to:
+  /// **'PRODUCTS VIEW'**
+  String get productsview;
+
+  /// No description provided for @productinformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Information'**
+  String get productinformation;
+
+  /// No description provided for @generalinformation.
+  ///
+  /// In en, this message translates to:
+  /// **'GENEREAL INFORMATION'**
+  String get generalinformation;
+
+  /// No description provided for @listofproducts.
+  ///
+  /// In en, this message translates to:
+  /// **'List of Products'**
+  String get listofproducts;
+
+  /// No description provided for @pdflist.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF List'**
+  String get pdflist;
+
+  /// No description provided for @image.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get image;
+
+  /// No description provided for @imagemessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to Upload Image'**
+  String get imagemessage01;
+
+  /// No description provided for @imagemessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Image Size:'**
+  String get imagemessage02;
+
+  /// No description provided for @imagemessage03.
+  ///
+  /// In en, this message translates to:
+  /// **'450x450 Pixels'**
+  String get imagemessage03;
+
+  /// No description provided for @codem.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get codem;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @stock.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get stock;
+
+  /// No description provided for @unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get unit;
+
+  /// No description provided for @pricem.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get pricem;
+
+  /// No description provided for @prices.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices'**
+  String get prices;
+
+  /// No description provided for @pricel1.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Level 01'**
+  String get pricel1;
+
+  /// No description provided for @pricel2.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Level 02'**
+  String get pricel2;
+
+  /// No description provided for @pricel3.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Level 03'**
+  String get pricel3;
+
+  /// No description provided for @pricel4.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Level 04'**
+  String get pricel4;
+
+  /// No description provided for @pricel5.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Level 05'**
+  String get pricel5;
+
+  /// No description provided for @priceex.
+  ///
+  /// In en, this message translates to:
+  /// **'Price - e.g. 10.20'**
+  String get priceex;
+
+  /// No description provided for @pricevalidation01.
+  ///
+  /// In en, this message translates to:
+  /// **'Price is required'**
+  String get pricevalidation01;
+
+  /// No description provided for @pricevalidation02.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid price format. Use . for decimals'**
+  String get pricevalidation02;
+
+  /// No description provided for @pricevalidation03.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid number'**
+  String get pricevalidation03;
+
+  /// No description provided for @descriptionm.
+  ///
+  /// In en, this message translates to:
+  /// **'DESCRIPTION'**
+  String get descriptionm;
+
+  /// No description provided for @descriptionmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Description is Required'**
+  String get descriptionmessage01;
+
+  /// No description provided for @descriptionmessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'Description cannot be more than 40 characters'**
+  String get descriptionmessage02;
+
+  /// No description provided for @stockm.
+  ///
+  /// In en, this message translates to:
+  /// **'STOCK'**
+  String get stockm;
+
+  /// No description provided for @stockd.
+  ///
+  /// In en, this message translates to:
+  /// **'STOCK - (Accept up to 4 decimals) e.g. 10.1234'**
+  String get stockd;
+
+  /// No description provided for @stockmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'STOCK IS REQUIRED'**
+  String get stockmessage01;
+
+  /// No description provided for @stockmessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'INVALID STOCK FORMAT (Only Numbers) Use . / Max 4 Decimals\''**
+  String get stockmessage02;
+
+  /// No description provided for @unitm.
+  ///
+  /// In en, this message translates to:
+  /// **'UNIT'**
+  String get unitm;
+
+  /// No description provided for @unitmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'UNIT IS REQUIRED'**
+  String get unitmessage01;
+
+  /// No description provided for @categorym.
+  ///
+  /// In en, this message translates to:
+  /// **'CATEGORY'**
+  String get categorym;
+
+  /// No description provided for @selectcategory.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT A CATEGORY'**
+  String get selectcategory;
+
+  /// No description provided for @taxm.
+  ///
+  /// In en, this message translates to:
+  /// **'TAX'**
+  String get taxm;
+
+  /// No description provided for @taxmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT A TAX'**
+  String get taxmessage01;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @editm.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editm;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'UPDATE'**
+  String get update;
+
+  /// No description provided for @productmessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'COULD NOT SAVE THE PRODUCT'**
+  String get productmessage01;
+
   /// No description provided for @bussinesssettings.
   ///
   /// In en, this message translates to:

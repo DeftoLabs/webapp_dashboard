@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/products.dart';
 import 'package:web_dashboard/providers/providers.dart';
 import 'package:web_dashboard/services/navigation_service.dart';
@@ -54,6 +55,9 @@ class _ProductViewState extends State<ProductView> {
             color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 4.0),
       );
     }
+
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(physics: const ClampingScrollPhysics(), children: [
@@ -67,7 +71,7 @@ class _ProductViewState extends State<ProductView> {
                   icon: const Icon(Icons.arrow_back_rounded)),
               Expanded(
                   child: Center(
-                child: Text('Product View', style: CustomLabels.h1),
+                child: Text(localization.productinformation, style: GoogleFonts.plusJakartaSans(fontSize: 26)),
               )),
             ],
           ),
@@ -99,14 +103,16 @@ class _PriceProductView extends StatelessWidget {
     final productFormProvider = Provider.of<ProductFormProvider>(context);
     final producto = productFormProvider.producto!;
 
+    final localization = AppLocalizations.of(context)!;
+
     return WhiteCardColor(
-      title: 'Prices',
+      title: localization.prices,
       child: SizedBox(
           height: 600,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const SizedBox(height: 20),
-            Text('Price Level 1',
+            Text(localization.pricel1,
                 style: GoogleFonts.plusJakartaSans(
                     color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
@@ -115,8 +121,8 @@ class _PriceProductView extends StatelessWidget {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
-                  hintText: 'Price',
-                  labelText: 'Price - e.g. 10.20',
+                  hintText: localization.price,
+                  labelText: localization.priceex,
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
@@ -132,14 +138,14 @@ class _PriceProductView extends StatelessWidget {
                 ),
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Price is required';
+                   if (value == null || value.isEmpty) {
+                    return localization.pricevalidation01;
                   }
                   if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
-                    return 'Invalid price format. Use "." for decimals';
+                    return localization.pricevalidation02;
                   }
                   if (double.tryParse(value) == null) {
-                    return 'Invalid number';
+                    return localization.pricevalidation03;
                   }
                   return null;
                 },
@@ -147,7 +153,7 @@ class _PriceProductView extends StatelessWidget {
                   producto.precio1 = double.tryParse(value) ?? 0.0;
                 }),
             const SizedBox(height: 20),
-            Text('Price Level 2',
+            Text(localization.pricel2,
                 style: GoogleFonts.plusJakartaSans(
                     color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
@@ -156,8 +162,8 @@ class _PriceProductView extends StatelessWidget {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
-                  hintText: 'Price',
-                  labelText: 'Price - e.g. 10.20',
+                  hintText: localization.price,
+                  labelText: localization.priceex,
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
@@ -173,14 +179,14 @@ class _PriceProductView extends StatelessWidget {
                 ),
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Price is required';
+                   if (value == null || value.isEmpty) {
+                    return localization.pricevalidation01;
                   }
                   if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
-                    return 'Invalid price format. Use "." for decimals';
+                    return localization.pricevalidation02;
                   }
                   if (double.tryParse(value) == null) {
-                    return 'Invalid number';
+                    return localization.pricevalidation03;
                   }
                   return null;
                 },
@@ -188,7 +194,7 @@ class _PriceProductView extends StatelessWidget {
                   producto.precio2 = double.tryParse(value) ?? 0.0;
                 }),
             const SizedBox(height: 20),
-            Text('Price Level 3',
+            Text(localization.pricel3,
                 style: GoogleFonts.plusJakartaSans(
                     color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
@@ -197,8 +203,8 @@ class _PriceProductView extends StatelessWidget {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
-                  hintText: 'Price',
-                  labelText: 'Price - e.g. 10.20',
+                  hintText: localization.price,
+                  labelText: localization.priceex,
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
@@ -214,14 +220,14 @@ class _PriceProductView extends StatelessWidget {
                 ),
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Price is required';
+                   if (value == null || value.isEmpty) {
+                    return localization.pricevalidation01;
                   }
                   if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
-                    return 'Invalid price format. Use "." for decimals';
+                    return localization.pricevalidation02;
                   }
                   if (double.tryParse(value) == null) {
-                    return 'Invalid number';
+                    return localization.pricevalidation03;
                   }
                   return null;
                 },
@@ -229,7 +235,7 @@ class _PriceProductView extends StatelessWidget {
                   producto.precio3 = double.tryParse(value) ?? 0.0;
                 }),
             const SizedBox(height: 20),
-            Text('Price Level 4',
+            Text(localization.pricel4,
                 style: GoogleFonts.plusJakartaSans(
                     color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
@@ -238,8 +244,8 @@ class _PriceProductView extends StatelessWidget {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
-                  hintText: 'Price',
-                  labelText: 'Price - e.g. 10.20',
+                  hintText: localization.price,
+                  labelText: localization.priceex,
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
@@ -255,14 +261,14 @@ class _PriceProductView extends StatelessWidget {
                 ),
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Price is required';
+                   if (value == null || value.isEmpty) {
+                    return localization.pricevalidation01;
                   }
                   if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
-                    return 'Invalid price format. Use "." for decimals';
+                    return localization.pricevalidation02;
                   }
                   if (double.tryParse(value) == null) {
-                    return 'Invalid number';
+                    return localization.pricevalidation03;
                   }
                   return null;
                 },
@@ -270,7 +276,7 @@ class _PriceProductView extends StatelessWidget {
                   producto.precio4 = double.tryParse(value) ?? 0.0;
                 }),
             const SizedBox(height: 20),
-            Text('Price Level 5',
+            Text(localization.pricel5,
                 style: GoogleFonts.plusJakartaSans(
                     color: Colors.white, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
@@ -279,8 +285,8 @@ class _PriceProductView extends StatelessWidget {
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 decoration: InputDecoration(
-                  hintText: 'Price',
-                  labelText: 'Price - e.g. 10.20',
+                  hintText: localization.price,
+                  labelText: localization.priceex,
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white, fontSize: 12),
                   hintStyle: GoogleFonts.plusJakartaSans(
@@ -297,13 +303,13 @@ class _PriceProductView extends StatelessWidget {
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Price is required';
+                    return localization.pricevalidation01;
                   }
                   if (!RegExp(r'^\d+(\.\d{1,2})?$').hasMatch(value)) {
-                    return 'Invalid price format. Use "." for decimals';
+                    return localization.pricevalidation02;
                   }
                   if (double.tryParse(value) == null) {
-                    return 'Invalid number';
+                    return localization.pricevalidation03;
                   }
                   return null;
                 },
@@ -339,8 +345,10 @@ class _ProductFormViewState extends State<_ProductFormView> {
     final productFormProvider = Provider.of<ProductFormProvider>(context);
     final producto = productFormProvider.producto!;
 
+    final localization = AppLocalizations.of(context)!;
+
     return WhiteCardColor(
-        title: 'GENERAL INFORMATION',
+        title: localization.generalinformation,
         child: Form(
           key: productFormProvider.formKey,
           child: Container(
@@ -373,8 +381,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   producto.descripcion = uppercaseValue;
                 },
                 decoration: InputDecoration(
-                  hintText: 'DESCRIPTION',
-                  labelText: 'DESCRIPTION',
+                  hintText: localization.descriptionm,
+                  labelText: localization.descriptionm,
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white,
                       fontSize: 16,
@@ -400,10 +408,10 @@ class _ProductFormViewState extends State<_ProductFormView> {
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Description is Required';
+                    return localization.descriptionmessage01;
                   }
                   if (value.length >= 41) {
-                    return 'Description cannot be more than 40 characters';
+                    return localization.descriptionmessage02;
                   }
                   return null;
                 },
@@ -416,10 +424,10 @@ class _ProductFormViewState extends State<_ProductFormView> {
                 },
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  hintText: 'STOCK',
+                  hintText: localization.stock,
                   hintStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white.withValues(alpha: (0.7))),
-                  labelText: 'STOCK - (Accept up to 4 decimals) e.g. 10.1234',
+                  labelText: localization.stockd,
                   labelStyle: GoogleFonts.plusJakartaSans(
                       color: Colors.white,
                       fontSize: 16,
@@ -443,15 +451,15 @@ class _ProductFormViewState extends State<_ProductFormView> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'STOCK IS REQUIRED';
+                      return localization.stockmessage01;
                   }
                   // Validar que sea un número con hasta 4 decimales
                   if (!RegExp(r'^\d+(\.\d{0,4})?$').hasMatch(value)) {
-                    return 'INVALID STOCK FORMAT (Only Numbers) Use "." / Max 4 Decimals';
+                      return localization.stockmessage02;
                   }
                   // Verificar si el valor puede ser convertido a un número
                   if (double.tryParse(value) == null) {
-                    return 'Invalid number';
+                      return localization.pricevalidation03;
                   }
                   return null;
                 },
@@ -462,8 +470,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   return DropdownButtonFormField<String>(
                     value: producto.unid,
                     decoration: InputDecoration(
-                      hintText: 'UNIT',
-                      labelText: 'UNIT',
+                      hintText: localization.unitm,
+                      labelText: localization.unitm,
                       labelStyle: GoogleFonts.plusJakartaSans(
                           color: Colors.white,
                           fontSize: 16,
@@ -500,7 +508,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'UNIT IS REQUIRED';
+                        return localization.unitmessage01;
                       }
                       return null;
                     },
@@ -513,8 +521,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   return DropdownButtonFormField<String>(
                     value: producto.categoria.id,
                     decoration: InputDecoration(
-                      hintText: 'CATEGORY',
-                      labelText: 'CATEGORY',
+                      hintText: localization.categorym,
+                      labelText: localization.categorym,
                       labelStyle: GoogleFonts.plusJakartaSans(
                           color: Colors.white,
                           fontSize: 16,
@@ -550,7 +558,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'PLEASE SELECT A CATEGORY';
+                        return localization.selectcategory;
                       }
                       return null;
                     },
@@ -558,7 +566,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                 },
               ),
                   const SizedBox(height: 20),
-                  Text('TAX', 
+                  Text(localization.tax, 
                   style: GoogleFonts.plusJakartaSans(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -576,8 +584,8 @@ class _ProductFormViewState extends State<_ProductFormView> {
                   return DropdownButtonFormField<String>(
                    value: selectedValue,
                     decoration: InputDecoration(
-                      hintText: 'TAX',
-                      labelText: 'TAX',
+                      hintText: localization.tax,
+                      labelText: localization.tax,
                       labelStyle: GoogleFonts.plusJakartaSans(
                           color: Colors.white,
                           fontSize: 16,
@@ -613,7 +621,7 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'PLEASE SELECT A TAX';
+                        return localization.taxmessage01;
                       }
                       return null;
                     },
@@ -628,14 +636,14 @@ class _ProductFormViewState extends State<_ProductFormView> {
                     final saved = await productFormProvider.updateProduct();
 
                     if (saved) {
-                      NotificationService.showSnackBa('${producto.descripcion} UPDATED');
+                      NotificationService.showSnackBa('${producto.descripcion} ${localization.update}');
                       NavigationService.replaceTo('/dashboard/products');
                     } else {
                       NotificationService.showSnackBarError(
-                          'COULD NOT SAVE THE PRODUCT');
+                          localization.productmessage01);
                     }
                   },
-                  text: 'Save',
+                  text: localization.save,
                   color: Colors.white,
                 ),
               ),
@@ -660,6 +668,8 @@ class _AvatarState extends State<_Avatar> {
         ? const Image(image: AssetImage('noimage.jpeg'))
         : FadeInImage.assetNetwork(
             placeholder: 'load.gif', image: producto.img!);
+
+    final localization = AppLocalizations.of(context)!;
 
     return WhiteCard(
         width: 250,
@@ -705,8 +715,7 @@ class _AvatarState extends State<_Avatar> {
                                 if (!context.mounted) return;
                                 Navigator.of(context).pop();
                               } else {
-                                NotificationService.showSnackBarError(
-                                    'Failed to Upload Image');
+                                NotificationService.showSnackBarError(localization.imagemessage01);
                               }
                             }
                             )),
@@ -715,10 +724,15 @@ class _AvatarState extends State<_Avatar> {
               ),
             ),
             const SizedBox(height: 20),
-            Text('Recommended Image Size:',
-                style: GoogleFonts.plusJakartaSans(fontSize: 12)),
+            Center(
+              child: Text(localization.imagemessage02,
+                  style: GoogleFonts.plusJakartaSans(fontSize: 12),
+                  textAlign: TextAlign.center,
+                  ),
+            ),
+            const SizedBox(height: 5),
             Text(
-              '450x450 Pixels',
+              localization.imagemessage03,
               style: GoogleFonts.plusJakartaSans(
                   fontSize: 12, fontWeight: FontWeight.bold),
             ),

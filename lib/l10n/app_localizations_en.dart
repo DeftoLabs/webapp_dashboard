@@ -592,6 +592,129 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dataanalysis => 'Data Analysis';
 
   @override
+  String get productsview => 'PRODUCTS VIEW';
+
+  @override
+  String get productinformation => 'Product Information';
+
+  @override
+  String get generalinformation => 'GENEREAL INFORMATION';
+
+  @override
+  String get listofproducts => 'List of Products';
+
+  @override
+  String get pdflist => 'PDF List';
+
+  @override
+  String get image => 'Image';
+
+  @override
+  String get imagemessage01 => 'Failed to Upload Image';
+
+  @override
+  String get imagemessage02 => 'Recommended Image Size:';
+
+  @override
+  String get imagemessage03 => '450x450 Pixels';
+
+  @override
+  String get codem => 'Code';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get stock => 'Stock';
+
+  @override
+  String get unit => 'Unit';
+
+  @override
+  String get pricem => 'Price';
+
+  @override
+  String get prices => 'Prices';
+
+  @override
+  String get pricel1 => 'Price Level 01';
+
+  @override
+  String get pricel2 => 'Price Level 02';
+
+  @override
+  String get pricel3 => 'Price Level 03';
+
+  @override
+  String get pricel4 => 'Price Level 04';
+
+  @override
+  String get pricel5 => 'Price Level 05';
+
+  @override
+  String get priceex => 'Price - e.g. 10.20';
+
+  @override
+  String get pricevalidation01 => 'Price is required';
+
+  @override
+  String get pricevalidation02 => 'Invalid price format. Use . for decimals';
+
+  @override
+  String get pricevalidation03 => 'Invalid number';
+
+  @override
+  String get descriptionm => 'DESCRIPTION';
+
+  @override
+  String get descriptionmessage01 => 'Description is Required';
+
+  @override
+  String get descriptionmessage02 => 'Description cannot be more than 40 characters';
+
+  @override
+  String get stockm => 'STOCK';
+
+  @override
+  String get stockd => 'STOCK - (Accept up to 4 decimals) e.g. 10.1234';
+
+  @override
+  String get stockmessage01 => 'STOCK IS REQUIRED';
+
+  @override
+  String get stockmessage02 => 'INVALID STOCK FORMAT (Only Numbers) Use . / Max 4 Decimals\'';
+
+  @override
+  String get unitm => 'UNIT';
+
+  @override
+  String get unitmessage01 => 'UNIT IS REQUIRED';
+
+  @override
+  String get categorym => 'CATEGORY';
+
+  @override
+  String get selectcategory => 'SELECT A CATEGORY';
+
+  @override
+  String get taxm => 'TAX';
+
+  @override
+  String get taxmessage01 => 'SELECT A TAX';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get editm => 'Edit';
+
+  @override
+  String get update => 'UPDATE';
+
+  @override
+  String get productmessage01 => 'COULD NOT SAVE THE PRODUCT';
+
+  @override
   String get bussinesssettings => 'Bussiness Settings';
 
   @override

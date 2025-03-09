@@ -592,6 +592,129 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dataanalysis => 'Análisis de Datos';
 
   @override
+  String get productsview => 'Productos';
+
+  @override
+  String get productinformation => 'Informacion del Producto';
+
+  @override
+  String get generalinformation => 'INFORMACION GENERAL';
+
+  @override
+  String get listofproducts => 'Productos';
+
+  @override
+  String get pdflist => 'PDF Lista';
+
+  @override
+  String get image => 'Imagen';
+
+  @override
+  String get imagemessage01 => 'No se actualizo la Imagen';
+
+  @override
+  String get imagemessage02 => 'Tamaño Recomendado de la Imagen:';
+
+  @override
+  String get imagemessage03 => '450x450 Pixels';
+
+  @override
+  String get codem => 'Código';
+
+  @override
+  String get description => 'Descripción';
+
+  @override
+  String get stock => 'Stock';
+
+  @override
+  String get unit => 'Unid.';
+
+  @override
+  String get pricem => 'Precio';
+
+  @override
+  String get prices => 'Precios';
+
+  @override
+  String get pricel1 => 'Precio Nivel 01';
+
+  @override
+  String get pricel2 => 'Precio Nivel 02';
+
+  @override
+  String get pricel3 => 'Precio Nivel 03';
+
+  @override
+  String get pricel4 => 'Precio Nivel 04';
+
+  @override
+  String get pricel5 => 'Precio Nivel 05';
+
+  @override
+  String get priceex => 'Precio - EJ: 10.20';
+
+  @override
+  String get pricevalidation01 => 'Precio Requerido';
+
+  @override
+  String get pricevalidation02 => 'Formato Invalido. Requiere . para decimales';
+
+  @override
+  String get pricevalidation03 => 'Numero Invlido';
+
+  @override
+  String get descriptionm => 'DESCRIPCION';
+
+  @override
+  String get descriptionmessage01 => 'La Descripción es Requerida';
+
+  @override
+  String get descriptionmessage02 => 'La Descripción no puede exceder los 40 caracteres';
+
+  @override
+  String get stockm => 'STOCK';
+
+  @override
+  String get stockd => 'STOCK - (Acepta hasta 4 decimales) EJ. 31.1234';
+
+  @override
+  String get stockmessage01 => 'STOCK es Requerida';
+
+  @override
+  String get stockmessage02 => 'Formato Invalido (Solo Numeros) Utilice . / Max 4 Decimales\'';
+
+  @override
+  String get unitm => 'UNID';
+
+  @override
+  String get unitmessage01 => 'Debe de Seleccionar una Unidad de Venta';
+
+  @override
+  String get categorym => 'CATEGORIA';
+
+  @override
+  String get selectcategory => 'Debe Seleccionar una Categoria';
+
+  @override
+  String get taxm => 'IMPUESTO';
+
+  @override
+  String get taxmessage01 => 'Debe Selecionar un Impuesto';
+
+  @override
+  String get category => 'Categoría';
+
+  @override
+  String get editm => 'Editar';
+
+  @override
+  String get update => 'ACTUALIZADO';
+
+  @override
+  String get productmessage01 => 'NO SE GUARDO EL PRODUCTO, CONTACTE A SOPORTE';
+
+  @override
   String get bussinesssettings => 'Configuración de la Empresa';
 
   @override

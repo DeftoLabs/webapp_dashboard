@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/api/cafeapi.dart';
 import 'package:web_dashboard/datatables/products_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/products_provider.dart';
 import 'package:web_dashboard/providers/profile_provider.dart';
 import 'package:web_dashboard/services/notification_services.dart';
@@ -53,6 +54,8 @@ class _ProductsViewState extends State<ProductsView> {
 
     final todayDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
@@ -63,7 +66,7 @@ class _ProductsViewState extends State<ProductsView> {
               const SizedBox(width: 20),
               Expanded
               (
-                child: Text('PRODUCTS VIEW', style: GoogleFonts.plusJakartaSans(fontSize: 22, fontWeight: FontWeight.bold),)),
+                child: Text(localization.productsview, style: GoogleFonts.plusJakartaSans(fontSize: 22, fontWeight: FontWeight.bold),)),
                   const SizedBox(width: 20),
                 Container(
                        height: 50,
@@ -124,7 +127,7 @@ class _ProductsViewState extends State<ProductsView> {
 
                         icon: const Icon(Icons.share, color: Colors.black,),
                         label: Text(
-                          'PDF LIST',
+                          localization.pdflist,
                           style: GoogleFonts.plusJakartaSans(
                               color: const Color.fromARGB(255, 0, 0, 0)),
                         ),
@@ -147,31 +150,31 @@ class _ProductsViewState extends State<ProductsView> {
               sortAscending: productsProvider.ascending,
               sortColumnIndex: productsProvider.sortColumnIndex,
               columns: [
-                const DataColumn(
-                  label: Text('Image'),
+                DataColumn(
+                  label: Text(localization.image),
                 ),
-                const DataColumn(
-                  label: Text('Code'),
+                DataColumn(
+                  label: Text(localization.codem),
                 ),
-                DataColumn(label: const Text('Description'), onSort: (colIndex, _) {
+                DataColumn(label: Text(localization.description), onSort: (colIndex, _) {
                   productsProvider.sortColumnIndex = colIndex;
                   productsProvider.sort((producto) => producto.descripcion.toString());
                 }),
-                DataColumn(label: const Text('Stock'), onSort: (colIndex, _) {
+                DataColumn(label: Text(localization.stock), onSort: (colIndex, _) {
                   productsProvider.sortColumnIndex = colIndex;
                   productsProvider.sort((producto) => producto.stock);
                 }),
-                const DataColumn(label: Text('Unit')),
+                DataColumn(label: Text(localization.unit)),
                 
-                DataColumn(label: const Text('Price'), onSort: (colIndex, _) {
+                DataColumn(label: Text(localization.pricem), onSort: (colIndex, _) {
                   productsProvider.sortColumnIndex = colIndex;
                   productsProvider.sort((producto) => producto.precio1);
                 }),
-                const DataColumn(label: Text('Categories')),
-                const DataColumn(label: Text('Actions')),
+                DataColumn(label: Text(localization.categories)),
+                DataColumn(label: Text(localization.editm)),
               ],
               source: productDataSource,
-              header: Text(' LIST OF PRODUCTS', maxLines: 2, style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),),
+              header: Text(localization.listofproducts, maxLines: 2, style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.bold),),
               onRowsPerPageChanged: (value) {
                 setState(() {
                   _rowsPerPage = value ?? 10;
@@ -179,7 +182,7 @@ class _ProductsViewState extends State<ProductsView> {
               },
               rowsPerPage: _rowsPerPage,
               actions: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.search, color: Colors.black)),
                 const SizedBox(width: 20),
                 CustomIconButton(
                   onPressed: () {
@@ -190,7 +193,7 @@ class _ProductsViewState extends State<ProductsView> {
                       },
                     );
                   },
-                  text: 'ADD PRODUCT',
+                  text: localization.addproduct,
                   icon: Icons.add_outlined,
                 ),
               ],
