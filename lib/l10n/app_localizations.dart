@@ -1793,6 +1793,426 @@ abstract class AppLocalizations {
   /// **'Back'**
   String get back;
 
+  /// No description provided for @waitplease.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait Please ...'**
+  String get waitplease;
+
+  /// No description provided for @errormap.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading Google Maps:'**
+  String get errormap;
+
+  /// No description provided for @salesrepresentativemap.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Representative'**
+  String get salesrepresentativemap;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading ...'**
+  String get loading;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @errormap01.
+  ///
+  /// In en, this message translates to:
+  /// **'Error to get address: No results found'**
+  String get errormap01;
+
+  /// No description provided for @errormap02.
+  ///
+  /// In en, this message translates to:
+  /// **'Error to connect to the server'**
+  String get errormap02;
+
+  /// No description provided for @noaddressavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No address available'**
+  String get noaddressavailable;
+
+  /// No description provided for @page.
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get page;
+
+  /// No description provided for @routeview.
+  ///
+  /// In en, this message translates to:
+  /// **'Routes'**
+  String get routeview;
+
+  /// No description provided for @createnewroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a New Route'**
+  String get createnewroute;
+
+  /// No description provided for @routename.
+  ///
+  /// In en, this message translates to:
+  /// **'ROUTE'**
+  String get routename;
+
+  /// No description provided for @routedetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Route Details'**
+  String get routedetail;
+
+  /// No description provided for @routecode.
+  ///
+  /// In en, this message translates to:
+  /// **'Route Code'**
+  String get routecode;
+
+  /// No description provided for @routenamem.
+  ///
+  /// In en, this message translates to:
+  /// **'Route'**
+  String get routenamem;
+
+  /// No description provided for @totalcustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Customers'**
+  String get totalcustomers;
+
+  /// No description provided for @editrouteinformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Route Information'**
+  String get editrouteinformation;
+
+  /// No description provided for @addcustomerroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a Customer Route'**
+  String get addcustomerroute;
+
+  /// No description provided for @nocustomeravailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No Customer Available'**
+  String get nocustomeravailable;
+
+  /// No description provided for @dayoftheweek.
+  ///
+  /// In en, this message translates to:
+  /// **'Day of the Week'**
+  String get dayoftheweek;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @selectcustomerroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Customer'**
+  String get selectcustomerroute;
+
+  /// No description provided for @selectdayoftheweek.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Day of the Week'**
+  String get selectdayoftheweek;
+
+  /// No description provided for @removeoreditcustomerfromroute.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove or Edit a Customer from Route'**
+  String get removeoreditcustomerfromroute;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @savem.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get savem;
+
+  /// No description provided for @monday.
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get monday;
+
+  /// No description provided for @tuesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get tuesday;
+
+  /// No description provided for @wednesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get wednesday;
+
+  /// No description provided for @thursday.
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get thursday;
+
+  /// No description provided for @friday.
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get friday;
+
+  /// No description provided for @saturday.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get saturday;
+
+  /// No description provided for @sunday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get sunday;
+
+  /// No description provided for @routeremovemessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a valid Customer and Day of the week'**
+  String get routeremovemessage01;
+
+  /// No description provided for @routeremovemessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure to'**
+  String get routeremovemessage02;
+
+  /// No description provided for @removem.
+  ///
+  /// In en, this message translates to:
+  /// **'REMOVE'**
+  String get removem;
+
+  /// No description provided for @routeremovemessage03.
+  ///
+  /// In en, this message translates to:
+  /// **'this customer from the route?'**
+  String get routeremovemessage03;
+
+  /// No description provided for @routeremovemessage04.
+  ///
+  /// In en, this message translates to:
+  /// **'The customer has been removed from the route.'**
+  String get routeremovemessage04;
+
+  /// No description provided for @routeremovemessage05.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove the customer. Please try again.\''**
+  String get routeremovemessage05;
+
+  /// No description provided for @routeremovemessage06.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a customer and a route.'**
+  String get routeremovemessage06;
+
+  /// No description provided for @routeremovemessage07.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a valid Customer and Day of the week'**
+  String get routeremovemessage07;
+
+  /// No description provided for @routeremovemessage08.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to '**
+  String get routeremovemessage08;
+
+  /// No description provided for @modifym.
+  ///
+  /// In en, this message translates to:
+  /// **'MODIFY'**
+  String get modifym;
+
+  /// No description provided for @routeremovemessage09.
+  ///
+  /// In en, this message translates to:
+  /// **' this customer from the route?'**
+  String get routeremovemessage09;
+
+  /// No description provided for @routeremovemessage10.
+  ///
+  /// In en, this message translates to:
+  /// **'Day of the week successfully updated'**
+  String get routeremovemessage10;
+
+  /// No description provided for @routeremovemessage11.
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating the day of the week. Please try again.'**
+  String get routeremovemessage11;
+
+  /// No description provided for @routeremovemessage12.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a customer and a day of the week.'**
+  String get routeremovemessage12;
+
+  /// No description provided for @addm.
+  ///
+  /// In en, this message translates to:
+  /// **'ADD'**
+  String get addm;
+
+  /// No description provided for @routeremovemessage13.
+  ///
+  /// In en, this message translates to:
+  /// **'The customer has been Added from the route.'**
+  String get routeremovemessage13;
+
+  /// No description provided for @routeremovemessage14.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a customer and a route.'**
+  String get routeremovemessage14;
+
+  /// No description provided for @routeremovemessage15.
+  ///
+  /// In en, this message translates to:
+  /// **'Error to Update the Route'**
+  String get routeremovemessage15;
+
+  /// No description provided for @routerequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Route Name is Required'**
+  String get routerequired;
+
+  /// No description provided for @routeuodate.
+  ///
+  /// In en, this message translates to:
+  /// **'Route Updated'**
+  String get routeuodate;
+
+  /// No description provided for @nocustomerthisday.
+  ///
+  /// In en, this message translates to:
+  /// **'No Customer for this day'**
+  String get nocustomerthisday;
+
+  /// No description provided for @zones.
+  ///
+  /// In en, this message translates to:
+  /// **'Zones'**
+  String get zones;
+
+  /// No description provided for @zona.
+  ///
+  /// In en, this message translates to:
+  /// **'ZONE'**
+  String get zona;
+
+  /// No description provided for @listofzone.
+  ///
+  /// In en, this message translates to:
+  /// **'List of Zone'**
+  String get listofzone;
+
+  /// No description provided for @createazone.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a Zone'**
+  String get createazone;
+
+  /// No description provided for @zonemap.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get zonemap;
+
+  /// No description provided for @zonecode.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal Zone Code'**
+  String get zonecode;
+
+  /// No description provided for @createazonemap.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a Zone on The Map'**
+  String get createazonemap;
+
+  /// No description provided for @zonemessage.
+  ///
+  /// In en, this message translates to:
+  /// **'With Version 2.0, you will be abel to select areas on the Map.'**
+  String get zonemessage;
+
+  /// No description provided for @maxlegth10.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 10 Characters'**
+  String get maxlegth10;
+
+  /// No description provided for @codrequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Code is required'**
+  String get codrequired;
+
+  /// No description provided for @zonenamerequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Zone Name is required'**
+  String get zonenamerequired;
+
+  /// No description provided for @descriptionrequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Description is required'**
+  String get descriptionrequired;
+
+  /// No description provided for @maxlegth60.
+  ///
+  /// In en, this message translates to:
+  /// **'Max 60 Characters'**
+  String get maxlegth60;
+
+  /// No description provided for @zonemessage01.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the Zone'**
+  String get zonemessage01;
+
+  /// No description provided for @zonemessage02.
+  ///
+  /// In en, this message translates to:
+  /// **'Zone Updated'**
+  String get zonemessage02;
+
+  /// No description provided for @zonemessage03.
+  ///
+  /// In en, this message translates to:
+  /// **'Important: The Code and Name mut be unique, cannot be repeated'**
+  String get zonemessage03;
+
   /// No description provided for @bussinesssettings.
   ///
   /// In en, this message translates to:

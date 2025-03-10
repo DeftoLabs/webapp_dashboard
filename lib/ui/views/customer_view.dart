@@ -800,7 +800,7 @@ void initState() {
                                         fontWeight: FontWeight.bold),
                                     prefixIcon: const Icon(Icons.info_outline_rounded,
                                         color: Colors.black, size: 20),
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(color: Colors.black, width: 1),
                                     ),
                                     focusedBorder: const OutlineInputBorder(

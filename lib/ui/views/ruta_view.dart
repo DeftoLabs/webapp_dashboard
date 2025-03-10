@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/customers.dart';
 import 'package:web_dashboard/models/ruta.dart';
 import 'package:web_dashboard/providers/providers.dart';
@@ -39,6 +40,9 @@ class _RutaViewState extends State<RutaView> {
 
   @override
   Widget build(BuildContext context) {
+
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
@@ -55,7 +59,7 @@ class _RutaViewState extends State<RutaView> {
                     icon: const Icon(Icons.arrow_back_rounded)),
                 Expanded(
                   child: Text(
-                    'Route View',
+                    localization.routedetail,
                     style: CustomLabels.h1,
                     textAlign: TextAlign.center,
                   ),
@@ -161,10 +165,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
   String? selectedCustomerId;
   String? selectedDiaSemana;
   List<Customer> clientesEnRuta = [];
-
-  final List<String> diasSemana = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +175,27 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
 
     clientesEnRuta = ruta.clientes;
 
+    final localization = AppLocalizations.of(context)!;
+
+    final diasSemana = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+
+    final Map<String, String> traduccionDias = {
+      'Monday': 'Lunes',
+      'Tuesday': 'Martes',
+      'Wednesday': 'Miércoles',
+      'Thursday': 'Jueves',
+      'Friday': 'Viernes',
+      'Saturday': 'Sábado',
+      'Sunday': 'Domingo'
+    };
 
     return WhiteCardColor(
       child: SizedBox(
@@ -182,7 +204,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
         child: Column(
           children: [
             Text(
-              'Remove or Edit a Customer from Route',
+              localization.removeoreditcustomerfromroute,
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
                 color: Colors.white,
@@ -204,11 +226,11 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                     child: DropdownButtonFormField<String>(
                         value: selectedCustomerId,
                         decoration: InputDecoration(
-                          hintText: 'Select Customer',
-                          labelText: 'Select Customer',
+                          //hintText: localization.selectcustomerroute,
+                          labelText: localization.selectcustomerroute,
                           labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, 
-                            fontSize: 16,
+                            fontSize: 12,
                           ),
                           hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                           focusedBorder: const OutlineInputBorder(
@@ -222,7 +244,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                           Icons.arrow_drop_down,
                           color: Colors.white,
                         ),
-                        style: GoogleFonts.plusJakartaSans(color: Colors.black),
+                        style: GoogleFonts.plusJakartaSans(color: Colors.white),
                         dropdownColor: Colors.grey[800],
                         items: ruta.clientes.map((customer) {
                             return DropdownMenuItem<String>(
@@ -233,7 +255,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                     style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12)),
                                 const SizedBox(width: 5),    
                                 Text(customer.sucursal,
-                                    style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)), 
+                                    style: GoogleFonts.plusJakartaSans(color: Colors.amber, fontSize: 12, fontWeight: FontWeight.bold)), 
                               ],
                             ));
                           }).toList(),
@@ -250,11 +272,11 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                         child: DropdownButtonFormField<String>(
                           value: selectedDiaSemana,
                           decoration: InputDecoration(
-                            hintText: 'Select Day of the Week',
-                            labelText: 'Day of the Week',
+                            //hintText: 'Select Day of the Week',
+                            labelText: localization.selectdayoftheweek,
                             labelStyle: GoogleFonts.plusJakartaSans(
                               color: Colors.white, 
-                              fontSize: 16,
+                              fontSize: 12,
                             ),
                             hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                             focusedBorder: const OutlineInputBorder(
@@ -273,8 +295,10 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                           items: diasSemana.map((dia) {
                             return DropdownMenuItem<String>(
                               value: dia,
-                              child: Text(dia,
-                                  style: const TextStyle(color: Colors.white)),
+                             child: Text(
+                              traduccionDias[dia] ?? dia, // Traduce el día si existe en el mapa
+                              style: const TextStyle(color: Colors.white),
+                                  ),
                             );
                           }).toList(),
                           onChanged: (value) {
@@ -302,14 +326,14 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                         child: TextButton.icon(
                           icon:   const Icon(Icons.remove_circle_outline, color: Colors.black),
                           label:  Text(
-                            'Remove',
+                            localization.remove,
                             style: GoogleFonts.plusJakartaSans(
                                 color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                           ),  
                           onPressed: () {
 
                               if (selectedCustomerId == null) {
-                              NotificationService.showSnackBarError('Select a valid Customer and Day of the week');
+                              NotificationService.showSnackBarError(localization.routeremovemessage01);
                               return;
                             }
                             final selectedCustomer = clientesEnRuta.firstWhere((customer) => customer.id == selectedCustomerId );
@@ -332,7 +356,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'Are you sure to ',
+                                          text: localization.routeremovemessage02,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: Colors.white,
@@ -340,7 +364,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: 'REMOVE',
+                                          text: localization.removem,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: const Color.fromRGBO(255, 152, 0, 1), // Cambia el color aquí
@@ -348,7 +372,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: ' this customer from the route?',
+                                          text: localization.routeremovemessage03,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: Colors.white,
@@ -376,7 +400,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                    const SizedBox(height: 10),
                                    customer.sucursal.isNotEmpty 
                                       ? Text(
-                                          'Branch: ${customer.sucursal}',
+                                          '${localization.branchm} ${customer.sucursal}',
                                           style: GoogleFonts.plusJakartaSans(
                                             color: Colors.white,
                                             fontSize: 16,
@@ -399,25 +423,32 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                   onPressed: (){
                                     Navigator.of(context).pop();
                                   }, 
-                                  child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
+                                  child: Text('NO', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
                                 TextButton(
                                   onPressed: () async {
+                                    
                                    final rutaId = ruta.id;
+
                                    if(selectedCustomerId != null && rutaId !=null) {
                                     try {
                                     await Provider.of<RutaProvider>(context, listen: false).deleteCustomerRuta(rutaId, selectedCustomerId!);
-                                    NotificationService.showSnackBa('The customer has been removed from the route.');
-                                    if(!context.mounted) return;
+                                    NotificationService.showSnackBa(localization.routeremovemessage04);
+                                     if (!context.mounted) return;
+                                      Navigator.of(context).pop();
                                     Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes();
-                                    Navigator.of(context).pop();        
+                                       
                                     } catch (e) {
-                                      NotificationService.showSnackBarError('Failed to remove the customer. Please try again.');
+                                      NotificationService.showSnackBarError(localization.routeremovemessage05);
+                                       if (!context.mounted) return;
+                                      Navigator.of(context).pop();
                                     }
                                    } else {
-                                    NotificationService.showSnackBarError('Please select a customer and a route.');
+                                    NotificationService.showSnackBarError(localization.routeremovemessage06);
+                                     if (!context.mounted) return;
+                                      Navigator.of(context).pop();
                                    }
                                   },
-                                  child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
+                                  child: Text(localization.yes, style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
                               ],
                             );
 
@@ -441,14 +472,14 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                         child: TextButton.icon(
                           icon:   const Icon(Icons.edit, color: Colors.black),
                           label:  Text(
-                            'Save',
+                            localization.savem,
                             style: GoogleFonts.plusJakartaSans(
                                 color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                           ),  
                           onPressed: () async {
 
                              if (selectedCustomerId == null || selectedDiaSemana == null) {
-                              NotificationService.showSnackBarError('Select a valid Customer and Day of the week');
+                              NotificationService.showSnackBarError(localization.routeremovemessage07);
                               return;
   }
                             final selectedCustomer = clientesEnRuta.firstWhere((customer) => customer.id == selectedCustomerId );
@@ -471,7 +502,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'Are you sure you want to ',
+                                          text:localization.routeremovemessage08,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: Colors.white,
@@ -479,7 +510,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: 'MODIFY',
+                                          text: localization.modifym,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: const Color.fromARGB(255, 88, 164, 246), // Cambia el color aquí
@@ -487,7 +518,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: ' this customer from the route?',
+                                          text: localization.routeremovemessage09,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: Colors.white,
@@ -515,7 +546,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                    const SizedBox(height: 10),
                                     customer.sucursal.isNotEmpty 
                                       ? Text(
-                                          'Branch: ${customer.sucursal}',
+                                          '${localization.branchm} ${customer.sucursal}',
                                           style: GoogleFonts.plusJakartaSans(
                                             color: Colors.white,
                                             fontSize: 16,
@@ -532,7 +563,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                        const SizedBox(height: 10),
                                        Text.rich(
                                   TextSpan(
-                                    text: 'Day of the Week: ', // Texto normal
+                                    text: localization.dayoftheweek, // Texto normal
                                     style: GoogleFonts.plusJakartaSans(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -557,7 +588,7 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                   onPressed: (){
                                     Navigator.of(context).pop();
                                   }, 
-                                  child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
+                                  child: Text('NO', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
                                 
                               TextButton(
                                 onPressed: () async {
@@ -568,19 +599,24 @@ class _DeleteRouteCustomerViewState extends State<_DeleteRouteCustomerView> {
                                         .updateDayOfWeekForCustomer(rutaId!, selectedCustomerId!, selectedDiaSemana!);
                               
                                     if (isUpdated) {
-                                      NotificationService.showSnackBa('Day of the week successfully updated');
+                                      NotificationService.showSnackBa(localization.routeremovemessage10);
                                       if (!context.mounted) return;
+                                      Navigator.of(context).pop();
                                       Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes(); // Recarga las rutas actualizadas
                                     } else {
-                                      NotificationService.showSnackBarError('Error updating the day of the week. Please try again.');
+                                      NotificationService.showSnackBarError(localization.routeremovemessage11);
+                                      if (!context.mounted) return;
+                                      Navigator.of(context).pop();
                                     }
                                   } else {
                                     // Mostrar el mensaje si no se selecciona un cliente o día
-                                    NotificationService.showSnackBarError('Please select a client and a day of the week.');
+                                    NotificationService.showSnackBarError(localization.routeremovemessage12);
+                                    if (!context.mounted) return;
+                                    Navigator.of(context).pop();
                                   }
                                 },
                                 child: Text(
-                                  'Yes',
+                                  localization.yes,
                                   style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white),
                                 ),
                               )
@@ -612,18 +648,6 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
   String? selectedCustomerId;
   String? selectedDiaSemana;
 
-
-
-  final List<String> diasSemana = [
-    'Monday', 
-    'Tuesday', 
-    'Wednesday', 
-    'Thursday', 
-    'Friday', 
-    'Saturday', 
-    'Sunday'
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -640,6 +664,29 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
 
     final rutaFormProvider = Provider.of<RutaFormProvider>(context);
 
+
+    final localization = AppLocalizations.of(context)!;
+
+    final diasSemana = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+
+    final Map<String, String> traduccionDias = {
+        'Monday': 'Lunes',
+        'Tuesday': 'Martes',
+        'Wednesday': 'Miércoles',
+        'Thursday': 'Jueves',
+        'Friday': 'Viernes',
+        'Saturday': 'Sábado',
+        'Sunday': 'Domingo'
+      };
+
     return WhiteCardColor(
       child: SizedBox(
         width: 420,
@@ -647,7 +694,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
         child: Column(
           children: [
             Text(
-              'Add a Customer Route',
+              localization.addcustomerroute,
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 16,
                 color: Colors.white,
@@ -665,17 +712,17 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
             customerProvider.isLoading
               ? const CircularProgressIndicator(color: Color.fromRGBO(255, 0, 200, 0.612), strokeWidth: 2)
               : customersNoEnRutas.isEmpty
-                  ? Text('No Customers Available', style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16))
+                  ? Text(localization.nocustomeravailable, style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16))
                   : SizedBox(
                     width: double.infinity,
                     child: DropdownButtonFormField<String>(
                         value: selectedCustomerId,
                         decoration: InputDecoration(
-                          hintText: 'Select Customer',
-                          labelText: 'Select Customer',
+                          //hintText: 'Select Customer',
+                          labelText: localization.selectcustomerroute,
                           labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, 
-                            fontSize: 16,
+                            fontSize: 12,
                           ),
                           hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                           focusedBorder: const OutlineInputBorder(
@@ -718,11 +765,11 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                         child: DropdownButtonFormField<String>(
                           value: selectedDiaSemana,
                           decoration: InputDecoration(
-                            hintText: 'Select Day of the Week',
-                            labelText: 'Day of the Week',
+                            //hintText: 'Select Day of the Week',
+                            labelText: localization.dayoftheweek,
                             labelStyle: GoogleFonts.plusJakartaSans(
                               color: Colors.white, 
-                              fontSize: 16,
+                              fontSize: 12,
                             ),
                             hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                             focusedBorder: const OutlineInputBorder(
@@ -741,8 +788,9 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                           items: diasSemana.map((dia) {
                             return DropdownMenuItem<String>(
                               value: dia,
-                              child: Text(dia,
-                                  style: const TextStyle(color: Colors.white)),
+                              child: Text(
+                              traduccionDias[dia] ?? dia, // Traduce el día si existe en el mapa
+                              style: const TextStyle(color: Colors.white)),
                             );
                           }).toList(),
                           onChanged: (value) {
@@ -767,13 +815,13 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                     child: TextButton.icon(
                       icon:   const Icon(Icons.add_circle_outline_outlined, color: Colors.black),
                       label:  Text(
-                        'Add',
+                        localization.add,
                         style: GoogleFonts.plusJakartaSans(
                             color: const Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
                       ),  
                      onPressed: () async {
                         if (selectedCustomerId == null || selectedDiaSemana == null) {
-                          NotificationService.showSnackBarError('Select a valid Customer and Day of the week');
+                          NotificationService.showSnackBarError(localization.routeremovemessage01);
                           return;
                         }
                           if (selectedCustomerId != null && selectedDiaSemana != null) {
@@ -795,7 +843,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'Are you sure you want to ',
+                                          text: localization.routeremovemessage02,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: Colors.white,
@@ -803,7 +851,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: 'ADD',
+                                          text: localization.addm,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: const Color.fromRGBO(177, 255, 46, 100),// Cambia el color aquí
@@ -811,7 +859,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: ' this customer from the route?',
+                                          text: localization.routeremovemessage03,
                                           style: GoogleFonts.plusJakartaSans(
                                             fontSize: 16,
                                             color: Colors.white,
@@ -839,9 +887,9 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                     const SizedBox(height: 10),
                                     customer.sucursal.isNotEmpty 
                                       ? Text(
-                                          'Branch: ${customer.sucursal}',
+                                          '${localization.branch} ${customer.sucursal}',
                                           style: GoogleFonts.plusJakartaSans(
-                                            color: Colors.white,
+                                            color: Colors.amber,
                                             fontSize: 16,
                                           ),
                                         )
@@ -856,7 +904,7 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                        const SizedBox(height: 10),
                                             Text.rich(
                                   TextSpan(
-                                    text: 'Day of the Week: ', // Texto normal
+                                    text: localization.dayoftheweek, // Texto normal
                                     style: GoogleFonts.plusJakartaSans(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -881,23 +929,23 @@ class _AddRouteCustomerViewState extends State<_AddRouteCustomerView> {
                                   onPressed: (){
                                     Navigator.of(context).pop();
                                   }, 
-                                  child: Text('No', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
+                                  child: Text('NO', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white))),
                                 TextButton(
                                   onPressed: () async {                              
                                      if (selectedCustomerId != null && selectedDiaSemana != null) {
                                     try {
                                     await rutaFormProvider.updateRutaWithCustomer(selectedCustomerId!, selectedDiaSemana!);  
-                                    NotificationService.showSnackBa('The customer has been Added from the route.');
+                                    NotificationService.showSnackBa(localization.routeremovemessage13);
                                     if(!context.mounted) return;
                                     Navigator.of(context).pop();        
                                     } catch (e) {
-                                      NotificationService.showSnackBarError('Error to Update the Route');
+                                      NotificationService.showSnackBarError(localization.routeremovemessage15);
                                     }
                                    } else {
-                                    NotificationService.showSnackBarError('Please select a customer and a route.');
+                                    NotificationService.showSnackBarError(localization.routeremovemessage14);
                                    }
                                   },
-                                  child: Text('Yes', style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
+                                  child: Text(localization.yes, style: GoogleFonts.plusJakartaSans(fontSize: 20, color: Colors.white)))  
                               ],
                             );
 
@@ -923,13 +971,16 @@ class _RutaViewGeneralInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final localization = AppLocalizations.of(context)!;
+
     return WhiteCardColor(
       child: SizedBox(
         height: 260,
         child: Column(
           children: [
             Text(
-              'General Information',
+              localization.generalinformation,
               style: GoogleFonts.plusJakartaSans(
                   fontSize: 16,
                   color: Colors.white,
@@ -946,7 +997,7 @@ class _RutaViewGeneralInfo extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Route Code',
+                localization.routecode,
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 14, color: Colors.white),
               ),
@@ -965,7 +1016,7 @@ class _RutaViewGeneralInfo extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Route Name:',
+                localization.route,
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 14, color: Colors.white),
               ),
@@ -984,7 +1035,7 @@ class _RutaViewGeneralInfo extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Sale Representative:',
+                localization.salesrepresentativemap,
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 14, color: Colors.white),
               ),
@@ -1003,7 +1054,7 @@ class _RutaViewGeneralInfo extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Total Customer',
+                localization.totalcustomers,
                 style: GoogleFonts.plusJakartaSans(
                     fontSize: 14, color: Colors.white),
               ),
@@ -1037,6 +1088,8 @@ class _RouteViewState extends State<_RouteView> {
     final rutaFormProvider = Provider.of<RutaFormProvider>(context);
     final ruta = rutaFormProvider.ruta!;
 
+    final localization = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         SizedBox(
@@ -1047,7 +1100,7 @@ class _RouteViewState extends State<_RouteView> {
               child: Column(
                 children: [
                   Text(
-                    'Edit Route Information',
+                    localization.editrouteinformation,
                     style: GoogleFonts.plusJakartaSans(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -1062,22 +1115,22 @@ class _RouteViewState extends State<_RouteView> {
                   TextFormField(
                     initialValue: ruta.nombreRuta,
                     style: const TextStyle(color: Colors.black, fontSize: 16),
-                    decoration: const InputDecoration(
-                      hintText: 'Route Name',
-                      hintStyle: TextStyle(color: Colors.black, fontSize: 16),
-                      labelText: 'Route Name',
-                      labelStyle: TextStyle(color: Colors.black, fontSize: 16),
-                      enabledBorder: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      //hintText: 'Route Name',
+                      hintStyle: const TextStyle(color: Colors.black, fontSize: 16),
+                      labelText: localization.routename,
+                      labelStyle: const TextStyle(color: Colors.black, fontSize: 16),
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 1),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color.fromARGB(255, 58, 60, 65)),
                       ),
-                      errorBorder: OutlineInputBorder(
+                      errorBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.red),
                       ),
-                      focusedErrorBorder: OutlineInputBorder(
+                      focusedErrorBorder: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color.fromARGB(255, 58, 60, 65)),
                       ),
@@ -1088,10 +1141,10 @@ class _RouteViewState extends State<_RouteView> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Route Name is Required';
+                        return localization.routerequired;
                       }
                       if (value.length > 20) {
-                        return 'Max 20 characters';
+                        return localization.maxlegth20;
                       }
                       return null;
                     },
@@ -1107,7 +1160,7 @@ class _RouteViewState extends State<_RouteView> {
                       return DropdownButtonFormField<String>(
                         value: isValidUid ? currentUid : null, 
                         decoration: InputDecoration(
-                          hintText: 'Sales Representative',
+                          hintText: localization.salesrepresentativemap,
                           labelText: ruta.usuarioZona.nombre,
                           labelStyle: GoogleFonts.plusJakartaSans(
                               color: Colors.black, fontSize: 16),
@@ -1157,7 +1210,7 @@ class _RouteViewState extends State<_RouteView> {
                         )),
                     child: TextButton(
                       child: Text(
-                        'Save',
+                        localization.save,
                         style: GoogleFonts.plusJakartaSans(
                             color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
@@ -1165,12 +1218,11 @@ class _RouteViewState extends State<_RouteView> {
                         final saved = await rutaFormProvider.updateRuta();
                         if (saved) {
                           if (!context.mounted) return;
-                          NotificationService.showSnackBa('Route Updated');
+                          NotificationService.showSnackBa(localization.routeuodate);
                           Navigator.of(context).popAndPushNamed('/dashboard/routes');
                           Provider.of<RutaProvider>(context, listen: false).getPaginatedRoutes();
                         } else {
-                          NotificationService.showSnackBarError(
-                              'Error to Update the Route');
+                          NotificationService.showSnackBarError(localization.routeremovemessage15);
                         }
                       },
                     ),
@@ -1197,6 +1249,7 @@ class _RutaPerDayView extends StatefulWidget {
 
 class _RutaPerDayViewState extends State<_RutaPerDayView> {
   final ScrollController _scrollController = ScrollController();
+  late RutaProvider rutaProvider;
    Ruta? ruta;
    
 
@@ -1252,6 +1305,18 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
       'Sunday'
     ];
 
+    final Map<String, String> traduccionDias = {
+        'Monday': 'Lunes',
+        'Tuesday': 'Martes',
+        'Wednesday': 'Miércoles',
+        'Thursday': 'Jueves',
+        'Friday': 'Viernes',
+        'Saturday': 'Sábado',
+        'Sunday': 'Domingo'
+      };
+
+    final localization = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         SizedBox(
@@ -1272,7 +1337,10 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                   return Container(
                     width: 350,
                     height: 350,
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 58, 60, 65),
+                      borderRadius: BorderRadius.circular(30)
+                    ),
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       children: [
@@ -1281,9 +1349,9 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '$dia - Customers: (${clientesDelDia.length})',
+                              '${traduccionDias[dia] ?? dia} - ${localization.customers}: (${clientesDelDia.length})',
                               style: GoogleFonts.plusJakartaSans(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -1293,14 +1361,14 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                         const Divider(
                           indent: 30,
                           endIndent: 30,
-                          color: Colors.black,
+                          color: Color.fromRGBO(177, 255, 46, 1),
                           thickness: 2,
                         ),
                         Expanded(
                             child: clientesDelDia.isEmpty ? 
                             Center(
-                              child: Text('No Customer for this day', 
-                              style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.bold))
+                              child: Text(localization.nocustomerthisday, 
+                              style: GoogleFonts.plusJakartaSans(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold))
                             ) : 
                             ListView.builder(
                                 itemCount: clientesDelDia.length,
@@ -1311,9 +1379,9 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                                         const EdgeInsets.symmetric(vertical: 1),
                                     child: ListTile(
                                         title: Text( cliente.nombre,
-                                          style: GoogleFonts.plusJakartaSans( fontSize: 12)),
+                                          style: GoogleFonts.plusJakartaSans( fontSize: 12, color: Colors.white)),
                                           subtitle: Text(cliente.sucursal,
-                                          style: GoogleFonts.plusJakartaSans( fontSize: 10, fontWeight: FontWeight.bold)
+                                          style: GoogleFonts.plusJakartaSans( fontSize: 10,color: Colors.amber ,fontWeight: FontWeight.bold)
                                           ),
                                         visualDensity: const VisualDensity(
                                             horizontal: -4, vertical: -4)),
@@ -1329,7 +1397,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                 top: 0,
                 bottom: 0,
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                  icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
                   onPressed: _scrollLeft,
                 ),
               ),
@@ -1339,7 +1407,7 @@ class _RutaPerDayViewState extends State<_RutaPerDayView> {
                 bottom: 0,
                 child: IconButton(
                   icon:
-                      const Icon(Icons.arrow_forward_ios, color: Colors.black),
+                      const Icon(Icons.arrow_forward_ios, color: Colors.white),
                   onPressed: _scrollRight,
                 ),
               )

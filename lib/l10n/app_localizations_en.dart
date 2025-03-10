@@ -856,6 +856,216 @@ class AppLocalizationsEn extends AppLocalizations {
   String get back => 'Back';
 
   @override
+  String get waitplease => 'Wait Please ...';
+
+  @override
+  String get errormap => 'Error loading Google Maps:';
+
+  @override
+  String get salesrepresentativemap => 'Sales Representative';
+
+  @override
+  String get loading => 'Loading ...';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get errormap01 => 'Error to get address: No results found';
+
+  @override
+  String get errormap02 => 'Error to connect to the server';
+
+  @override
+  String get noaddressavailable => 'No address available';
+
+  @override
+  String get page => 'Page';
+
+  @override
+  String get routeview => 'Routes';
+
+  @override
+  String get createnewroute => 'Create a New Route';
+
+  @override
+  String get routename => 'ROUTE';
+
+  @override
+  String get routedetail => 'Route Details';
+
+  @override
+  String get routecode => 'Route Code';
+
+  @override
+  String get routenamem => 'Route';
+
+  @override
+  String get totalcustomers => 'Total Customers';
+
+  @override
+  String get editrouteinformation => 'Edit Route Information';
+
+  @override
+  String get addcustomerroute => 'Add a Customer Route';
+
+  @override
+  String get nocustomeravailable => 'No Customer Available';
+
+  @override
+  String get dayoftheweek => 'Day of the Week';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get selectcustomerroute => 'Select a Customer';
+
+  @override
+  String get selectdayoftheweek => 'Select Day of the Week';
+
+  @override
+  String get removeoreditcustomerfromroute => 'Remove or Edit a Customer from Route';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get savem => 'Save';
+
+  @override
+  String get monday => 'Monday';
+
+  @override
+  String get tuesday => 'Tuesday';
+
+  @override
+  String get wednesday => 'Wednesday';
+
+  @override
+  String get thursday => 'Thursday';
+
+  @override
+  String get friday => 'Friday';
+
+  @override
+  String get saturday => 'Saturday';
+
+  @override
+  String get sunday => 'Sunday';
+
+  @override
+  String get routeremovemessage01 => 'Select a valid Customer and Day of the week';
+
+  @override
+  String get routeremovemessage02 => 'Are you sure to';
+
+  @override
+  String get removem => 'REMOVE';
+
+  @override
+  String get routeremovemessage03 => 'this customer from the route?';
+
+  @override
+  String get routeremovemessage04 => 'The customer has been removed from the route.';
+
+  @override
+  String get routeremovemessage05 => 'Failed to remove the customer. Please try again.\'';
+
+  @override
+  String get routeremovemessage06 => 'Please select a customer and a route.';
+
+  @override
+  String get routeremovemessage07 => 'Select a valid Customer and Day of the week';
+
+  @override
+  String get routeremovemessage08 => 'Are you sure you want to ';
+
+  @override
+  String get modifym => 'MODIFY';
+
+  @override
+  String get routeremovemessage09 => ' this customer from the route?';
+
+  @override
+  String get routeremovemessage10 => 'Day of the week successfully updated';
+
+  @override
+  String get routeremovemessage11 => 'Error updating the day of the week. Please try again.';
+
+  @override
+  String get routeremovemessage12 => 'Please select a customer and a day of the week.';
+
+  @override
+  String get addm => 'ADD';
+
+  @override
+  String get routeremovemessage13 => 'The customer has been Added from the route.';
+
+  @override
+  String get routeremovemessage14 => 'Please select a customer and a route.';
+
+  @override
+  String get routeremovemessage15 => 'Error to Update the Route';
+
+  @override
+  String get routerequired => 'Route Name is Required';
+
+  @override
+  String get routeuodate => 'Route Updated';
+
+  @override
+  String get nocustomerthisday => 'No Customer for this day';
+
+  @override
+  String get zones => 'Zones';
+
+  @override
+  String get zona => 'ZONE';
+
+  @override
+  String get listofzone => 'List of Zone';
+
+  @override
+  String get createazone => 'Create a Zone';
+
+  @override
+  String get zonemap => 'Map';
+
+  @override
+  String get zonecode => 'Internal Zone Code';
+
+  @override
+  String get createazonemap => 'Create a Zone on The Map';
+
+  @override
+  String get zonemessage => 'With Version 2.0, you will be abel to select areas on the Map.';
+
+  @override
+  String get maxlegth10 => 'Max 10 Characters';
+
+  @override
+  String get codrequired => 'Code is required';
+
+  @override
+  String get zonenamerequired => 'Zone Name is required';
+
+  @override
+  String get descriptionrequired => 'Description is required';
+
+  @override
+  String get maxlegth60 => 'Max 60 Characters';
+
+  @override
+  String get zonemessage01 => 'Could not save the Zone';
+
+  @override
+  String get zonemessage02 => 'Zone Updated';
+
+  @override
+  String get zonemessage03 => 'Important: The Code and Name mut be unique, cannot be repeated';
+
+  @override
   String get bussinesssettings => 'Bussiness Settings';
 
   @override

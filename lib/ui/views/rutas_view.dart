@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/ruta_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/ruta_provider.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
 import 'package:web_dashboard/ui/modals/ruta_modal.dart';
@@ -18,6 +19,8 @@ class RutasView extends StatelessWidget {
 
     final routeDataSource = RutaDatasource( rutasProvider.rutas );
 
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -29,7 +32,7 @@ class RutasView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'Routes View',
+                    localization.routeview,
                     style: CustomLabels.h1,
                   ),
                 ),
@@ -39,7 +42,7 @@ class RutasView extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(177, 255, 46, 100),
+                      color:  const Color.fromRGBO(177, 255, 46, 1),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: const Color.fromARGB(255, 0, 0, 0),
@@ -47,7 +50,7 @@ class RutasView extends StatelessWidget {
                       )),
                     child: TextButton.icon(
                       label: Text(
-                        'Create e New Route',
+                        localization.createnewroute,
                         style: GoogleFonts.plusJakartaSans(
                             color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
@@ -78,20 +81,22 @@ class RutasView extends StatelessWidget {
             sortColumnIndex: rutasProvider.sortColumnIndex,
             columns: [
               const DataColumn(label: Text('#')),
-              DataColumn(label: const Text('Code', style: TextStyle(
+              DataColumn(label: Text(localization.code, 
+              style: const TextStyle(
                 fontWeight: FontWeight.bold)), 
               onSort: (colIndex, _) {
                 rutasProvider.sortColumnIndex = colIndex;
                 rutasProvider.sort<String>((ruta) => ruta.codigoRuta);
               }),
-              DataColumn(label: const Text('Route Name', style: TextStyle(fontWeight: FontWeight.bold)), 
+              DataColumn(label: Text(localization.routename, 
+              style: const TextStyle(fontWeight: FontWeight.bold)), 
               onSort: (colIndex, _) {
                 rutasProvider.sortColumnIndex = colIndex;
                 rutasProvider.sort<String>((ruta) => ruta.nombreRuta);
               }),
-              const DataColumn(label: Text('Customers')),
-              const DataColumn(label: Text('Sales Representative')),
-              const DataColumn(label: Text('Edit')),
+              DataColumn(label: Text(localization.customer)),
+              DataColumn(label: Text(localization.salesrepresentative)),
+              DataColumn(label: Text(localization.edit)),
             ], 
             source: routeDataSource,
             onPageChanged: (page) {

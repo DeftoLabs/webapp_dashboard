@@ -9,7 +9,6 @@ import 'package:web_dashboard/services/navigation_service.dart';
 import 'package:web_dashboard/services/notification_services.dart';
 import 'package:web_dashboard/ui/buttons/custom_outlined_buttom.dart';
 import 'package:web_dashboard/ui/cards/white_card.dart';
-import 'package:web_dashboard/ui/labels/custom_labels.dart';
 
 class ProductView extends StatefulWidget {
   final String id;

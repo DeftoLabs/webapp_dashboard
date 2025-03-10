@@ -856,6 +856,216 @@ class AppLocalizationsEs extends AppLocalizations {
   String get back => 'Volver';
 
   @override
+  String get waitplease => 'Cargando el Mapa ...';
+
+  @override
+  String get errormap => 'Error al Cargar el Mapa:';
+
+  @override
+  String get salesrepresentativemap => 'Representante de Ventas';
+
+  @override
+  String get loading => 'Cargando ...';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get errormap01 => 'Error al obtener la direccion: No se encontraron resultados';
+
+  @override
+  String get errormap02 => 'Error al conectarse con el servidor';
+
+  @override
+  String get noaddressavailable => 'Direccion No Disponible';
+
+  @override
+  String get page => 'Pagina';
+
+  @override
+  String get routeview => 'Rutas';
+
+  @override
+  String get createnewroute => 'Crear una Nueva Ruta';
+
+  @override
+  String get routename => 'RUTA';
+
+  @override
+  String get routedetail => 'Detalles de la Ruta';
+
+  @override
+  String get routecode => 'Codigo de la Ruta';
+
+  @override
+  String get routenamem => 'Ruta';
+
+  @override
+  String get totalcustomers => 'Total Clientes';
+
+  @override
+  String get editrouteinformation => 'Editar la Ruta';
+
+  @override
+  String get addcustomerroute => 'Añadir Clientes a la Ruta';
+
+  @override
+  String get nocustomeravailable => 'No Tiene Clientes Disponibles';
+
+  @override
+  String get dayoftheweek => 'Dias de la Semana';
+
+  @override
+  String get add => 'Añadir';
+
+  @override
+  String get selectcustomerroute => 'Seleccione un Cliente';
+
+  @override
+  String get selectdayoftheweek => 'Seleccione un Dia de la Semana';
+
+  @override
+  String get removeoreditcustomerfromroute => 'Remover o Editar Clientes de la Ruta';
+
+  @override
+  String get remove => 'Remover';
+
+  @override
+  String get savem => 'Guardar';
+
+  @override
+  String get monday => 'Lunes';
+
+  @override
+  String get tuesday => 'Martes';
+
+  @override
+  String get wednesday => 'Miércoles';
+
+  @override
+  String get thursday => 'Jueves';
+
+  @override
+  String get friday => 'Viernes';
+
+  @override
+  String get saturday => 'Sábado';
+
+  @override
+  String get sunday => 'Domingo';
+
+  @override
+  String get routeremovemessage01 => 'Selecciona un Cliente y un Dia de la Semana Valido';
+
+  @override
+  String get routeremovemessage02 => 'Estas Seguro de ';
+
+  @override
+  String get removem => 'REMOVER';
+
+  @override
+  String get routeremovemessage03 => ' este cliente de esta Ruta?';
+
+  @override
+  String get routeremovemessage04 => 'El Cliente ha sido REMOVIDO de la RUTA';
+
+  @override
+  String get routeremovemessage05 => 'Error al Remover al Cliente. Contacte a Soporte';
+
+  @override
+  String get routeremovemessage06 => 'Por Favor, Seleecione un Cliente y una Ruta';
+
+  @override
+  String get routeremovemessage07 => 'Selecciona un Cliente y un Dia de la Semana Valido';
+
+  @override
+  String get routeremovemessage08 => 'Estas Seguro de ';
+
+  @override
+  String get modifym => 'MOIFICAR';
+
+  @override
+  String get routeremovemessage09 => ' este cliente de esta Ruta?';
+
+  @override
+  String get routeremovemessage10 => 'Dia de la Semana, Actualizado Correctamente';
+
+  @override
+  String get routeremovemessage11 => 'Error al Actualizar el Dia de la Semana, Contacte a Soporte';
+
+  @override
+  String get routeremovemessage12 => 'Selecciona un Cliente y un Dia de la Semana Valido';
+
+  @override
+  String get addm => 'ANADIR';
+
+  @override
+  String get routeremovemessage13 => 'El Cliente se añadio a la Ruta';
+
+  @override
+  String get routeremovemessage14 => 'Por Favor Seleccione un Cliente y una Ruta';
+
+  @override
+  String get routeremovemessage15 => 'Error al Actualizar la Ruta, Contacte a Soporte';
+
+  @override
+  String get routerequired => 'Requiere el Nombre de la Ruta';
+
+  @override
+  String get routeuodate => 'Ruta Actualizada';
+
+  @override
+  String get nocustomerthisday => 'Sin Clientes Asignados';
+
+  @override
+  String get zones => 'Zonas';
+
+  @override
+  String get zona => 'ZONA';
+
+  @override
+  String get listofzone => 'Lista de Zonas';
+
+  @override
+  String get createazone => 'Crear una Zona';
+
+  @override
+  String get zonemap => 'Mapa';
+
+  @override
+  String get zonecode => 'Codigo de la Zona';
+
+  @override
+  String get createazonemap => 'Crear una Zona en el Mapa';
+
+  @override
+  String get zonemessage => 'Con la Version 2.0, se podra seleccionar el area en el Mapa';
+
+  @override
+  String get maxlegth10 => 'Max 10 Caracteres';
+
+  @override
+  String get codrequired => 'El Codigo es Requerido';
+
+  @override
+  String get zonenamerequired => 'El Nombre de la Zona es requerido';
+
+  @override
+  String get descriptionrequired => 'La Descripcion es Requerida';
+
+  @override
+  String get maxlegth60 => 'Max 60 Caracteres';
+
+  @override
+  String get zonemessage01 => 'Error al Guardar la Zona, Contacte a Soporte';
+
+  @override
+  String get zonemessage02 => 'Zona Actualizada';
+
+  @override
+  String get zonemessage03 => 'Importante: EL Codigo y el Nombre deben de ser unicos, no se pueden repetir';
+
+  @override
   String get bussinesssettings => 'Configuración de la Empresa';
 
   @override

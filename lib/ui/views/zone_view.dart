@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/zona.dart';
 import 'package:web_dashboard/providers/zone_form_provider.dart';
 import 'package:web_dashboard/providers/zones_providers.dart';
@@ -62,6 +63,8 @@ class _ZoneViewState extends State<ZoneView> {
       );
     }
 
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
@@ -77,7 +80,7 @@ class _ZoneViewState extends State<ZoneView> {
                   icon: const Icon(Icons.arrow_back_rounded)),
               Expanded(
                   child: Center(
-                child: Text('Zone View', style: CustomLabels.h1),
+                child: Text(localization.zone, style: CustomLabels.h1),
               )),
             ],
           ),
@@ -103,8 +106,11 @@ class _ZoneViewState extends State<ZoneView> {
 class _RouteMapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final localization = AppLocalizations.of(context)!;
+
     return WhiteCardColor(
-      title: 'Map',
+      title:localization.zonemap,
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -113,7 +119,7 @@ class _RouteMapView extends StatelessWidget {
               const SizedBox(width: 25),
               CustomIconButtonClear(
                   onPressed: () {},
-                  text: 'Create a Zone on the Map',
+                  text: localization.createazonemap,
                   icon: Icons.add_outlined),
             ],
           ),
@@ -137,7 +143,7 @@ class _RouteMapView extends StatelessWidget {
               const SizedBox(height: 10),
               Center(
               child: SizedBox(
-                child: Text('With version 2.0, you will be able to select areas on the map.',   style:GoogleFonts.plusJakartaSans(
+                child: Text(localization.zonemessage,   style:GoogleFonts.plusJakartaSans(
                         fontSize: 18,
                         color: Colors.white,
                       ),
@@ -161,10 +167,12 @@ class _RouteViewForm extends StatelessWidget {
     final routeFormProvider = Provider.of<ZoneFormProvider>(context);
     final zona = routeFormProvider.zona!;
 
+    final localization = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         WhiteCardColor(
-            title: 'Genereal Information',
+            title: localization.generalinformation,
             child: Form(
               key: routeFormProvider.formKey,
               child: Column(
@@ -176,10 +184,10 @@ class _RouteViewForm extends StatelessWidget {
                       initialValue: zona.codigo,
                       style: const TextStyle(color: Colors.white), // Añade esta línea
                       decoration: InputDecoration(
-                        hintText: 'Code',
+                        hintText: localization.code,
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white.withValues(alpha: 0.7)),
-                        labelText: 'Internal Zone Code',
+                        labelText: localization.zonecode,
                         labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontSize: 16),
                         focusedBorder: const OutlineInputBorder(
@@ -193,9 +201,9 @@ class _RouteViewForm extends StatelessWidget {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Code is required';
+                          return localization.codrequired;
                         }else if (value.length >10){
-                          return 'The code cannot exceed 10 characters';
+                          return localization.maxlegth10;
                         }
                         return null;
                       },
@@ -209,10 +217,10 @@ class _RouteViewForm extends StatelessWidget {
                       initialValue: zona.nombrezona,
                       style: const TextStyle(color: Colors.white), // Añade esta línea
                       decoration: InputDecoration(
-                        hintText: 'Zone Name',
+                        hintText: localization.zonename,
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white..withValues(alpha: 0.7)),
-                        labelText: 'Zone Name',
+                        labelText: localization.zonename,
                         labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontSize: 16),
                         focusedBorder: const OutlineInputBorder(
@@ -226,9 +234,9 @@ class _RouteViewForm extends StatelessWidget {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Zone Name is required';
+                          return localization.zonenamerequired;
                         }else if (value.length >20){
-                          return 'The description cannot exceed 20 characters';
+                          return localization.maxlegth20;
                         }
                         return null;
                       },
@@ -243,10 +251,10 @@ class _RouteViewForm extends StatelessWidget {
                       initialValue: zona.descripcion,
                       style: const TextStyle(color: Colors.white), // Añade esta línea
                       decoration: InputDecoration(
-                        hintText: 'Zone Descripcion',
+                        hintText: localization.description,
                         hintStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white..withValues(alpha: 0.7)),
-                        labelText: 'Description',
+                        labelText: localization.description,
                         labelStyle: GoogleFonts.plusJakartaSans(
                             color: Colors.white, fontSize: 16),
                         focusedBorder: const OutlineInputBorder(
@@ -263,9 +271,9 @@ class _RouteViewForm extends StatelessWidget {
                       expands: false,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Description is required';
+                          return localization.descriptionrequired;
                         } else if (value.length >60){
-                          return 'The description cannot exceed 60 characters';
+                          return localization.maxlegth60;
                         }
                         return null;
                       },
@@ -282,15 +290,15 @@ class _RouteViewForm extends StatelessWidget {
                       onPressed: () async {
                         final saved = await routeFormProvider.updateRoute();
                         if(saved) {
-                          NotificationService.showSnackBa('Zone Updated');
+                          NotificationService.showSnackBa(localization.zonemessage02);
                           if (!context.mounted) return;
                           Provider.of<ZonesProviders>(context, listen: false).refreshRoute(zona);
                           NavigationService.replaceTo('/dashboard/zones');
                         } else {
-                          NotificationService.showSnackBarError('Could not save the Route');
+                          NotificationService.showSnackBarError(localization.zonemessage01);
                         }
                       },
-                      text: 'Save',
+                      text: localization.save,
                       color: Colors.white,
                     ),
                   ),

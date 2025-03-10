@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/zona.dart';
 import 'package:web_dashboard/providers/zone_form_provider.dart';
 import 'package:web_dashboard/providers/zones_providers.dart';
@@ -42,6 +43,8 @@ class _ZoneModalState extends State<ZoneModal> {
     final routeProvider = Provider.of<ZonesProviders>(context, listen: false);
     final routeFormProvider = Provider.of<ZoneFormProvider>(context, listen: false);
 
+    final localization = AppLocalizations.of(context)!;
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -63,7 +66,7 @@ class _ZoneModalState extends State<ZoneModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Add Zone',
+                    localization.createazone,
                     style: CustomLabels.h1.copyWith(color: Colors.white),
                   ),
                   IconButton(
@@ -83,8 +86,8 @@ class _ZoneModalState extends State<ZoneModal> {
                   codigo = uppercaseValue;
                   },
                 decoration: InputDecoration(
-                  hintText: 'Internal Zone Code',
-                  labelText: 'Zone Code',
+                  hintText: localization.zonecode,
+                  labelText: localization.zonecode,
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                   hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                   focusedBorder:const OutlineInputBorder(
@@ -104,9 +107,9 @@ class _ZoneModalState extends State<ZoneModal> {
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                 validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Code is required';
+                      return localization.codrequired;
                     }else if (value.length >10){
-                      return 'The code cannot exceed 10 characters';
+                      return localization.maxlegth10;
                     }
                     return null;
                   },
@@ -119,8 +122,8 @@ class _ZoneModalState extends State<ZoneModal> {
                   nombrezona = uppercaseValue;
                   },
                 decoration: InputDecoration(
-                  hintText: 'Zone Name',
-                  labelText: 'Zone Name',
+                  hintText: localization.zonename,
+                  labelText: localization.zonename,
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                   hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                   focusedBorder:const OutlineInputBorder(
@@ -140,9 +143,9 @@ class _ZoneModalState extends State<ZoneModal> {
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                  validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Zone Name is required';
+                          return localization.zonenamerequired;
                         }else if (value.length >20){
-                          return 'The description cannot exceed 20 characters';
+                          return localization.maxlegth20;
                         }
                         return null;
                       },
@@ -156,8 +159,8 @@ class _ZoneModalState extends State<ZoneModal> {
                   descripcion = uppercaseValue;
                   },
                 decoration: InputDecoration(
-                  hintText: 'Description',
-                  labelText: 'Description',
+                  hintText: localization.description,
+                  labelText: localization.description,
                   labelStyle: GoogleFonts.plusJakartaSans(color: Colors.white),
                   hintStyle: GoogleFonts.plusJakartaSans(color: Colors.white.withValues(alpha: 0.7)),
                   focusedBorder:const OutlineInputBorder(
@@ -180,9 +183,9 @@ class _ZoneModalState extends State<ZoneModal> {
                 style: GoogleFonts.plusJakartaSans(color: Colors.white),
                     validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Description is required';
+                            return localization.descriptionrequired;
                           } else if (value.length >60){
-                            return 'The description cannot exceed 60 characters';
+                            return localization.maxlegth60;
                           }
                           return null;
                         },
@@ -190,7 +193,7 @@ class _ZoneModalState extends State<ZoneModal> {
               const SizedBox(height: 20),
               RichText
               ( textAlign: TextAlign.center,
-                text: TextSpan(text:'Important: The Code and Name must be unique, cannot be repeated.', 
+                text: TextSpan(text:localization.zonemessage03, 
                 style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 16))),
               const SizedBox(height: 20),
               Container(
@@ -211,7 +214,7 @@ class _ZoneModalState extends State<ZoneModal> {
         }
       }
     },
-    text: 'Save',
+    text: localization.save,
     color: const Color.fromRGBO(177, 255, 46, 1),
     isFilled: true,
   ),

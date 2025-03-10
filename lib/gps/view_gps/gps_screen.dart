@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:web_dashboard/gps/blocs/blocs.dart';
 import 'package:web_dashboard/gps/view_gps/helper/custom_image_market.dart';
 import 'package:web_dashboard/gps/view_gps/screen_gps.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/models/usuario.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 import 'package:web_dashboard/ui/views/dashboard_view.dart';
@@ -110,6 +111,8 @@ class _GpsScreenState extends State<GpsScreen> {
     final containerWidth = screenWidth * 0.20;
     final containerHeight = screenHeight * 0.6;
 
+    final localization = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: FutureBuilder<void>(
         future: _googleMapsCompleter.future,
@@ -117,12 +120,12 @@ class _GpsScreenState extends State<GpsScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error loading Google Maps: ${snapshot.error}'));
+            return Center(child: Text('${localization.errormap} ${snapshot.error}'));
           } else {
             return BlocBuilder<LocationBloc, LocationState>(
               builder: (context, state) {
                 if (state.lastKnowLocation == null) {
-                  return const Center(child: Text('Wait Please ...'));
+                  return  Center(child: Text(localization.waitplease));
                 }
 
                 return Stack(
@@ -142,7 +145,7 @@ class _GpsScreenState extends State<GpsScreen> {
                             left:16,
                             bottom: 130,
                             child: FloatingActionButton.extended(
-                              label: const Text('Back'),
+                              label: Text(localization.back),
                               icon: const  Icon(Icons.arrow_back),
                               backgroundColor: const Color.fromRGBO(177, 255, 46, 1),
                               onPressed: (){

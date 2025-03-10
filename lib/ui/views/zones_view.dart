@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/datatables/zones_datasource.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/zones_providers.dart';
 import 'package:web_dashboard/ui/buttons/custom_icon_button.dart';
 import 'package:web_dashboard/ui/labels/custom_labels.dart';
@@ -19,32 +20,34 @@ class ZonesView extends StatelessWidget {
 
     final routesDataSource = ZonesDataSource( routesProvider.zonas );
 
+    final localization = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          Text('Zones View', style: CustomLabels.h1,),
+          Text(localization.zones, style: CustomLabels.h1,),
           const SizedBox(height: 10),
 
           PaginatedDataTable(
             sortAscending: routesProvider.ascending,
             sortColumnIndex: routesProvider.sortColumnIndex,
             columns: [
-              DataColumn(label: const Text('Code'), onSort: (colIndex, _){
+              DataColumn(label: Text(localization.code), onSort: (colIndex, _){
                 routesProvider.sortColumnIndex = colIndex;
                 routesProvider.sort<String>((zona) => zona.codigo ); 
               }),
-              DataColumn(label: const Text('Zone Name'), onSort: (colIndex, _){
+              DataColumn(label: Text(localization.zona), onSort: (colIndex, _){
                 routesProvider.sortColumnIndex = colIndex;
                 routesProvider.sort<String>((zona) => zona.nombrezona ); 
               }),
-              const DataColumn(label: Text('Description')),
-              const DataColumn(label: Text('Edit', textAlign: TextAlign.right), numeric: true),
+              DataColumn(label: Text(localization.descriptionm)),
+              DataColumn(label: Text(localization.edit, textAlign: TextAlign.right), numeric: true),
             ], 
             
             source: routesDataSource,
-            header: const Text('List of Zones', maxLines: 2),
+            header: Text(localization.listofzone, maxLines: 2),
             onPageChanged: (page) {
 
             },
@@ -60,7 +63,7 @@ class ZonesView extends StatelessWidget {
                     );
                 //NavigationService.replaceTo('/dashboard/newroute');
                   }, 
-                  text:'Create a Zone', 
+                  text:localization.createazone, 
                   icon: Icons.add_outlined)
               ],
             )

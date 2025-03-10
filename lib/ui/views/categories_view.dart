@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:web_dashboard/l10n/app_localizations.dart';
-import 'package:web_dashboard/providers/auth_provider.dart';
 
 import 'package:web_dashboard/providers/categories_provider.dart';
 
@@ -30,8 +29,6 @@ class _CategoriesViewState extends State<CategoriesView> {
 
   @override
   Widget build(BuildContext context) {
-
-    final activeUser = Provider.of<AuthProvider>(context).user!;
 
     final categorias = Provider.of<CategoriesProvider>(context).categorias;
     final categoriasProvider = Provider.of<CategoriesProvider>(context);

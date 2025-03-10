@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:web_dashboard/l10n/app_localizations.dart';
 import 'package:web_dashboard/providers/users_providers.dart';
 
 class LocationSquare extends StatefulWidget {
@@ -48,6 +49,9 @@ class _LocationSquareState extends State<LocationSquare> {
   }
 
   Future<String> _getAddress(double lat, double lng) async {
+
+     final localization = AppLocalizations.of(context)!;
+
     final url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/$lng,$lat.json?access_token=pk.eyJ1IjoiZGVmdG9sYWJzIiwiYSI6ImNseHhiZjJybTE5b2wya29vMDdrdXViem0ifQ._dnK1oSv5G-MfKwzHpdKcQ';
 
     final response = await http.get(Uri.parse(url));
@@ -57,10 +61,10 @@ class _LocationSquareState extends State<LocationSquare> {
       if (json['features'] != null && json['features'].isNotEmpty) {
         return json['features'][0]['place_name'];
       } else {
-        throw Exception('Error to get address: No results found');
+        throw Exception(localization.errormap01);
       }
     } else {
-      throw Exception('Error to connect to the server');
+      throw Exception(localization.errormap02);
     }
   }
 
@@ -76,6 +80,8 @@ class _LocationSquareState extends State<LocationSquare> {
       startIndex,
       endIndex > users.length ? users.length : endIndex,
     );
+
+    final localization = AppLocalizations.of(context)!;
 
     return Positioned(
       top: 10,
@@ -95,7 +101,7 @@ class _LocationSquareState extends State<LocationSquare> {
           child: Column(
             children: [
               ListTile(
-                title: const Center(child: Text('Sales Representative', style: TextStyle(fontWeight: FontWeight.bold))),
+                title: Center(child: Text(localization.salesrepresentativemap, style: const TextStyle(fontWeight: FontWeight.bold))),
                 trailing: Icon(
                   _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                 ),
@@ -116,12 +122,12 @@ class _LocationSquareState extends State<LocationSquare> {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
                                   return ListTile(
                                     title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                    subtitle: const Text('Loading...'),
+                                    subtitle: Text(localization.loading),
                                   );
                                 } else if (snapshot.hasError) {
                                   return ListTile(
                                     title: Text(user.nombre, style: const TextStyle(fontWeight: FontWeight.bold)),
-                                    subtitle: Text('Error: ${snapshot.error}'),
+                                    subtitle: Text('${localization.error}: ${snapshot.error}'),
                                   );
                                 } else {
                                   return ListTile(
@@ -153,7 +159,7 @@ class _LocationSquareState extends State<LocationSquare> {
                                         const SizedBox(height: 10)
                                       ],
                                     ),
-                                    subtitle: Text(snapshot.data ?? 'No address available'),
+                                    subtitle: Text(snapshot.data ?? localization.noaddressavailable),
                                   );
                                 }
                               },
@@ -175,7 +181,7 @@ class _LocationSquareState extends State<LocationSquare> {
                     icon: const Icon(Icons.arrow_back),
                     onPressed: _previousPage,
                   ),
-                  Text('Page ${_currentPage + 1}'),
+                  Text('${localization.page} ${_currentPage + 1}'),
                   IconButton(
                     icon: const Icon(Icons.arrow_forward),
                     onPressed: _nextPage,
